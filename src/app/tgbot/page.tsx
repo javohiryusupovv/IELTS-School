@@ -14,34 +14,34 @@ export default async function TgBot() {
   const totalCoin = userCoin.reduce((coin1: number, coin2: number)=> coin1 + coin2, 0)
 
   return (
-    <section className="w-full max-w-[450px] m-auto overflow-hidden flex flex-col justify-between min-h-screen fixed bottom-0 left-0 right-0 pt-[15px] pb-0 px-[15px]">
+    <section className="w-full max-w-[450px] mx-auto overflow-hidden flex flex-col justify-between min-h-screen fixed bottom-0 left-0 right-0 pt-[15px] pb-0 px-[15px]">
       <div className="min-h-screen bg-orange-500/85 rounded-xl flex flex-col border">
         <div className="w-full max-w-[450px] m-auto px-4 pb-10 rounded-lg rounded-t-xl">
           <h1 className="pt-16 pb-7 text-white font-semibold text-xl">
             Hello, {userName}
           </h1>
 
-          <div className="grid grid-cols-3 justify-between bg-white rounded-lg py-2 mb-11">
-            <div className="flex flex-col justify-center items-center border-r border-orange-500 last:border-r-0">
-              <article className="flex items-center gap-2">
+          <div className="grid grid-cols-3 justify-center w-full bg-white rounded-lg py-2 mb-11">
+            <div className="flex flex-col border-r border-orange-500 last:border-r-0">
+              <article className="flex justify-center items-center gap-2 mb-2">
                 <BsCoin className="fill-[#f9d222] text-[24px]" />
                 <span className="font-extralight text-sm">Jami Coinlar</span>
               </article>
-              <p className="font-normal text-base ml-10">{totalCoin}</p>
+              <p className="font-medium text-base text-center">{totalCoin}</p>
             </div>
-            <div className="flex flex-col justify-center items-center border-r border-orange-500 last:border-r-0">
-              <article className="flex items-center gap-2">
+            <div className="flex flex-col border-r border-orange-500 last:border-r-0">
+              <article className="flex justify-center items-center gap-2 mb-2">
                 <GiTrophyCup className="fill-[#f9d222] text-[24px]" />
                 <span className="font-extralight text-sm">Reyting </span>
               </article>
-              <p className="font-normal text-base ml-10">1</p>
+              <p className="font-medium text-base text-center">1</p>
             </div>
-            <div className="flex flex-col justify-center items-center border-r border-orange-500 last:border-r-0">
-              <article className="flex items-center gap-2">
+            <div className="flex flex-col border-r border-orange-500 last:border-r-0">
+              <article className="flex justify-center items-center gap-2 mb-2">
                 <SiLevelsdotfyi className="fill-[#f9d222] text-[24px] rotate-90" />
                 <span className="font-extralight text-sm">Daraja </span>
               </article>
-              <p className="font-normal text-base ml-10">5</p>
+              <p className="font-medium text-base text-center">5</p>
             </div>
           </div>
         </div>
@@ -49,7 +49,7 @@ export default async function TgBot() {
         <article className="bg-white pt-16 mt-auto">
           <div className="w-full max-w-[420px] m-auto px-4">
             <div className="bg-orange-500/85 bg-no-repeat bg-center bg-contain p-6 flex justify-between items-center rounded-lg mb-10">
-              <div className="text-black text-sm">
+              <div className="text-white text-sm">
                 <p>Bozorga borib xarid qildim</p>
                 <p>Kattaligi bois adashdim</p>
                 <p>Agar dono bo'lishni istasang</p>
