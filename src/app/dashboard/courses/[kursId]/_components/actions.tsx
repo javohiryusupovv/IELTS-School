@@ -3,7 +3,7 @@
 import { DeleteCourse } from "@/actions/course.action";
 import { toast } from "sonner";
 import { ICourse } from "@/types/type";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface Props {
@@ -11,13 +11,14 @@ interface Props {
 }
 
 export default function Actions({ course }: Props) {
-    const router = useRouter()
+    const router = useRouter();
+    const pathname = usePathname()
     const [textStatus, settextStatus] = useState(false); 
         
     const onDelete = () => {
         settextStatus(true);
         const toastId = toast.loading("O'chirilmoqda...");
-        DeleteCourse(course._id, "/dashboard/courses")
+        DeleteCourse(course._id, pathname)
         .then(() => {
             // 2. Muvaffaqiyatli o'chirilganda toasti yangilash
             toast.success("Muvaffaqiyatli o'chirildi!", { id: toastId });

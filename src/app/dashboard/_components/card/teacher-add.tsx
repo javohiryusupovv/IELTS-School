@@ -11,14 +11,14 @@ import {
     SheetTitle,
     SheetTrigger,
   } from "@/components/ui/sheet";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 
 function TeacherCreated() {
       const [open, setOpen] = useState(false)
-      const [teacherName, setTeacherName] = useState("")
-      const router = useRouter()
+      const [teacherName, setTeacherName] = useState("");
+      const pathname = usePathname()
 
       const handleTotal = async() => {
         if (!teacherName.trim()) {
@@ -27,12 +27,11 @@ function TeacherCreated() {
           }
         try{
 
-            toast.promise(createTeacher(teacherName), {
+            await toast.promise(createTeacher(teacherName, pathname), {
                 loading: "Loading...",
                 success: "Teacher muvaffaqiyatli qo‘shildi!",
                 error: "Xatolik yuz berdi!",
             })
-            router.push("/dashboard/teacher")
             setTeacherName("")
             setOpen(false)
         }catch(error){

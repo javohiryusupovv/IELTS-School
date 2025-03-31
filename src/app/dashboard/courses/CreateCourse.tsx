@@ -13,7 +13,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { ITeacher } from "@/types/type";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Datapicker } from "../_components/startDay/datapicker";
@@ -31,7 +31,7 @@ function CreateCourse() {
   const [selectDay, setSelectDay] = useState("toq")
 
   const [open, setOpen] = useState(false);
-  const router = useRouter();
+  const pathname = usePathname()
 
   useEffect(() => {
     const fetchTeacher = async () => {
@@ -65,20 +65,18 @@ function CreateCourse() {
     }
    
     try {
-      toast.promise(postCourse(courseTitle, teacherId, startDate ? startDate.toISOString() : "", endDate ? endDate.toISOString(): "", filteredDay, "/dashboard/courses"), {
+        toast.promise(postCourse(courseTitle, teacherId, startDate ? startDate.toISOString() : "", endDate ? endDate.toISOString(): "", filteredDay, pathname), {
         loading: "Loading...",
         success: "Successfully created!",
         error: "Something went wrong!",
       });
       
-      
       setCourseTitle("");
       setTeacherId("");
       setStartDate(null)
       setEndDate(null)
-      setSelectDay("")
+      setSelectDay("");
       setOpen(false);
-      router.push("/dashboard/courses");
     } catch (error) {
       console.log("Sizdagi karobkalar xatolikka uchradi", error);
     }

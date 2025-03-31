@@ -3,14 +3,16 @@
 import ConnectMonogDB from "@/lib/mongodb"
 import Teacher from "@/models/teacher.model"
 import mongoose from "mongoose"
+import { revalidatePath } from "next/cache"
 
 
-export const createTeacher = async(teacherName: string) => {
+export const createTeacher = async(teacherName: string, path: string) => {
     if (!teacherName.trim()) throw new Error("Teacher nomi kiritilmagan!");
     try{
         await ConnectMonogDB()
         const newTeacher = new Teacher({teacherName})
         await newTeacher.save()
+        revalidatePath(path)
         return { success: true, message: "Teacher muvaffaqiyatli qo‘shildi!" };
     }catch(error){
         throw new Error (`XAtolik yuz berdi Teacher saqlashda , ${error}`)

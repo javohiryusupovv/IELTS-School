@@ -7,7 +7,7 @@ import { CalendarDayGet } from "./_components/CalendarDayGet";
 async function GroupDashboard() {
   const students = await getStudents();
   const courses = await getCourses();
-  let dayCourses = courses[2].days
+  let dayCourses = courses[1].days
   
   
   return (

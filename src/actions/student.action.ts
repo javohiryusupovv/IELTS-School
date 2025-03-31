@@ -8,7 +8,7 @@ import { revalidatePath } from "next/cache";
 
 
 
-export const postAddStudent = async (courseId: string, name: string, surname: string, phone: string) => {
+export const postAddStudent = async (courseId: string, name: string, surname: string, phone: string, path: string) => {
     if (!name || !surname || !phone || !courseId) {
         throw new Error("Xatolik yuz berdi: Ma'lumotlar to'liq emas!");
     }
@@ -35,7 +35,7 @@ export const postAddStudent = async (courseId: string, name: string, surname: st
         // Kursga studentni qo‘shamiz
         course.students.push(newStudent._id);
         await course.save();
-
+        revalidatePath(path)
         return { success: true, message: "O‘quvchi muvaffaqiyatli qo‘shildi!",};
     } catch (error) {
         console.error("Student qo‘shishda xatolik:", error);

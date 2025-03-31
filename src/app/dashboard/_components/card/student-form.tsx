@@ -12,7 +12,7 @@ import {
     SheetTrigger,
 } from "@/components/ui/sheet";
 import { ICourse } from "@/types/type";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 export default function StudentForm({propCourses}: {propCourses: ICourse[]}) {
@@ -22,7 +22,7 @@ export default function StudentForm({propCourses}: {propCourses: ICourse[]}) {
     const [courseId, setCourseId] = useState("");
     const [phone, setPhone] = useState("+998 ");
     const [open, setOpen] = useState(false);
-    const router = useRouter()
+    const pathname = usePathname()
     
     
     useEffect(() => {
@@ -69,12 +69,11 @@ export default function StudentForm({propCourses}: {propCourses: ICourse[]}) {
 
 
 
-            toast.promise(postAddStudent(courseId, name, surname, phone), {
+            await toast.promise(postAddStudent(courseId, name, surname, phone, pathname), {
                 loading: "O'quvchi qo'shilmoqda...",
                 success: `${coursess} kursiga qo'shildi!`,
                 error: "O'quvchini qo'shishda xatolik!",
             });
-            router.push("/dashboard/students")
         }catch(error){
             console.error("Xatolik yuz berdi, o'quvchini qo'shishda!");
             return;

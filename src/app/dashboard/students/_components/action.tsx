@@ -12,7 +12,7 @@ interface Props{
 export default function Action({studentId, courseId}: Props) {
     const handleDelete = async () => {
         try {
-            toast.promise(deleteStudent(studentId, courseId, "/dashboard/students"), {
+            await toast.promise(deleteStudent(studentId, courseId, "/dashboard/students"), {
                 loading: "O'chirilmoqda...",
                 success: "Talaba o'chirildi",
                 error: "O'chirishda xatolik",

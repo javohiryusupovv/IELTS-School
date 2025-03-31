@@ -13,7 +13,7 @@ interface Props {
 export default function Attendence({ students, days}: Props) {
   const [inputValues, setInputValues] = useState<{ [key: string]: string }>({});
   const [isPending, startTransition] = useTransition();
-  const filterStudent = students[2];
+  const filterStudent = students[1];
   const sliceTitle = filterStudent?.courseTitle?.split(" ")[0] || "";
   
 
