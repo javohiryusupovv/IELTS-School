@@ -12,10 +12,9 @@ export default async function Loading() {
       </article>
       <hr className="mb-7" />
       <div className="w-full grid grid-cols-4 gap-4">
-        {Array.from({length: 5}).map((_, ) => (
+        {Array.from({length: 3}).map((_, ) => (
           <div key={uuid4()}>
-            <Skeleton className="w-full h-[200px] mb-5" />
-            <Skeleton className="w-full h-[20px] rounded-full" />
+            <Skeleton className="w-full h-[40px] rounded-lg" />
           </div>
         ))}
       </div>

@@ -1,5 +1,4 @@
 import { Skeleton } from "@/components/ui/skeleton";
-
 import uuid4 from "uuid4";
 
 export default async function Loading() {
@@ -11,11 +10,10 @@ export default async function Loading() {
         <Skeleton className="h-11 w-[150px] rounded-full" />
       </article>
       <hr className="mb-7" />
-      <div className="w-full grid grid-cols-4 gap-4">
-        {Array.from({length: 5}).map((_, ) => (
+      <div className="w-full">
+        {Array.from({length: 1}).map((_, ) => (
           <div key={uuid4()}>
-            <Skeleton className="w-full h-[200px] mb-5" />
-            <Skeleton className="w-full h-[20px] rounded-full" />
+            <Skeleton className="w-full h-[30px] rounded-lg mb-3" />
           </div>
         ))}
       </div>
