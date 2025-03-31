@@ -15,11 +15,11 @@ export default function ProfileAll() {
   const [savedData, setSavedData] = useState({ ...formData });
   const [previousData, setPreviousData] = useState({ ...formData });
 
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
     setSavedData({ ...formData });
     setIsEditing(false);
