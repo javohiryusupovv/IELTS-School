@@ -65,7 +65,7 @@ function CreateCourse() {
     }
    
     try {
-      toast.promise(postCourse(courseTitle, teacherId, startDate ? startDate.toISOString() : "", endDate ? endDate.toISOString(): "", filteredDay), {
+      toast.promise(postCourse(courseTitle, teacherId, startDate ? startDate.toISOString() : "", endDate ? endDate.toISOString(): "", filteredDay, "/dashboard/courses"), {
         loading: "Loading...",
         success: "Successfully created!",
         error: "Something went wrong!",

@@ -40,7 +40,7 @@ export const getCourseById = async (kursId: string) => {
 };
 
 
-export const postCourse = async(courseTitle: string, teacherId: string, startDate: string, endDate: string, days: string[]) => {
+export const postCourse = async(courseTitle: string, teacherId: string, startDate: string, endDate: string, days: string[], path: string) => {
     if(!courseTitle || !teacherId || !startDate || !endDate || days.length === 0){
         throw new Error(`Xatolik yuz berdi Courseni POST qilishda`)
     }
@@ -59,8 +59,7 @@ export const postCourse = async(courseTitle: string, teacherId: string, startDat
             days 
         });
         await newCourse.save();
-        return { message: "Kurs muvaffaqiyatli yaratildi!" };
-
+        revalidatePath(path)
     }catch(error){
         throw new Error(`Xatolik yuz berid POST Courseda, ${error}`)
     }
