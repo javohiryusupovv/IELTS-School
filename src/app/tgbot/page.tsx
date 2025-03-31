@@ -5,27 +5,29 @@ import { GiTrophyCup } from "react-icons/gi";
 import { GoPerson } from "react-icons/go";
 import { SiLevelsdotfyi } from "react-icons/si";
 import "./tgbot.css";
+import { getStudents } from "@/actions/student.action";
 
-const profile = {
-  user: "Shamsiddin",
-};
+export default async function TgBot() {
+  const user = await getStudents();
+  const userName = user[1].students[0].name;
+  const userCoin = user[1].students[0].coins;
+  const totalCoin = userCoin.reduce((coin1: number, coin2: number)=> coin1 + coin2, 0)
 
-export default function TgBot() {
   return (
     <section className="w-full max-w-[450px] m-auto overflow-hidden flex flex-col justify-between min-h-screen fixed bottom-0 left-0 right-0 pt-[15px] pb-0 px-[15px]">
       <div className="min-h-screen bg-orange-500/85 rounded-xl flex flex-col border">
         <div className="w-full max-w-[450px] m-auto px-4 pb-10 rounded-lg rounded-t-xl">
           <h1 className="pt-16 pb-7 text-white font-semibold text-xl">
-            Hello, {profile.user}
+            Hello, {userName}
           </h1>
 
           <div className="grid grid-cols-3 justify-between bg-white rounded-lg py-2 mb-11">
             <div className="flex flex-col justify-center items-center border-r border-orange-500 last:border-r-0">
               <article className="flex items-center gap-2">
                 <BsCoin className="fill-[#f9d222] text-[24px]" />
-                <span className="font-extralight text-sm">Ball</span>
+                <span className="font-extralight text-sm">Jami Coinlar</span>
               </article>
-              <p className="font-normal text-base ml-10">788</p>
+              <p className="font-normal text-base ml-10">{totalCoin}</p>
             </div>
             <div className="flex flex-col justify-center items-center border-r border-orange-500 last:border-r-0">
               <article className="flex items-center gap-2">
