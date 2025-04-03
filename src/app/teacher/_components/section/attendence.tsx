@@ -4,18 +4,41 @@ import { addCoins } from "@/actions/student.action";
 import moment from "moment";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
+import { ChevronRight, ChevronLeft  } from 'lucide-react';
+
 
 interface Props {
   students: any;
-  days: string[]
+  days: string[],
+  titleCourse: string,
+  teacherName: string
 }
 
-export default function Attendence({ students, days}: Props) {
+export default function Attendence({ students, days, titleCourse, teacherName}: Props) {
   const [inputValues, setInputValues] = useState<{ [key: string]: string }>({});
   const [isPending, startTransition] = useTransition();
-  const filterStudent = students[1];
-  const sliceTitle = filterStudent?.courseTitle?.split(" ")[0] || "";
-  
+  const sliceTitle = titleCourse.split(" ")[0] || "";
+
+  // Hozirgi oy va yilni boshlang'ich qiymati
+  const [currentMonth, setCurrentMonth] = useState(moment(days[0]).month());
+  const [currentYears, setCurrentYears] = useState(moment(days[0]).year());
+  const filterDays = days.filter((day)=> moment(day).month() === currentMonth && moment(day).year() === currentYears)
+  const nextMonth = () => {
+    const nextDate = moment().year(currentYears).month(currentMonth).add(1, 'month');
+    if(days.some(day=> moment(day).month() === nextDate.month() && moment(day).year() === nextDate.year())){
+      setCurrentMonth(nextDate.month())
+      setCurrentYears(nextDate.year())
+    }
+  }
+
+  const prevMonth = () => {
+    const prevDate = moment().year(currentYears).month(currentMonth).subtract(1, 'month');
+    if(days.some(day=> moment(day).month() === prevDate.month() && moment(day).year() === prevDate.year())){
+      setCurrentMonth(prevDate.month())
+      setCurrentYears(prevDate.year())
+    }
+  }
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, studentId: string) => {
     const newValue = e.target.value;
@@ -47,7 +70,17 @@ export default function Attendence({ students, days}: Props) {
 
   return (
     <div className="p-4">
-      <h6 className="mb-7 text-[25px]">{sliceTitle} - Yusupov Javohir</h6>
+      <div className="flex w-full flex-col">
+        <article className="flex items-center gap-3 mb-7">
+          <p className="w-[6] h-[6] rounded-full bg-orange-400"></p>
+          <h6 className="flex gap-3 items-center text-[25px]">{sliceTitle} <p className="w-[6] h-[6] rounded-full bg-orange-400"></p> {teacherName}</h6>
+        </article>
+        <div className="flex items-center justify-end mr-10 gap-4 mb-5">
+          <button onClick={prevMonth} className="flex items-center py-[2px] px-2 border rounded-sm  focus:bg-orange-300 bg-[#ffa6006e]"><ChevronLeft className="stroke-white stroke-1 w-[18] h-[18px]"/></button>
+          <p>{moment().month(currentMonth).format("MMMM").slice(0, 3).toLowerCase()} {currentYears}</p>
+          <button onClick={nextMonth} className="flex items-center py-[2px] px-2 border rounded-md focus:bg-orange-300 bg-[#ffa6007c]"><ChevronRight className="stroke-white stroke-1 w-[18] h-[18px]"/></button>
+        </div>
+      </div>
       <div className="grid grid-cols-4 gap-3">
         <div className="border col-span-1"></div>
         <div className="col-span-3 overflow-hidden">
@@ -58,7 +91,7 @@ export default function Attendence({ students, days}: Props) {
                   <th className="w-[200px] sticky left-0 z-[10] bg-white">
                     <p className="text-[15px] font-medium py-2">Ism</p>
                   </th>
-                  {days.map((month, i) => (
+                  {filterDays.map((month, i) => (
                     <th key={i} className="text-[12px] p-3">
                       {moment(month).format("D-MMM")}
                     </th>
@@ -69,7 +102,7 @@ export default function Attendence({ students, days}: Props) {
                 </tr>
               </thead>
               <tbody>
-                {filterStudent?.students.map((student: any, id: number) => (
+                {students.map((student: any, id: number) => (
                   <tr key={id} className="border-b-[0.3px]">
                     <th className="w-[200px] sticky left-0 z-[10] bg-white">
                       <div className="w-[200px] text-left py-3">
@@ -78,7 +111,7 @@ export default function Attendence({ students, days}: Props) {
                         </p>
                       </div>
                     </th>
-                    {days.map((_, i) => (
+                    {filterDays.map((_, i) => (
                       <td key={i} className="text-[12px] p-4">
                         <span className="text-white py-1 px-3 bg-orange-400 rounded-md cursor-pointer">bor</span>
                       </td>

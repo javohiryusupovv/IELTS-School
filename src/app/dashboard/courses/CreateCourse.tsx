@@ -19,7 +19,7 @@ import { toast } from "sonner";
 import { Datapicker } from "../_components/startDay/datapicker";
 import { DatapickerEnd } from "../_components/endDay/dataPicker";
 import OddEvenDayFilter from "../_components/selectDay/odd.even";
-import { CalendarDayGet } from "@/app/teacher/_components/CalendarDayGet";
+import { CalendarDayGet } from "@/components/custom/CalendarDayGet";
 
 
 function CreateCourse() {
@@ -137,9 +137,10 @@ function CreateCourse() {
                 onChange={(e) => setTeacherId(e.target.value)}
                 value={teacherId}
               >
+                <option value="">Tanlang ...</option>
                 {teachers.map((teach: ITeacher) => (
                   <option key={teach._id} value={teach._id}>
-                    {teach.teacherName}
+                    {teach.teacherName} {teach.teacherSurname}
                   </option>
                 ))}
               </select>

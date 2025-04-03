@@ -32,6 +32,10 @@ export interface ICourse{
 export interface ITeacher {
     _id: string; // MongoDB ObjectId string sifatida bo'ladi
     teacherName: string;
-    courses: string[] | ICourse; // Kurslar ID-lari bo'lishi mumkin
+    teacherSurname: string;
+    teacherPhone?:string;
+    teacherPassword?: string;
+    courses: ICourse[]; // Kurslar ID-lari bo'lishi mumkin
   }
+  
   

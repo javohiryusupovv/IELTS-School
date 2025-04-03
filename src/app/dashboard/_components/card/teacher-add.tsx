@@ -18,6 +18,9 @@ import { toast } from "sonner";
 function TeacherCreated() {
       const [open, setOpen] = useState(false)
       const [teacherName, setTeacherName] = useState("");
+      const [teacherSurname, setTeacherSurname] = useState("")
+      const [teacherPhone, setTeacherPhone] = useState("")
+      const [teacherPassword, setTeacherPassword] = useState("")
       const pathname = usePathname()
 
       const handleTotal = async() => {
@@ -27,12 +30,15 @@ function TeacherCreated() {
           }
         try{
 
-            await toast.promise(createTeacher(teacherName, pathname), {
+            await toast.promise(createTeacher(teacherName, teacherSurname, teacherPhone, teacherPassword, pathname), {
                 loading: "Loading...",
                 success: "Teacher muvaffaqiyatli qo‘shildi!",
                 error: "Xatolik yuz berdi!",
             })
-            setTeacherName("")
+            setTeacherName("");
+            setTeacherSurname("");
+            setTeacherPhone("");
+            setTeacherPassword("")
             setOpen(false)
         }catch(error){
             console.error("Xatolik:", error);
@@ -61,6 +67,18 @@ function TeacherCreated() {
             <label className="flex gap-2 text-[#d47323cd] flex-col mb-5" htmlFor="kurs">
               Teacher ismi
               <input onChange={(e) => setTeacherName(e.target.value)} value={teacherName} className="py-2 border rounded-md px-2 text-gray-700" id="kurs" type="text" placeholder="Teacher ismini kiriting !" />
+            </label>
+            <label className="flex gap-2 text-[#d47323cd] flex-col mb-5" htmlFor="kurs">
+              Teacher familiyasi
+              <input onChange={(e) => setTeacherSurname(e.target.value)} value={teacherSurname} className="py-2 border rounded-md px-2 text-gray-700" id="kurs" type="text" placeholder="Teacher ismini kiriting !" />
+            </label>
+            <label className="flex gap-2 text-[#d47323cd] flex-col mb-5" htmlFor="kurs">
+              Teacher number
+              <input onChange={(e) => setTeacherPhone(e.target.value)} value={teacherPhone}  className="py-2 border rounded-md px-2 text-gray-700" id="kurs" type="text" placeholder="Teacher uchun raqam kiriting" />
+            </label>
+            <label className="flex gap-2 text-[#d47323cd] flex-col mb-5" htmlFor="kurs">
+              Teacher password
+              <input onChange={(e) => setTeacherPassword(e.target.value)} value={teacherPassword}  className="py-2 border rounded-md px-2 text-gray-700" id="kurs" type="text" placeholder="Teacher uchun password kiriting !" />
             </label>
           </div>
           <SheetFooter>

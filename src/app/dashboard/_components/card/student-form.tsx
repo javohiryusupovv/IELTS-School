@@ -129,6 +129,7 @@ export default function StudentForm({propCourses}: {propCourses: ICourse[]}) {
                                 onChange={(e) => setCourseId(e.target.value)}
                                 value={courseId}
                             >
+                                <option value="">kursni tanlang ..</option>
                                 {courses.map((course: ICourse)=> (
                                     <option key={course._id} value={course._id}>
                                         {course.courseTitle}

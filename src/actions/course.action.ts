@@ -12,10 +12,7 @@ import { revalidatePath } from "next/cache"
 export const getCourses  = async()=> {
     try{
         await ConnectMonogDB()
-        const courses = await Course.find().populate({
-            path: "teacher",
-            model: Teacher
-        })
+        const courses = await Course.find()
         return courses as ICourse[]
     }catch(error){
         throw new Error(`Sizda Xatolik yuz berdi Courselarni olishda  ${error}`)
@@ -32,6 +29,10 @@ export const getCourseById = async (kursId: string) => {
         const course = await Course.findById(kursId).populate({
             path: "teacher",
             model: Teacher
+        })
+        .populate({
+            path: "students",
+            model: Student // Talabalar modeli nomini to'g'ri ko'rsating
         })
         return course as ICourse;
     } catch (error) {
@@ -59,6 +60,10 @@ export const postCourse = async(courseTitle: string, teacherId: string, startDat
             days 
         });
         await newCourse.save();
+
+        await Teacher.findByIdAndUpdate(teacherId, {
+            $push: {courses: newCourse._id}
+        })
         revalidatePath(path)
     }catch(error){
         throw new Error(`Xatolik yuz berid POST Courseda, ${error}`)

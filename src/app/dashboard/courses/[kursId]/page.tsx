@@ -24,7 +24,7 @@ async function CourseDetail({ params, }: { params: Promise<{ kursId: string }> }
         <p className="absolute top-8 left-0 text-center w-full mt-12 text-[20px] font-semibold text-white">{course.courseTitle}</p>
         <Image className="w-[500px] object-cover" src={Frontend} alt="Course Detail Img" />
       </div>
-      <h4 className="mb-3">O'qituvchi: <span className="font-semibold text-[19px]">{course.teacher.teacherName}</span></h4>
+      <h4 className="mb-3">O'qituvchi: <span className="font-semibold text-[19px]">{course.teacher.teacherName} {course.teacher.teacherSurname}</span></h4>
       <div className="flex items-center gap-3">
         <Actions course={course} />
       </div>

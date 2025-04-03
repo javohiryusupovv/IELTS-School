@@ -14,8 +14,8 @@ export default async function TgBot() {
   const totalCoin = userCoin.reduce((coin1: number, coin2: number)=> coin1 + coin2, 0)
 
   return (
-    <section className="w-full max-w-[450px] mx-auto overflow-hidden flex flex-col justify-between min-h-screen fixed bottom-0 left-0 right-0 pt-[15px] pb-0 px-[15px]">
-      <div className="min-h-screen bg-orange-500/85 rounded-xl flex flex-col border">
+    <section className="w-full max-w-[450px] mx-auto flex flex-col justify-between fixed top-0 bottom-0 left-0 right-0 px-[15px]">
+      <div className="h-screen relative bottom-0 bg-orange-500/85 rounded-xl flex flex-col border">
         <div className="w-full max-w-[450px] m-auto px-4 pb-10 rounded-lg rounded-t-xl">
           <h1 className="pt-16 pb-7 text-white font-semibold text-xl">
             Hello, {userName}
