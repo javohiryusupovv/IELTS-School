@@ -7,12 +7,10 @@ import { revalidatePath } from "next/cache";
 
 
 export const TeacherLogin = async(phoneNumber: string, password: string, path: string) => {
+    const Course = (await import("@/models/course.model")).default;
     try{
         await ConnectMonogDB()
-        const teacher = await Teacher.findOne({teacherPhone: phoneNumber}).populate({
-            path: 'courses',
-            populate: { path: 'students'}
-        })
+        const teacher = await Teacher.findOne({teacherPhone: phoneNumber}) .populate({ path: 'courses', populate: { path: 'students' } });
         if(!teacher){
             console.log(`O'qituvchi topilmadi`);
             return null
