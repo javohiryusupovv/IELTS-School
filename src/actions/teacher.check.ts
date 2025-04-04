@@ -3,9 +3,10 @@
 import bcrypt from "bcrypt";
 import Teacher from "@/models/teacher.model";
 import ConnectMonogDB from "@/lib/mongodb";
+import { revalidatePath } from "next/cache";
 
 
-export const TeacherLogin = async(phoneNumber: string, password: string) => {
+export const TeacherLogin = async(phoneNumber: string, password: string, path: string) => {
     try{
         await ConnectMonogDB()
         const teacher = await Teacher.findOne({teacherPhone: phoneNumber}).populate({
@@ -22,6 +23,7 @@ export const TeacherLogin = async(phoneNumber: string, password: string) => {
             console.log(`Password topilmadi`);
             return null
         }
+        revalidatePath(path)
         return JSON.parse(JSON.stringify(teacher));
     }catch(error){
         console.error("O'qituvchini qidirishda xatolik:", error);

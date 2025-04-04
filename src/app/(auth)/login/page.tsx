@@ -4,7 +4,7 @@
 import { TeacherLogin } from "@/actions/teacher.check";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
@@ -12,13 +12,14 @@ export default function login() {
     const [phone, setPhone] = useState("");
     const [isloading, setLoading] = useState(false)
     const [ispassword, setIsPassword] = useState("");
-    const router = useRouter()
+    const router = useRouter();
+    const pathname = usePathname()
 
     const handleCheckTeacher = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
         try {
-            const teacherLogins = await TeacherLogin(phone, ispassword);
+            const teacherLogins = await TeacherLogin(phone, ispassword, pathname);
             if (teacherLogins) { // Teacher topilsa
                 localStorage.setItem("teacher", JSON.stringify(teacherLogins));
                 toast.success("Teacher topildi !");
