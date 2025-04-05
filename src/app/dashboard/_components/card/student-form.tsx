@@ -12,6 +12,7 @@ import {
     SheetTrigger,
 } from "@/components/ui/sheet";
 import { ICourse } from "@/types/type";
+import { generateRandomID } from "@/utils/generateID";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
@@ -19,6 +20,7 @@ export default function StudentForm({propCourses}: {propCourses: ICourse[]}) {
     const [courses, setCourses] = useState<ICourse[]>([]);
     const [name, setName] = useState("");
     const [surname, setSurname] = useState("");
+    const [studentID, setStudentID] = useState("");
     const [courseId, setCourseId] = useState("");
     const [phone, setPhone] = useState("+998 ");
     const [open, setOpen] = useState(false);
@@ -66,10 +68,12 @@ export default function StudentForm({propCourses}: {propCourses: ICourse[]}) {
 
             const coursesName = courses.find((course) => course._id === courseId);
             const coursess = coursesName?.courseTitle.split(" ")[0];
+            const studentGen = generateRandomID();
+            console.log(studentGen);
+            
 
 
-
-            await toast.promise(postAddStudent(courseId, name, surname, phone, pathname), {
+            await toast.promise(postAddStudent(courseId, name, surname, phone, studentGen, pathname), {
                 loading: "O'quvchi qo'shilmoqda...",
                 success: `${coursess} kursiga qo'shildi!`,
                 error: "O'quvchini qo'shishda xatolik!",
@@ -82,6 +86,7 @@ export default function StudentForm({propCourses}: {propCourses: ICourse[]}) {
         setSurname("");
         setCourseId("");
         setPhone("+998 ");
+        setStudentID("")
     };
 
     return (

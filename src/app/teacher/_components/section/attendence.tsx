@@ -4,7 +4,7 @@ import { addCoins } from "@/actions/student.action";
 import moment from "moment";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
-import { ChevronRight, ChevronLeft  } from 'lucide-react';
+import { ChevronRight, ChevronLeft } from 'lucide-react';
 
 
 interface Props {
@@ -14,18 +14,17 @@ interface Props {
   teacherName: string
 }
 
-export default function Attendence({ students, days, titleCourse, teacherName}: Props) {
+export default function Attendence({ students, days, titleCourse, teacherName }: Props) {
   const [inputValues, setInputValues] = useState<{ [key: string]: string }>({});
   const [isPending, startTransition] = useTransition();
-  const sliceTitle = titleCourse.split(" ")[0] || "";
 
   // Hozirgi oy va yilni boshlang'ich qiymati
   const [currentMonth, setCurrentMonth] = useState(moment(days[0]).month());
   const [currentYears, setCurrentYears] = useState(moment(days[0]).year());
-  const filterDays = days.filter((day)=> moment(day).month() === currentMonth && moment(day).year() === currentYears)
+  const filterDays = days.filter((day) => moment(day).month() === currentMonth && moment(day).year() === currentYears)
   const nextMonth = () => {
     const nextDate = moment().year(currentYears).month(currentMonth).add(1, 'month');
-    if(days.some(day=> moment(day).month() === nextDate.month() && moment(day).year() === nextDate.year())){
+    if (days.some(day => moment(day).month() === nextDate.month() && moment(day).year() === nextDate.year())) {
       setCurrentMonth(nextDate.month())
       setCurrentYears(nextDate.year())
     }
@@ -33,7 +32,7 @@ export default function Attendence({ students, days, titleCourse, teacherName}: 
 
   const prevMonth = () => {
     const prevDate = moment().year(currentYears).month(currentMonth).subtract(1, 'month');
-    if(days.some(day=> moment(day).month() === prevDate.month() && moment(day).year() === prevDate.year())){
+    if (days.some(day => moment(day).month() === prevDate.month() && moment(day).year() === prevDate.year())) {
       setCurrentMonth(prevDate.month())
       setCurrentYears(prevDate.year())
     }
@@ -55,16 +54,16 @@ export default function Attendence({ students, days, titleCourse, teacherName}: 
   const handleAdd = (studentId: string) => {
     const coinValue = inputValues[studentId] ? parseInt(inputValues[studentId]) : 0;
 
-    if(coinValue > 0){
-        startTransition(async()=> {
-            const result = await addCoins(studentId, coinValue)
-            if(result.success){
-                toast.success("Coin qushildi")
-            }else{
-                toast.error("Coin qushilmadi !!!")
-            }
-            setInputValues(prev => ({ ...prev, [studentId]: "" }));
-        })
+    if (coinValue > 0) {
+      startTransition(async () => {
+        const result = await addCoins(studentId, coinValue)
+        if (result.success) {
+          toast.success("Coin qushildi")
+        } else {
+          toast.error("Coin qushilmadi !!!")
+        }
+        setInputValues(prev => ({ ...prev, [studentId]: "" }));
+      })
     }
   };
 
@@ -73,12 +72,12 @@ export default function Attendence({ students, days, titleCourse, teacherName}: 
       <div className="flex w-full flex-col">
         <article className="flex items-center gap-3 mb-7">
           <p className="w-[6] h-[6] rounded-full bg-orange-400"></p>
-          <h6 className="flex gap-3 items-center text-[25px]">{sliceTitle} <p className="w-[6] h-[6] rounded-full bg-orange-400"></p> {teacherName}</h6>
+          <h6 className="flex gap-3 items-center text-[25px]">{titleCourse} <p className="w-[6] h-[6] rounded-full bg-orange-400"></p> {teacherName}</h6>
         </article>
         <div className="flex items-center justify-end mr-10 gap-4 mb-5">
-          <button onClick={prevMonth} className="flex items-center py-[2px] px-2 border rounded-sm  focus:bg-orange-300 bg-[#ffa6006e]"><ChevronLeft className="stroke-white stroke-1 w-[18] h-[18px]"/></button>
+          <button onClick={prevMonth} className="flex items-center py-[2px] px-2 border rounded-sm  focus:bg-orange-500 bg-[#ffa600b8]"><ChevronLeft className="stroke-white stroke-1 w-[18] h-[18px]" /></button>
           <p>{moment().month(currentMonth).format("MMMM").slice(0, 3).toLowerCase()} {currentYears}</p>
-          <button onClick={nextMonth} className="flex items-center py-[2px] px-2 border rounded-md focus:bg-orange-300 bg-[#ffa6007c]"><ChevronRight className="stroke-white stroke-1 w-[18] h-[18px]"/></button>
+          <button onClick={nextMonth} className="flex items-center py-[2px] px-2 border rounded-md focus:bg-orange-500 bg-[#ffa600b8]"><ChevronRight className="stroke-white stroke-1 w-[18] h-[18px]" /></button>
         </div>
       </div>
       <div className="grid grid-cols-4 gap-3">
@@ -111,11 +110,26 @@ export default function Attendence({ students, days, titleCourse, teacherName}: 
                         </p>
                       </div>
                     </th>
-                    {filterDays.map((_, i) => (
-                      <td key={i} className="text-[12px] p-4">
-                        <span className="text-white py-1 px-3 bg-orange-400 rounded-md cursor-pointer">bor</span>
-                      </td>
-                    ))}
+                    {filterDays.map((day, i) => {
+                      const formatDay = moment(day).startOf('day').format("YYYY-MM-DD");
+                      const coinGiven = student.coins.some((coin: any) => {
+                        const coinDate = moment(coin.date).format("YYYY-MM-DD");
+                        return coinDate === formatDay;
+                      });
+                      console.log(coinGiven);
+                      
+
+                      return (
+                        <td key={i} className="text-[12px] p-4">
+                          {coinGiven ? (
+                            <span className="text-white py-1 px-5 bg-orange-400 rounded-md cursor-pointer">✓</span>
+                          ) : (
+                            <span className="text-white py-1 px-5 rounded-md cursor-pointer border">–</span>
+                          )}
+                        </td>
+                      );
+                    })
+                    }
                     <td className="w-[100px] flex items-center gap-2 p-3">
                       <input
                         value={inputValues[student._id] || ""}
@@ -123,7 +137,7 @@ export default function Attendence({ students, days, titleCourse, teacherName}: 
                         type="text"
                         className="w-[45px] px-3 py-1 border outline-none rounded-md"
                       />
-                      <button onClick={()=> handleAdd(student._id)} className="p-1 border rounded-sm cursor-pointer text-[13px] text-white bg-red-500">add</button>
+                      <button onClick={() => handleAdd(student._id)} className="p-1 border rounded-sm cursor-pointer text-[13px] text-white bg-red-500">add</button>
                     </td>
                   </tr>
                 ))}

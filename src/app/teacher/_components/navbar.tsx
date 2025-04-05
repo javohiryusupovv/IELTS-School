@@ -3,11 +3,12 @@
 import Image from "next/image"
 import LearningCenterLogo from "../../../../public/icons/ustozDev.png"
 import GroupCard from "./card/group-card"
-import { ArrowRightToLine } from 'lucide-react';
+import { ArrowRightToLine, CircleUserRound  } from 'lucide-react';
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Loading from "./loading";
 import { ITeacher } from "@/types/type";
+import Logout from "@/app/(auth)/logout/page";
 
 
 
@@ -28,7 +29,6 @@ function NavbarTeacher() {
   }, []);
   
 
-  
 
   if (isLoading) {
     return <Loading/>; // Loading indikatorini ko'rsatamiz
@@ -37,22 +37,29 @@ function NavbarTeacher() {
   if (!teacher) {
     return <p>Login qilingan teacher topilmadi.</p>;
   }
+
+  
   
 
 
   return (
-    <>
-      <div className={`fixed left-0 top-0 w-[130px] h-screen border scrolbars transition-all duration-500 bg-white shadow-md`}>
-        <nav>
-          <Link href={"/dashboard"} className="flex items-center py-5 ml-4">
+    <div className=" relative top-0 left-0">
+      <div className={`fixed left-0 top-0 z-20 flex justify-between w-[150px] h-screen scrolbars overflow-y-auto bg-white shadow-md`}>
+        <nav className="w-full">
+          <Link href={"/"} className="fixed top-0 bg-white flex items-center p-[24.5px] mb-14 shadow-sm">
             <Image width={100} src={LearningCenterLogo} alt="UstozDev" />
           </Link>
-          <ArrowRightToLine className={`w-[30px] h-[30px] absolute -right-3 top-14 p-[5px] border rounded-full cursor-pointer stroke-white bg-[#fdb61b]`} />
-          <p className="mb-14 w-full h-[1px] bg-[#80808062]"></p>
           <GroupCard teacher={teacher}/>
         </nav>
+        <div className="fixed bottom-0 w-[148px] flex flex-col items-center gap-4 py-5 px-[13.5px] bg-white border-t">
+          <article className="px-1 py-2 flex flex-col gap-2 items-center justify-center">
+            <CircleUserRound className="stroke-[0.9] w-7 h-7"/>
+            <p className="text-[15px] font-light text-center">{ teacher?.teacherName} {teacher?.teacherSurname.slice(0, 1)}</p>
+          </article>
+          <Logout/>
+        </div>
       </div>
-    </>
+    </div>
   )
 }
 

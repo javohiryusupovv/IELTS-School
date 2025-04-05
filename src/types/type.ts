@@ -12,7 +12,7 @@ export interface IProduct{
 
 export interface IStudent{
     _id: string;
-    courseId: string;
+    studentID: string;
     name: string;
     surname: string;
     phone: string;

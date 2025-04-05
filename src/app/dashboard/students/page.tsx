@@ -6,14 +6,12 @@ import { getStudents } from "@/actions/student.action";
 
 
 export default async function StudentAll() {
-  let course = "Frontend Dasturlash";
-  let courseArray = course.split(" ").slice(0, 1);
-
   const courses = await getCourses();
   const propCourses = JSON.parse(JSON.stringify(courses));
   const students = await getStudents();
 
   const studentList = students.flatMap((course) => course.students);
+  console.log(studentList);
 
 
   // Barcha studentlarni sanash
@@ -39,6 +37,7 @@ export default async function StudentAll() {
                 <th className="pl-2 font-semibold py-3">№</th>
                 <th className="py-3 px-3">Ism - Familiya</th>
                 <th className="py-3">Course</th>
+                <th className="py-3">StudentID</th>
                 <th className="py-3">Phone</th>
               </tr>
             </thead>
@@ -48,6 +47,9 @@ export default async function StudentAll() {
                   <td className="py-2 text-[14px] font-medium px-3">{id + 1}</td>
                   <td className="py-2 text-[14px] font-normal px-3">{student.name} {student.surname}</td>
                   <td className="py-2 text-[14px] font-normal">{course.courseTitle}</td>
+                  <td className="py-2 text-[14px] font-normal">
+                    <p className="py-1 px-2 rounded-full border bg-[#04b94f] text-white inline-flex">{student.studentID}</p>
+                  </td>
                   <td className="py-2 text-[14px] font-normal">{student.phone}</td>
                   <td className="py-2">
                     <Action studentId={student._id} courseId={course._id} />

@@ -5,17 +5,18 @@ import Course from "@/models/course.model"
 import Student from "@/models/student.model";
 import mongoose from "mongoose"
 import { revalidatePath } from "next/cache";
+import moment from "moment";
 
 
 
-export const postAddStudent = async (courseId: string, name: string, surname: string, phone: string, path: string) => {
+export const postAddStudent = async (courseId: string, name: string, surname: string, phone: string, studentID: string, path: string) => {
     if (!name || !surname || !phone || !courseId) {
         throw new Error("Xatolik yuz berdi: Ma'lumotlar to'liq emas!");
     }
 
     try {
         await ConnectMonogDB();
-        
+
         // Kursni topamiz
         const course = await Course.findById(courseId);
         if (!course) {
@@ -27,6 +28,7 @@ export const postAddStudent = async (courseId: string, name: string, surname: st
             name,
             surname,
             phone,
+            studentID,
             course: courseId // Student qaysi kursga tegishli ekanligi
         });
 
@@ -36,7 +38,7 @@ export const postAddStudent = async (courseId: string, name: string, surname: st
         course.students.push(newStudent._id);
         await course.save();
         revalidatePath(path)
-        return { success: true, message: "O‘quvchi muvaffaqiyatli qo‘shildi!",};
+        return { success: true, message: "O‘quvchi muvaffaqiyatli qo‘shildi!", };
     } catch (error) {
         console.error("Student qo‘shishda xatolik:", error);
         throw new Error(`Student qo‘shishda xatolik yuz berdi!`);
@@ -44,14 +46,14 @@ export const postAddStudent = async (courseId: string, name: string, surname: st
 };
 
 
-export const getStudents = async() => {
+export const getStudents = async () => {
     try {
         await ConnectMonogDB();
-        const course =  await Course.find().populate("students")
+        const course = await Course.find().populate("students")
         const plainCourses = course.map(course => ({
             ...course.toObject(),
             _id: course._id.toString(),
-            students: course.students.map((student:any) => ({
+            students: course.students.map((student: any) => ({
                 ...student.toObject(),
                 _id: student._id.toString(),
                 course: student.course.toString(), // ObjectId ni stringga o'tkazish
@@ -59,7 +61,7 @@ export const getStudents = async() => {
             teacher: course.teacher.toString()
         }));
         return plainCourses
-      
+
     } catch (error) {
         console.error("Student olishda xatolik:", error);
         throw new Error(`Student olishda xatolik yuz berdi!`);
@@ -68,7 +70,7 @@ export const getStudents = async() => {
 
 
 export const deleteStudent = async (studentId: string, courseId: string, path: string) => {
-    try{
+    try {
         await ConnectMonogDB();
         if (!mongoose.Types.ObjectId.isValid(studentId) || !mongoose.Types.ObjectId.isValid(courseId)) {
             throw new Error("Noto‘g‘ri ID!");
@@ -76,7 +78,7 @@ export const deleteStudent = async (studentId: string, courseId: string, path: s
         console.log(`Kurs ID: ${courseId}, O‘quvchi ID: ${studentId}`);
         const updatedCourse = await Course.findByIdAndUpdate(
             courseId,
-            { $pull: { students: new mongoose.Types.ObjectId(studentId) } }, 
+            { $pull: { students: new mongoose.Types.ObjectId(studentId) } },
             { new: true }
         );
         if (!updatedCourse) {
@@ -90,24 +92,33 @@ export const deleteStudent = async (studentId: string, courseId: string, path: s
         revalidatePath(path)
         return { success: true, message: "O‘quvchi o‘chirildi!" };
     }
-    catch(error){
+    catch (error) {
         console.error("O'quvchini o‘chirishda xatolik:", error);
         throw new Error(`O‘quvchini o‘chirishda xatolik yuz berdi!`);
     }
 }
 
-
-export const addCoins = async(studentId: string, coinValue: number) => {
-    try{
+export const addCoins = async (studentId: string, coinValue: number) => {
+    try {
         await ConnectMonogDB();
         const student = await Student.findById(studentId);
         if (!student) throw new Error("Student topilmadi");
 
-        student.coins.push(coinValue)
+        const today = moment().format("YYYY-MM-DD");  // Bugungi sana YYYY-MM-DD formatida
 
-        await student.save()
+        const lastGetCoin = student.coins.some(
+            (coin: any) => coin.date === today
+        );
+        if (lastGetCoin) {
+            return { success: false, message: "Bugungi coin berildi" }
+        }
+
+        student.coins.push({ value: coinValue, date: today });
+        student.lastDateCoin = today;
+
+        await student.save();
         return { success: true, message: "Coin muvaffaqiyatli qo‘shildi" };
-    }catch(error){
+    } catch (error) {
         throw new Error(`Xatolik yuz berdi coin qushishda, ${error}`)
     }
 }
