@@ -2,7 +2,7 @@ import { getTeacherById } from "@/actions/teacher.action";
 import Link from "next/link";
 import TeacherLogo from "../../../../../public/icons/roleTeacher.png";
 import Image from "next/image";
-import ResetPassword from "@/app/(auth)/resetPassword/route";
+import ResetPassword from "@/app/(auth)/resetPassword/resetPassword";
 
 export default async function DetailTeacher({
   params,
