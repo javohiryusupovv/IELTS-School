@@ -1,8 +1,9 @@
 "use server";
 
 import ConnectMonogDB from "@/lib/mongodb";
-import Student from "@/models/student.model";
 import { revalidatePath } from "next/cache";
+
+import {Course, Student, Teacher} from "@/models/index"
 
 export const StudentCheck = async (id: string, path: string) => {
   try {

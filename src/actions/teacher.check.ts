@@ -1,14 +1,13 @@
 "use server";
 
 import bcrypt from "bcrypt";
-import Teacher from "@/models/teacher.model";
 import ConnectMonogDB from "@/lib/mongodb";
 import { revalidatePath } from "next/cache";
 
+import {Course, Student, Teacher} from "@/models/index"
+
 
 export const TeacherLogin = async(phoneNumber: string, password: string, path: string) => {
-    const Course = (await import("@/models/course.model")).default;
-    const Student = (await import("@/models/student.model")).default;
     try{
         await ConnectMonogDB()
         const teacher = await Teacher.findOne({teacherPhone: phoneNumber}).populate({ path: 'courses', populate: { path: 'students' } });
@@ -40,5 +39,18 @@ export const LogoutTeacher = async(path: string) => {
         return { success: true }
     }catch(error){
         throw new Error(`Sizda Xatolik yuz berdi, Logoutda , ${error}`)
+    }
+}
+
+export const ResetPasswordAction = async(teacherId: string, newpassword: string, path: string) => {
+    try{
+        await ConnectMonogDB();
+
+        const hashPassword = await bcrypt.hash(newpassword, 10);
+        await Teacher.findByIdAndUpdate(teacherId, { teacherPassword: hashPassword }, { new: true });
+        revalidatePath(path);
+        return { success: true, newpassword };
+    }catch(error){
+        throw new Error(`Sizda Xatolik yuz berdi, NewPasswordda , ${error}`)
     }
 }

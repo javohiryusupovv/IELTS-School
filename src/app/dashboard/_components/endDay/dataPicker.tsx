@@ -20,7 +20,7 @@ export function DatapickerEnd({ endDate, setEndDate }: Props) {
         <Button
           variant={"outline"}
           className={cn(
-            "w-[145px] justify-start text-left font-normal px-1",
+            "w-[145px] justify-start text-left font-normal px-1 overflow-hidden",
             !endDate && "text-muted-foreground"
           )}
         >

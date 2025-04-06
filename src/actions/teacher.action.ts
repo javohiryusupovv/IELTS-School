@@ -1,11 +1,11 @@
 "use server"
 
 import ConnectMonogDB from "@/lib/mongodb"
-import Teacher from "@/models/teacher.model"
 import mongoose from "mongoose"
 import { revalidatePath } from "next/cache"
 import bcrypt from "bcrypt";
 
+import {Course, Student, Teacher} from "@/models/index"
 
 
 export const createTeacher = async(teacherName: string, teacherSurname: string, teacherPhone: string, teacherPassword1: string, path: string) => {

@@ -18,7 +18,7 @@ export function Datapicker({ startDate, setStartDate }: Props) {
         <Button
           variant={"outline"}
           className={cn(
-            "w-[145px] justify-start text-left font-normal px-1",
+            "w-[145px] justify-start text-left font-normal px-1 overflow-hidden",
             !startDate && "text-muted-foreground"
           )}
         >

@@ -1,12 +1,11 @@
 "use server"
 
 import ConnectMonogDB from "@/lib/mongodb"
-import Course from "@/models/course.model"
-import Student from "@/models/student.model";
 import mongoose from "mongoose"
 import { revalidatePath } from "next/cache";
 import moment from "moment";
 
+import {Course, Student, Teacher} from "@/models/index"
 
 
 export const postAddStudent = async (courseId: string, name: string, surname: string, phone: string, studentID: string, path: string) => {

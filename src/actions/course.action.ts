@@ -1,12 +1,11 @@
 "use server"
 
 import ConnectMonogDB from "@/lib/mongodb"
-import Course from "@/models/course.model"
-import Student from "@/models/student.model"
-import Teacher from "@/models/teacher.model"
-import { ICourse, ITeacher } from "@/types/type"
+import { ICourse } from "@/types/type"
 import mongoose from "mongoose"
 import { revalidatePath } from "next/cache"
+
+import {Course, Student, Teacher} from "@/models/index"
 
 
 export const getCourses  = async()=> {

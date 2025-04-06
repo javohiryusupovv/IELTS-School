@@ -2,6 +2,7 @@ import { getTeacherById } from "@/actions/teacher.action";
 import Link from "next/link";
 import TeacherLogo from "../../../../../public/icons/roleTeacher.png";
 import Image from "next/image";
+import ResetPassword from "@/app/(auth)/resetPassword/route";
 
 export default async function DetailTeacher({
   params,
@@ -14,20 +15,37 @@ export default async function DetailTeacher({
 
   return (
     <div>
-      <div className="inline-flex px-10 py-3 rounded-xl bg-accent items-center justify-center mb-5">
-        <Image width={170} src={TeacherLogo} alt="Teacher Icons" />
+      <div className="flex gap-6">
+        <div className="inline-flex px-10 py-3 rounded-xl bg-accent items-center justify-center mb-5">
+          <Image width={170} src={TeacherLogo} alt="Teacher Icons" />
+        </div>
+        <div>
+          <article className="flex flex-col items-start">
+            <h6 className="flex items-center gap-3 font-medium text-[16px] mb-4">
+              O'qituvchi:
+              <span className="py-1 px-2 rounded-full text-[13px] font-normal bg-green-400 text-white">
+                {teacher.teacherName} {teacher.teacherSurname}
+              </span>
+            </h6>
+            <h6 className="flex items-center gap-3 font-medium text-[16px] mb-4">
+              Telefon:
+              <span className="py-1 px-2 rounded-full text-[13px] font-normal bg-green-400 text-white">
+                +998 {teacher.teacherPhone}
+              </span>
+            </h6>
+            <h6 className="flex items-center gap-3 font-medium text-[16px] mb-14">
+              Yaratilgan Vaqti:
+              <span className="py-1 px-2 rounded-full text-[13px] font-normal bg-yellow-400 text-white">
+                {new Date(teacher.createdAt).toISOString().split("T")[0]}
+              </span>
+            </h6>
+            <ResetPassword teacherRes={teacher._id}/>
+          </article>
+        </div>
       </div>
-      <article className="mb-5">
-        <h6 className="flex items-center gap-3 font-medium text-[18px]">
-          O'qituvchi:{" "}
-          <span className="py-1 px-2 rounded-full border text-[14px] font-normal bg-green-400 text-white">
-            {teacher.teacherName} {teacher.teacherSurname}
-          </span>
-        </h6>
-      </article>
       <div>
         <p className="flex gap-4 items-center text-[18px] font-medium mb-2">
-          Kurslari:{" "}
+          Kurslari:
           {teacher.courses.length < 1 ? (
             <span className="px-2 py-1 rounded-full bg-red-600 text-white text-[13px] font-light">
               Kurslar Yo'q !
