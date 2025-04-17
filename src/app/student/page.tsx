@@ -9,7 +9,7 @@ export default async function StudentDashboard() {
   const student = await getStudentFromCookie();  
   const coins = student?.coins?.reduce((sum: number, coin: any) => sum + coin.value, 0) ?? 0;
   return (
-    <div className="pt-5 h-screen">
+    <div className="pt-5">
       <article className="w-11/12 py-20 rounded-md m-auto px-8 mb-10 bg-orange-400">
         <p className="text-[20px] font-medium mb-10 text-white">Salom, {student?.surname} {student?.name}</p>
         <div className="grid grid-cols-2 justify-center bg-white rounded-lg py-2 mb-11">

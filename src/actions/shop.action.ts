@@ -15,7 +15,6 @@ export const postShop = async(data: ICreateShop, path:string) => {
         await ConnectMonogDB()
         await Shop.create(data)
         revalidatePath(path)
-        return true
     }catch(error){
         throw new Error(`Xatolik yuz berid POST Shopda, ${error}`)
     }

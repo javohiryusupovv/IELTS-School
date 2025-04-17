@@ -157,13 +157,6 @@ export const addCoins = async (studentId: string, coinValue: number) => {
 
         const today = moment().format("YYYY-MM-DD");  // Bugungi sana YYYY-MM-DD formatida
 
-        const lastGetCoin = student.coins.some(
-            (coin: any) => coin.date === today
-        );
-        if (lastGetCoin) {
-            return { success: false, message: "Bugungi coin berildi" }
-        }
-
         student.coins.push({ value: coinValue, date: today });
         student.lastDateCoin = today;
 
@@ -172,4 +165,27 @@ export const addCoins = async (studentId: string, coinValue: number) => {
     } catch (error) {
         throw new Error(`Xatolik yuz berdi coin qushishda, ${error}`)
     }
+}
+
+
+export const salesUpdateCoins = async(studentId: string, coinValue: number, path: string) => {
+    try {
+        await ConnectMonogDB();
+    
+        const student = await Student.findById(studentId);
+        if (!student) throw new Error("Student topilmadi");
+    
+        const today = moment().format("YYYY-MM-DD");
+    
+        student.coins.push({
+          value: -coinValue,
+          date: today,
+        });
+    
+        await student.save();
+        revalidatePath(path)
+        return { success: true, message: "Coin muvaffaqiyatli ayrildi" };
+      } catch (error) {
+        throw new Error(`Xatolik yuz berdi coin ayirishda, ${error}`);
+      }
 }

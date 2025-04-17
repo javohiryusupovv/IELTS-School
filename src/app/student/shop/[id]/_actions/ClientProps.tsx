@@ -12,6 +12,8 @@ import { BsCoin } from "react-icons/bs";
 import { ICreateShop, IStudent } from "@/types/type";
 import { toast } from "sonner";
 import { useState } from "react";
+import { salesUpdateCoins } from "@/actions/student.action";
+import { usePathname } from "next/navigation";
 
 interface Props {
   product: ICreateShop,
@@ -21,21 +23,33 @@ interface Props {
 
 export default function ClientComponent({ product, coins, student }: Props) {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname()
 
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = async(e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     if (coins >= product.price) {
-      const data = {
-        title: product.title,
-        description: product.description,
-        price: product.price,
-        image: product.image,
-        firstName: student.name,
-        lastName: student.surname,
-        kurs: student.course.courseTitle
+      try{
+        const result = await salesUpdateCoins(student._id, product.price, pathname)
+        const data = {
+          title: product.title,
+          description: product.description,
+          price: product.price,
+          image: product.image,
+          firstName: student.name,
+          lastName: student.surname,
+          kurs: student.course.courseTitle
+        }
+        if(result.success){
+          toast.success(`Siz ${product.title} mahsulotini muvaffaqiyatli sotib oldingiz`)
+        }else {
+          toast.error("Coin ayirishda xatolik: " + result.message);
+        }
+      }catch (err) {
+        console.error(err);
+        toast.error("Server bilan ulanishda xatolik");
+      }finally{
+        setOpen(false)
       }
-      console.log(data);
-      setOpen(false)
     } else {
       toast.error(`Sizni Coins yetarli emas !!!`)
     }

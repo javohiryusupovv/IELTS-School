@@ -84,10 +84,10 @@ export default function Attendence({ students, days, titleCourse, teacherName }:
         <div className="border col-span-1"></div>
         <div className="col-span-3 overflow-hidden">
           <div className="w-full overflow-x-auto">
-            <table className="w-full">
-              <thead className="overflow-x-auto w-full whitespace-nowrap border-t border-b">
+            <table className="w-full pr-28">
+              <thead className="overflow-x-auto w-full whitespace-nowrap border-t border-b mr-[100px]">
                 <tr className="text-left whitespace-nowrap">
-                  <th className="w-[200px] sticky left-0 z-[10] bg-white">
+                  <th className="w-[150px] sticky left-0 z-[10] bg-white">
                     <p className="text-[15px] font-medium py-2">Ism</p>
                   </th>
                   {filterDays.map((month, i) => (
@@ -95,8 +95,8 @@ export default function Attendence({ students, days, titleCourse, teacherName }:
                       {moment(month).format("D-MMM")}
                     </th>
                   ))}
-                  <th className="w-[100px] text-center">
-                    <p className="w-[100px]">Coins</p>
+                  <th className="fixed right-0 bg-white py-[10px] w-[120px] text-center">
+                    <p className="w-[120px]">Coins</p>
                   </th>
                 </tr>
               </thead>
@@ -111,26 +111,14 @@ export default function Attendence({ students, days, titleCourse, teacherName }:
                       </div>
                     </th>
                     {filterDays.map((day, i) => {
-                      const formatDay = moment(day).startOf('day').format("YYYY-MM-DD");
-                      const coinGiven = student.coins.some((coin: any) => {
-                        const coinDate = moment(coin.date).format("YYYY-MM-DD");
-                        return coinDate === formatDay;
-                      });
-                      console.log(coinGiven);
-                      
-
                       return (
                         <td key={i} className="text-[12px] p-4">
-                          {coinGiven ? (
-                            <span className="text-white py-1 px-5 bg-orange-400 rounded-md cursor-pointer">✓</span>
-                          ) : (
-                            <span className="text-white py-1 px-5 rounded-md cursor-pointer border">–</span>
-                          )}
+                          <span className="text-white py-1 px-5 bg-orange-400 rounded-md cursor-pointer">✓</span>
                         </td>
                       );
                     })
                     }
-                    <td className="w-[100px] flex items-center gap-2 p-3">
+                    <td className="fixed right-0 w-[120px] bg-white flex items-center gap-2 p-3">
                       <input
                         value={inputValues[student._id] || ""}
                         onChange={(e) => handleChange(e, student._id)}

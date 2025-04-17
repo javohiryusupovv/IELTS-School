@@ -19,7 +19,7 @@ export default async function ShopId({params,}:{params: Promise<{ id: string }>}
   }
 
   return (
-    <div className="container pb-20 pt-7 h-screen overflow-y-scroll scrolbars">
+    <div className="container pb-20 pt-7 overflow-y-scroll scrolbars">
       <div className="grid w-[80%] m-auto">
         <div className="max-lg:flex max-lg:flex-col">
           <h6 className="text-2xl font-medium mb-5">{products.title}</h6>
