@@ -1,4 +1,4 @@
-import Analitika from "./(analitika)/page"
+import Analitika from "./(analitika)/Analitika"
 
 
 async function Dashboard() {

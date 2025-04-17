@@ -1,7 +1,8 @@
+"use client";
 
-import Talabalar from "../(analitika)/_components/_students"
-import Mentorlar from "../(analitika)/_components/_mentors"
-import Filiallar from "../(analitika)/_components/_filiallar"
+import Talabalar from "./_components/_students"
+import Mentorlar from "./_components/_mentors"
+import Filiallar from "./_components/_filiallar"
 
 export default function Analitika() {
   return (
