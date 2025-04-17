@@ -31,7 +31,8 @@ export const getCourseById = async (kursId: string) => {
         })
         .populate({
             path: "students",
-            model: Student // Talabalar modeli nomini to'g'ri ko'rsating
+            model: Student, // Talabalar modeli nomini to'g'ri ko'rsating
+            match: { publishStudent: true },
         })
         return course as ICourse;
     } catch (error) {

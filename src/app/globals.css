@@ -115,6 +115,10 @@
 }
 
 
+.shadowCustom{
+  box-shadow: 0px 0px 10px rgba(128, 128, 128, 0.12);
+}
+
 
 @layer base {
   * {

@@ -68,11 +68,7 @@ export default function StudentForm({propCourses}: {propCourses: ICourse[]}) {
 
             const coursesName = courses.find((course) => course._id === courseId);
             const coursess = coursesName?.courseTitle.split(" ")[0];
-            const studentGen = generateRandomID();
-            console.log(studentGen);
-            
-
-
+            const studentGen = generateRandomID();            
             await toast.promise(postAddStudent(courseId, name, surname, phone, studentGen, pathname), {
                 loading: "O'quvchi qo'shilmoqda...",
                 success: `${coursess} kursiga qo'shildi!`,

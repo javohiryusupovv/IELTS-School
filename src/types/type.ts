@@ -11,12 +11,14 @@ export interface IProduct{
 }
 
 export interface IStudent{
+    publishStudent: boolean;
     _id: string;
     studentID: string;
     name: string;
     surname: string;
     phone: string;
     coins: number[]
+    course: ICourse; // MongoDB ObjectId string sifatida bo'ladi
 }
 
 export interface ICourse{
@@ -39,3 +41,10 @@ export interface ITeacher {
   }
   
   
+  export interface ICreateShop{
+    _id: string,
+    title: string,
+    description: string,
+    price: number,
+    image: string
+  }

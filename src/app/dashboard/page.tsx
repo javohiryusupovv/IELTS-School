@@ -1,9 +1,10 @@
+import Analitika from "./(analitika)/page"
 
 
-function Dashboard() {
+async function Dashboard() {
   return (
     <div className="">
-        <h1>Bu Main Qismi</h1>
+        <Analitika/>
     </div>
   )
 }

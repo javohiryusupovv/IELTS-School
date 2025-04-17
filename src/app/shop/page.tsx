@@ -1,15 +1,16 @@
-
-
-
 import Image from "next/image";
 import { IoArrowBack } from "react-icons/io5";
 import { getProducts } from "../../../constants/page";
 import Link from "next/link";
 import { BsCoin } from "react-icons/bs";
 import Navbar from "./Navbar";
+import { getShop } from "@/actions/shop.action";
+import { ICreateShop } from "@/types/type";
 
 export default async function ShopList() {
-  const products = await getProducts();
+  const productsJSON = await getShop();
+  const productss = JSON.parse(JSON.stringify(productsJSON));
+  
 
   return (
     <div className="container w-full">
@@ -23,9 +24,9 @@ export default async function ShopList() {
           Orqaga
         </Link>
         <div>
-          <div className="grid grid-cols-3 gap-5">
-            {products?.map((product) => (
-              <div className="border rounded-lg" key={product.id}>
+          <div className="grid grid-cols-3 gap-5 max-xl:grid-cols-2 max-md:grid-cols-1 max-sm:px-2">
+            {productss?.map((product: ICreateShop, id: number) => (
+              <div className="border rounded-lg" key={id}>
                 <article className="h-[250px] w-full overflow-hidden flex justify-center mb-8">
                   <Image
                     className="object-cover w-full h-full"
@@ -41,11 +42,11 @@ export default async function ShopList() {
                     <p className="flex items-center gap-1 py-1 px-2 rounded-[5px] border">
                       <BsCoin className="fill-[#f9d222] text-[20px]" />
                       <span className="font-normal text-[14px]">
-                        {product.coin}
+                        {product.price}
                       </span>
                     </p>
                   </article>
-                  <Link href={`/shop/${product.id}`}>
+                  <Link href={`/shop/${product._id}`}>
                     <button className="px-2 py-2 border rounded-md cursor-pointer">
                       Almashtirish
                     </button>

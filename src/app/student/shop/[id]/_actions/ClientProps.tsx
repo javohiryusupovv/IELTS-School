@@ -1,0 +1,80 @@
+"use client";
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { DialogDescription } from "@radix-ui/react-dialog";
+import Image from "next/image";
+import { BsCoin } from "react-icons/bs";
+import { ICreateShop, IStudent } from "@/types/type";
+import { toast } from "sonner";
+import { useState } from "react";
+
+interface Props {
+  product: ICreateShop,
+  coins: number,
+  student: IStudent
+}
+
+export default function ClientComponent({ product, coins, student }: Props) {
+  const [open, setOpen] = useState(false);
+
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    if (coins >= product.price) {
+      const data = {
+        title: product.title,
+        description: product.description,
+        price: product.price,
+        image: product.image,
+        firstName: student.name,
+        lastName: student.surname,
+        kurs: student.course.courseTitle
+      }
+      console.log(data);
+      setOpen(false)
+    } else {
+      toast.error(`Sizni Coins yetarli emas !!!`)
+    }
+
+
+  }
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild className="flex">
+        <Button className="mt-5 mb-8 w-full py-2 px-12 flex items-center">Sotib olish</Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogTitle className="text-xl font-bold">{product.title}</DialogTitle>
+        <DialogDescription>
+          Bu mahsulotni sotib olish uchun ma'lumotlarni to'ldiring.
+        </DialogDescription>
+        <Image
+          src={product.image}
+          width={480}
+          height={360}
+          alt={product.title}
+          priority
+          className="h-[250px] object-cover rounded-md overflow-hidden"
+        />
+        <div className="flex items-center justify-between mb-5">
+          <p className="flex items-center justify-end gap-1 py-1 px-4 rounded-[5px] border overflow-hidden">
+            <BsCoin className="fill-[#f9d222] text-[20px]" />
+            <span className="font-normal text-[14px]">{product.price}</span>
+          </p>
+        </div>
+
+        <button
+          onClick={handleSubmit}
+          className="py-2 px-4 border hover:bg-black/50 hover:text-white transition-all duration-300"
+        >
+          Select
+        </button>
+      </DialogContent>
+    </Dialog>
+  );
+}

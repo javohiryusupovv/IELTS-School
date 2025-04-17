@@ -28,7 +28,8 @@ export const postAddStudent = async (courseId: string, name: string, surname: st
             surname,
             phone,
             studentID,
-            course: courseId // Student qaysi kursga tegishli ekanligi
+            course: courseId, // Student qaysi kursga tegishli ekanligi
+            publishStudent: false
         });
 
         await newStudent.save();
@@ -45,6 +46,25 @@ export const postAddStudent = async (courseId: string, name: string, surname: st
 };
 
 
+export const getStudentById = async (studentId: string) => {
+    try {
+        await ConnectMonogDB();
+        if (!mongoose.Types.ObjectId.isValid(studentId)) {
+            throw new Error("Noto‘g‘ri ID!");
+        }
+        const student = await Student.findById(studentId).populate("course");
+        if (!student) {
+            throw new Error("Student topilmadi!");
+        }
+        return student;
+    } catch (error) {
+        console.error("Student olishda xatolik:", error);
+        throw new Error(`Student olishda xatolik yuz berdi!`);
+    }
+}
+
+
+
 export const getStudents = async () => {
     try {
         await ConnectMonogDB();
@@ -56,6 +76,7 @@ export const getStudents = async () => {
                 ...student.toObject(),
                 _id: student._id.toString(),
                 course: student.course.toString(), // ObjectId ni stringga o'tkazish
+                courseTitle: course.courseTitle,
             })),
             teacher: course.teacher.toString()
         }));
@@ -96,6 +117,37 @@ export const deleteStudent = async (studentId: string, courseId: string, path: s
         throw new Error(`O‘quvchini o‘chirishda xatolik yuz berdi!`);
     }
 }
+
+
+export const ActiveStudent = async (id: string, status: boolean, path: string) => {
+    try{
+        await ConnectMonogDB();
+        await Student.findByIdAndUpdate(id, {publishStudent: status}, {new: true});
+        revalidatePath(path)
+    }catch(error){
+        throw new Error(`O‘quvchini yangilashda xatolik yuz berdi!, ${error}`);
+    }
+}
+
+export const updateStudent = async (studentId: string, data: {name: string, surname: string, phone: string}, path: string) => {
+        try{
+            await ConnectMonogDB();
+            const updatedStudent =  await Student.findByIdAndUpdate(studentId, {
+                name: data.name,
+                surname: data.surname,
+                phone: data.phone
+            }, {new: true})
+            revalidatePath(path)
+            return updatedStudent
+        }catch(error: any){
+            // Extract the error message and throw it directly as a string
+            throw new Error(`O‘quvchini yangilashda xatolik yuz berdi! ${error.message || error}`);
+        }
+    }
+
+
+
+
 
 export const addCoins = async (studentId: string, coinValue: number) => {
     try {
