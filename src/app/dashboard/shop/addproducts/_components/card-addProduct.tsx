@@ -69,7 +69,6 @@ export default function CardAddProduct() {
     )
     setPrevImg("");
     form.reset()
-    redirect("/dashboard/shop")
   };
 
   return (

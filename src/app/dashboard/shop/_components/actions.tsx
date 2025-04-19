@@ -3,7 +3,7 @@ import { ShopActive } from "@/actions/shop.action"
 import { Switch } from "@/components/ui/switch"
 import { ICreateShop } from "@/types/type"
 import { usePathname } from "next/navigation"
-import { useEffect, useState } from "react"
+import {useState } from "react"
 
 interface Props {
     products: ICreateShop
