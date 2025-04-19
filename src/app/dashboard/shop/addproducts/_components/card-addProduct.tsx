@@ -61,7 +61,7 @@ export default function CardAddProduct() {
     };
 
     await toast.promise(
-      postShop({...product,_id: ""}, pathname), {
+      postShop({...product}, pathname), {
       loading: "Mahsulot yuklanmoqda...",
       success: "Mahsulot yuklandi!",
       error: "Mahsulot yuklanmadi!",
@@ -69,6 +69,7 @@ export default function CardAddProduct() {
     )
     setPrevImg("");
     form.reset()
+    redirect("/dashboard/shop")
   };
 
   return (
