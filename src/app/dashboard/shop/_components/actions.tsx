@@ -16,7 +16,7 @@ export default function SwitchSettings({products}: Props) {
     const handleChecked = async(checked: boolean) => {
         setSwitch(checked);
         try{
-            await ShopActive(products._id, checked, pathname);
+            await ShopActive(products._id!, checked, pathname);
         }catch(error){
             console.error("Error updating product status:", error);
             setSwitch(!checked);
