@@ -20,6 +20,8 @@ export const postShop = async(data: ICreateShop, path:string) => {
     }
 }
 
+
+
 export const getShop = async() => {
     try{
         await ConnectMonogDB()
@@ -29,6 +31,26 @@ export const getShop = async() => {
         throw new Error(`Xatolik yuz berid GET Shopda, ${error}`)
     }
 }
+
+export const ShopActive = async(id: string, status: boolean, path: string) => {
+    try{
+        const updatedShop = await Shop.findByIdAndUpdate(
+            id,
+            { activeProduct: status },  // Update the activeProduct field
+            { new: true }  // Return the updated document
+        );
+
+        if (!updatedShop) {
+            throw new Error("Product not found");
+        }
+        revalidatePath(path)
+
+    }catch(error){
+        throw new Error(`Xatolik yuz berid Shopda, ${error}`)
+    }
+}
+
+
 
 export const getShopId = async(id: string) => {
     try{

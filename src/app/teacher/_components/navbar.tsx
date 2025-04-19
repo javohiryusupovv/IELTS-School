@@ -27,6 +27,7 @@ function NavbarTeacher() {
       setIsLoading(false);
     }
   }, []);
+  console.log(teacher);
   
 
 

@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { IoArrowBack } from "react-icons/io5";
-import { getProducts } from "../../../constants/page";
 import Link from "next/link";
 import { BsCoin } from "react-icons/bs";
 import Navbar from "./Navbar";
@@ -10,6 +9,7 @@ import { ICreateShop } from "@/types/type";
 export default async function ShopList() {
   const productsJSON = await getShop();
   const productss = JSON.parse(JSON.stringify(productsJSON));
+  console.log(productss);
   
 
   return (

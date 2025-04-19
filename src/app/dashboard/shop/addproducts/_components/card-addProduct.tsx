@@ -3,7 +3,7 @@
 import { postShop } from "@/actions/shop.action";
 import { supabase } from "@/lib/supabase";
 import { ImagePlus } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 
@@ -55,19 +55,21 @@ export default function CardAddProduct() {
     const product = {
       title: data.get("title") as string,
       description: data.get("description") as string,
-      price:  Number(data.get("price")),
+      price: Number(data.get("price")),
       image: imageUrl || "",
-    }; 
-    
+      activeProduct: false,
+    };
+
     await toast.promise(
-      postShop({...product}, pathname),{
-        loading: "Mahsulot yuklanmoqda...",
-        success: "Mahsulot yuklandi!",
-        error: "Mahsulot yuklanmadi!",
-      }
+      postShop({...product,_id: ""}, pathname), {
+      loading: "Mahsulot yuklanmoqda...",
+      success: "Mahsulot yuklandi!",
+      error: "Mahsulot yuklanmadi!",
+    }
     )
-    setPrevImg("");    
+    setPrevImg("");
     form.reset()
+    redirect("/dashboard/shop")
   };
 
   return (
@@ -121,11 +123,10 @@ export default function CardAddProduct() {
         {/* Image preview */}
         <div
           onClick={handleClick}
-          className={`group w-[250px] h-[250px] mt-5 border flex justify-center items-center flex-col rounded-md overflow-hidden cursor-pointer ${
-            prevImg
+          className={`group w-[250px] h-[250px] mt-5 border flex justify-center items-center flex-col rounded-md overflow-hidden cursor-pointer ${prevImg
               ? ""
               : "hover:border-[#00b7ff49] hover:shadow-blue-300 hover:shadow-sm"
-          }`}
+            }`}
         >
           {prevImg ? (
             <img

@@ -42,9 +42,10 @@ export interface ITeacher {
   
   
   export interface ICreateShop{
-    _id?: string,
+    _id: string,
     title: string,
     description: string,
     price: number,
-    image: string
+    image: string,
+    activeProduct: boolean
   }
