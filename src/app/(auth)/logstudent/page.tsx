@@ -5,6 +5,7 @@ import { IDSchema } from "@/actions/zod";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { usePathname, useRouter } from "next/navigation";
+import { useTopLoader } from "nextjs-toploader";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -12,15 +13,14 @@ export default function StudentLogin() {
   const pathname = usePathname();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const loader = useTopLoader()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    loader.start()
     const data = new FormData(e.currentTarget)
     const idStudent = data.get("id") as string;
-
-    const validateID = IDSchema.safeParse(idStudent)
-    console.log(validateID);
-    
+    const validateID = IDSchema.safeParse(idStudent)    
     try {
       setIsLoading(true);
       const students = await StudentCheck(idStudent, pathname);
@@ -28,6 +28,7 @@ export default function StudentLogin() {
         localStorage.setItem("studentID", JSON.stringify(students));
         toast.success("Siz Talabasiz");
         router.push("/student");
+        
       } else {
         toast.warning("Siz Talabalar safida yuqsiz");
         router.push("/logstudent");
@@ -36,6 +37,7 @@ export default function StudentLogin() {
       throw new Error(`Sizda Xatolik yuz berdi, ${error}`);
     } finally {
       setIsLoading(false);
+      loader.done()
     }
   };
 

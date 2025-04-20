@@ -8,7 +8,7 @@ const ShopSchema = new Schema(
         description: String,
         price: Number,
         image: String,
-        activeProduct: String
+        activeProduct: Boolean
     },
     {timestamps:true}
 )

@@ -60,7 +60,7 @@ export default async function DetailTeacher({
               key={id}
               className="group border border-transparent hover:bg-transparent hover:border-[#80808070] py-1 px-2 bg-accent rounded-md cursor-pointer mb-2 transition-all duration-300"
             >
-              <Link href={`/teacher`}>
+              <Link href={`/login`}>
                 <p className="group-hover:text-orange-400 transition-all duration-300">
                   {kurs.courseTitle}
                 </p>

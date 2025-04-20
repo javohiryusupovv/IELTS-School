@@ -3,14 +3,15 @@ import { ShopActive } from "@/actions/shop.action"
 import { Switch } from "@/components/ui/switch"
 import { ICreateShop } from "@/types/type"
 import { usePathname } from "next/navigation"
-import {useState } from "react"
+import { useState } from "react"
 
 interface Props {
     products: ICreateShop
 }
 
 export default function SwitchSettings({products}: Props) {
-    const [isSwitch, setSwitch] = useState(false)
+    const [isSwitch, setSwitch] = useState(products.activeProduct);
+
     const pathname = usePathname()
 
     const handleChecked = async(checked: boolean) => {

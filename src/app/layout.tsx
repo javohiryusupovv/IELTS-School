@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
+import NextTopLoader from 'nextjs-toploader'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,6 +29,17 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased !pointer-events-auto`} suppressHydrationWarning
       >
+       <NextTopLoader
+							color='#f2933c'
+							initialPosition={0.5}
+							crawlSpeed={200}
+							height={3}
+							crawl={true}
+							showSpinner={false}
+							easing='ease'
+							speed={200}
+							shadow='0 0 10px #f2933c,0 0 5px #f2933c'
+						/>
         <Toaster position="top-right"/>
         {children}
       </body>
