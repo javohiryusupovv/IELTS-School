@@ -1,33 +1,46 @@
-'use client'
+"use client";
 
-import { LoginAdmin } from '@/actions/login.action';
-import { usePathname, useRouter } from 'next/navigation';
-import {  useState } from 'react'
-import { toast } from 'sonner';
+import { LoginAdmin } from "@/actions/login.action";
+import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
+import { toast } from "sonner";
+import { LoaderCircle } from 'lucide-react';
+import { useTopLoader } from "nextjs-toploader";
+
 
 export default function ReceptionLogin() {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('');
-  const pathname = usePathname()
-  const [error, setError] = useState("");
-  const router = useRouter()
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const pathname = usePathname();
+  const [error, setError] = useState(false);
+  const router = useRouter();
+  const [isloading, setLoading] = useState(false);
+  const topLoading = useTopLoader()
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try{
+    setLoading(true);
+    try {
       const admin = await LoginAdmin(username, password, pathname);
-      if (admin) { // Teacher topilsa
+      topLoading.start()
+      if (admin) {
+        // Teacher topilsa
         toast.success("Admin Topildi ...");
-        router.push("/dashboard")
-    } else { // Teacher topilmasa
-        router.push("/reception")
-        setError("Login is not")
-    }
-    }catch(error){
+        router.push("/dashboard");
+      } else {
+        // Teacher topilmasa
+        router.push("/reception");
+        setError(true);
+        topLoading.done()
+      }
+    } catch (error) {
       console.error("Login qilinmadi Frontenda", error);
-      setError("Login is invalid")
-    }    
-  }
+      setError(true)
+    } finally {
+      setLoading(false);
+      topLoading.done()
+    }
+  };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -60,14 +73,24 @@ export default function ReceptionLogin() {
             required
           />
         </div>
-        {error && <div>{error}</div>}
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
-        >
-          Kirish
-        </button>
+        {isloading ? (
+          <button
+            type="button"
+            disabled
+            className="flex items-center justify-center gap-1 w-full bg-blue-600/60 text-white py-2 rounded-lg"
+          >
+            <LoaderCircle className="w-[20px] animate-spin"/>
+            Qidirilmoqda...
+          </button>
+        ) : (
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+          >
+            Kirish
+          </button>
+        )}
       </form>
     </div>
-  )
+  );
 }
