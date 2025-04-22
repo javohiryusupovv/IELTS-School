@@ -1,0 +1,21 @@
+
+
+
+.anim{
+    display: block;
+    transform: rotate(370deg);
+    animation: anim-icons 1s linear infinite;
+}
+
+
+@keyframes anim-icons{
+    0%{
+        transform: rotate(370deg);
+    }
+    50%{
+        transform: rotate(340deg);
+    }
+    100%{
+        transform: rotate(370deg);
+    }
+}

@@ -47,7 +47,7 @@ function NavbarLayout() {
                 }`}
             >
               <UserRound className="text-[30px] flex justify-center items-center group-hover:stroke-white duration-0" />{" "}
-              Teacher
+              O'qituvchilar
             </Link>
           </li>
           <li>
@@ -59,7 +59,7 @@ function NavbarLayout() {
                 }`}
             >
               <GraduationCap className="text-[30px] flex justify-center items-center group-hover:stroke-white duration-0" />{" "}
-              Course
+              Kurslar
             </Link>
           </li>
           <li>
@@ -71,7 +71,7 @@ function NavbarLayout() {
                 }`}
             >
               <Users className="text-[30px] flex justify-center items-center group-hover:stroke-white duration-0" />{" "}
-              Student
+              O'quvchilar
             </Link>
           </li>
           <li className="overflow-hidden" onMouseEnter={() => setSelect(true)} onMouseLeave={() => setSelect(false)}>
@@ -79,7 +79,7 @@ function NavbarLayout() {
               href={"/dashboard/shop"}
               className={` relative top-0 left-0 group flex items-center gap-2 py-5 px-2 border-b hover:bg-orange-300 hover:text-white cursor-pointer transition-all duration-200  ${pathnames === "/dashboard/shop" ? "bg-orange-400 text-white" : ""}`}>
               <Store className="text-[27px] flex justify-center items-center group-hover:stroke-white duration-0" />
-              Shop
+              Magazin
             </Link>
             <article className={`w-full transition-all duration-300 ${select ? "h-[90px] opacity-100 mt-2" : "h-0 opacity-0"} ml-5`}>
               <Link href={`/dashboard/shop/addproducts`} className="py-2 px-2 flex items-center gap-2 mb-2 hover:bg-accent">
@@ -102,7 +102,7 @@ function NavbarLayout() {
                 }`}
             >
               <ShoppingBag className="text-[27px] flex justify-center items-center group-hover:stroke-white duration-0" />{" "}
-              Orders
+              Mahsulot Tarixi
             </Link>
           </li>
         </ul>

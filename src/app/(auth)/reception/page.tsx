@@ -6,6 +6,8 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { LoaderCircle } from 'lucide-react';
 import { useTopLoader } from "nextjs-toploader";
+import Image from "next/image";
+import LoginLogo from "../../../../public/logo/logo.png"
 
 
 export default function ReceptionLogin() {
@@ -43,7 +45,8 @@ export default function ReceptionLogin() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      <Image width={200} className="mb-8" src={LoginLogo} alt="Logo" />
       <form
         onSubmit={handleSubmit}
         className="bg-white p-6 rounded-xl shadow-md w-full max-w-sm"
@@ -57,7 +60,7 @@ export default function ReceptionLogin() {
           <input
             type="text"
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => setUsername(e.target.value.trim())}
             className="w-full px-3 py-2 border rounded-lg"
             required
           />
@@ -68,7 +71,7 @@ export default function ReceptionLogin() {
           <input
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value.trim())}
             className="w-full px-3 py-2 border rounded-lg"
             required
           />

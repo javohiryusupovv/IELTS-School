@@ -26,7 +26,6 @@ export const LoginAdmin = async (login: string, password: string, path: string) 
 
         revalidatePath(path)
         return {
-            message: "Login successful",
             redirect: "/dashboard",
             admin: {
               login: admin.login,
@@ -40,5 +39,5 @@ export const LoginAdmin = async (login: string, password: string, path: string) 
 
 export const LogOutAdmin = async () => {
     const cookieStore = await cookies();
-  cookieStore.delete("admin-auth");
+    cookieStore.delete("admin-auth");
   }

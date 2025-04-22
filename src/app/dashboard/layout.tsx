@@ -1,15 +1,35 @@
 
 import NavbarLayout from "./_components/navbarLayout";
+import LMSLogo from "../../../public/logo/logo.png"
+import "./custom.css"
+
+import Image from "next/image";
+import NotificationModal from "./_components/modal/notificationModal";
+import ProfileAccount from "./_components/modal/profileAccount";
+
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
-  
-  
+
+
 
   return (
     <div className="flex w-full gap-4 pt-5 bg-gray-500/10">
-      <NavbarLayout/>
-      <main className="w-[calc(100%-250px)] mb-10 overflow-y-auto scrolbars mt-3 rounded-md">
-        <div className="mr-[20px] p-5 bg-white min-h-screen">{children}</div>
+      <NavbarLayout />
+      <main className="w-[calc(100%-250px)] mr-[20px] mb-10 overflow-y-auto scrolbars mt-3 rounded-md">
+        <div className="w-full flex justify-between items-center h-[60px] rounded-md bg-white mb-4 px-2">
+          <article className="w-[120px] h-full flex items-center">
+            <Image src={LMSLogo} alt="Logo Learning Center" />
+          </article>
+          <div className="flex gap-4 items-center">
+            <NotificationModal />
+            <ProfileAccount/>
+          </div>
+        </div>
+        <div className="p-5 bg-white min-h-screen mb-4">{children}</div>
+        <footer className="w-full py-5 px-4 border rounded-md bg-white">
+        <a href="https://t.me/Javoxir_iq" target="_blank"><p className="flex gap-2 items-center justify-end text-end group cursor-pointer"><span className="anim">👋🏻</span> Tizimni ishlab chiquvchi: <span className="text-[20px] transition-all duration-200 font-medium group-hover:text-orange-500">Javokhir</span></p></a>
+          
+        </footer>
       </main>
     </div>
 
