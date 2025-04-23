@@ -4,7 +4,13 @@ import { addCoins } from "@/actions/student.action";
 import moment from "moment";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
-import { ChevronRight, ChevronLeft } from 'lucide-react';
+import { ChevronRight, ChevronLeft, LockKeyhole, CheckCheck } from 'lucide-react';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 
 interface Props {
@@ -95,9 +101,9 @@ export default function Attendence({ students, days, titleCourse, teacherName }:
                       {moment(month).format("D-MMM")}
                     </th>
                   ))}
-                  <th className="fixed right-0 bg-white py-[10px] w-[120px] text-center">
+                  {/* <th className="fixed right-0 bg-white py-[10px] w-[120px] text-center">
                     <p className="w-[120px]">Coins</p>
-                  </th>
+                  </th> */}
                 </tr>
               </thead>
               <tbody>
@@ -111,14 +117,40 @@ export default function Attendence({ students, days, titleCourse, teacherName }:
                       </div>
                     </th>
                     {filterDays.map((day, i) => {
+                      const today = moment().format("YYYY-MM-DD");
+                      const isArxivDay = moment(day).isSameOrBefore(today, 'day');
+                      const isToday = moment(day).isSame(today, 'day');
+
                       return (
-                        <td key={i} className="text-[12px] p-4">
-                          <span className="text-white py-1 px-5 bg-orange-400 rounded-md cursor-pointer">✓</span>
+                        <td key={i} className='text-[12px] p-4'>
+                          <span className={`text-white flex py-1 px-5 border rounded-md`}>
+                            {isArxivDay ? (
+                              isToday ? (
+                                <div className="cursor-pointer">
+                                  <CheckCheck className="stroke-green-500 bg-red-400 stroke-[1.4]" />
+                                </div>
+                              ) : (
+                                <div className="cursor-pointer">
+                                  <CheckCheck className="stroke-green-500 stroke-[1.4]" />
+                                </div>
+                              )
+                            ) : (
+                              <TooltipProvider>
+                                <Tooltip>
+                                  <TooltipTrigger disabled className="w-full h-full cursor-not-allowed">
+                                    <LockKeyhole className=" stroke-black/70 stroke-1 w-5 h-5" />
+                                  </TooltipTrigger>
+                                  <TooltipContent>
+                                    <p>Yopiq kun</p>
+                                  </TooltipContent>
+                                </Tooltip>
+                              </TooltipProvider>
+                            )}
+                          </span>
                         </td>
                       );
-                    })
-                    }
-                    <td className="fixed right-0 w-[120px] bg-white flex items-center gap-2 p-3">
+                    })}
+                    {/* <td className="fixed right-0 w-[120px] bg-white flex items-center gap-2 p-3">
                       <input
                         value={inputValues[student._id] || ""}
                         onChange={(e) => handleChange(e, student._id)}
@@ -126,7 +158,7 @@ export default function Attendence({ students, days, titleCourse, teacherName }:
                         className="w-[45px] px-3 py-1 border outline-none rounded-md"
                       />
                       <button onClick={() => handleAdd(student._id)} className="p-1 border rounded-sm cursor-pointer text-[13px] text-white bg-red-500">add</button>
-                    </td>
+                    </td> */}
                   </tr>
                 ))}
               </tbody>
