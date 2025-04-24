@@ -12,8 +12,6 @@ export default async function StudentAll() {
   const students = await getStudents();
 
   const studentList = students.flatMap((course) => course.students);
-  console.log(studentList);
-
 
   // Barcha studentlarni sanash
   const totalStudents = studentList.length

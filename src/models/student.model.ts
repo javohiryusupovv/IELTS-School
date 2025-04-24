@@ -3,7 +3,13 @@ import { Schema, model, models } from "mongoose";
 const CoinSchema = new Schema(
   {
     value: { type: Number, required: true },
-    date: { type: String, required: true }, // YYYY-MM-DD formatda
+    date: { type: String, required: true }, // YYYY-MM-DD
+    reasons: [
+      {
+        reason: { type: String, required: true },
+        value: { type: Number, required: true }
+      }
+    ] // ["Uyga vazifa", "Yuqori ball"]
   },
   { _id: false }
 );
@@ -19,11 +25,6 @@ const StudentSchema = new Schema({
   publishStudent: { type: Boolean, default: false }, // Talabani ko'rsatish
   
 }, { timestamps: true });
-  
-
-StudentSchema.virtual("totalCoins").get(function(){
-  return this.coins.reduce((sum, coin)=> sum + coin.value, 0)
-})
 
   const Student = models.Student || model("Student", StudentSchema);
   export default Student;

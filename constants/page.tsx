@@ -28,5 +28,13 @@ export const getStableColor = (_id: string) => {
 
   const adminstrator = {
     login: "admin",
-    password: "123456"
+    password: 123456
   }
+
+
+ export const reasonsWithValues = {
+    homework: 10,
+    keldi: 10,
+    leader: 15
+  };
+  

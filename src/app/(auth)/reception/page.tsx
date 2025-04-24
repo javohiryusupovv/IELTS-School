@@ -51,9 +51,6 @@ export default function ReceptionLogin() {
         onSubmit={handleSubmit}
         className="bg-white p-6 rounded-xl shadow-md w-full max-w-sm"
       >
-        <h2 className="text-2xl font-bold mb-4 text-center">Admin Login</h2>
-
-        {error && <p className="text-red-500 mb-4">Xato login</p>}
 
         <div className="mb-4">
           <label className="block text-sm mb-1">Username</label>
@@ -76,6 +73,8 @@ export default function ReceptionLogin() {
             required
           />
         </div>
+        
+        {error && <p className="text-red-500 mb-4">Xato login</p>}
         {isloading ? (
           <button
             type="button"

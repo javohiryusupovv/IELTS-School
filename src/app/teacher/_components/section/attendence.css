@@ -1,0 +1,42 @@
+input[type="checkbox"]{
+    position: relative;
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+    appearance: none;
+    cursor: pointer;
+    border: 1px solid gray;
+}
+
+input[type="checkbox"]:checked{
+    background-color: #22c55e;
+    border: transparent;
+}
+input[type="checkbox"]::before{
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 8px;
+    width: 6px;
+    height: 12px;
+    border: 2px solid transparent;
+    border-left: none;
+    border-top: none;
+    transform: rotate(45deg) scale(1);
+}
+
+input[type="checkbox"]:checked::before{
+    border-color: white;
+    animation: checkAnim .2s ease;
+}
+
+
+@keyframes checkAnim{
+    from{
+        transform: rotate(45deg) scale(0);
+    }
+}
+label{
+    cursor: pointer;
+    user-select: none;
+}

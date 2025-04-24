@@ -19,7 +19,7 @@ export const LoginAdmin = async (login: string, password: string, path: string) 
         (await cookies()).set("admin-auth", "true", {
             httpOnly: true,
             path: "/",
-            maxAge: 60 * 60 // 1 soat
+            maxAge: 60 * 90 // 1:30 soat
           });
           
 

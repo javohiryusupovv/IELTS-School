@@ -42,7 +42,7 @@ export const getCourseById = unstable_cache(
           path: "students",
           model: Student,
           match: { publishStudent: true },
-          select: "name surname phone",
+          select: "name surname phone coins",
         })
       if (!course) {
         throw new Error("Kurs topilmadi")

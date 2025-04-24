@@ -44,7 +44,7 @@ function NavbarTeacher() {
 
 
   return (
-    <div className=" relative top-0 left-0">
+    <div className="relative top-0 left-0">
       <div className={`fixed left-0 top-0 z-20 flex justify-between w-[150px] h-screen scrolbars overflow-y-auto bg-white shadow-md`}>
         <nav className="w-full">
           <Link href={"/"} className="fixed top-0 bg-white flex items-center p-[24.5px] mb-14 shadow-sm">

@@ -8,6 +8,12 @@ import moment from "moment"
 
 import { Course, Student, Teacher } from "@/models/index"
 
+
+type Records_Coins = {
+  reason: string;
+  value: number;
+}[]
+
 // Barcha talabalarni olish (kesh bilan)
 export const getStudents = unstable_cache(
   async () => {
@@ -18,11 +24,10 @@ export const getStudents = unstable_cache(
           path: "students",
           model: Student,
           select: "name surname phone studentID publishStudent course", // Faqat kerakli maydonlar
-        })
-        .lean() // Performansi oshirish uchun
+        }).lean()
       const plainCourses = courses.map((course) => ({
         ...course,
-        _id: course._id,
+        _id: course._id?.toString(),
         students: course.students.map((student: any) => ({
           ...student,
           _id: student._id.toString(),
@@ -38,7 +43,7 @@ export const getStudents = unstable_cache(
     }
   },
   ["students"], // Kesh kaliti
-  { revalidate: 3600, tags: ["students"] } // 1 soatlik kesh
+  { revalidate: 3600, tags: ["students"] } // Umumiy "students" tegi
 )
 
 // Muayyan talabani olish (kesh bilan)
@@ -203,28 +208,44 @@ export const updateStudent = async (
 }
 
 // Talabaga coin qo‘shish
-export const addCoins = async (studentId: string, coinValue: number) => {
+export const addCoins = async (studentId: string, reasons: Records_Coins, path: string, date?: string) => {
+  console.log(reasons);
+  
   try {
     if (!mongoose.Types.ObjectId.isValid(studentId)) {
       throw new Error("Noto‘g‘ri ID!")
     }
-    if (coinValue <= 0) {
-      throw new Error("Coin qiymati musbat bo‘lishi kerak!")
+
+    const givenDate = date || moment().format("YYYY-MM-DD");
+
+    let total = reasons.reduce((acc, item) => acc + item.value, 0);
+
+    if (total <= 0) {
+      throw new Error("Hech qanday sabab tanlanmadi, coin qo‘shilmadi.");
     }
+
     await ConnectMonogDB()
     const student = await Student.findById(studentId)
     if (!student) {
       throw new Error("Talaba topilmadi!")
     }
 
-    const today = moment().format("YYYY-MM-DD")
-    student.coins.push({ value: coinValue, date: today })
-    student.lastDateCoin = today
-    await student.save()
+    const responseReasons = reasons.map((item) => {
+      return { reason: item.reason, value: item.value } 
+    })
+
+    student.coins.push({
+      value: total,
+      date: givenDate,
+      reasons: responseReasons,
+    });
+    student.lastDateCoin = new Date(givenDate);
+    await student.save();
 
     // Keshni yangilash
     revalidateTag("students")
     revalidateTag("student")
+    revalidatePath(path)
     return { success: true, message: "Coin muvaffaqiyatli qo‘shildi!" }
   } catch (error) {
     console.error(`Error adding coins to student ${studentId}:`, error)

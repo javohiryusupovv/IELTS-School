@@ -1,76 +1,157 @@
 "use client";
 
 import { addCoins } from "@/actions/student.action";
+import "./attendence.css";
 import moment from "moment";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
-import { ChevronRight, ChevronLeft, LockKeyhole, CheckCheck } from 'lucide-react';
+import {
+  ChevronRight,
+  ChevronLeft,
+  LockKeyhole,
+  CheckCheck,
+} from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip"
+} from "@/components/ui/tooltip";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { PopoverClose } from "@radix-ui/react-popover";
 
+import { usePathname } from "next/navigation";
+import { reasonsWithValues } from "../../../../../constants/page";
 
 interface Props {
   students: any;
-  days: string[],
-  titleCourse: string,
-  teacherName: string
+  days: string[];
+  titleCourse: string;
+  teacherName: string;
 }
 
-export default function Attendence({ students, days, titleCourse, teacherName }: Props) {
-  const [inputValues, setInputValues] = useState<{ [key: string]: string }>({});
+export default function Attendence({
+  students,
+  days,
+  titleCourse,
+  teacherName,
+}: Props) {
+  const [reasonValues, setReasonValues] = useState<{[key: string]: any;}>({});
   const [isPending, startTransition] = useTransition();
+  const [selectedCell, setSelectedCell] = useState<{
+    studentID: string;
+    day: string;
+  } | null>(null);
+  const [isopen, setOpen] = useState(false);
+  const [attedence, setAttendence] = useState({
+    homework: false,
+    keldi: false,
+    leader: false,
+  });
+  const pathname = usePathname();
+
+  const handleOnChangeChecked = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, checked } = e.target;
+    setAttendence((item) => ({
+      ...item,
+      [id]: checked,
+    }));
+  };
 
   // Hozirgi oy va yilni boshlang'ich qiymati
   const [currentMonth, setCurrentMonth] = useState(moment(days[0]).month());
   const [currentYears, setCurrentYears] = useState(moment(days[0]).year());
-  const filterDays = days.filter((day) => moment(day).month() === currentMonth && moment(day).year() === currentYears)
+  const filterDays = days.filter(
+    (day) =>
+      moment(day).month() === currentMonth &&
+      moment(day).year() === currentYears
+  );
   const nextMonth = () => {
-    const nextDate = moment().year(currentYears).month(currentMonth).add(1, 'month');
-    if (days.some(day => moment(day).month() === nextDate.month() && moment(day).year() === nextDate.year())) {
-      setCurrentMonth(nextDate.month())
-      setCurrentYears(nextDate.year())
-    }
-  }
-
-  const prevMonth = () => {
-    const prevDate = moment().year(currentYears).month(currentMonth).subtract(1, 'month');
-    if (days.some(day => moment(day).month() === prevDate.month() && moment(day).year() === prevDate.year())) {
-      setCurrentMonth(prevDate.month())
-      setCurrentYears(prevDate.year())
-    }
-  }
-
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>, studentId: string) => {
-    const newValue = e.target.value;
-
-    // Faqat raqamlarni qabul qiladi va uzunligi 2 tadan oshmaydi
-    if (/^\d{0,2}$/.test(newValue)) {
-      setInputValues((prev) => ({
-        ...prev,
-        [studentId]: newValue, // Har bir student uchun alohida input qiymatini saqlash
-      }));
+    const nextDate = moment()
+      .year(currentYears)
+      .month(currentMonth)
+      .add(1, "month");
+    if (
+      days.some(
+        (day) =>
+          moment(day).month() === nextDate.month() &&
+          moment(day).year() === nextDate.year()
+      )
+    ) {
+      setCurrentMonth(nextDate.month());
+      setCurrentYears(nextDate.year());
     }
   };
 
-  const handleAdd = (studentId: string) => {
-    const coinValue = inputValues[studentId] ? parseInt(inputValues[studentId]) : 0;
-
-    if (coinValue > 0) {
-      startTransition(async () => {
-        const result = await addCoins(studentId, coinValue)
-        if (result.success) {
-          toast.success("Coin qushildi")
-        } else {
-          toast.error("Coin qushilmadi !!!")
-        }
-        setInputValues(prev => ({ ...prev, [studentId]: "" }));
-      })
+  const prevMonth = () => {
+    const prevDate = moment()
+      .year(currentYears)
+      .month(currentMonth)
+      .subtract(1, "month");
+    if (
+      days.some(
+        (day) =>
+          moment(day).month() === prevDate.month() &&
+          moment(day).year() === prevDate.year()
+      )
+    ) {
+      setCurrentMonth(prevDate.month());
+      setCurrentYears(prevDate.year());
     }
+  };
+
+  const handleSelect = (studentID: string, day: string) => {
+    setSelectedCell((prev) => {
+      if (prev?.studentID === studentID && prev?.day === day) return null;
+      return { studentID, day };
+    });
+    setOpen(!isopen);
+  };
+
+  const handleCheckedValue = async () => {
+    const studentId = selectedCell?.studentID;
+    if (!studentId) return;
+
+    // Checkboxlarning qiymatlari
+    const reasons = {
+      homework: attedence.homework,
+      keldi: attedence.keldi,
+      leader: attedence.leader,
+    };
+    // Tanlangan sabablarga ko'ra qiymatlarni olish
+    const filteredReasons = Object.entries(reasons)
+    const filteredReasonsArray = filteredReasons.filter(
+      ([key, value]) => value === true)
+      .map(([key]) => (
+        {
+          reason: key,
+          value: reasonsWithValues[key as keyof typeof reasonsWithValues],
+        }
+      ))
+
+      try{
+        toast.promise(
+          addCoins(studentId, filteredReasonsArray, pathname, selectedCell?.day),
+          {
+            loading: "Qo'shilmoqda...",
+            success: "Coin muvaffaqiyatli qo'shildi",
+            error: (error) => `Xatolik: ${error}`,
+          }
+        )
+        setAttendence({
+          homework: false,
+          keldi: false,
+          leader: false,
+        });
+        setSelectedCell(null);
+      }catch(error){
+        console.log("Xatolik:", error)
+        throw new Error("Xatolik yuz berdi")
+      }
   };
 
   return (
@@ -78,12 +159,33 @@ export default function Attendence({ students, days, titleCourse, teacherName }:
       <div className="flex w-full flex-col">
         <article className="flex items-center gap-3 mb-7">
           <p className="w-[6] h-[6] rounded-full bg-orange-400"></p>
-          <h6 className="flex gap-3 items-center text-[25px]">{titleCourse} <p className="w-[6] h-[6] rounded-full bg-orange-400"></p> {teacherName}</h6>
+          <h6 className="flex gap-3 items-center text-[25px]">
+            {titleCourse}{" "}
+            <p className="w-[6] h-[6] rounded-full bg-orange-400"></p>{" "}
+            {teacherName}
+          </h6>
         </article>
         <div className="flex items-center justify-end mr-10 gap-4 mb-5">
-          <button onClick={prevMonth} className="flex items-center py-[2px] px-2 border rounded-sm  focus:bg-orange-500 bg-[#ffa600b8]"><ChevronLeft className="stroke-white stroke-1 w-[18] h-[18px]" /></button>
-          <p>{moment().month(currentMonth).format("MMMM").slice(0, 3).toLowerCase()} {currentYears}</p>
-          <button onClick={nextMonth} className="flex items-center py-[2px] px-2 border rounded-md focus:bg-orange-500 bg-[#ffa600b8]"><ChevronRight className="stroke-white stroke-1 w-[18] h-[18px]" /></button>
+          <button
+            onClick={prevMonth}
+            className="flex items-center py-[2px] px-2 border rounded-sm  focus:bg-orange-500 bg-[#ffa600b8]"
+          >
+            <ChevronLeft className="stroke-white stroke-1 w-[18] h-[18px]" />
+          </button>
+          <p>
+            {moment()
+              .month(currentMonth)
+              .format("MMMM")
+              .slice(0, 3)
+              .toLowerCase()}{" "}
+            {currentYears}
+          </p>
+          <button
+            onClick={nextMonth}
+            className="flex items-center py-[2px] px-2 border rounded-md focus:bg-orange-500 bg-[#ffa600b8]"
+          >
+            <ChevronRight className="stroke-white stroke-1 w-[18] h-[18px]" />
+          </button>
         </div>
       </div>
       <div className="grid grid-cols-4 gap-3">
@@ -97,7 +199,7 @@ export default function Attendence({ students, days, titleCourse, teacherName }:
                     <p className="text-[15px] font-medium py-2">Ism</p>
                   </th>
                   {filterDays.map((month, i) => (
-                    <th key={i} className="text-[12px] p-3">
+                    <th key={i} className="text-center text-[12px] p-3">
                       {moment(month).format("D-MMM")}
                     </th>
                   ))}
@@ -118,27 +220,103 @@ export default function Attendence({ students, days, titleCourse, teacherName }:
                     </th>
                     {filterDays.map((day, i) => {
                       const today = moment().format("YYYY-MM-DD");
-                      const isArxivDay = moment(day).isSameOrBefore(today, 'day');
-                      const isToday = moment(day).isSame(today, 'day');
-
+                      const isArxivDay = moment(day).isSameOrBefore(
+                        today,
+                        "day"
+                      );
+                      const isToday = moment(day).isSame(today, "day");
                       return (
-                        <td key={i} className='text-[12px] p-4'>
-                          <span className={`text-white flex py-1 px-5 border rounded-md`}>
+                        <td key={i} className="text-[12px] p-3">
+                          <span
+                            className={`text-white flex items-center justify-center`}
+                          >
                             {isArxivDay ? (
                               isToday ? (
-                                <div className="cursor-pointer">
-                                  <CheckCheck className="stroke-green-500 bg-red-400 stroke-[1.4]" />
-                                </div>
+                                <Popover>
+                                  <PopoverTrigger
+                                    asChild
+                                    onClick={() =>
+                                      handleSelect(student._id, day)
+                                    }
+                                  >
+                                    <button className="w-9 h-7 cursor-pointer border rounded-md hover:border-green-500 transition-all duration-300"></button>
+                                  </PopoverTrigger>
+                                  <PopoverContent className="w-64">
+                                    <div className="">
+                                      <p className="text-orange-500 text-center mb-2">
+                                        Coin sabablari
+                                      </p>
+                                      <hr className="mb-2" />
+                                      <article className="flex items-center gap-2 mb-2">
+                                        <input
+                                          type="checkbox"
+                                          checked={attedence.homework}
+                                          onChange={handleOnChangeChecked}
+                                          id="homework"
+                                          name="attendance"
+                                        />
+                                        -
+                                        <label
+                                          htmlFor="homework"
+                                          className="text-[13px]"
+                                        >
+                                          Uyga vazifa
+                                        </label>
+                                      </article>
+                                      <article className="flex items-center gap-2 mb-2">
+                                        <input
+                                          type="checkbox"
+                                          checked={attedence.keldi}
+                                          onChange={handleOnChangeChecked}
+                                          id="keldi"
+                                          name="attendance"
+                                        />
+                                        -
+                                        <label
+                                          htmlFor="keldi"
+                                          className="text-[13px]"
+                                        >
+                                          Vaqtida keldi
+                                        </label>
+                                      </article>
+                                      <article className="flex items-center gap-2 mb-4">
+                                        <input
+                                          type="checkbox"
+                                          checked={attedence.leader}
+                                          onChange={handleOnChangeChecked}
+                                          id="leader"
+                                          name="attendance"
+                                        />
+                                        -
+                                        <label
+                                          htmlFor="leader"
+                                          className="text-[13px]"
+                                        >
+                                          Yuqori ball
+                                        </label>
+                                      </article>
+                                      <PopoverClose
+                                        onClick={handleCheckedValue}
+                                        className="px-2 py-1 text-[13px] rounded-md bg-orange-500 text-white"
+                                      >
+                                        Saqlash
+                                      </PopoverClose>
+                                    </div>
+                                  </PopoverContent>
+                                </Popover>
                               ) : (
-                                <div className="cursor-pointer">
-                                  <CheckCheck className="stroke-green-500 stroke-[1.4]" />
+                                <div className="cursor-pointer py-1 px-3 border rounded-md">
+                                  <CheckCheck className="stroke-green-500 stroke-[1.4] w-5 h-5" />
                                 </div>
                               )
                             ) : (
                               <TooltipProvider>
                                 <Tooltip>
-                                  <TooltipTrigger disabled className="w-full h-full cursor-not-allowed">
-                                    <LockKeyhole className=" stroke-black/70 stroke-1 w-5 h-5" />
+                                  <TooltipTrigger
+                                    disabled
+                                    className="cursor-not-allowed py-1 px-3 border rounded-md"
+                                  >
+                                    <LockKeyhole className=" stroke-black/70 stroke-1 w-4 h-5" />
                                   </TooltipTrigger>
                                   <TooltipContent>
                                     <p>Yopiq kun</p>
@@ -150,15 +328,6 @@ export default function Attendence({ students, days, titleCourse, teacherName }:
                         </td>
                       );
                     })}
-                    {/* <td className="fixed right-0 w-[120px] bg-white flex items-center gap-2 p-3">
-                      <input
-                        value={inputValues[student._id] || ""}
-                        onChange={(e) => handleChange(e, student._id)}
-                        type="text"
-                        className="w-[45px] px-3 py-1 border outline-none rounded-md"
-                      />
-                      <button onClick={() => handleAdd(student._id)} className="p-1 border rounded-sm cursor-pointer text-[13px] text-white bg-red-500">add</button>
-                    </td> */}
                   </tr>
                 ))}
               </tbody>
