@@ -10,17 +10,16 @@ export default async function StudentAll() {
   const courses = await getCourses();
   const propCourses = JSON.parse(JSON.stringify(courses));
   const students = await getStudents();
-
-  const studentList = students.flatMap((course) => course.students);
-
+  console.log(students);
+  
   // Barcha studentlarni sanash
-  const totalStudents = studentList.length;
+  const totalStudents = students.length;
   let studentCounter = 1;
   return (
     <div>
       <article className="flex items-center justify-between mb-3">
         <h6 className="font-semibold text-[26px]">Bizning Talabalar</h6>
-        <SearchFuture studentList={studentList} />
+        <SearchFuture studentList={students} />
         <StudentForm propCourses={propCourses} />
       </article>
       <hr className="mb-7" />
@@ -46,7 +45,7 @@ export default async function StudentAll() {
               </tr>
             </thead>
             <tbody>
-              {students.flatMap((course: any) => course.students.map((student: any, id: number) => (
+              {students.map((student: any, id: number) => (
                 <tr key={student._id || id} className={`border hover:bg-gray-100 transition ${student.publishStudent ? "bg-white" : "bg-accent hover:bg-gray-400/20"}`}>
                   {student.publishStudent ? (
                     <>
@@ -57,7 +56,7 @@ export default async function StudentAll() {
                         </Link>
                       </td>
                       <td className="py-2 text-[14px] font-normal">
-                        {course.courseTitle}
+                        {student.course.courseTitle}
                       </td>
                       <td className="py-2 text-[14px] font-normal">
                         <span className="py-1 px-2 rounded-full border bg-[#04b94f] text-white inline-flex">
@@ -66,7 +65,7 @@ export default async function StudentAll() {
                       </td>
                       <td className="py-2 text-[14px] font-normal">{student.phone}</td>
                       <td className="py-2">
-                        <Action studentId={student._id} courseId={course._id} />
+                        <Action student={student} />
                       </td>
                     </>
 
@@ -79,7 +78,7 @@ export default async function StudentAll() {
                         </Link>
                       </td>
                       <td className="py-2 text-[14px] font-normal text-gray-400">
-                        {course.courseTitle}
+                        {student.course.courseTitle}
                       </td>
                       <td className="py-2 text-[14px] font-normal text-gray-400">
                         <span className="w-[109px] py-1 px-2 rounded-full border bg-[#b90404] text-white flex justify-center">
@@ -88,12 +87,12 @@ export default async function StudentAll() {
                       </td>
                       <td className="py-2 text-[14px] font-normal text-gray-400">{student.phone}</td>
                       <td className="py-2">
-                        <Action studentId={student._id} courseId={course._id} />
+                        <Action student={student} />
                       </td>
                     </>
                   )}
                 </tr>
-              )))}
+              ))}
             </tbody>
           </table>
         )}

@@ -49,9 +49,6 @@ export interface ICreateShop {
   activeProduct: boolean;
 }
 
-
-
-
 export interface Records_Coins{
   homework?: boolean,
   onTime?: boolean,

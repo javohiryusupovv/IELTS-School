@@ -19,18 +19,20 @@ export default async function ShopId({params,}:{params: Promise<{ id: string }>}
   }
 
   return (
-    <div className="container pb-20 pt-7 overflow-y-scroll scrolbars">
+    <div className="container h-screen pb-20 pt-7 overflow-y-scroll scrolbars">
       <div className="grid w-[80%] m-auto">
         <div className="max-lg:flex max-lg:flex-col">
           <h6 className="text-2xl font-medium mb-5">{products.title}</h6>
-          <Image
-            src={products.image}
-            alt={products.title}
-            width={400}
-            height={300}
-            priority
-            className="max-lg:self-center rounded-md mb-4 h-[250px] object-cover"
-          />
+          <article className="w-full overflow-hidden flex justify-center">
+            <Image
+              src={products.image}
+              alt={products.title}
+              width={400}
+              height={300}
+              priority
+              className="max-lg:self-center rounded-md mb-4 w-[250px] object-cover"
+            />
+          </article>
         </div>
         <div className="w-full flex flex-col items-start gap-2">
           <article className="w-full">

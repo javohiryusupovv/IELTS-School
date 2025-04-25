@@ -67,16 +67,18 @@ export default function ClientComponent({ product, coins, student }: Props) {
       <DialogContent>
         <DialogTitle className="text-xl font-bold">{product.title}</DialogTitle>
         <DialogDescription>
-          Bu mahsulotni sotib olish uchun ma'lumotlarni to'ldiring.
+          Bu mahsulotni sotib olish uchun <span className="text-green-500">{product.price}</span> coin sarflanadi.
         </DialogDescription>
-        <Image
-          src={product.image}
-          width={480}
-          height={360}
-          alt={product.title}
-          priority
-          className="h-[250px] object-cover rounded-md overflow-hidden"
-        />
+        <article className="w-full flex justify-center overflow-hidden">
+          <Image
+            src={product.image}
+            width={480}
+            height={360}
+            alt={product.title}
+            priority
+            className="w-[250px] object-cover rounded-md "
+          />
+        </article>
         <div className="flex items-center justify-between mb-5">
           <p className="flex items-center justify-end gap-1 py-1 px-4 rounded-[5px] border overflow-hidden">
             <BsCoin className="fill-[#f9d222] text-[20px]" />
@@ -86,7 +88,7 @@ export default function ClientComponent({ product, coins, student }: Props) {
 
         <button
           onClick={handleSubmit}
-          className="py-2 px-4 border hover:bg-black/50 hover:text-white transition-all duration-300"
+          className="py-2 px-4 rounded-md text-white bg-orange-500 hover:bg-orange-400/90 hover:text-white transition-all duration-300"
         >
           Select
         </button>

@@ -17,21 +17,25 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { IStudent } from "@/types/type";
 
 interface Props {
-  studentId: string;
-  courseId: string;
+  student: IStudent
 }
 
 interface StudentListProps {
   studentList: any;
 }
 
-export default function Action({ studentId, courseId }: Props) {
+export default function Action({student}: Props) {
   const handleDelete = async () => {
+    if (!student.publishStudent) {
+      toast.error("Bu talabani o'chirish uchun arxivdan chiqaring !");
+      return;
+    }
     try {
       await toast.promise(
-        deleteStudent(studentId, courseId, "/dashboard/students"),
+        deleteStudent(student._id, student.course._id, "/dashboard/students"),
         {
           loading: "O'chirilmoqda...",
           success: "Talaba o'chirildi",

@@ -32,7 +32,7 @@ export default async function ShopList() {
             activeProducts?.map((product: ICreateShop) => (
                 <Fragment key={product._id}>
                   {product.activeProduct ? (
-                    <div className="border w-[80%] m-auto rounded-lg bg-white overflow-hidden" >
+                    <div className="border w-[80%] pt-10 m-auto rounded-lg bg-white overflow-hidden" >
                       <article className="w-full overflow-hidden flex justify-center mb-8">
                         <Image
                           className="w-[250px] object-cover"
@@ -42,18 +42,16 @@ export default async function ShopList() {
                           height={200}
                         />
                       </article>
-                      <div className="px-3 pb-3">
-                        <article className="flex items-center justify-between mb-3">
-                          <h6 className="text-[20px] font-medium">{product.title}</h6>
-                          <p className="flex items-center gap-1 py-1 px-2 rounded-[5px] border">
+                      <div className="px-5 pb-3">
+                        <article className="mb-5">
+                          <h6 className="text-[20px] font-medium mb-3">{product.title}</h6>
+                          <span className="inline-flex items-center py-2 px-4 border rounded-md justify-items-start gap-2">
                             <BsCoin className="fill-[#f9d222] text-[20px]" />
-                            <span className="font-normal text-[14px]">
-                              {product.price}
-                            </span>
-                          </p>
+                            <span className="font-normal text-[16px]">{product.price}</span>
+                          </span>
                         </article>
                         <Link href={`/student/shop/${product._id}`}>
-                          <button className="px-10 py-2 border rounded-sm cursor-pointer hover:bg-orange-500 transition-all duration-300 hover:text-white">
+                          <button className="w-full px-10 py-2 border rounded-sm cursor-pointer bg-orange-500 hover:bg-orange-500/70 transition-all duration-300 text-white">
                             Olish
                           </button>
                         </Link>

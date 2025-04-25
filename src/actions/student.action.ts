@@ -24,6 +24,11 @@ export const getStudents = unstable_cache(
           path: "students",
           model: Student,
           select: "name surname phone studentID publishStudent course", // Faqat kerakli maydonlar
+          populate: {
+            path: "course",
+            model: Course, // <<< Shu joy qo‘shiladi!
+            select: "_id courseTitle", // Kursdan kerakli maydonlarni tanlab olasan
+          },
         }).lean()
       const plainCourses = courses.map((course) => ({
         ...course,
@@ -31,12 +36,15 @@ export const getStudents = unstable_cache(
         students: course.students.map((student: any) => ({
           ...student,
           _id: student._id.toString(),
-          course: student.course.toString(),
-          courseTitle: course.courseTitle,
+          course: {
+            _id: student.course._id.toString(),
+            courseTitle: student.course.courseTitle,
+          },
         })),
         teacher: course.teacher.toString(),
       }))
-      return plainCourses
+      const allStudents = plainCourses.flatMap(course => course.students);
+      return allStudents
     } catch (error) {
       console.error("Error fetching students:", error)
       throw new Error("Talabalarni olishda xatolik yuz berdi")
