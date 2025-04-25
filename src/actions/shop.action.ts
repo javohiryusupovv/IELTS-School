@@ -61,3 +61,13 @@ export const getShopId = async(id: string) => {
         throw new Error(`Xatolik yuz berid GET ShopIdda, ${error}`)
     }
 }
+
+export const deleteShop = async(id: string, path: string) => {
+    try{
+        await ConnectMonogDB()
+        await Shop.findByIdAndDelete(id)
+        revalidatePath(path)
+    }catch(error){
+        throw new Error(`Xatolik yuz berid DELETE Shopda, ${error}`)
+    }
+}

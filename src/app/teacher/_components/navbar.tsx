@@ -1,9 +1,9 @@
 "use client"
 
 import Image from "next/image"
-import LearningCenterLogo from "../../../../public/icons/ustozDev.png"
+import LearningCenterLogo from "../../../../public/logo/logo.png"
 import GroupCard from "./card/group-card"
-import { ArrowRightToLine, CircleUserRound  } from 'lucide-react';
+import { CircleUserRound  } from 'lucide-react';
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Loading from "./loading";

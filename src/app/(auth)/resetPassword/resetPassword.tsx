@@ -22,6 +22,7 @@ export default function ResetPassword({teacherRes}: Props) {
         if (istoggle) {
             if(newpassword.length < 6) {
                 toast.warning("Password kamida 6 ta belgidan iborat bo'lishi kerak!");
+                setLoading(false);
                 return;
             }
             const res = await ResetPasswordAction(teacherRes, newpassword, pathname)
@@ -32,7 +33,7 @@ export default function ResetPassword({teacherRes}: Props) {
               }
         }
         setLoading(false);
-        setIstoggle((prev) => !prev);
+        setIstoggle(!istoggle);
     };
 
     return (

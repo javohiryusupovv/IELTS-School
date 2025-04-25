@@ -117,7 +117,7 @@ function NavbarLayout() {
             Shoppinga o&apos;tish
           </p>
           <button className="py-[6px] px-7 border rounded-lg font-semibold text-white">
-            <Link href={"/shop"}>Kettik</Link>
+            <Link href={"/shop"}>Shop</Link>
           </button>
         </div>
       </div>

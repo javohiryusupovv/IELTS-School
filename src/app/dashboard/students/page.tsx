@@ -14,8 +14,8 @@ export default async function StudentAll() {
   const studentList = students.flatMap((course) => course.students);
 
   // Barcha studentlarni sanash
-  const totalStudents = studentList.length
-
+  const totalStudents = studentList.length;
+  let studentCounter = 1;
   return (
     <div>
       <article className="flex items-center justify-between mb-3">
@@ -50,7 +50,7 @@ export default async function StudentAll() {
                 <tr key={student._id || id} className={`border hover:bg-gray-100 transition ${student.publishStudent ? "bg-white" : "bg-accent hover:bg-gray-400/20"}`}>
                   {student.publishStudent ? (
                     <>
-                      <td className="py-2 text-[14px] font-medium px-3">{id + 1}</td>
+                      <td className="py-2 text-[14px] font-medium px-3">{studentCounter++}</td>
                       <td className="py-2 text-[14px] font-normal px-3">
                         <Link href={`/dashboard/students/${student._id}`} className="hover:underline hover:text-orange-400 transition-all duration-300">
                           {student.name} {student.surname}
@@ -72,7 +72,7 @@ export default async function StudentAll() {
 
                   ) : (
                     <>
-                      <td className="py-2 text-[14px] font-medium px-3">{id + 1}</td>
+                      <td className="py-2 text-[14px] font-medium px-3">{studentCounter++}</td>
                       <td className="py-2 text-[14px] font-normal px-3 text-gray-400">
                         <Link href={`/dashboard/students/${student._id}`} className="hover:underline hover:text-orange-400 transition-all duration-300">
                           {student.name} {student.surname}
@@ -82,7 +82,7 @@ export default async function StudentAll() {
                         {course.courseTitle}
                       </td>
                       <td className="py-2 text-[14px] font-normal text-gray-400">
-                        <span className="w-[109px] py-1 px-2 rounded-full border bg-[#04b94f] text-white flex justify-center">
+                        <span className="w-[109px] py-1 px-2 rounded-full border bg-[#b90404] text-white flex justify-center">
                           * * * * *
                         </span>
                       </td>

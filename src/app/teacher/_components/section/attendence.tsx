@@ -292,7 +292,7 @@ export default function Attendence({
                                           htmlFor="leader"
                                           className="text-[13px]"
                                         >
-                                          Yuqori ball
+                                          Vaqtida to'lov
                                         </label>
                                       </article>
                                       <PopoverClose

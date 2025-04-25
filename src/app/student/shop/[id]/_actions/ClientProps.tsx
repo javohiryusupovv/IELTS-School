@@ -39,6 +39,8 @@ export default function ClientComponent({ product, coins, student }: Props) {
           lastName: student.surname,
           kurs: student.course.courseTitle
         }
+        console.log(data);
+        
         if(result.success){
           toast.success(`Siz ${product.title} mahsulotini muvaffaqiyatli sotib oldingiz`)
         }else {

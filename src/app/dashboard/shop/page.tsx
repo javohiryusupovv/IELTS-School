@@ -2,6 +2,7 @@ import Image from "next/image"
 import SwitchSettings from "./_components/actions"
 import { getShop } from "@/actions/shop.action"
 import { ICreateShop } from "@/types/type";
+import DeleteProduct from "./_components/deletefn";
 
 async function ShopAdmin() {
   const productsJSON = await getShop();
@@ -17,6 +18,7 @@ async function ShopAdmin() {
               <Image width={300} height={250} className="w-full h-full object-cover" src={item.image} alt="Iphone Teleofon" />
             </article>
             <SwitchSettings products={item} /> 
+            <DeleteProduct products={item}/>
             <p>{item.title}</p>
           </div>
         ))}

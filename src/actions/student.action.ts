@@ -97,7 +97,7 @@ export const postAddStudent = async ( courseId: string, name: string, surname: s
     })
     await newStudent.save()
 
-    course.students.push(newStudent._id)
+    course.students.unshift(newStudent._id)
     await course.save()
 
     // Keshni yangilash
@@ -137,7 +137,7 @@ export const deleteStudent = async (studentId: string, courseId: string, path: s
     revalidatePath(path)
     return { success: true, message: "Talaba muvaffaqiyatli o‘chirildi!" }
   } catch (error) {
-    console.error(`Error deleting student ${studentId}:`, error)
+    console.error(`Talabani o‘chirishda xatolik:`, error);
     throw new Error("Talabani o‘chirishda xatolik yuz berdi")
   }
 }
