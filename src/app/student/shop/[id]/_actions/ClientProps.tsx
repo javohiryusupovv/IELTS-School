@@ -16,58 +16,96 @@ import { salesUpdateCoins } from "@/actions/student.action";
 import { usePathname } from "next/navigation";
 
 interface Props {
-  product: ICreateShop,
-  coins: number,
-  student: IStudent
+  product: ICreateShop;
+  coins: number;
+  student: IStudent;
 }
 
 export default function ClientComponent({ product, coins, student }: Props) {
   const [open, setOpen] = useState(false);
-  const pathname = usePathname()
+  const [isLoading, setIsLoading] = useState(false);
+  const pathname = usePathname();
 
-  const handleSubmit = async(e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     if (coins >= product.price) {
-      try{
-        const result = await salesUpdateCoins(student._id, product.price, pathname)
-        const data = {
-          title: product.title,
-          description: product.description,
-          price: product.price,
-          image: product.image,
-          firstName: student.name,
-          lastName: student.surname,
-          kurs: student.course.courseTitle
-        }
-        console.log(data);
-        
-        if(result.success){
-          toast.success(`Siz ${product.title} mahsulotini muvaffaqiyatli sotib oldingiz`)
-        }else {
+      try {
+        const result = await salesUpdateCoins(
+          student._id,
+          product.price,
+          pathname
+        );
+        if (result.success) {
+          handlePurchaseBot();
+        } else {
           toast.error("Coin ayirishda xatolik: " + result.message);
         }
-      }catch (err) {
+      } catch (err) {
         console.error(err);
         toast.error("Server bilan ulanishda xatolik");
-      }finally{
-        setOpen(false)
+      } finally {
+        setOpen(false);
       }
     } else {
-      toast.error(`Sizni Coins yetarli emas !!!`)
+      toast.error(`Sizni Coins yetarli emas !!!`);
     }
+  };
 
+  const handlePurchaseBot = () => {
+    setIsLoading(true);
+    const telegramBotId = process.env.NEXT_PUBLIC_TELEGRAM_BOT_API!;
+    const telegramChatId = process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID!;
+const message = `
+👨‍🎓 Name: ${student.name} ${student.surname}
 
-  }
+📔 Kurs: ${student.course.courseTitle}
+
+🖊 Title: ${product.title}
+
+🧾 Description: ${product.description}
+
+💵 Price: ${product.price}
+
+📆 Date: ${new Date().toLocaleDateString()}
+`.trim();
+    const promise = fetch(
+      `https://api.telegram.org/bot${telegramBotId}/sendMessage`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "cache-control": "no-cache",
+        },
+        body: JSON.stringify({
+          chat_id: telegramChatId,
+          text: message,
+          parse_mode: "HTML",
+      }),
+      }
+    ).finally(() => {
+      setIsLoading(false);
+    });
+
+    toast.promise(promise, {
+      loading: "Loading...",
+      success: "Mahsulot muvaffaqiyatli sotib olindi, tabriklaymiz!",
+      error: "Something went wrong!",
+    });
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild className="flex">
-        <Button className="mt-5 mb-8 w-full py-2 px-12 flex items-center">Sotib olish</Button>
+        <Button className="mt-5 mb-8 w-full py-2 px-12 flex items-center">
+          Sotib olish
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogTitle className="text-xl font-bold">{product.title}</DialogTitle>
         <DialogDescription>
-          Bu mahsulotni sotib olish uchun <span className="text-green-500">{product.price}</span> coin sarflanadi.
+          Bu mahsulotni sotib olish uchun{" "}
+          <span className="text-green-500">{product.price}</span> coin
+          sarflanadi.
         </DialogDescription>
         <article className="w-full flex justify-center overflow-hidden">
           <Image
@@ -88,6 +126,7 @@ export default function ClientComponent({ product, coins, student }: Props) {
 
         <button
           onClick={handleSubmit}
+          disabled={isLoading}
           className="py-2 px-4 rounded-md text-white bg-orange-500 hover:bg-orange-400/90 hover:text-white transition-all duration-300"
         >
           Select
