@@ -40,8 +40,6 @@ export default function Attendence({
   titleCourse,
   teacherName,
 }: Props) {
-  const [reasonValues, setReasonValues] = useState<{[key: string]: any;}>({});
-  const [isPending, startTransition] = useTransition();
   const [selectedCell, setSelectedCell] = useState<{
     studentID: string;
     day: string;
@@ -123,35 +121,33 @@ export default function Attendence({
       leader: attedence.leader,
     };
     // Tanlangan sabablarga ko'ra qiymatlarni olish
-    const filteredReasons = Object.entries(reasons)
-    const filteredReasonsArray = filteredReasons.filter(
-      ([key, value]) => value === true)
-      .map(([key]) => (
-        {
-          reason: key,
-          value: reasonsWithValues[key as keyof typeof reasonsWithValues],
-        }
-      ))
+    const filteredReasons = Object.entries(reasons);
+    const filteredReasonsArray = filteredReasons
+      .filter(([key, value]) => value === true)
+      .map(([key]) => ({
+        reason: key,
+        value: reasonsWithValues[key as keyof typeof reasonsWithValues],
+      }));
 
-      try{
-        toast.promise(
-          addCoins(studentId, filteredReasonsArray, pathname, selectedCell?.day),
-          {
-            loading: "Qo'shilmoqda...",
-            success: "Coin muvaffaqiyatli qo'shildi",
-            error: (error) => `Xatolik: ${error}`,
-          }
-        )
-        setAttendence({
-          homework: false,
-          keldi: false,
-          leader: false,
-        });
-        setSelectedCell(null);
-      }catch(error){
-        console.log("Xatolik:", error)
-        throw new Error("Xatolik yuz berdi")
-      }
+    try {
+      toast.promise(
+        addCoins(studentId, filteredReasonsArray, pathname, selectedCell?.day),
+        {
+          loading: "Qo'shilmoqda...",
+          success: "Coin muvaffaqiyatli qo'shildi",
+          error: "Coin sabablari tanlanmadi",
+        }
+      );
+      setAttendence({
+        homework: false,
+        keldi: false,
+        leader: false,
+      });
+      setSelectedCell(null);
+    } catch (error) {
+      console.log("Xatolik:", error);
+      throw new Error("Xatolik yuz berdi");
+    }
   };
 
   return (
@@ -305,9 +301,21 @@ export default function Attendence({
                                   </PopoverContent>
                                 </Popover>
                               ) : (
-                                <div className="cursor-pointer py-1 px-3 border rounded-md">
-                                  <CheckCheck className="stroke-green-500 stroke-[1.4] w-5 h-5" />
-                                </div>
+                                
+                                  <TooltipProvider>
+                                    <Tooltip>
+                                      <TooltipTrigger
+                                        disabled
+                                        className="cursor-pointer flex justify-center items-center py-1 px-3 border rounded-md"
+                                      >
+                                        <CheckCheck className="stroke-green-500 stroke-[1.4] w-5 h-5" />
+                                      </TooltipTrigger>
+                                      <TooltipContent>
+                                        <p className="text-green-500">Bajarilgan</p>
+                                      </TooltipContent>
+                                    </Tooltip>
+                                  </TooltipProvider>
+                                
                               )
                             ) : (
                               <TooltipProvider>

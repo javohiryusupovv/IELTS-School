@@ -3,7 +3,7 @@
 import ConnectMonogDB from "@/lib/mongodb"
 import mongoose from "mongoose"
 import { revalidatePath, revalidateTag, unstable_cache } from "next/cache"
-import bcrypt from "bcrypt";
+import bcrypt from 'bcryptjs';
 
 import {Course, Student, Teacher} from "@/models/index"
 

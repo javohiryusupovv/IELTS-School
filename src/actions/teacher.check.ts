@@ -1,6 +1,6 @@
 "use server";
 
-import bcrypt from "bcrypt";
+import bcrypt from 'bcryptjs';
 import ConnectMonogDB from "@/lib/mongodb";
 import { revalidatePath } from "next/cache";
 
