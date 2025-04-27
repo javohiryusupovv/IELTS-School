@@ -18,10 +18,7 @@ async function ShopAdmin() {
             <article className="w-[200px] overflow-hidden my-10">
               <Image width={300} height={250} className="w-full h-full object-cover" src={item.image} alt="Iphone Teleofon" />
             </article>
-            <article className="flex items-center gap-2 absolute right-5 top-4">
-              {item.activeProduct ? <p className="text-green-500">Faol</p> : <p className="text-red-500">Arxiv</p>}
-              <SwitchSettings status={item.activeProduct} productID={item._id} />
-            </article>
+            <SwitchSettings status={item.activeProduct} productID={item._id} />
             <DeleteProduct products={item} />
             <p>{item.title}</p>
           </div>
