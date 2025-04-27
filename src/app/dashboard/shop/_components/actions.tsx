@@ -12,23 +12,25 @@ interface Props {
 
 export default function SwitchSettings({products}: Props) {
     const [isSwitch, setSwitch] = useState(Boolean(products.activeProduct));
-
+    const [loading, setLoading] = useState(false);
     const pathname = usePathname()
 
-    const handleChecked = async(checked: boolean) => {
-        setSwitch(checked);
-        try{
+    const handleChecked = async (checked: boolean) => {
+        setLoading(true);
+        try {
             await ShopActive(products._id!, checked, pathname);
-        }catch(error){
+            setSwitch(checked);
+        } catch (error) {
             console.error("Error updating product status:", error);
-            setSwitch(!checked);
+        } finally {
+            setLoading(false);
         }
     }
 
     return (
         <article className="flex items-center gap-2 absolute right-5 top-4">
             {isSwitch ? <p className="text-green-500">Faol</p> : <p className="text-red-500">Arxiv</p>}
-            <Switch checked={isSwitch} onCheckedChange={handleChecked} />
+            <Switch checked={isSwitch} onCheckedChange={handleChecked} disabled={loading}/>
         </article>
     )
 }
