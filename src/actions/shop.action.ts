@@ -3,7 +3,7 @@
 import ConnectMonogDB from "@/lib/mongodb";
 import Shop from "@/models/shop.model";
 import { ICreateShop } from "@/types/type";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { IShops } from "../../app.types";
 
 
@@ -34,10 +34,12 @@ export const postShop = async (data: ICreateShop, path: string) => {
 
 
 
-export const ShopActive = async (id: string, status: boolean) => {
+export const ShopActive = async (id: string, status: boolean, path: string) => {
     try {
         await ConnectMonogDB()
         await Shop.findByIdAndUpdate(id, { activeProduct: status }, { new: true } );
+        revalidateTag("shop")
+        revalidatePath(path)
     } catch (error) {
         throw new Error(`Xatolik yuz berid Shopda, ${error}`)
     }

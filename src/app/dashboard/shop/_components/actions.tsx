@@ -18,7 +18,7 @@ export default function SwitchSettings({ products }: Props) {
     const handleChecked = async (checked: boolean) => {
         setSwitch(checked);
         try {
-            await ShopActive(products._id!, checked);
+            await ShopActive(products._id!, checked, pathname);
             router.refresh();
             if (checked) {
                 toast.success("Mahsulot faol holatga o'tdi")
