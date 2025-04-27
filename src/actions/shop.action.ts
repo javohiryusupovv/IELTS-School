@@ -47,8 +47,7 @@ export const ShopActive = async (id: string, status: boolean, path: string) => {
 
 export const updateShop = async () => {
     await ConnectMonogDB()
-    const shops = await Shop.find({ activeProduct: true })
-    return shops as IShops[]
+    return await Shop.find({ activeProduct: true }).lean()
 }
 
 

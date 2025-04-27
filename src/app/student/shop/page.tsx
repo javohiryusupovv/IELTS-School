@@ -4,9 +4,11 @@ import { BsCoin } from "react-icons/bs";
 import { updateShop } from "@/actions/shop.action";
 import { Fragment } from "react";
 import { FiBox } from "react-icons/fi";
+import { IShops } from "../../../../app.types";
 
 export default async function ShopList() {
-  const productss = await updateShop();
+  const productsJSON = await updateShop();
+  const productss = JSON.parse(JSON.stringify(productsJSON));
 
   return (
     <div className="container w-full min-h-screen pt-5">
@@ -24,7 +26,7 @@ export default async function ShopList() {
                 </article>
               </div>
             ) :
-              productss?.map((product, id: number) => (
+              productss?.map((product: IShops, id: number) => (
                 <Fragment key={id}>
                   {product.activeProduct ? (
                     <div className="border w-[80%] pt-10 m-auto rounded-lg bg-white overflow-hidden" >
