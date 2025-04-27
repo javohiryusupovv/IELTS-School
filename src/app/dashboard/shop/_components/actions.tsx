@@ -15,16 +15,17 @@ export default function SwitchSettings({ products }: Props) {
     const [isActive, setIsActive] = useState(products.activeProduct);
     const router = useRouter()
 
-    const onUpdateStatus = () => {
+    const onUpdateStatus = async () => {
         const newStatus = !isActive;
 
         const promise = ShopActive(products._id, newStatus);
 
         toast.promise(promise, {
             loading: "Loading...",
-            success: () => {
-                setIsActive(newStatus);
+            success:async () => {
+                await promise;
                 router.refresh();
+                setIsActive(newStatus);
                 return "O'zgartirildi";
             },
             error: "Xatolik yuz berdi statusda",
