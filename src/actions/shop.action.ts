@@ -32,11 +32,10 @@ export const postShop = async (data: ICreateShop, path: string) => {
 
 
 
-export const ShopActive = async (id: string, status: boolean, path: string) => {
+export const ShopActive = async (id: string, status: boolean) => {
     try {
         await ConnectMonogDB()
         await Shop.findByIdAndUpdate(id,{ activeProduct: status },);
-        revalidatePath(path)
     } catch (error) {
         throw new Error(`Xatolik yuz berid Shopda, ${error}`)
     }

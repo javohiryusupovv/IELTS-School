@@ -2,7 +2,7 @@
 
 import { ShopActive } from "@/actions/shop.action"
 import { Switch } from "@/components/ui/switch"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { useState } from "react"
 import { IShops } from "../../../../../app.types"
 import { toast } from "sonner"
@@ -12,19 +12,19 @@ interface Props {
 }
 
 export default function SwitchSettings({ products }: Props) {
-    const pathname = usePathname()
     const [isActive, setIsActive] = useState(products.activeProduct);
-
+    const router = useRouter()
 
     const onUpdateStatus = () => {
         const newStatus = !isActive;
 
-        const promise = ShopActive(products._id, newStatus, pathname);
+        const promise = ShopActive(products._id, newStatus);
 
         toast.promise(promise, {
             loading: "Loading...",
             success: () => {
                 setIsActive(newStatus);
+                router.refresh();
                 return "O'zgartirildi";
             },
             error: "Xatolik yuz berdi statusda",

@@ -8,8 +8,8 @@ import { FiBox } from "react-icons/fi";
 export default async function ShopList() {
   const productss = await getShop();
   const activeProducts = productss.filter((product) => product.activeProduct === true);
-  
 
+  
   return (
     <div className="container w-full min-h-screen pt-5">
       <article className="w-full text-center py-2 mb-8">
