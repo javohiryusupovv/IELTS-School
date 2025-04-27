@@ -17,6 +17,8 @@ export const getShop = async () => {
     }
 }
 
+ 
+
 export const postShop = async (data: ICreateShop, path: string) => {
     if (!data.title || !data.description || !data.price || !data.image) {
         throw new Error("Data not found")
@@ -35,10 +37,16 @@ export const postShop = async (data: ICreateShop, path: string) => {
 export const ShopActive = async (id: string, status: boolean) => {
     try {
         await ConnectMonogDB()
-        await Shop.findByIdAndUpdate(id,{ activeProduct: status },);
+        await Shop.findByIdAndUpdate(id, { activeProduct: status }, { new: true } );
     } catch (error) {
         throw new Error(`Xatolik yuz berid Shopda, ${error}`)
     }
+}
+
+export const updateShop = async () => {
+    await ConnectMonogDB()
+    const shops = await Shop.find({ activeProduct: true })
+    return shops as IShops[]
 }
 
 

@@ -1,15 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { BsCoin } from "react-icons/bs";
-import { getShop } from "@/actions/shop.action";
+import { getShop, updateShop } from "@/actions/shop.action";
 import { Fragment } from "react";
 import { FiBox } from "react-icons/fi";
 
 export default async function ShopList() {
-  const productss = await getShop();
-  const activeProducts = productss.filter((product) => product.activeProduct === true);
+  const productss = await updateShop();
 
-  
   return (
     <div className="container w-full min-h-screen pt-5">
       <article className="w-full text-center py-2 mb-8">
@@ -18,7 +16,7 @@ export default async function ShopList() {
       <div>
         <div className="grid grid-cols-1 gap-10 pb-20">
           {
-            activeProducts.length < 1 ? (
+            productss.length < 1 ? (
               <div className="w-full h-full">
                 <article className="flex flex-col items-center gap-2 absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
                   <FiBox className="w-[30px] h-[30px] stroke-1 drop-shadow-xl stroke-orange-500 animate-bounce" />
@@ -26,7 +24,7 @@ export default async function ShopList() {
                 </article>
               </div>
             ) :
-              activeProducts?.map((product, id: number) => (
+              productss?.map((product, id: number) => (
                 <Fragment key={id}>
                   {product.activeProduct ? (
                     <div className="border w-[80%] pt-10 m-auto rounded-lg bg-white overflow-hidden" >
