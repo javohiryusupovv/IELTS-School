@@ -1,13 +1,14 @@
 import Image from "next/image"
 import SwitchSettings from "./_components/actions"
 import { getShop } from "@/actions/shop.action"
-import { ICreateShop } from "@/types/type";
 import DeleteProduct from "./_components/deletefn";
 import { IShops } from "../../../../app.types";
 
 async function ShopAdmin() {
   const productJSON = await getShop();
-  const product = await JSON.parse(JSON.stringify(productJSON));  
+  const product = await JSON.parse(JSON.stringify(productJSON));
+  console.log(product);
+
   return (
     <div>
       <p className="mb-10 text-[18px] font-medium">Shop List</p>
@@ -17,8 +18,11 @@ async function ShopAdmin() {
             <article className="w-[200px] overflow-hidden my-10">
               <Image width={300} height={250} className="w-full h-full object-cover" src={item.image} alt="Iphone Teleofon" />
             </article>
-            <SwitchSettings products={item} /> 
-            <DeleteProduct products={item}/>
+            <article className="flex items-center gap-2 absolute right-5 top-4">
+              {item.activeProduct ? <p className="text-green-500">Faol</p> : <p className="text-red-500">Arxiv</p>}
+              <SwitchSettings status={item.activeProduct} productID={item._id} />
+            </article>
+            <DeleteProduct products={item} />
             <p>{item.title}</p>
           </div>
         ))}

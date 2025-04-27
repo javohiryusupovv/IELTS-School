@@ -38,8 +38,8 @@ export const ShopActive = async (id: string, status: boolean, path: string) => {
     try {
         await ConnectMonogDB()
         await Shop.findByIdAndUpdate(id, { activeProduct: status }, { new: true } );
-        revalidateTag("shop")
         revalidatePath(path)
+        return { success: true, status };
     } catch (error) {
         throw new Error(`Xatolik yuz berid Shopda, ${error}`)
     }
@@ -47,7 +47,8 @@ export const ShopActive = async (id: string, status: boolean, path: string) => {
 
 export const updateShop = async () => {
     await ConnectMonogDB()
-    return await Shop.find({ activeProduct: true }).lean()
+    const products = await Shop.find({ activeProduct: true }).lean()
+    return products
 }
 
 

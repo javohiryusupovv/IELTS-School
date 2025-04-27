@@ -6,9 +6,18 @@ import { Fragment } from "react";
 import { FiBox } from "react-icons/fi";
 import { IShops } from "../../../../app.types";
 
+
+export const dynamic = "force-dynamic"
+
 export default async function ShopList() {
-  const productsJSON = await updateShop();
-  const productss = JSON.parse(JSON.stringify(productsJSON));
+  let products: IShops[] = []
+
+  try {
+    const rawProducts = await updateShop()
+    products = JSON.parse(JSON.stringify(rawProducts))
+  } catch (error) {
+    console.error("Failed to fetch products:", error)
+  }
 
   return (
     <div className="container w-full min-h-screen pt-5">
@@ -18,15 +27,15 @@ export default async function ShopList() {
       <div>
         <div className="grid grid-cols-1 gap-10 pb-20">
           {
-            productss.length < 1 ? (
+            products.length < 1 ? (
               <div className="w-full h-full">
                 <article className="flex flex-col items-center gap-2 absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
                   <FiBox className="w-[30px] h-[30px] stroke-1 drop-shadow-xl stroke-orange-500 animate-bounce" />
                   <p className="text-[15px] font-medium text-orange-500">Mahsulotlar Qolmadi !</p>
                 </article>
               </div>
-            ) :
-              productss?.map((product: IShops, id: number) => (
+            ) : (
+              products?.map((product: IShops, id: number) => (
                 <Fragment key={id}>
                   {product.activeProduct ? (
                     <div className="border w-[80%] pt-10 m-auto rounded-lg bg-white overflow-hidden" >
@@ -57,7 +66,7 @@ export default async function ShopList() {
                   ) : null}
                 </Fragment>
               )
-              )}
+              ))}
         </div>
       </div>
     </div>
