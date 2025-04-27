@@ -4,7 +4,18 @@ import ConnectMonogDB from "@/lib/mongodb";
 import Shop from "@/models/shop.model";
 import { ICreateShop } from "@/types/type";
 import { revalidatePath } from "next/cache";
+import { IShops } from "../../app.types";
 
+
+export const getShop = async () => {
+    try {
+        await ConnectMonogDB()
+        const shops = await Shop.find()
+        return shops as IShops[]
+    } catch (error) {
+        throw new Error(`Xatolik yuz berid GET Shopda`)
+    }
+}
 
 export const postShop = async (data: ICreateShop, path: string) => {
     if (!data.title || !data.description || !data.price || !data.image) {
@@ -21,30 +32,11 @@ export const postShop = async (data: ICreateShop, path: string) => {
 
 
 
-export const getShop = async () => {
-    try {
-        await ConnectMonogDB()
-        return await Shop.find().lean()
-    } catch (error) {
-        throw new Error(`Xatolik yuz berid GET Shopda, ${error}`)
-    }
-}
-
 export const ShopActive = async (id: string, status: boolean, path: string) => {
     try {
         await ConnectMonogDB()
-        const updatedShop = await Shop.findOneAndUpdate(
-            {_id: id},
-            { activeProduct: status },  // Update the activeProduct field
-            { new: true }  // Return the updated document
-        );
-
-        if (!updatedShop) {
-            throw new Error("Product not found");
-        }
-        console.log("Updated product:", updatedShop);
+        await Shop.findByIdAndUpdate(id,{ activeProduct: status },);
         revalidatePath(path)
-        return { success: true, updatedShop};
     } catch (error) {
         throw new Error(`Xatolik yuz berid Shopda, ${error}`)
     }

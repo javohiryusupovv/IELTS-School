@@ -1,15 +1,5 @@
-import { Types } from "mongoose";
-import { StaticImageData } from "next/image";
 
-export interface IProduct {
-  id: number;
-  image: string | StaticImageData;
-  title: string;
-  coin: number;
-  description: string;
-  qolganproduct: number;
-  levelRequired: number;
-}
+
 
 export interface IStudent {
   publishStudent: boolean;
@@ -41,7 +31,7 @@ export interface ITeacher {
 }
 
 export interface ICreateShop {
-  _id: string;
+  _id?: string;
   title: string;
   description: string;
   price: number;

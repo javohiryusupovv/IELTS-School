@@ -8,7 +8,6 @@ import { FiBox } from "react-icons/fi";
 export default async function ShopList() {
   const productss = await getShop();
   const activeProducts = productss.filter((product) => product.activeProduct === true);
-  console.log(activeProducts);
   
 
   return (
