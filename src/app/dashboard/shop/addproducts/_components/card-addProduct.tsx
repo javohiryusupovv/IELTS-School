@@ -2,6 +2,7 @@
 
 import { postShop } from "@/actions/shop.action";
 import { supabase } from "@/lib/supabase";
+import { ICreateShop } from "@/types/type";
 import { ImagePlus } from "lucide-react";
 import { redirect, usePathname } from "next/navigation";
 import { useRef, useState } from "react";
@@ -61,7 +62,7 @@ export default function CardAddProduct() {
     };
 
     await toast.promise(
-      postShop({...product}, pathname), {
+      postShop({...product as ICreateShop}, pathname), {
       loading: "Mahsulot yuklanmoqda...",
       success: "Mahsulot yuklandi!",
       error: "Mahsulot yuklanmadi!",
