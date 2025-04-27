@@ -6,33 +6,34 @@ import { ICreateShop } from "@/types/type";
 import { revalidatePath } from "next/cache";
 
 
-export const postShop = async(data: ICreateShop, path:string) => {
-    if(!data.title || !data.description || !data.price || !data.image) {
+export const postShop = async (data: ICreateShop, path: string) => {
+    if (!data.title || !data.description || !data.price || !data.image) {
         throw new Error("Data not found")
     }
-    try{
+    try {
         await ConnectMonogDB()
         await Shop.create(data)
         revalidatePath(path)
-    }catch(error){
+    } catch (error) {
         throw new Error(`Xatolik yuz berid POST Shopda, ${error}`)
     }
 }
 
 
 
-export const getShop = async() => {
-    try{
+export const getShop = async () => {
+    try {
         await ConnectMonogDB()
         const shop = await Shop.find()
         return shop
-    }catch(error){
+    } catch (error) {
         throw new Error(`Xatolik yuz berid GET Shopda, ${error}`)
     }
 }
 
-export const ShopActive = async(id: string, status: boolean, path: string) => {
-    try{
+export const ShopActive = async (id: string, status: boolean, path: string) => {
+    try {
+        await ConnectMonogDB()
         const updatedShop = await Shop.findByIdAndUpdate(
             id,
             { activeProduct: status },  // Update the activeProduct field
@@ -43,29 +44,29 @@ export const ShopActive = async(id: string, status: boolean, path: string) => {
             throw new Error("Product not found");
         }
         revalidatePath(path)
-    }catch(error){
+    } catch (error) {
         throw new Error(`Xatolik yuz berid Shopda, ${error}`)
     }
 }
 
 
 
-export const getShopId = async(id: string) => {
-    try{
+export const getShopId = async (id: string) => {
+    try {
         await ConnectMonogDB()
         const shop = await Shop.findById(id)
         return shop
-    }catch(error){
+    } catch (error) {
         throw new Error(`Xatolik yuz berid GET ShopIdda, ${error}`)
     }
 }
 
-export const deleteShop = async(id: string, path: string) => {
-    try{
+export const deleteShop = async (id: string, path: string) => {
+    try {
         await ConnectMonogDB()
         await Shop.findByIdAndDelete(id)
         revalidatePath(path)
-    }catch(error){
+    } catch (error) {
         throw new Error(`Xatolik yuz berid DELETE Shopda, ${error}`)
     }
 }
