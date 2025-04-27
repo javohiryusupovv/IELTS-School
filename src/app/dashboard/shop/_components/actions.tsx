@@ -1,41 +1,46 @@
 "use client"
 
-import { ShopActive } from "@/actions/shop.action"
 import { Switch } from "@/components/ui/switch"
-import { usePathname, useRouter } from "next/navigation"
-import { useState } from "react"
 import { IShops } from "../../../../../app.types"
+import { ShopActive } from "@/actions/shop.action"
+import { useEffect, useState } from "react"
 import { toast } from "sonner"
 
 interface Props {
     products: IShops
 }
 
-export default function SwitchSettings({ products }: Props) {
-    const [isActive, setIsActive] = useState(products.activeProduct);
-    const router = useRouter()
+export default function SwitchSettings({products}: Props) {
+    
+    const [isSwitch, setSwitch] = useState(false);
+    const [isLoading, setLoading] = useState(false);
 
-    const onUpdateStatus = async () => {
-        const newStatus = !isActive;
+    useEffect(() => {
+        if (products) {
+            setSwitch(Boolean(products.activeProduct));
+        }
+    }, [products]); // <-- products o'zgarsa ishlaydi
 
-        const promise = ShopActive(products._id, newStatus);
+    const handleChecked = async (checked: boolean) => {
+        setLoading(true);
+        try{
+            setSwitch(checked);
+            localStorage.setItem("activeProduct", JSON.stringify(checked));
+            await ShopActive(products._id, checked);
+        }catch(error){
+            throw new Error("Xatolik yuz berdi")
+        }finally{
+            setLoading(false);
+        }
 
-        toast.promise(promise, {
-            loading: "Loading...",
-            success:async () => {
-                await promise;
-                router.refresh();
-                setIsActive(newStatus);
-                return "O'zgartirildi";
-            },
-            error: "Xatolik yuz berdi statusda",
-        });
+        toast.success(checked ? "Faol holatga o'tdi" : "Arxivga o'tdi");
+
     };
 
     return (
         <article className="flex items-center gap-2 absolute right-5 top-4">
-            {isActive ? <p className="text-green-500">Faol</p> : <p className="text-red-500">Arxiv</p>}
-            <Switch checked={isActive} onCheckedChange={onUpdateStatus} />
+            {isSwitch ? <p className="text-green-500">Faol</p> : <p className="text-red-500">Arxiv</p>}
+            <Switch checked={isSwitch} onCheckedChange={handleChecked} disabled={isLoading}/>
         </article>
     )
 }
