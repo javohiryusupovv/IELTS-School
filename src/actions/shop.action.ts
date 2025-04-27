@@ -24,8 +24,7 @@ export const postShop = async (data: ICreateShop, path: string) => {
 export const getShop = async () => {
     try {
         await ConnectMonogDB()
-        const shop = await Shop.find().lean()
-        return shop
+        return await Shop.find().lean()
     } catch (error) {
         throw new Error(`Xatolik yuz berid GET Shopda, ${error}`)
     }
@@ -43,8 +42,9 @@ export const ShopActive = async (id: string, status: boolean, path: string) => {
         if (!updatedShop) {
             throw new Error("Product not found");
         }
+        console.log("Updated product:", updatedShop);
         revalidatePath(path)
-        return { success: true };
+        return { success: true, updatedShop};
     } catch (error) {
         throw new Error(`Xatolik yuz berid Shopda, ${error}`)
     }
@@ -55,8 +55,7 @@ export const ShopActive = async (id: string, status: boolean, path: string) => {
 export const getShopId = async (id: string) => {
     try {
         await ConnectMonogDB()
-        const shop = await Shop.findById(id)
-        return shop
+        return await Shop.findById(id)
     } catch (error) {
         throw new Error(`Xatolik yuz berid GET ShopIdda, ${error}`)
     }

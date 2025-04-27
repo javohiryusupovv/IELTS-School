@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { BsCoin } from "react-icons/bs";
 import { getShop } from "@/actions/shop.action";
-import { ICreateShop } from "@/types/type";
 import { Fragment } from "react";
 import { FiBox } from "react-icons/fi";
 
