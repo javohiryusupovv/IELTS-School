@@ -1,4 +1,5 @@
 "use client"
+
 import { ShopActive } from "@/actions/shop.action"
 import { Switch } from "@/components/ui/switch"
 import { ICreateShop } from "@/types/type"
@@ -10,7 +11,7 @@ interface Props {
 }
 
 export default function SwitchSettings({products}: Props) {
-    const [isSwitch, setSwitch] = useState(products.activeProduct);
+    const [isSwitch, setSwitch] = useState(Boolean(products.activeProduct));
 
     const pathname = usePathname()
 

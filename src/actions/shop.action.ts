@@ -10,7 +10,6 @@ export const postShop = async(data: ICreateShop, path:string) => {
     if(!data.title || !data.description || !data.price || !data.image) {
         throw new Error("Data not found")
     }
-
     try{
         await ConnectMonogDB()
         await Shop.create(data)
@@ -44,7 +43,6 @@ export const ShopActive = async(id: string, status: boolean, path: string) => {
             throw new Error("Product not found");
         }
         revalidatePath(path)
-
     }catch(error){
         throw new Error(`Xatolik yuz berid Shopda, ${error}`)
     }

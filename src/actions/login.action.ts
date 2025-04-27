@@ -10,7 +10,6 @@ export const LoginAdmin = async (login: string, password: string, path: string) 
     try {
         await ConnectMonogDB();
         const admin = await Admin.findOne({ login, password })
-        console.log(admin);
         
         if (!admin) {
             throw new Error("Admin not found");

@@ -7,7 +7,8 @@ import DeleteProduct from "./_components/deletefn";
 async function ShopAdmin() {
   const productsJSON = await getShop();
   const product = JSON.parse(JSON.stringify(productsJSON));
-
+  console.log(product);
+  
   return (
     <div>
       <p className="mb-10 text-[18px] font-medium">Shop List</p>
