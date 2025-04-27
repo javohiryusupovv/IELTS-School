@@ -24,7 +24,7 @@ export const postShop = async (data: ICreateShop, path: string) => {
 export const getShop = async () => {
     try {
         await ConnectMonogDB()
-        const shop = await Shop.find()
+        const shop = await Shop.find().lean()
         return shop
     } catch (error) {
         throw new Error(`Xatolik yuz berid GET Shopda, ${error}`)

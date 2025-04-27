@@ -11,7 +11,7 @@ interface Props {
 }
 
 export default function SwitchSettings({products}: Props) {
-    const [isSwitch, setSwitch] = useState(Boolean(products.activeProduct));
+    const [isSwitch, setSwitch] = useState(products.activeProduct);
     const [loading, setLoading] = useState(false);
     const pathname = usePathname()
 

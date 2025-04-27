@@ -7,10 +7,9 @@ import { Fragment } from "react";
 import { FiBox } from "react-icons/fi";
 
 export default async function ShopList() {
-  const productsJSON = await getShop();
-  const productss = JSON.parse(JSON.stringify(productsJSON));
-  const activeProducts = productss.filter((product: ICreateShop) => product.activeProduct === true);
-  
+  const productss = await getShop();
+  const activeProducts = productss.filter((product) => product.activeProduct === true);
+
 
   return (
     <div className="container w-full min-h-screen pt-5">
@@ -23,13 +22,13 @@ export default async function ShopList() {
             activeProducts.length < 1 ? (
               <div className="w-full h-full">
                 <article className="flex flex-col items-center gap-2 absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
-                  <FiBox className="w-[30px] h-[30px] stroke-1 drop-shadow-xl stroke-orange-500 animate-bounce"/>
+                  <FiBox className="w-[30px] h-[30px] stroke-1 drop-shadow-xl stroke-orange-500 animate-bounce" />
                   <p className="text-[15px] font-medium text-orange-500">Mahsulotlar Qolmadi !</p>
                 </article>
               </div>
             ) :
-            activeProducts?.map((product: ICreateShop) => (
-                <Fragment key={product._id}>
+              activeProducts?.map((product, id: number) => (
+                <Fragment key={id}>
                   {product.activeProduct ? (
                     <div className="border w-[80%] pt-10 m-auto rounded-lg bg-white overflow-hidden" >
                       <article className="w-full overflow-hidden flex justify-center mb-8">

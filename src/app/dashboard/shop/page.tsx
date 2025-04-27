@@ -5,8 +5,8 @@ import { ICreateShop } from "@/types/type";
 import DeleteProduct from "./_components/deletefn";
 
 async function ShopAdmin() {
-  const productsJSON = await getShop();
-  const product = JSON.parse(JSON.stringify(productsJSON));
+  const productJSON = await getShop();
+  const product = await JSON.parse(JSON.stringify(productJSON));
   console.log(product);
   
   return (
