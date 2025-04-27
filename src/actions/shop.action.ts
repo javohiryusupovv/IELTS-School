@@ -34,8 +34,8 @@ export const getShop = async () => {
 export const ShopActive = async (id: string, status: boolean, path: string) => {
     try {
         await ConnectMonogDB()
-        const updatedShop = await Shop.findByIdAndUpdate(
-            id,
+        const updatedShop = await Shop.findOneAndUpdate(
+            {_id: id},
             { activeProduct: status },  // Update the activeProduct field
             { new: true }  // Return the updated document
         );
@@ -44,6 +44,7 @@ export const ShopActive = async (id: string, status: boolean, path: string) => {
             throw new Error("Product not found");
         }
         revalidatePath(path)
+        return { success: true };
     } catch (error) {
         throw new Error(`Xatolik yuz berid Shopda, ${error}`)
     }

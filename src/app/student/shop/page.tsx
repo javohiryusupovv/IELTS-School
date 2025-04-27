@@ -9,9 +9,8 @@ import { FiBox } from "react-icons/fi";
 export default async function ShopList() {
   const productsJSON = await getShop();
   const productss = JSON.parse(JSON.stringify(productsJSON));
-
   const activeProducts = productss.filter((product: ICreateShop) => product.activeProduct === true);
-
+  
 
   return (
     <div className="container w-full min-h-screen pt-5">
