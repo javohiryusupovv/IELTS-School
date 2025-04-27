@@ -34,8 +34,8 @@ export default function SwitchSettings({ status, productID }: Props) {
 
     return (
         <article className="flex items-center gap-2 absolute right-5 top-4">
-              {status ? <p className="text-green-500">Faol</p> : <p className="text-red-500">Arxiv</p>}
-              <Switch checked={status} onCheckedChange={handleChecked} disabled={isLoading} />            </article>
-    
+              {currentStatus ? <p className="text-green-500">Faol</p> : <p className="text-red-500">Arxiv</p>}
+              <Switch checked={currentStatus} onCheckedChange={handleChecked} disabled={isLoading} />            </article>
+
     )
 }
