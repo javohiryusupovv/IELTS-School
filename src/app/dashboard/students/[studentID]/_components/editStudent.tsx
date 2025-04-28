@@ -12,7 +12,7 @@ import {
     SheetTrigger,
 } from "@/components/ui/sheet"
 import { IStudent } from "@/types/type";
-import { FormEvent, useState, useTransition } from "react";
+import { FormEvent, useState } from "react";
 import { updateStudent } from "@/actions/student.action";
 import { usePathname } from "next/navigation";
 import { toast } from "sonner";

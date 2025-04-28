@@ -6,6 +6,19 @@ import { ICourse } from "@/types/type";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
+
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+
 interface Props {
     course: ICourse
 }
@@ -13,33 +26,50 @@ interface Props {
 export default function Actions({ course }: Props) {
     const router = useRouter();
     const pathname = usePathname()
-    const [textStatus, settextStatus] = useState(false); 
-        
+    const [textStatus, settextStatus] = useState(false);
+
     const onDelete = () => {
         settextStatus(true);
         const toastId = toast.loading("O'chirilmoqda...");
         DeleteCourse(course._id, pathname)
-        .then(() => {
-            // 2. Muvaffaqiyatli o'chirilganda toasti yangilash
-            toast.success("Muvaffaqiyatli o'chirildi!", { id: toastId });
-            router.push("/dashboard/courses");
-        })
-        .catch(() => {
-            // 3. Xatolik bo'lsa toastni yangilash
-            toast.error("Xatolik yuz berdi!", { id: toastId });
-        })
-        .finally(()=> {
-            settextStatus(false)
-        })
+            .then(() => {
+                // 2. Muvaffaqiyatli o'chirilganda toasti yangilash
+                toast.success("Muvaffaqiyatli o'chirildi!", { id: toastId });
+                router.push("/dashboard/courses");
+            })
+            .catch(() => {
+                // 3. Xatolik bo'lsa toastni yangilash
+                toast.error("Xatolik yuz berdi!", { id: toastId });
+            })
+            .finally(() => {
+                settextStatus(false)
+            })
     }
-    
+
     return (
         <div>
-            <button onClick={onDelete} className="px-7 py-3 rounded-full bg-[#f18024] hover:bg-[#f18024ca] transition-all duration-200">
-                <p className="text-[15px] font-medium text-white">
-                    {textStatus ? "O'chirilmoqda" : "O'chirish"}
-                </p>
-            </button>
+            <AlertDialog>
+                <AlertDialogTrigger asChild>
+                    <button disabled={textStatus} className="px-7 py-3 rounded-full bg-red-600 hover:bg-red-500/70 transition-all duration-200">
+                        <p className="text-[15px] font-medium text-white">
+                            {textStatus ? "O'chirilmoqda" : "O'chirish"}
+                        </p>
+                    </button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            This action cannot be undone. This will permanently delete your
+                            account and remove your data from our servers.
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel>Yuq</AlertDialogCancel>
+                        <AlertDialogAction onClick={onDelete}>Ha</AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </div>
     )
 }

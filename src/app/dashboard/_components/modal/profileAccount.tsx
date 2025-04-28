@@ -7,7 +7,6 @@ import {
 } from "@/components/ui/popover";
 import adminImg from "../../../../../public/accountImg/azizbek.jpg";
 import Image from "next/image";
-import { FilePenLine } from "lucide-react";
 import ModalConfirm from "@/components/custom/modalConfirm";
 import { useState } from "react";
 

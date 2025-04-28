@@ -33,40 +33,80 @@ export default function EditProfile() {
             <label className="relative w-full">
               <input
                 type="text"
+                name="fullname"
+                required
                 className="peer border w-full p-2 rounded outline-none focus:border-orange-500 transition-all duration-200"
                 placeholder=" "
               />
-              <p className="absolute left-2 text-gray-500 bg-white px-2 text-[12px] transition-all duration-200 peer-placeholder-shown:top-[10px] peer-focus:text-[14px] peer-placeholder-shown:text-gray-400 peer-focus:-top-3 peer-focus:text-orange-500">
+              <p
+                className="absolute left-2 bg-white px-2 text-gray-500 text-[12px] transition-all duration-200
+              peer-placeholder-shown:top-[10px] 
+              peer-placeholder-shown:text-gray-400
+              peer-focus:-top-3 
+              peer-focus:text-orange-500
+              peer-valid:-top-3 
+              peer-valid:text-[14px]"
+              >
                 Ism va Familiya?
               </p>
             </label>
             <label className="relative w-full">
               <input
                 type="text"
+                name="fullname"
+                required
                 className="peer border w-full p-2 rounded outline-none focus:border-orange-500 transition-all duration-200"
                 placeholder=" "
               />
-              <p className="absolute left-2 text-gray-500 bg-white px-2 text-[12px] transition-all duration-200 peer-placeholder-shown:top-[10px] peer-focus:text-[14px] peer-placeholder-shown:text-gray-400 peer-focus:-top-3 peer-focus:text-orange-500">
+              <p
+                className="absolute left-2 bg-white px-2 text-gray-500 text-[12px] transition-all duration-200
+              peer-placeholder-shown:top-[10px] 
+              peer-placeholder-shown:text-gray-400
+              peer-focus:-top-3 
+              peer-focus:text-orange-500
+              peer-valid:-top-3 
+              peer-valid:text-[14px]"
+              >
                 Phone number
               </p>
             </label>
             <label className="relative w-full">
               <input
                 type="text"
+                name="fullname"
+                required
                 className="peer border w-full p-2 rounded outline-none focus:border-orange-500 transition-all duration-200"
                 placeholder=" "
               />
-              <p className="absolute left-2 text-gray-500 bg-white px-2 text-[12px] transition-all duration-200 peer-placeholder-shown:top-[10px] peer-focus:text-[14px] peer-placeholder-shown:text-gray-400 peer-focus:-top-3 peer-focus:text-orange-500">
+              <p
+                className="absolute left-2 bg-white px-2 text-gray-500 text-[12px] transition-all duration-200
+              peer-placeholder-shown:top-[10px] 
+              peer-placeholder-shown:text-gray-400
+              peer-focus:-top-3 
+              peer-focus:text-orange-500
+              peer-valid:-top-3 
+              peer-valid:text-[14px]"
+              >
                 Login
               </p>
             </label>
             <label className="relative w-full">
               <input
                 type="text"
+                name="fullname"
+                required
                 className="peer border w-full p-2 rounded outline-none focus:border-orange-500 transition-all duration-200"
                 placeholder=" "
               />
-              <p className="absolute left-2 text-gray-500 bg-white px-2 text-[12px] transition-all duration-200 peer-placeholder-shown:top-[10px] peer-focus:text-[14px] peer-placeholder-shown:text-gray-400 peer-focus:-top-3 peer-focus:text-orange-500">
+              <p
+                className="absolute left-2 bg-white px-2 text-gray-500 text-[12px] transition-all duration-200
+              peer-placeholder-shown:top-[10px] 
+              peer-placeholder-shown:text-gray-400
+              peer-focus:-top-3 
+              peer-focus:text-orange-500
+              peer-valid:-top-3 
+              peer-valid:text-[14px]"
+              >
                 Password
               </p>
             </label>

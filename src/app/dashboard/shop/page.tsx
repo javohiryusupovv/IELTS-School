@@ -15,8 +15,8 @@ async function ShopAdmin() {
       <div className="grid grid-cols-3 xl:grid-cols-4 gap-4 justify-center w-full ">
         {product.map((item: IShops) => (
           <div key={item._id} className="relative top-0 left-0 px-2 py-5 w-full flex flex-col justify-center items-center border rounded-md">
-            <article className="w-[300px] h-[180px] overflow-hidden my-10">
-              <Image width={300} height={250} className="w-full h-full object-contain" src={item.image} alt="Iphone Teleofon" />
+            <article className="w-full h-[180px] overflow-hidden my-10">
+              <Image width={200} height={200} className="w-full h-full object-contain overflow-hidden" src={item.image} alt="Iphone Teleofon" />
             </article>
             <SwitchSettings status={item.activeProduct} productID={item._id} />
             <DeleteProduct products={item} />

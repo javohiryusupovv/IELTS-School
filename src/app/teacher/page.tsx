@@ -29,9 +29,7 @@ export default function Page() {
     return (
         <div className="pt-10">
             <div className="flex gap-7 items-start w-[400px] h-[250px] p-5 rounded-md border shadow-lg shadow-gray-500/20">
-                <article className="p-2 border w-[120px] h-[120px] rounded-full">
-                    <Image className="w-full" src={AccountImg} alt="Account Img" />
-                </article>
+                    <Image className="w-[120px] h-[120px] rounded-full" src={AccountImg} alt="Account Img" />
                 <article>
                     <p className="text-[20px] mb-1">{teacher.teacherSurname} {teacher.teacherName}</p>
                     <p className="text-[17px]">+998 {teacher.teacherPhone}</p>

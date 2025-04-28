@@ -1,3 +1,5 @@
+import { ITeacher } from "@/types/type";
+
 export interface IShops{
     _id: string;
     title: string;
@@ -7,3 +9,11 @@ export interface IShops{
     activeProduct: boolean;
     
 } 
+
+export interface IUpdateCourse{
+    courseTitle: string, 
+    startDate: string;
+    endDate: string;
+    days: string[];
+    teacher: string | ITeacher;
+}

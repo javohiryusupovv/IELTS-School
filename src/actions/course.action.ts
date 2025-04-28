@@ -7,6 +7,7 @@ import { unstable_cache } from "next/cache"
 import { revalidatePath, revalidateTag } from "next/cache"
 
 import { Course, Student, Teacher } from "@/models/index"
+import { IUpdateCourse } from "../../app.types"
 
 // Barcha kurslarni olish (kesh bilan)
 export const getCourses = unstable_cache(
@@ -44,9 +45,9 @@ export const getCourseById = unstable_cache(
           match: { publishStudent: true },
           select: "name surname phone coins",
         })
-      if (!course) {
-        throw new Error("Kurs topilmadi")
-      }
+        if (!course) {
+          return null
+        }
       return JSON.parse(JSON.stringify(course)) as ICourse
     } catch (error) {
       console.error(`Error fetching course ${kursId}:`, error)
@@ -89,6 +90,21 @@ export const postCourse = async (courseTitle: string, teacherId: string, startDa
   } catch (error) {
     console.error("Error creating course:", error)
     throw new Error("Kurs yaratishda xatolik yuz berdi")
+  }
+}
+
+export const updateCourseServer = async (courseId: string, courseData: IUpdateCourse, path: string) => {
+  try{
+    await ConnectMonogDB()
+    const updateCourseData = await Course.findByIdAndUpdate(
+      courseId,
+      {$set: courseData},
+      {new: true}
+    )
+    revalidatePath(path)
+    return JSON.parse(JSON.stringify(updateCourseData));
+  }catch(error){
+    throw new Error("Kurs Yangilanmadi")
   }
 }
 

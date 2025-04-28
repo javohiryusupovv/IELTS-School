@@ -4,10 +4,11 @@ import { LoginAdmin } from "@/actions/login.action";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-import { LoaderCircle } from 'lucide-react';
+import { LoaderCircle, Eye, EyeOff } from 'lucide-react';
 import { useTopLoader } from "nextjs-toploader";
 import Image from "next/image";
 import LoginLogo from "../../../../public/logo/logo.png"
+
 
 
 export default function ReceptionLogin() {
@@ -17,7 +18,12 @@ export default function ReceptionLogin() {
   const [error, setError] = useState(false);
   const router = useRouter();
   const [isloading, setLoading] = useState(false);
-  const topLoading = useTopLoader()
+  const topLoading = useTopLoader();
+  const [eye, setEye] = useState(false);
+
+  const hidePassword = () => {
+    setEye(!eye);
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -64,14 +70,19 @@ export default function ReceptionLogin() {
         </div>
 
         <div className="mb-6">
-          <label className="block text-sm mb-1">Password</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value.trim())}
-            className="w-full px-3 py-2 border rounded-lg"
-            required
-          />
+          <p className="text-sm mb-1">Password</p>
+          <label className="flex items-center justify-between w-full gap-5 overflow-hidden pr-3 border rounded-lg focus:border-orange-500">
+            <input
+              type={eye ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value.trim())}
+              className="w-full h-full px-3 py-3 rounded-l-md outline-none"
+              required
+            />
+            <p className="cursor-pointer" onClick={hidePassword}>
+              {eye ? <Eye /> : <EyeOff/>}
+            </p>
+          </label>
         </div>
         
         {error && <p className="text-red-500 mb-4">Xato login</p>}

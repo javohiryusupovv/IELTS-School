@@ -21,7 +21,7 @@ export const StudentCheck = async (id: string, path: string) => {
     (await cookies()).set("student-auth", student._id.toString(), {
       httpOnly: true,
       path: "/",
-      maxAge: 60 * 60 * 24, // 1 hafta
+      maxAge: 60 * 60, // 1 hafta
     })
 
     revalidatePath(path)
