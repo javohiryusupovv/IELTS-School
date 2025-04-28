@@ -2,7 +2,7 @@
 
 import { ITeacher } from "@/types/type"
 import { useEffect, useState } from "react"
-import AccountImg from "../../../public/accountImg/users.png"
+import AccountImg from "../../../public/accountImg/azizbek.jpg"
 import Image from "next/image";
 import Link from "next/link";
 
