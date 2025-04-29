@@ -39,7 +39,7 @@ export default async function ShopList() {
                 <Fragment key={id}>
                   {product.activeProduct ? (
                     <div className="border w-full flex flex-col justify-between rounded-lg bg-white overflow-hidden" >
-                      <article className="w-full h-[200px] overflow-hidden flex justify-center mb-5">
+                      <article className="w-full h-[170px] overflow-hidden flex justify-center mb-5">
                         <Image
                           className="w-full h-full object-cover"
                           src={product.image}
@@ -57,7 +57,7 @@ export default async function ShopList() {
                           </span>
                         </article>
                         <Link href={`/student/shop/${product._id}`}>
-                          <button className="w-full px-10 py-2 rounded-sm cursor-pointer bg-orange-500 hover:bg-orange-500/70 transition-all duration-300 text-white">
+                          <button className="w-full px-8 py-2 rounded-sm cursor-pointer bg-orange-500 hover:bg-orange-500/70 transition-all duration-300 text-white text-[14px]">
                             Olish
                           </button>
                         </Link>

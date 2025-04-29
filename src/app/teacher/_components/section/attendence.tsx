@@ -3,7 +3,7 @@
 import { addCoins } from "@/actions/student.action";
 import "./attendence.css";
 import moment from "moment";
-import { useState, useTransition } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 import {
   ChevronRight,
@@ -25,16 +25,19 @@ import {
 import { PopoverClose } from "@radix-ui/react-popover";
 
 import { usePathname } from "next/navigation";
-import { reasonsWithValues } from "../../../../../constants/page";
+import { formatDate, reasonsWithValues } from "../../../../../constants/page";
+import { ICourse } from "@/types/type";
 
 interface Props {
   students: any;
   days: string[];
   titleCourse: string;
   teacherName: string;
+  course: ICourse
 }
 
 export default function Attendence({
+  course,
   students,
   days,
   titleCourse,
@@ -51,6 +54,10 @@ export default function Attendence({
     leader: false,
   });
   const pathname = usePathname();
+  
+  
+  
+  
 
   const handleOnChangeChecked = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, checked } = e.target;
@@ -156,8 +163,8 @@ export default function Attendence({
         <article className="flex items-center gap-3 mb-7">
           <p className="w-[6] h-[6] rounded-full bg-orange-400"></p>
           <h6 className="flex gap-3 items-center text-[25px]">
-            {titleCourse}{" "}
-            <p className="w-[6] h-[6] rounded-full bg-orange-400"></p>{" "}
+            {titleCourse}
+            <p className="w-[6] h-[6] rounded-full bg-orange-400"></p>
             {teacherName}
           </h6>
         </article>
@@ -184,8 +191,22 @@ export default function Attendence({
           </button>
         </div>
       </div>
-      <div className="grid grid-cols-4 gap-3">
-        <div className="border col-span-1"></div>
+      <div className="grid grid-cols-4 gap-10">
+        <div className="border px-5 pt-5 pb-16 col-span-1 rounded shadow-md shadow-gray-500/10">
+              <article>
+                <p className="flex gap-3 items-center text-[14px]"><strong className="font-medium text-[13px]">Kurs: </strong> {course.courseTitle}</p>
+              </article>
+              <article className="flex gap-3 items-center text-[14px]">
+                <p><strong className="font-medium text-[13px]">O'qituvchi: </strong> {teacherName}</p>
+              </article>
+              <article className="flex gap-3 items-center text-[14px]">
+                <p><strong className="font-medium text-[13px]">O'quvchilar soni: </strong> {students.length} ta</p>
+              </article>
+              <article className="text-[14px]">
+                <p><strong className="font-medium text-[13px]">Dars muddati: </strong></p>
+                <p>{formatDate(course.startDate)} — {formatDate(course.endDate)}</p>
+              </article>
+        </div>
         <div className="col-span-3 overflow-hidden">
           <div className="w-full overflow-x-auto">
             <table className="w-full pr-28">

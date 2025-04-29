@@ -2,9 +2,10 @@
 
 import { ITeacher } from "@/types/type"
 import { useEffect, useState } from "react"
-import AccountImg from "../../../public/accountImg/azizbek.jpg"
+import AccountImg from "../../../public/accountImg/users.png"
 import Image from "next/image";
 import Link from "next/link";
+import { formatDate } from "../../../constants/page";
 
 export default function Page() {
     const [teacher, setTeacher] = useState<ITeacher | null>(null);
@@ -16,20 +17,16 @@ export default function Page() {
         }
     }, []);
 
-    const formatDate = (dateString: string) => {
-        const date = new Date(dateString);
-        const day = String(date.getUTCDate()).padStart(2, "0");
-        const month = String(date.getUTCMonth() + 1).padStart(2, "0");
-        const year = date.getUTCFullYear();
-        return `${day}-${month}-${year}`;
-    };
+    
 
     if (!teacher) return <p>Loading...</p>;
 
     return (
         <div className="pt-10">
             <div className="flex gap-7 items-start w-[400px] h-[250px] p-5 rounded-md border shadow-lg shadow-gray-500/20">
-                    <Image className="w-[120px] h-[120px] rounded-full" src={AccountImg} alt="Account Img" />
+                <article className="p-2 border w-[120px] h-[120px] rounded-full">
+                     <Image className="w-full" src={AccountImg} alt="Account Img" />
+                 </article>
                 <article>
                     <p className="text-[20px] mb-1">{teacher.teacherSurname} {teacher.teacherName}</p>
                     <p className="text-[17px]">+998 {teacher.teacherPhone}</p>
