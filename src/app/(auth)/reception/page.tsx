@@ -60,7 +60,7 @@ export default function ReceptionLogin() {
       >
 
         <div className="mb-4">
-          <label className="block text-sm mb-1">Username</label>
+          <label className="block text-sm mb-1">Login</label>
           <input
             type="text"
             value={username}

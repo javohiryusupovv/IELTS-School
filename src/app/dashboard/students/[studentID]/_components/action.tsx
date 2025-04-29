@@ -12,6 +12,7 @@ import { CircleCheckBig } from "lucide-react";
 
 import Archive from "./Archive";
 import ActiveStudentFunc from "./ActiveStudent";
+import { formatDate, formatReasonText } from "../../../../../../constants/page";
 
 interface Props {
   student: IStudent;
@@ -78,11 +79,6 @@ export default function Actions({ student }: Props) {
         <div className="p-4 text-center col-span-2 rounded-lg shadowCustom">
           <p className="mb-4">Studentning Coinlar tarixi</p>
           <div className="w-full">
-            {/* {totalCoins === 0 && (
-              <p className="text-gray-500/50 text-[14px] my-5 underline">
-                Coinlar tarixi mavjud emas
-              </p>
-            )} */}
             {totalCoins < 1 ? (
               <p className="text-gray-500/50 text-[14px] my-5 underline">
                 Coinlar tarixi mavjud
@@ -109,7 +105,7 @@ export default function Actions({ student }: Props) {
                     className="flex w-full py-2 px-4 items-center bg-green-300/30 rounded-md mb-3"
                   >
                     <article className="flex-[0.4]">
-                      <CircleCheckBig className="stroke-[1.5] w-5 h-5 stroke-green-500" />
+                      <CircleCheckBig className={`stroke-[1.5] w-5 h-5 ${coin.value > 0 ? "stroke-green-500" : "stroke-red-500"}`} />
                     </article>
                     <article className="flex-1 text-start">
                       <article className="flex gap-2 items-center">
@@ -118,23 +114,24 @@ export default function Actions({ student }: Props) {
                             key={index}
                             className="text-[10px] text-white px-3 py-1 rounded-2xl bg-orange-500"
                           >
-                            {reason}
+                            {formatReasonText(reason)}
                           </p>
                         ))}
                       </article>
                     </article>
                     <article className="flex-1 text-center">
-                      <p className="text-gray-500/50">{coin.date}</p>
+                      <p className="text-gray-500/50">{formatDate(coin.date)}</p>
                     </article>
                     <article className="flex-1 justify-items-end text-right">
-                      <p className="flex justify-center items-center w-14 h-6 rounded-3xl text-[14px] text-white bg-green-500">
-                        +{coin.value}
+                      <p className={`flex justify-center items-center w-14 h-6 rounded-3xl text-[14px] text-white bg-green-500 ${coin.value > 0 ? "bg-green-500" :  "bg-red-500" }`}>
+                        {coin.value > 0 ? "+" : ""}
+                        {coin.value}
                       </p>
                     </article>
                   </div>
                 ))}
               </div>
-            ) }
+            )}
           </div>
         </div>
       </div>

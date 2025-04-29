@@ -280,6 +280,7 @@ export const salesUpdateCoins = async (studentId: string, coinValue: number, pat
     student.coins.push({
       value: -coinValue,
       date: today,
+      reasons: [{ reason: "Coin almashtirildi !", value: -coinValue }]
     })
     await student.save()
 

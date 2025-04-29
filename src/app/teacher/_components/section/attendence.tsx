@@ -10,6 +10,7 @@ import {
   ChevronLeft,
   LockKeyhole,
   CheckCheck,
+  Info
 } from "lucide-react";
 import {
   Tooltip,
@@ -54,10 +55,10 @@ export default function Attendence({
     leader: false,
   });
   const pathname = usePathname();
-  
-  
-  
-  
+
+
+
+
 
   const handleOnChangeChecked = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, checked } = e.target;
@@ -123,9 +124,9 @@ export default function Attendence({
 
     // Checkboxlarning qiymatlari
     const reasons = {
-      homework: attedence.homework,
-      keldi: attedence.keldi,
-      leader: attedence.leader,
+      UygaVazifa: attedence.homework,
+      VaqtidaKeldi: attedence.keldi,
+      ImtihondanYaxshiBall: attedence.leader,
     };
     // Tanlangan sabablarga ko'ra qiymatlarni olish
     const filteredReasons = Object.entries(reasons);
@@ -135,6 +136,7 @@ export default function Attendence({
         reason: key,
         value: reasonsWithValues[key as keyof typeof reasonsWithValues],
       }));
+
 
     try {
       toast.promise(
@@ -156,6 +158,8 @@ export default function Attendence({
       throw new Error("Xatolik yuz berdi");
     }
   };
+
+
 
   return (
     <div className="p-4">
@@ -193,19 +197,19 @@ export default function Attendence({
       </div>
       <div className="grid grid-cols-4 gap-10">
         <div className="border px-5 pt-5 pb-16 col-span-1 rounded shadow-md shadow-gray-500/10">
-              <article>
-                <p className="flex gap-3 items-center text-[14px]"><strong className="font-medium text-[13px]">Kurs: </strong> {course.courseTitle}</p>
-              </article>
-              <article className="flex gap-3 items-center text-[14px]">
-                <p><strong className="font-medium text-[13px]">O'qituvchi: </strong> {teacherName}</p>
-              </article>
-              <article className="flex gap-3 items-center text-[14px]">
-                <p><strong className="font-medium text-[13px]">O'quvchilar soni: </strong> {students.length} ta</p>
-              </article>
-              <article className="text-[14px]">
-                <p><strong className="font-medium text-[13px]">Dars muddati: </strong></p>
-                <p>{formatDate(course.startDate)} — {formatDate(course.endDate)}</p>
-              </article>
+          <article>
+            <p className="flex gap-3 items-center text-[14px]"><strong className="font-medium text-[13px]">Kurs: </strong> {course.courseTitle}</p>
+          </article>
+          <article className="flex gap-3 items-center text-[14px]">
+            <p><strong className="font-medium text-[13px]">O'qituvchi: </strong> {teacherName}</p>
+          </article>
+          <article className="flex gap-3 items-center text-[14px]">
+            <p><strong className="font-medium text-[13px]">O'quvchilar soni: </strong> {students.length} ta</p>
+          </article>
+          <article className="text-[14px]">
+            <p><strong className="font-medium text-[13px]">Dars muddati: </strong></p>
+            <p>{formatDate(course.startDate)} — {formatDate(course.endDate)}</p>
+          </article>
         </div>
         <div className="col-span-3 overflow-hidden">
           <div className="w-full overflow-x-auto">
@@ -220,9 +224,6 @@ export default function Attendence({
                       {moment(month).format("D-MMM")}
                     </th>
                   ))}
-                  {/* <th className="fixed right-0 bg-white py-[10px] w-[120px] text-center">
-                    <p className="w-[120px]">Coins</p>
-                  </th> */}
                 </tr>
               </thead>
               <tbody>
@@ -242,6 +243,7 @@ export default function Attendence({
                         "day"
                       );
                       const isToday = moment(day).isSame(today, "day");
+                      const isCoinGiven = student.coins && student.coins.some((coin: any) => coin.date === day);
                       return (
                         <td key={i} className="text-[12px] p-3">
                           <span
@@ -280,7 +282,7 @@ export default function Attendence({
                                           Uyga vazifa
                                         </label>
                                       </article>
-                                      <article className="flex items-center gap-2 mb-2">
+                                      <article className="flex items-center gap-2 mb-4">
                                         <input
                                           type="checkbox"
                                           checked={attedence.keldi}
@@ -296,7 +298,7 @@ export default function Attendence({
                                           Vaqtida keldi
                                         </label>
                                       </article>
-                                      <article className="flex items-center gap-2 mb-4">
+                                      {/* <article className="flex items-center gap-2 mb-4">
                                         <input
                                           type="checkbox"
                                           checked={attedence.leader}
@@ -311,7 +313,7 @@ export default function Attendence({
                                         >
                                           Vaqtida to'lov
                                         </label>
-                                      </article>
+                                      </article> */}
                                       <PopoverClose
                                         onClick={handleCheckedValue}
                                         className="px-2 py-1 text-[13px] rounded-md bg-orange-500 text-white"
@@ -322,21 +324,27 @@ export default function Attendence({
                                   </PopoverContent>
                                 </Popover>
                               ) : (
-                                
-                                  <TooltipProvider>
-                                    <Tooltip>
-                                      <TooltipTrigger
-                                        disabled
-                                        className="cursor-pointer flex justify-center items-center py-1 px-3 border rounded-md"
-                                      >
+
+                                <TooltipProvider>
+                                  <Tooltip>
+                                    <TooltipTrigger
+                                      disabled
+                                      className={`cursor-pointer flex justify-center items-center py-1 px-3 border rounded-md`}
+                                    >
+                                      {isCoinGiven ? (
                                         <CheckCheck className="stroke-green-500 stroke-[1.4] w-5 h-5" />
-                                      </TooltipTrigger>
-                                      <TooltipContent>
-                                        <p className="text-green-500">Bajarilgan</p>
-                                      </TooltipContent>
-                                    </Tooltip>
-                                  </TooltipProvider>
-                                
+                                      ) : (
+                                        <Info className="stroke-red-500 stroke-1 w-4 h-5" />
+                                      )}
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                      <p className={isCoinGiven ? "text-green-500" : "text-red-500"}>
+                                        {isCoinGiven ? "Coin berilgan" : "Coin berilmagan"}
+                                      </p>
+                                    </TooltipContent>
+                                  </Tooltip>
+                                </TooltipProvider>
+
                               )
                             ) : (
                               <TooltipProvider>
