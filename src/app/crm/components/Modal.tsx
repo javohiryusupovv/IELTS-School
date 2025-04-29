@@ -8,18 +8,36 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { createAccount } from "@/actions/crmaccount.action";
+import { usePathname } from "next/navigation";
+import { toast } from "sonner";
 
 export default function DialogCloseButton() {
-  const handleSubmitAccounts = (e: React.FormEvent<HTMLFormElement>) => {
+  const pathname = usePathname();
+
+  const handleSubmitAccounts = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const data = new FormData(e.currentTarget);
-    const fullData = {
-      fullname: data.get("fullname") as string,
-      login: data.get("login") as string,
-      password: data.get("password") as string,
-      role: data.get("attendance") as string,
-    };
-    console.log(fullData);
+    try {
+      const data = new FormData(e.currentTarget);
+      const fullData = {
+        _id: data.get("_id") as string,
+        fullname: data.get("fullname") as string,
+        login: data.get("login") as string,
+        password: data.get("password") as string,
+        phone: data.get("phone") as string,
+        role: data.get("attendance") as string,
+      };
+
+    
+      const accounts = toast.promise(createAccount(fullData, pathname), {
+        loading: "Yuklanmoqda...",
+        success: "Account yaratildi!",
+        error: (err) => err.message,
+      });
+      await accounts;
+    } catch (error) {
+      throw new Error("Error creating account");
+    }
   };
 
   return (
@@ -95,8 +113,28 @@ export default function DialogCloseButton() {
               Password
             </p>
           </label>
+          <label className="relative w-full">
+            <input
+              type="text"
+              name="phone"
+              required
+              className="peer border w-full p-2 rounded outline-none focus:border-orange-500 transition-all duration-200"
+              placeholder=" "
+            />
+            <p
+              className="absolute left-2 bg-white px-2 text-gray-500 text-[12px] transition-all duration-200
+              peer-placeholder-shown:top-[10px] 
+              peer-placeholder-shown:text-gray-400
+              peer-focus:-top-3 
+              peer-focus:text-orange-500
+              peer-valid:-top-3 
+              peer-valid:text-[14px]"
+            >
+              Telefon raqam
+            </p>
+          </label>
           <article>
-            <h6 className="mb-3">Role accounts</h6>
+            <h6 className="mb-3">User turi ?</h6>
             <div className="flex items-center gap-4 custom-radio">
               <label className="relative flex items-center gap-2 cursor-pointer">
                 <input
@@ -114,16 +152,15 @@ export default function DialogCloseButton() {
                   type="radio"
                   name="attendance"
                   className="hidden peer"
-                  value="user"
+                  value="adminstrator"
                   defaultChecked
                   required
                 />
                 <div className="w-[15px] h-[15px] rounded-full border-[1px] border-black peer-checked:bg-blue-500 peer-checked:border-blue-500"></div>
-                <span className="text-gray-500 text-[12px]">User</span>
+                <span className="text-gray-500 text-[12px]">Adminstrator</span>
               </label>
             </div>
           </article>
-
           <button className="py-2 px-6 rounded-lg text-white bg-orange-500 hover:bg-orange-600 transition">
             Yaratish
           </button>

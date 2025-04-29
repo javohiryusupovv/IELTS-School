@@ -38,6 +38,7 @@ export default function ReceptionLogin() {
       } else {
         // Teacher topilmasa
         router.push("/reception");
+        toast.error("Admin topilmadi ...");
         setError(true);
         topLoading.done()
       }
@@ -64,19 +65,19 @@ export default function ReceptionLogin() {
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value.trim())}
-            className="w-full px-3 py-2 border rounded-lg"
+            className={`w-full px-3 py-2 border rounded-lg outline-none focus:border-[#3978ff] focus:shadow-sm focus:shadow-[#0000ff22] transition-all duration-200 ${error ? "border-red-500" : "border-gray-300"}`}
             required
           />
         </div>
 
         <div className="mb-6">
           <p className="text-sm mb-1">Password</p>
-          <label className="flex items-center justify-between w-full gap-5 overflow-hidden pr-3 border rounded-lg focus:border-orange-500">
+          <label className={`flex items-center justify-between w-full gap-5 overflow-hidden pr-3 border rounded-lg focus-within:border-[#3978ff] focus-within::shadow-sm focus-within::shadow-[#0000ff22] transition-all duration-200  ${error ? "border-red-500" : "border-gray-300"}`}>
             <input
               type={eye ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value.trim())}
-              className="w-full h-full px-3 py-3 rounded-l-md outline-none"
+              className={`peer w-full h-full px-3 py-[10px] rounded-l-md outline-none`}
               required
             />
             <p className="cursor-pointer" onClick={hidePassword}>
@@ -84,8 +85,6 @@ export default function ReceptionLogin() {
             </p>
           </label>
         </div>
-        
-        {error && <p className="text-red-500 mb-4">Xato login</p>}
         {isloading ? (
           <button
             type="button"

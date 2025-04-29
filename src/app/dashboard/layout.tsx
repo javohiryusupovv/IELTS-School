@@ -6,10 +6,35 @@ import "./custom.css"
 import Image from "next/image";
 import NotificationModal from "./_components/modal/notificationModal";
 import ProfileAccount from "./_components/modal/profileAccount";
+import { cookies } from "next/headers";
+import ConnectMonogDB from "@/lib/mongodb";
+import CrmAccount from "@/models/crmadmin.model";
 
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
+  const cookie = (await cookies()).get("admin-auth");
+  let adminData = null
 
+  if (cookie && cookie.value) {
+    try {
+      const adminInfo = JSON.parse(cookie?.value);
+      // Fetch admin data from the database
+      await ConnectMonogDB();
+      const admin = await CrmAccount.findById(adminInfo._id);
+      if (admin) {
+        adminData = {
+          _id: admin._id.toString(),
+          login: admin.login,
+          password: admin.password,
+          fullname: admin.fullname,
+          phone: admin.phone,
+          role: admin.role
+        };
+      }
+    } catch (error) {
+      console.error("Error fetching admin data", error);
+    }
+  }
 
 
   return (
@@ -22,7 +47,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </article>
           <div className="flex gap-4 items-center">
             <NotificationModal />
-            <ProfileAccount/>
+            {adminData && <ProfileAccount admin={adminData} />}
           </div>
         </div>
         <div className="p-5 bg-white min-h-screen mb-4">{children}</div>

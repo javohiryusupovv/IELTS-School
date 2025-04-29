@@ -17,3 +17,12 @@ export interface IUpdateCourse{
     days: string[];
     teacher: string | ITeacher;
 }
+
+export interface ICRMAccount {
+    _id: string;
+    fullname: string;
+    login: string;
+    password: string;
+    phone: string;
+    role: string;
+}

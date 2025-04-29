@@ -20,7 +20,7 @@ async function ShopAdmin() {
             </article>
             <SwitchSettings status={item.activeProduct} productID={item._id} />
             <DeleteProduct products={item} />
-            <p>{item.title}</p>
+            <p className="line-clamp-2">{item.title}</p>
           </div>
         ))}
       </div>

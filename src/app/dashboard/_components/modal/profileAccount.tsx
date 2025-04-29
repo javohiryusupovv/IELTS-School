@@ -13,8 +13,15 @@ import { useState } from "react";
 import { BiSupport } from "react-icons/bi";
 import Link from "next/link";
 import EditProfile from "./editProfile";
+import { ICRMAccount } from "../../../../../app.types";
 
-export default function ProfileAccount() {
+interface Props{
+  admin: ICRMAccount
+}
+
+export default function ProfileAccount({ admin }: Props) {  
+  console.log(admin);
+  
   const [isOpen, setIsOpen] = useState(false);
   const handleClose = () => {
     setIsOpen(false);
@@ -41,9 +48,9 @@ export default function ProfileAccount() {
                   alt="Admins Img"
                 />
                 <article>
-                  <p className="text-[16px] font-medium">Qayumov Azizbek</p>
+                  <p className="text-[16px] font-medium">{admin.fullname} - <span className="text-green-500 text-[12px] font-normal underline">({admin.role})</span></p>
                   <span className="text-[13px] text-green-500">
-                    +998 (90)-070-02-51
+                    +998 {admin.phone}
                   </span>
                 </article>
               </article>

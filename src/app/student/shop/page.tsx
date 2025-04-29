@@ -25,7 +25,7 @@ export default async function ShopList() {
         <p className="text-[20px] font-medium text-orange-500">Shop Bo'limi</p>
       </article>
       <div>
-        <div className="grid grid-cols-1 gap-10 pb-20">
+        <div className="grid grid-cols-2 gap-2 pb-20 px-3">
           {
             products.length < 1 ? (
               <div className="w-full h-full">
@@ -38,26 +38,26 @@ export default async function ShopList() {
               products?.map((product: IShops, id: number) => (
                 <Fragment key={id}>
                   {product.activeProduct ? (
-                    <div className="border w-[80%] pt-10 m-auto rounded-lg bg-white overflow-hidden" >
-                      <article className="w-full overflow-hidden flex justify-center mb-8">
+                    <div className="border w-full flex flex-col justify-between rounded-lg bg-white overflow-hidden" >
+                      <article className="w-full h-[200px] overflow-hidden flex justify-center mb-5">
                         <Image
-                          className="w-[250px] object-cover"
+                          className="w-full h-full object-cover"
                           src={product.image}
                           alt={product.title}
                           width={200}
                           height={200}
                         />
                       </article>
-                      <div className="px-5 pb-3">
+                      <div className="px-2 pb-3">
                         <article className="mb-5">
-                          <h6 className="text-[20px] font-medium mb-3">{product.title}</h6>
-                          <span className="inline-flex items-center py-2 px-4 border rounded-md justify-items-start gap-2">
-                            <BsCoin className="fill-[#f9d222] text-[20px]" />
-                            <span className="font-normal text-[16px]">{product.price}</span>
+                          <h6 className="text-[14px] font-medium mb-3 line-clamp-2">{product.title}</h6>
+                          <span className="inline-flex items-center py-1 px-2 border rounded-md justify-items-start gap-2">
+                            <BsCoin className="fill-[#f9d222] text-[17px]" />
+                            <span className="font-normal text-[12px]">{product.price}</span>
                           </span>
                         </article>
                         <Link href={`/student/shop/${product._id}`}>
-                          <button className="w-full px-10 py-2 border rounded-sm cursor-pointer bg-orange-500 hover:bg-orange-500/70 transition-all duration-300 text-white">
+                          <button className="w-full px-10 py-2 rounded-sm cursor-pointer bg-orange-500 hover:bg-orange-500/70 transition-all duration-300 text-white">
                             Olish
                           </button>
                         </Link>
