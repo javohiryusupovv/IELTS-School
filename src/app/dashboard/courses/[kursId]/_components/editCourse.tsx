@@ -36,6 +36,7 @@ export default function EditCourse({ course }: Props) {
         try{
             const formData = new FormData(e.currentTarget);
             const updatedCourse: IUpdateCourse = {
+                _id: course._id,
                 courseTitle: formData.get('title') as string,
                 startDate: startDate ? startDate.toISOString() : "",
                 endDate: endDate ? endDate.toISOString() : "",
