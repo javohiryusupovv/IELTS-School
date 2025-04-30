@@ -30,10 +30,28 @@ export default function login() {
             const teacherLogins = await TeacherLogin(phone, ispassword, pathname);
             if (teacherLogins) { // Teacher topilsa
                 localStorage.setItem("teacher", JSON.stringify(teacherLogins));
-                toast.success("Teacher topildi !");
+                toast.success("Teacher topildi", {
+                    duration: 2000,
+                    style: {
+                        height: "50px",
+                        color: "green",
+                        border: "1px solid #17be5a",
+                        backgroundColor: "white",
+                        boxShadow: "0 0px 5px #17be5a56",
+                    },
+                });
                 router.push("/teacher")
             } else { // Teacher topilmasa
-                toast.error("Teacher topilmadi ...");
+                toast.error("Teacher topilmadi", {
+                    duration: 2000,
+                    style: {
+                        height: "50px",
+                        color: "red",
+                        border: "1px solid #ff4343",
+                        backgroundColor: "white",
+                        boxShadow: "0 0px 5px #ff434383",
+                    },
+                });
                 router.push("/login")
             }
         } catch (error) {

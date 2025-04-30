@@ -47,7 +47,17 @@ export default function EditCourse({ course }: Props) {
 
             toast.promise(updatePromise, {
                 loading: "Yuklanmoqda...",
-                success: "Kurs yangilandi!",
+                success: {
+                    message: "Kurs yangilandi!",
+                    duration: 2500,
+                    style: {
+                      height: "50px", // fon yashil bo'ladi
+                      color: "green",
+                      border: "1px solid #17be5a",
+                      backgroundColor: "white",
+                      boxShadow: "0 0px 5px #17be5a56",
+                    },
+                  },
                 error: "Kursni yangilashda xatolik!",
             })
     

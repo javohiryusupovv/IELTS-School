@@ -13,11 +13,11 @@ import {
 } from "@/components/ui/alert-dialog"
 
 interface Props {
-    ActiveStudentHande: (isActive: boolean) => void;
+    ArxiveStudentHande: (isActive: boolean) => void;
 }
 
 
-export default function Archive({ ActiveStudentHande }: Props) {
+export default function Archive({ ArxiveStudentHande }: Props) {
     return (
         <div>
 
@@ -37,7 +37,7 @@ export default function Archive({ ActiveStudentHande }: Props) {
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                         <AlertDialogCancel>yo'q</AlertDialogCancel>
-                        <AlertDialogAction onClick={() => ActiveStudentHande(false)}>Ha</AlertDialogAction>
+                        <AlertDialogAction onClick={() => ArxiveStudentHande(false)}>Ha</AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>

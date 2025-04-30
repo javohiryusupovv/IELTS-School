@@ -35,14 +35,25 @@ export default function EditStudent({ student }: Props) {
                 surname: formData.get("surname") as string,
                 phone: formData.get("phone") as string,
             }
-            const updatedStudent = await updateStudent(student._id, data, pathname);
+            const updatedStudent = updateStudent(student._id, data, pathname);
 
             // Show success message with the toast
             toast.promise(updatedStudent, {
                 loading: "Yuklanmoqda...",
-                success: "O'quvchi yangilandi!",
+                success: {
+                    message: "O'quvchi ma'lumotlari yangilandi!",
+                    duration: 2500,
+                    style: {
+                      height: "50px",
+                      color: "green",
+                      border: "1px solid #17be5a",
+                      backgroundColor: "white",
+                      boxShadow: "0 0px 5px #17be5a",
+                    },
+                  },
                 error: "O'quvchini yangilashda xatolik!",
             });
+            await updatedStudent;
         } catch (err) {
             console.log(err);
         }

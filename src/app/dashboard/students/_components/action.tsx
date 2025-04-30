@@ -30,18 +30,38 @@ interface StudentListProps {
 export default function Action({student}: Props) {
   const handleDelete = async () => {
     if (!student.publishStudent) {
-      toast.error("Bu talabani o'chirish uchun arxivdan chiqaring !");
+      toast.warning("Bu talabani o'chirish uchun arxivdan chiqaring !", {
+        duration: 3000,
+        style: {
+          height: "50px",
+          color: "orange",
+          border: "1px solid orange",
+          backgroundColor: "white",
+          boxShadow: "0 0px 5px orange",
+        },
+      });
       return;
     }
     try {
-      await toast.promise(
-        deleteStudent(student._id, student.course._id, "/dashboard/students"),
+      const promise = deleteStudent(student._id, student.course._id, "/dashboard/students");
+      toast.promise(promise,
         {
           loading: "O'chirilmoqda...",
-          success: "Talaba o'chirildi",
+          success: {
+            message: "Talaba O'chirildi",
+            duration: 2500,
+            style: {
+              height: "50px",
+              color: "green",
+              border: "1px solid #17be5a",
+              backgroundColor: "white",
+              boxShadow: "0 0px 5px #17be5a56",
+            },
+          },
           error: "O'chirishda xatolik",
         }
       );
+      await promise;
     } catch (error) {
       console.error("O'chirishda xatolik:", error);
       toast.error("O'chirishda xatolik");

@@ -31,11 +31,23 @@ export default function DeleteProduct({ products }: Props) {
       return;
     }
     try {
-      await toast.promise(deleteShop(products._id, pathname), {
+      const promise = deleteShop(products._id, pathname)
+      toast.promise(promise, {
         loading: "O'chirilmoqda...",
-        success: () => "O'chirildi",
+        success: {
+          message: "Mahsulot o'chirildi",
+          duration: 2500,
+          style: {
+            height: "50px",
+            color: "green",
+            border: "1px solid #17be5a",
+            backgroundColor: "white",
+            boxShadow: "0 0px 5px #17be5a56",
+          },
+        },
         error: (error) => `Xatolik yuz berdi ${error}`,
       });
+      await promise;
     } catch (error) {
       throw new Error(`Xatolik yuz berid DELETE Shopda ${error}`);
     }

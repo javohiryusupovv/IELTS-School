@@ -23,7 +23,7 @@ export default function Topbar() {
         </button>
         <div className="flex items-center gap-2">
           <Image src={"/img/bgID.png"} alt="Profile" width={18} height={18} className="w-8 h-8 rounded-full object-cover" />
-          <span className="font-semibold text-gray-700">Shamsiddin Ro'ziboyev</span>
+          <span className="font-semibold text-gray-700">Zafar Uralov</span>
         </div>
       </div>
     </header>

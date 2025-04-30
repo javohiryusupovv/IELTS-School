@@ -88,7 +88,17 @@ const message = `
 
     toast.promise(promise, {
       loading: "Loading...",
-      success: "Mahsulot muvaffaqiyatli sotib olindi, tabriklaymiz!",
+      success: {
+        message: "Mahsulot muvaffaqiyatli sotib olindi, tabriklaymiz!",
+        duration: 2500,
+        style: {
+          height: "50px",
+          color: "green",
+          border: "1px solid #17be5a",
+          backgroundColor: "white",
+          boxShadow: "0 0px 5px #17be5a56",
+        },
+      },
       error: "Something went wrong!",
     });
   };

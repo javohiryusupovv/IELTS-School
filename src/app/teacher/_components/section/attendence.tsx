@@ -143,7 +143,16 @@ export default function Attendence({
         addCoins(studentId, filteredReasonsArray, pathname, selectedCell?.day),
         {
           loading: "Qo'shilmoqda...",
-          success: "Coin muvaffaqiyatli qo'shildi",
+          success: {
+            message: "Coin muvaffaqiyatli qo'shildi",
+            duration: 2500,
+            style: {
+              height: "50px",
+              color: "orange",
+              border: "1px solid orange",
+              backgroundColor: "white",
+            },
+          },
           error: "Coin sabablari tanlanmadi",
         }
       );

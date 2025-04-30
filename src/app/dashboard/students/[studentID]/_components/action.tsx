@@ -8,7 +8,8 @@ import studentImage from "../../../../../../public/img/student.png";
 import Image from "next/image";
 import { BsCoin } from "react-icons/bs";
 import EditStudent from "./editStudent";
-import { CircleCheckBig } from "lucide-react";
+import { CircleCheckBig, TriangleAlert  } from "lucide-react";
+
 
 import Archive from "./Archive";
 import ActiveStudentFunc from "./ActiveStudent";
@@ -26,10 +27,40 @@ export default function Actions({ student }: Props) {
 
     toast.promise(promise, {
       loading: "Yuklanmoqda...",
-      success: "Success updated !",
+      success: {
+        message: "O'quvchi Activ qilindi",
+        duration: 2500,
+        style: {
+          height: "50px", // fon yashil bo'ladi
+          color: "green",
+          border: "1px solid #17be5a",
+          backgroundColor: "white",
+          boxShadow: "0 0px 5px #17be5a56",
+        },
+      },
       error: "Error updated !",
     });
   };
+  const ArxiveStudentHande = (isActive: boolean) => {
+    const promise = ActiveStudent(student._id, isActive, pathname);
+
+    toast.promise(promise, {
+      loading: "Yuklanmoqda...",
+      success: {
+        message: "O'quvchi Arxiv qilindi",
+        duration: 2500,
+        style: {
+          height: "50px",
+          color: "orange",
+          border: "1px solid orange",
+          backgroundColor: "white",
+          boxShadow: "0 0px 5px orange",
+        },
+      },
+      error: "Error updated !",
+    });
+  };
+
   const totalCoins =
     student?.coins?.reduce((sum: number, coin: any) => sum + coin.value, 0) ??
     0;
@@ -41,6 +72,19 @@ export default function Actions({ student }: Props) {
     };
   });
 
+  // const handleNotification = () => {
+  //   toast.success("Kurs Yangilandi", {
+  //     duration: 2500,
+  //     style: {
+  //       height: "50px", // fon yashil bo'ladi
+  //       color: "green",
+  //       border: "1px solid #17be5a",
+  //       backgroundColor: "white",
+  //       boxShadow: "0 0px 5px #17be5a56",
+  //     },
+  //   });
+  // };
+
   return (
     <div>
       <div className="grid grid-cols-3 items-start gap-5 mb-4">
@@ -48,7 +92,7 @@ export default function Actions({ student }: Props) {
           <div className="absolute top-5 right-3 flex flex-col items-center gap-2">
             <EditStudent student={student} />
             <ActiveStudentFunc ActiveStudentHande={ActiveStudentHande} />
-            <Archive ActiveStudentHande={ActiveStudentHande} />
+            <Archive ArxiveStudentHande={ArxiveStudentHande} />
           </div>
           <div>
             <article className="flex justify-center items-center w-[80px] h-[80px] border rounded-full bg-gray-400/40 mb-10">
@@ -105,7 +149,11 @@ export default function Actions({ student }: Props) {
                     className="flex w-full py-2 px-4 items-center bg-green-300/30 rounded-md mb-3"
                   >
                     <article className="flex-[0.4]">
-                      <CircleCheckBig className={`stroke-[1.5] w-5 h-5 ${coin.value > 0 ? "stroke-green-500" : "stroke-red-500"}`} />
+                      <CircleCheckBig
+                        className={`stroke-[1.5] w-5 h-5 ${
+                          coin.value > 0 ? "stroke-green-500" : "stroke-red-500"
+                        }`}
+                      />
                     </article>
                     <article className="flex-1 text-start">
                       <article className="flex gap-2 items-center">
@@ -120,10 +168,16 @@ export default function Actions({ student }: Props) {
                       </article>
                     </article>
                     <article className="flex-1 text-center">
-                      <p className="text-gray-500/50">{formatDate(coin.date)}</p>
+                      <p className="text-gray-500/50">
+                        {formatDate(coin.date)}
+                      </p>
                     </article>
                     <article className="flex-1 justify-items-end text-right">
-                      <p className={`flex justify-center items-center w-14 h-6 rounded-3xl text-[14px] text-white bg-green-500 ${coin.value > 0 ? "bg-green-500" :  "bg-red-500" }`}>
+                      <p
+                        className={`flex justify-center items-center w-14 h-6 rounded-3xl text-[14px] text-white bg-green-500 ${
+                          coin.value > 0 ? "bg-green-500" : "bg-red-500"
+                        }`}
+                      >
                         {coin.value > 0 ? "+" : ""}
                         {coin.value}
                       </p>

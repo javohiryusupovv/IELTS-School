@@ -43,9 +43,9 @@ export default function DialogCloseButton() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button className="px-4 py-3 bg-orange-500 rounded-lg flex items-center gap-2 text-white hover:bg-orange-600">
+        <button className="px-4 py-3 text-[13px] bg-orange-500 rounded-lg flex items-center gap-2 text-white hover:bg-orange-600">
           <Plus />
-          Create Leads
+          Foydalanuvchi Yaratish
         </button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">

@@ -23,7 +23,16 @@ export default function SwitchSettings({ status, productID }: Props) {
         try {
             await ShopActive(productID, newStatus, "/student/shop");
             router.refresh();
-            toast.success(`${newStatus ? "Mahsulot bor" : "Mahsulot yo'q"}`)
+            toast.success(newStatus ? "Faol holatga o'tdi" : "Arxiv holatga o'tdi", {
+                duration: 2000,
+                style: {
+                    height: "50px",
+                    color: newStatus ? "green" : "red",
+                    border: `1px solid ${newStatus ? "#17be5a" : "#ff4343"}`,
+                    backgroundColor: "white",
+                    boxShadow: `0 0px 5px ${newStatus ? "#17be5a56" : "#ff434383"}`,
+                },
+            })
         } catch (error) {
             setCurrentStatus(!newStatus)
             throw new Error("Error updating status")
@@ -35,7 +44,7 @@ export default function SwitchSettings({ status, productID }: Props) {
     return (
         <article className="flex items-center gap-2 absolute right-5 top-4">
               {currentStatus ? <p className="text-green-500">Faol</p> : <p className="text-red-500">Arxiv</p>}
-              <Switch checked={currentStatus} onCheckedChange={handleChecked} disabled={isLoading} />            </article>
-
+              <Switch checked={currentStatus} onCheckedChange={handleChecked} disabled={isLoading} />            
+        </article>
     )
 }

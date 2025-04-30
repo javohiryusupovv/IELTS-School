@@ -1,54 +1,71 @@
-"use client"
+"use client";
 
 import { createTeacher } from "@/actions/teacher.action";
 import {
-    Sheet,
-    SheetClose,
-    SheetContent,
-    SheetDescription,
-    SheetFooter,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger,
-  } from "@/components/ui/sheet";
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 
 function TeacherCreated() {
-      const [open, setOpen] = useState(false)
-      const [teacherName, setTeacherName] = useState("");
-      const [teacherSurname, setTeacherSurname] = useState("")
-      const [teacherPhone, setTeacherPhone] = useState("")
-      const [teacherPassword, setTeacherPassword] = useState("")
-      const pathname = usePathname()
+  const [open, setOpen] = useState(false);
+  const [teacherName, setTeacherName] = useState("");
+  const [teacherSurname, setTeacherSurname] = useState("");
+  const [teacherPhone, setTeacherPhone] = useState("");
+  const [teacherPassword, setTeacherPassword] = useState("");
+  const pathname = usePathname();
 
-      const handleTotal = async() => {
-        if (!teacherName.trim()) {
-            toast.error("Teacher nomini kiriting!");
-            return;
-          }
-        try{
-
-            await toast.promise(createTeacher(teacherName, teacherSurname, teacherPhone, teacherPassword, pathname), {
-                loading: "Loading...",
-                success: "Teacher muvaffaqiyatli qo‘shildi!",
-                error: "Xatolik yuz berdi!",
-            })
-            setTeacherName("");
-            setTeacherSurname("");
-            setTeacherPhone("");
-            setTeacherPassword("")
-            setOpen(false)
-        }catch(error){
-            console.error("Xatolik:", error);
-            toast.error("Xatolik yuz berdi!");
-        }
-      }
+  const handleTotal = async () => {
+    if (!teacherName.trim()) {
+      toast.error("Teacher nomini kiriting!");
+      return;
+    }
+    try {
+      const promise = createTeacher(
+        teacherName,
+        teacherSurname,
+        teacherPhone,
+        teacherPassword,
+        pathname
+      );
+      toast.promise(promise, {
+        loading: "Loading...",
+        success: {
+          message: "O'qituvchi yaratildi!",
+          duration: 2500,
+          style: {
+            height: "50px", // fon yashil bo'ladi
+            color: "green",
+            border: "1px solid #17be5a",
+            backgroundColor: "white",
+            boxShadow: "0 0px 5px #17be5a56",
+          },
+        },
+        error: "Xatolik yuz berdi!",
+      });
+      await promise;
+      setTeacherName("");
+      setTeacherSurname("");
+      setTeacherPhone("");
+      setTeacherPassword("");
+      setOpen(false);
+    } catch (error) {
+      console.error("Xatolik:", error);
+      toast.error("Xatolik yuz berdi!");
+    }
+  };
 
   return (
     <div>
-        <Sheet open={open} onOpenChange={setOpen} >
+      <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>
           <button className="px-5 py-3 rounded-full bg-[#f18024] hover:bg-[#f18024ca] transition-all duration-200">
             <p className="text-[12px] font-medium text-white">
@@ -64,26 +81,70 @@ function TeacherCreated() {
             </SheetDescription>
           </SheetHeader>
           <div className="w-full mb-5">
-            <label className="flex gap-2 text-[#d47323cd] flex-col mb-5" htmlFor="kurs">
+            <label
+              className="flex gap-2 text-[#d47323cd] flex-col mb-5"
+              htmlFor="kurs"
+            >
               Teacher ismi
-              <input onChange={(e) => setTeacherName(e.target.value)} value={teacherName} className="py-2 border rounded-md px-2 text-gray-700" id="kurs" type="text" placeholder="Teacher ismini kiriting !" />
+              <input
+                onChange={(e) => setTeacherName(e.target.value)}
+                value={teacherName}
+                className="py-2 border rounded-md px-2 text-gray-700"
+                id="kurs"
+                type="text"
+                placeholder="Teacher ismini kiriting !"
+              />
             </label>
-            <label className="flex gap-2 text-[#d47323cd] flex-col mb-5" htmlFor="kurs">
+            <label
+              className="flex gap-2 text-[#d47323cd] flex-col mb-5"
+              htmlFor="kurs"
+            >
               Teacher familiyasi
-              <input onChange={(e) => setTeacherSurname(e.target.value)} value={teacherSurname} className="py-2 border rounded-md px-2 text-gray-700" id="kurs" type="text" placeholder="Teacher ismini kiriting !" />
+              <input
+                onChange={(e) => setTeacherSurname(e.target.value)}
+                value={teacherSurname}
+                className="py-2 border rounded-md px-2 text-gray-700"
+                id="kurs"
+                type="text"
+                placeholder="Teacher ismini kiriting !"
+              />
             </label>
-            <label className="flex gap-2 text-[#d47323cd] flex-col mb-5" htmlFor="kurs">
+            <label
+              className="flex gap-2 text-[#d47323cd] flex-col mb-5"
+              htmlFor="kurs"
+            >
               Teacher number
-              <input onChange={(e) => setTeacherPhone(e.target.value)} value={teacherPhone}  className="py-2 border rounded-md px-2 text-gray-700" id="kurs" type="text" placeholder="Teacher uchun raqam kiriting" />
+              <input
+                onChange={(e) => setTeacherPhone(e.target.value)}
+                value={teacherPhone}
+                className="py-2 border rounded-md px-2 text-gray-700"
+                id="kurs"
+                type="text"
+                placeholder="Teacher uchun raqam kiriting"
+              />
             </label>
-            <label className="flex gap-2 text-[#d47323cd] flex-col mb-5" htmlFor="kurs">
+            <label
+              className="flex gap-2 text-[#d47323cd] flex-col mb-5"
+              htmlFor="kurs"
+            >
               Teacher password
-              <input onChange={(e) => setTeacherPassword(e.target.value)} value={teacherPassword}  className="py-2 border rounded-md px-2 text-gray-700" id="kurs" type="text" placeholder="Teacher uchun password kiriting !" />
+              <input
+                onChange={(e) => setTeacherPassword(e.target.value)}
+                value={teacherPassword}
+                className="py-2 border rounded-md px-2 text-gray-700"
+                id="kurs"
+                type="text"
+                placeholder="Teacher uchun password kiriting !"
+              />
             </label>
           </div>
           <SheetFooter>
             <SheetClose asChild>
-              <button onClick={handleTotal} type="submit" className="px-5 py-2 rounded-full bg-[#f18024] hover:bg-[#f18024ca] transition-all duration-200">
+              <button
+                onClick={handleTotal}
+                type="submit"
+                className="px-5 py-2 rounded-full bg-[#f18024] hover:bg-[#f18024ca] transition-all duration-200"
+              >
                 <p className="text-[15px] font-medium text-white">Saqlash</p>
               </button>
             </SheetClose>
@@ -91,7 +152,7 @@ function TeacherCreated() {
         </SheetContent>
       </Sheet>
     </div>
-  )
+  );
 }
 
-export default TeacherCreated
+export default TeacherCreated;

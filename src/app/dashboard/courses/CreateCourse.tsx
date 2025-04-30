@@ -65,18 +65,29 @@ function CreateCourse() {
     }
    
     try {
-        toast.promise(postCourse(courseTitle, teacherId, startDate ? startDate.toISOString() : "", endDate ? endDate.toISOString(): "", filteredDay, pathname), {
+      const course = postCourse(courseTitle, teacherId, startDate ? startDate.toISOString() : "", endDate ? endDate.toISOString(): "", filteredDay, pathname)
+      toast.promise(course, {
         loading: "Loading...",
-        success: "Successfully created!",
+        success: {
+          message: "Kurs Yaratildi",
+          duration: 2500,
+          style: {
+            height: "50px", // fon yashil bo'ladi
+            color: "green",
+            border: "1px solid #17be5a",
+            backgroundColor: "white",
+            boxShadow: "0 0px 5px #17be5a56",
+          },
+        },
         error: "Something went wrong!",
       });
-      
       setCourseTitle("");
       setTeacherId("");
       setStartDate(null)
       setEndDate(null)
       setSelectDay("");
       setOpen(false);
+      await course;
     } catch (error) {
       console.log("Sizdagi karobkalar xatolikka uchradi", error);
     }

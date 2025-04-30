@@ -66,14 +66,24 @@ export default function StudentForm({propCourses}: {propCourses: ICourse[]}) {
         if (!isValid) return;
         try{
 
-            const coursesName = courses.find((course) => course._id === courseId);
-            const coursess = coursesName?.courseTitle.split(" ")[0];
-            const studentGen = generateRandomID();            
-            await toast.promise(postAddStudent(courseId, name, surname, phone, studentGen, pathname), {
+            const studentGen = generateRandomID();   
+            const promise = postAddStudent(courseId, name, surname, phone, studentGen, pathname);         
+            toast.promise(promise, {
                 loading: "O'quvchi qo'shilmoqda...",
-                success: `${coursess} kursiga qo'shildi!`,
+                success: {
+                    message: `O'quvchi yaratildi! (${name} ${surname})`,
+                    duration: 2500,
+                    style: {
+                        height: "50px", // fon yashil bo'ladi
+                        color: "green",
+                        border: "1px solid #17be5a",
+                        backgroundColor: "white",
+                        boxShadow: "0 0px 5px #17be5a56",
+                    },
+                },
                 error: "O'quvchini qo'shishda xatolik!",
             });
+            await promise;
         }catch(error){
             console.error("Xatolik yuz berdi, o'quvchini qo'shishda!");
             return;

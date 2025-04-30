@@ -8,7 +8,7 @@ import { useRef, useState } from "react";
 import { toast } from "sonner";
 
 export default function CardAddProduct() {
-  const pathname = usePathname()
+  const pathname = usePathname();
   const inputRef = useRef<HTMLInputElement>(null);
   const [prevImg, setPrevImg] = useState<string>();
   const [imageFile, setImageFile] = useState<File | null>(null); // 🆕 Faylni saqlaymiz
@@ -59,17 +59,26 @@ export default function CardAddProduct() {
       image: imageUrl || "",
       activeProduct: false,
     };
-
-    await toast.promise(
-      postShop({...product}, pathname), {
+    const promise = postShop({ ...product }, pathname);
+    toast.promise(promise, {
       loading: "Mahsulot yuklanmoqda...",
-      success: "Mahsulot yuklandi!",
+      success: {
+        message: "Mahsulot yaratildi",
+        duration: 2500,
+        style: {
+          height: "50px",
+          color: "green",
+          border: "1px solid #17be5a",
+          backgroundColor: "white",
+          boxShadow: "0 0px 5px #17be5a56",
+        },
+      },
       error: "Mahsulot yuklanmadi!",
-    }
-    )
+    });
     setPrevImg("");
-    form.reset()
-    await redirect("/dashboard/shop")
+    form.reset();
+    await promise;
+    await redirect("/dashboard/shop");
   };
 
   return (
@@ -123,10 +132,11 @@ export default function CardAddProduct() {
         {/* Image preview */}
         <div
           onClick={handleClick}
-          className={`group w-[250px] h-[250px] mt-5 border flex justify-center items-center flex-col rounded-md overflow-hidden cursor-pointer ${prevImg
+          className={`group w-[250px] h-[250px] mt-5 border flex justify-center items-center flex-col rounded-md overflow-hidden cursor-pointer ${
+            prevImg
               ? ""
               : "hover:border-[#00b7ff49] hover:shadow-blue-300 hover:shadow-sm"
-            }`}
+          }`}
         >
           {prevImg ? (
             <img

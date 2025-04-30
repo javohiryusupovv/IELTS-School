@@ -10,7 +10,6 @@ export default async function StudentAll() {
   const courses = await getCourses();
   const propCourses = JSON.parse(JSON.stringify(courses));
   const students = await getStudents();
-  console.log(students);
   
   // Barcha studentlarni sanash
   const totalStudents = students.length;
