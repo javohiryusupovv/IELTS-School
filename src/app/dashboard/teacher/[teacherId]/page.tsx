@@ -9,39 +9,40 @@ export default async function DetailTeacher({
 }: {
   params: Promise<{ teacherId: string }>;
 }) {
-  const teacherJSON = await getTeacherById((await params).teacherId);
-  const teacher = JSON.parse(JSON.stringify(teacherJSON));
+  const teacher = await getTeacherById((await params).teacherId);
   console.log(teacher);
 
   return (
     <div>
-      <div className="flex gap-6">
-        <div className="inline-flex px-10 py-3 rounded-xl bg-accent items-center justify-center mb-5">
-          <Image width={170} src={TeacherLogo} alt="Teacher Icons" />
+      <div className="flex justify-between items-start">
+        <div className="flex items-start gap-10">
+          <div className="inline-flex px-10 py-3 rounded-xl bg-accent items-center justify-center mb-5">
+            <Image width={170} src={TeacherLogo} alt="Teacher Icons" />
+          </div>
+          <div>
+            <article className="flex flex-col items-start">
+              <h6 className="flex flex-col  gap-2 font-medium text-[16px] mb-4">
+                O'qituvchi:
+                <span className="py-1 px-2 rounded-full text-[13px] font-normal bg-green-400 text-white">
+                  {teacher.teacherName} {teacher.teacherSurname}
+                </span>
+              </h6>
+              <h6 className="flex flex-col  gap-2 font-medium text-[16px] mb-4">
+                Telefon:
+                <span className="py-1 px-2 rounded-full text-[13px] font-normal bg-green-400 text-white">
+                  +998 {teacher.teacherPhone}
+                </span>
+              </h6>
+              <h6 className="flex flex-col gap-2 font-medium text-[16px]">
+                Yaratilgan Vaqti:
+                <span className="py-1 px-1 text-center rounded-full text-[13px] font-normal bg-yellow-400 text-white">
+                  {new Date(teacher.createdAt).toISOString().split("T")[0]}
+                </span>
+              </h6>
+            </article>
+          </div>
         </div>
-        <div>
-          <article className="flex flex-col items-start">
-            <h6 className="flex items-center gap-3 font-medium text-[16px] mb-4">
-              O'qituvchi:
-              <span className="py-1 px-2 rounded-full text-[13px] font-normal bg-green-400 text-white">
-                {teacher.teacherName} {teacher.teacherSurname}
-              </span>
-            </h6>
-            <h6 className="flex items-center gap-3 font-medium text-[16px] mb-4">
-              Telefon:
-              <span className="py-1 px-2 rounded-full text-[13px] font-normal bg-green-400 text-white">
-                +998 {teacher.teacherPhone}
-              </span>
-            </h6>
-            <h6 className="flex items-center gap-3 font-medium text-[16px] mb-14">
-              Yaratilgan Vaqti:
-              <span className="py-1 px-2 rounded-full text-[13px] font-normal bg-yellow-400 text-white">
-                {new Date(teacher.createdAt).toISOString().split("T")[0]}
-              </span>
-            </h6>
-            <ResetPassword teacherRes={teacher._id}/>
-          </article>
-        </div>
+        <ResetPassword teacherRes={teacher._id.toString()} />
       </div>
       <div>
         <p className="flex gap-4 items-center text-[18px] font-medium mb-2">

@@ -47,7 +47,7 @@ export default function ClientComponent({ product, coins, student }: Props) {
         setOpen(false);
       }
     } else {
-      toast.error(`Sizni Coins yetarli emas !!!`);
+      toast.error(`Sizda yetarli coin mavjud emas!`);
     }
   };
 

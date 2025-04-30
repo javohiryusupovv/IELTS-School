@@ -5,9 +5,7 @@ import { getTeachers } from "@/actions/teacher.action";
 
 
 export default async function DashboardTeacher() {
-  const getTeacher = await getTeachers();
-  console.log(getTeacher);
-  
+  const getTeacher = await getTeachers();  
   return (
     <div>
         <article className="flex justify-between items-center mb-3">

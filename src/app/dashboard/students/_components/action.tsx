@@ -99,7 +99,11 @@ export function SearchFuture({ studentList }: StudentListProps) {
     `${student?.surname} ${student?.name}`
       .toLowerCase()
       .includes(searchStudent.toLowerCase())
+
   );
+
+  console.log(filterStudent);
+  
   // const dashboard/students = studentList.map((student: any)=> (
   //     console.log(student.course)
   // ))
@@ -146,7 +150,7 @@ export function SearchFuture({ studentList }: StudentListProps) {
                 <p className="flex gap-2 items-end text-[13px] text-gray-500 font-medium">
                   {student.surname} {student.name}
                   <span className="text-orange-300/60 text-[12px]">
-                    ({student.courseTitle})
+                    ({student.course.courseTitle})
                   </span>
                 </p>
               </Link>

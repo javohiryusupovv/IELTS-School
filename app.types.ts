@@ -11,6 +11,7 @@ export interface IShops{
 } 
 
 export interface IUpdateCourse{
+    _id: string;
     courseTitle: string, 
     startDate: string;
     endDate: string;

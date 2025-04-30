@@ -51,7 +51,7 @@ export const getTeacherById = unstable_cache(
                 throw new Error(`noto'g'ri Teacher ID formati: ${teacherId}`);
             }
             await ConnectMonogDB();
-            const teacherID = await Teacher.findById(teacherId).populate("courses").lean()
+            const teacherID = await Teacher.findById(teacherId).populate("courses")
             if (!teacherID) {
                 throw new Error(`ID: ${teacherId} bo‘yicha o‘qituvchi topilmadi`);
             }
