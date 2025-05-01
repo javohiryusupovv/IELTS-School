@@ -5,7 +5,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import adminImg from "../../../../../public/accountImg/azizbek.jpg";
 import Image from "next/image";
 import ModalConfirm from "@/components/custom/modalConfirm";
 import { useState } from "react";
@@ -14,6 +13,8 @@ import { BiSupport } from "react-icons/bi";
 import Link from "next/link";
 import EditProfile from "./editProfile";
 import { ICRMAccount } from "../../../../../app.types";
+import { RiRobot2Line } from "react-icons/ri";
+
 
 interface Props{
   admin: ICRMAccount
@@ -30,23 +31,17 @@ export default function ProfileAccount({ admin }: Props) {
     <div>
       <Popover open={isOpen} onOpenChange={setIsOpen}>
         <PopoverTrigger asChild>
-          <article className="w-[50px] h-[50px] rounded-full overflow-hidden ">
-            <Image
-              className="w-full h-full cursor-pointer"
-              src={adminImg}
-              alt="Admins Img"
-            />
+          <article className="flex justify-center cursor-pointer items-center border w-[45px] h-[45px] rounded-full overflow-hidden ">
+            <RiRobot2Line className="w-[25px] h-[25px]"/>
           </article>
         </PopoverTrigger>
         <PopoverContent className="w-[350px] absolute right-2">
           <div>
             <article className="flex items-center justify-between mb-2">
               <article className="flex items-center gap-3">
-                <Image
-                  className="w-[50px] h-[50px] rounded-full cursor-pointer"
-                  src={adminImg}
-                  alt="Admins Img"
-                />
+                  <article className="flex justify-center cursor-pointer items-center border w-[45px] h-[45px] rounded-full overflow-hidden ">
+                    <RiRobot2Line className="w-[25px] h-[25px]"/>
+                  </article>
                 <article>
                   <p className="text-[16px] font-medium">{admin.fullname} - <span className="text-green-500 text-[12px] font-normal underline">({admin.role})</span></p>
                   <span className="text-[13px] text-green-500">
