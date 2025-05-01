@@ -1,6 +1,7 @@
 "use client";
 
 import { createTeacher } from "@/actions/teacher.action";
+import { TeacherSchemaZod } from "@/actions/zod";
 import {
   Sheet,
   SheetClose,
@@ -11,6 +12,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { formatUzbekPhone } from "@/utils/PhoneFormatter";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -19,21 +21,30 @@ function TeacherCreated() {
   const [open, setOpen] = useState(false);
   const [teacherName, setTeacherName] = useState("");
   const [teacherSurname, setTeacherSurname] = useState("");
-  const [teacherPhone, setTeacherPhone] = useState("");
+  const [teacherPhone, setTeacherPhone] = useState("+998 ");
   const [teacherPassword, setTeacherPassword] = useState("");
+  const [iserror, setError] = useState<string[]>([]);
   const pathname = usePathname();
 
   const handleTotal = async () => {
-    if (!teacherName.trim()) {
-      toast.error("Teacher nomini kiriting!");
+    const validateTeacher = TeacherSchemaZod.safeParse({
+      name: teacherName,
+      surname: teacherSurname,
+      password: teacherPassword
+    })
+
+    if (!validateTeacher.success) {
+      const errorMessage = validateTeacher.error.errors.map((err) => err.message);
+      setError(errorMessage)      
       return;
-    }
+    }    
+    const { name, surname, password } = validateTeacher.data;
     try {
       const promise = createTeacher(
-        teacherName,
-        teacherSurname,
+        name,
+        surname,
         teacherPhone,
-        teacherPassword,
+        password,
         pathname
       );
       toast.promise(promise, {
@@ -46,7 +57,6 @@ function TeacherCreated() {
             color: "green",
             border: "1px solid #17be5a",
             backgroundColor: "white",
-            boxShadow: "0 0px 5px #17be5a56",
           },
         },
         error: "Xatolik yuz berdi!",
@@ -54,8 +64,9 @@ function TeacherCreated() {
       await promise;
       setTeacherName("");
       setTeacherSurname("");
-      setTeacherPhone("");
+      setTeacherPhone("+998 ");
       setTeacherPassword("");
+      setError([])
       setOpen(false);
     } catch (error) {
       console.error("Xatolik:", error);
@@ -87,13 +98,22 @@ function TeacherCreated() {
             >
               Teacher ismi
               <input
-                onChange={(e) => setTeacherName(e.target.value)}
+                onChange={(e) => {
+                  setTeacherName(e.target.value);
+                  setError(prev => {
+                    const newErrors = [...prev];
+                    newErrors[0] = "";
+                    return newErrors;
+                  });
+                }}
                 value={teacherName}
-                className="py-2 border rounded-md px-2 text-gray-700"
+                className={`py-2 border rounded-md px-2 text-gray-700 transition-all duration-200 ${iserror[0] ? "border-red-600 border-2" : "border-gray-300"}`}
                 id="kurs"
                 type="text"
                 placeholder="Teacher ismini kiriting !"
+                required
               />
+              <span className="text-[12px] font-light text-red-600">{iserror[0]}</span>
             </label>
             <label
               className="flex gap-2 text-[#d47323cd] flex-col mb-5"
@@ -101,13 +121,22 @@ function TeacherCreated() {
             >
               Teacher familiyasi
               <input
-                onChange={(e) => setTeacherSurname(e.target.value)}
+                onChange={(e) => {
+                  setTeacherSurname(e.target.value);
+                  setError(prev => {
+                    const newErrors = [...prev];
+                    newErrors[1] = "";
+                    return newErrors;
+                  });
+                }}
                 value={teacherSurname}
-                className="py-2 border rounded-md px-2 text-gray-700"
+                className={`py-2 border rounded-md px-2 text-gray-700 transition-all duration-200 ${iserror[1] ? "border-red-600 border-2" : "border-gray-300"}`}
                 id="kurs"
                 type="text"
                 placeholder="Teacher ismini kiriting !"
+                required
               />
+              <span className="text-[12px] font-light text-red-600">{iserror[1]}</span>
             </label>
             <label
               className="flex gap-2 text-[#d47323cd] flex-col mb-5"
@@ -115,12 +144,13 @@ function TeacherCreated() {
             >
               Teacher number
               <input
-                onChange={(e) => setTeacherPhone(e.target.value)}
+                onChange={(e) => setTeacherPhone(formatUzbekPhone(e.target.value))}
                 value={teacherPhone}
-                className="py-2 border rounded-md px-2 text-gray-700"
+                className="py-2 border rounded-md px-2 text-gray-700 border-gray-300"
                 id="kurs"
                 type="text"
                 placeholder="Teacher uchun raqam kiriting"
+                required
               />
             </label>
             <label
@@ -129,17 +159,25 @@ function TeacherCreated() {
             >
               Teacher password
               <input
-                onChange={(e) => setTeacherPassword(e.target.value)}
+                onChange={(e) => {
+                  setTeacherPassword(e.target.value);
+                  setError(prev => {
+                    const newErrors = [...prev];
+                    newErrors[2] = "";
+                    return newErrors;
+                  });
+                }}
                 value={teacherPassword}
-                className="py-2 border rounded-md px-2 text-gray-700"
+                className={`py-2 border rounded-md px-2 text-gray-700 transition-all duration-200 ${iserror[2] ? "border-red-600 border-2" : "border-gray-300"}`}
                 id="kurs"
                 type="text"
                 placeholder="Teacher uchun password kiriting !"
+                required
               />
+              <span className="text-[12px] font-light text-red-600">{iserror[2]}</span>
             </label>
           </div>
           <SheetFooter>
-            <SheetClose asChild>
               <button
                 onClick={handleTotal}
                 type="submit"
@@ -147,7 +185,6 @@ function TeacherCreated() {
               >
                 <p className="text-[15px] font-medium text-white">Saqlash</p>
               </button>
-            </SheetClose>
           </SheetFooter>
         </SheetContent>
       </Sheet>

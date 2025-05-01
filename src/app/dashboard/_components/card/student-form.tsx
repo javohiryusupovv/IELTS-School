@@ -12,6 +12,7 @@ import {
     SheetTrigger,
 } from "@/components/ui/sheet";
 import { ICourse } from "@/types/type";
+import { formatUzbekPhone } from "@/utils/PhoneFormatter";
 import { generateRandomID } from "@/utils/generateID";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
@@ -30,16 +31,7 @@ export default function StudentForm({propCourses}: {propCourses: ICourse[]}) {
     useEffect(() => {
           setCourses(propCourses)
       }, [propCourses])
-    
-    
 
-    // Telefon raqamini to'g'ri formatga keltirish
-    const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        let value = e.target.value.replace(/\D/g, ""); // Faqat raqamlarni qoldiramiz
-        value = value.replace(/^998/, ""); // Agar 998 ni kiritsa, olib tashlaymiz
-        value = value.slice(0, 9); // Maksimal 9 ta raqam kiritish mumkin
-        setPhone("+998 " + value);
-    };
 
     const checkForm = () => {
         if (!name) {
@@ -78,7 +70,6 @@ export default function StudentForm({propCourses}: {propCourses: ICourse[]}) {
                         color: "green",
                         border: "1px solid #17be5a",
                         backgroundColor: "white",
-                        boxShadow: "0 0px 5px #17be5a56",
                     },
                 },
                 error: "O'quvchini qo'shishda xatolik!",
@@ -151,7 +142,7 @@ export default function StudentForm({propCourses}: {propCourses: ICourse[]}) {
                         <label className="flex gap-2 text-[#d47323cd] flex-col mb-5">
                             Phone *
                             <input
-                                onChange={handlePhoneChange}
+                                onChange={(e) => setPhone(formatUzbekPhone(e.target.value))}
                                 value={phone}
                                 className="py-2 border rounded-md px-2 text-gray-700"
                                 type="text"

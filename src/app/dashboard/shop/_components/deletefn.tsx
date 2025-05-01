@@ -42,7 +42,6 @@ export default function DeleteProduct({ products }: Props) {
             color: "green",
             border: "1px solid #17be5a",
             backgroundColor: "white",
-            boxShadow: "0 0px 5px #17be5a56",
           },
         },
         error: (error) => `Xatolik yuz berdi ${error}`,
