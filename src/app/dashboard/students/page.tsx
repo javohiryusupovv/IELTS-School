@@ -24,8 +24,8 @@ export default async function StudentAll() {
       <hr className="mb-7" />
       <div className="w-full">
         <article className="mb-5 flex gap-5 items-center">
-          <p className="flex items-center gap-4"><span className="w-4 h-4 bg-white border inline-block"></span> Activ</p>
-          <p className="flex items-center gap-4"><span className="w-4 h-4 bg-accent border inline-block"></span> Arxiv</p>
+          <p className="flex items-center gap-4"><span className="w-4 h-4 bg-green-500 inline-block"></span> Activ</p>
+          <p className="flex items-center gap-4"><span className="w-4 h-4 bg-red-500 inline-block"></span> Arxiv</p>
         </article>
         {totalStudents < 1 ? (
           <div className="w-full h-[80vh] flex gap-2 flex-col justify-center items-center">

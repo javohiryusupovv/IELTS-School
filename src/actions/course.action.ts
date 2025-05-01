@@ -22,7 +22,7 @@ export const getCourses = unstable_cache(
     }
   },
   ["courses"],
-  { revalidate: 3600, tags: ["courses"] } // 1 soatlik kesh
+  { revalidate: 300, tags: ["courses"] } // 1 soatlik kesh
 )
 
 // Muayyan kursni olish (kesh bilan)
@@ -55,7 +55,7 @@ export const getCourseById = unstable_cache(
     }
   },
   ["course"], // Statik kesh kaliti
-  { revalidate: 3600, tags: ["course"] } // Umumiy "course" tegi
+  { revalidate: 300, tags: ["course"] } // Umumiy "course" tegi
 )
 
 // Yangi kurs yaratish

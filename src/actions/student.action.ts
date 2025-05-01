@@ -15,8 +15,7 @@ type Records_Coins = {
 }[]
 
 // Barcha talabalarni olish (kesh bilan)
-export const getStudents = unstable_cache(
-  async () => {
+export const getStudents =  async () => {
     try {
       await ConnectMonogDB()
       const courses = await Course.find()
@@ -49,10 +48,7 @@ export const getStudents = unstable_cache(
       console.error("Error fetching students:", error)
       throw new Error("Talabalarni olishda xatolik yuz berdi")
     }
-  },
-  ["students"], // Kesh kaliti
-  { revalidate: 3600, tags: ["students"] } // Umumiy "students" tegi
-)
+  }
 
 // Muayyan talabani olish (kesh bilan)
 export const getStudentById = unstable_cache(
@@ -79,7 +75,7 @@ export const getStudentById = unstable_cache(
     }
   },
   ["student"], // Statik kesh kaliti
-  { revalidate: 3600, tags: ["student"] } // Umumiy "student" tegi
+  { revalidate: 300, tags: ["student"] } // Umumiy "student" tegi
 )
 
 // Yangi talaba qo‘shish

@@ -20,6 +20,7 @@ import { Datapicker } from "../_components/startDay/datapicker";
 import { DatapickerEnd } from "../_components/endDay/dataPicker";
 import OddEvenDayFilter from "../_components/selectDay/odd.even";
 import { CalendarDayGet } from "@/components/custom/CalendarDayGet";
+import { CourseSchemaZod } from "@/actions/zod";
 
 
 function CreateCourse() {
@@ -29,6 +30,8 @@ function CreateCourse() {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [selectDay, setSelectDay] = useState("toq")
+  const [iserror, setError] = useState<string[]>([]);
+
 
   const [open, setOpen] = useState(false);
   const pathname = usePathname()
@@ -59,13 +62,18 @@ function CreateCourse() {
 
   const totalValue = async (e: React.MouseEvent) => {
     e.preventDefault();
-    if (!courseTitle || !teacherId) {
-      alert("Sizdagi karobkalar bo'sh");
+    const CourseValidation = CourseSchemaZod.safeParse({
+      title: courseTitle
+    })
+   
+    if(!CourseValidation.success){
+      const errorMessage = CourseValidation.error.errors.map((err) => err.message);
+      setError(errorMessage)      
       return;
     }
-   
+    const {title} = CourseValidation.data
     try {
-      const course = postCourse(courseTitle, teacherId, startDate ? startDate.toISOString() : "", endDate ? endDate.toISOString(): "", filteredDay, pathname)
+      const course = postCourse(title, teacherId, startDate ? startDate.toISOString() : "", endDate ? endDate.toISOString(): "", filteredDay, pathname)
       toast.promise(course, {
         loading: "Loading...",
         success: {
@@ -76,10 +84,9 @@ function CreateCourse() {
             color: "green",
             border: "1px solid #17be5a",
             backgroundColor: "white",
-            boxShadow: "0 0px 5px #17be5a56",
           },
         },
-        error: "Something went wrong!",
+        error: "Kurs Yaratishda Xatolik",
       });
       setCourseTitle("");
       setTeacherId("");
@@ -117,13 +124,21 @@ function CreateCourse() {
             >
               Kurs nomi
               <input
-                onChange={(e) => setCourseTitle(e.target.value)}
+                onChange={(e) => {
+                  setCourseTitle(e.target.value)
+                  setError((err)=> {
+                    const newErrors = [...err];
+                    newErrors[0] = "";
+                    return newErrors
+                  })
+                }}
                 value={courseTitle}
-                className="py-2 border rounded-md px-2 text-gray-700 "
+                className={`py-2 border rounded-md px-2 text-gray-700 transition-all duration-200 ${iserror[0] ? "border-red-600 border-[1.5px]" : "border-gray-300"}`}
                 id="kurs"
                 type="text"
                 placeholder="Kurs nomini kiriting !"
               />
+              <span className="text-[12px] font-light text-red-600">{iserror[0]}</span>
             </label>
             <div className="flex w-full justify-between mb-5">
               <div>
