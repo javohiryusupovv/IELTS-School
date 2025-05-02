@@ -105,9 +105,11 @@ const message = `
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild className="flex">
-        <Button className="mt-5 mb-8 w-full py-2 px-12 flex items-center">
-          Sotib olish
-        </Button>
+      <button
+          className="w-full flex justify-center py-2 px-4 rounded-md text-white bg-orange-500 hover:bg-orange-400/90 hover:text-white transition-all duration-300"
+        >
+          Sotib Olish
+        </button>
       </DialogTrigger>
       <DialogContent>
         <DialogTitle className="text-xl font-bold">{product.title}</DialogTitle>
@@ -138,7 +140,7 @@ const message = `
           disabled={isLoading}
           className="py-2 px-4 rounded-md text-white bg-orange-500 hover:bg-orange-400/90 hover:text-white transition-all duration-300"
         >
-          Select
+          Buyurtma berish
         </button>
       </DialogContent>
     </Dialog>

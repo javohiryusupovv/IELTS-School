@@ -15,7 +15,7 @@ export default function _filiallar() {
         <div className=" relative flex items-start  justify-between">
             <article className="flex items-center gap-3">
                 <p className="text-[30px] text-gray-300 font-semibold">=</p>
-                <h6 className="text-[35px] font-bold">3</h6>
+                <h6 className="text-[35px] font-bold">0</h6>
             </article>
             <Image  width={200} src={Filiallar} alt="Mentors background img" />
         </div>
