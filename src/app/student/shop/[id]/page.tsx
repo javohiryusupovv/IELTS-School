@@ -41,7 +41,7 @@ export default async function ShopId({params,}:{params: Promise<{ id: string }>}
               {product.description}
             </p>
             <article className="w-full">
-              <button className="flex items-center gap-2 px-2 py-1 border rounded-full bg-[#f9d922]">
+              <button className="flex items-center gap-2 px-2 py-1 border rounded-full bg-[#f9d922] mb-8">
                 <BsCoin className="fill-white text-[20px]" />
                 <p className="text-black">{product.price}</p>
               </button>
