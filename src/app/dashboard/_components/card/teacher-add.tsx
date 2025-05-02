@@ -107,7 +107,7 @@ function TeacherCreated() {
                   });
                 }}
                 value={teacherName}
-                className={`py-2 border rounded-md px-2 text-gray-700 transition-all duration-200 ${iserror[0] ? "border-red-600 border-2" : "border-gray-300"}`}
+                className={`py-2 border rounded-md px-2 text-gray-700 transition-all duration-200 ${iserror[0] ? "border-red-600 border-[1.5px]" : "border-gray-300"}`}
                 id="kurs"
                 type="text"
                 placeholder="Teacher ismini kiriting !"
@@ -130,7 +130,7 @@ function TeacherCreated() {
                   });
                 }}
                 value={teacherSurname}
-                className={`py-2 border rounded-md px-2 text-gray-700 transition-all duration-200 ${iserror[1] ? "border-red-600 border-2" : "border-gray-300"}`}
+                className={`py-2 border rounded-md px-2 text-gray-700 transition-all duration-200 ${iserror[1] ? "border-red-600 border-[1.5px]" : "border-gray-300"}`}
                 id="kurs"
                 type="text"
                 placeholder="Teacher ismini kiriting !"
@@ -168,7 +168,7 @@ function TeacherCreated() {
                   });
                 }}
                 value={teacherPassword}
-                className={`py-2 border rounded-md px-2 text-gray-700 transition-all duration-200 ${iserror[2] ? "border-red-600 border-2" : "border-gray-300"}`}
+                className={`py-2 border rounded-md px-2 text-gray-700 transition-all duration-200 ${iserror[2] ? "border-red-600 border-[1.5px]" : "border-gray-300"}`}
                 id="kurs"
                 type="text"
                 placeholder="Teacher uchun password kiriting !"

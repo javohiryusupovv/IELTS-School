@@ -21,19 +21,19 @@ export default async function DetailTeacher({
           </div>
           <div>
             <article className="flex flex-col items-start">
-              <h6 className="flex flex-col  gap-2 font-medium text-[16px] mb-4">
+              <h6 className="flex flex-col  gap-1 font-medium text-[16px] mb-4">
                 O'qituvchi:
                 <span className="py-1 px-2 rounded-full text-[13px] font-normal bg-green-400 text-white">
                   {teacher.teacherName} {teacher.teacherSurname}
                 </span>
               </h6>
-              <h6 className="flex flex-col  gap-2 font-medium text-[16px] mb-4">
+              <h6 className="flex flex-col  gap-1 font-medium text-[16px] mb-4">
                 Telefon:
                 <span className="py-1 px-2 rounded-full text-[13px] font-normal bg-green-400 text-white">
-                  +998 {teacher.teacherPhone}
+                  {teacher.teacherPhone}
                 </span>
               </h6>
-              <h6 className="flex flex-col gap-2 font-medium text-[16px]">
+              <h6 className="flex flex-col gap-1 font-medium text-[16px]">
                 Yaratilgan Vaqti:
                 <span className="py-1 px-1 text-center rounded-full text-[13px] font-normal bg-yellow-400 text-white">
                   {new Date(teacher.createdAt).toISOString().split("T")[0]}

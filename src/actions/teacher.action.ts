@@ -61,3 +61,22 @@ export const getTeacherById = unstable_cache(
     { revalidate: 3600, tags: ["teacher"] } // Umumiy "teacher" tegi
 )
 
+
+export const deleteTeachers = async (teacherId: string, path: string) => {
+    try {
+        if (!mongoose.Types.ObjectId.isValid(teacherId)) {
+            throw new Error(`noto'g'ri Teacher ID formati: ${teacherId}`);
+        }
+        await ConnectMonogDB()
+        await Course.deleteMany({ teacher: teacherId })
+        const teacher = await Teacher.findByIdAndDelete(teacherId)
+        if (!teacher) {
+            throw new Error(`ID: ${teacherId} bo‘yicha o‘qituvchi topilmadi`);
+        }
+        revalidatePath(path)
+        return { success: true, message: "O'qituvchi muvaffaqiyatli o'chirildi!" };
+    } catch (error) {
+        throw new Error(`Xatolik yuz berdi Teacher o'chirishda , ${error}`)
+    }
+}
+

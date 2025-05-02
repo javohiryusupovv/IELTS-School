@@ -29,7 +29,7 @@ export default function Page() {
                  </article>
                 <article>
                     <p className="text-[20px] mb-1">{teacher.teacherSurname} {teacher.teacherName}</p>
-                    <p className="text-[17px]">+998 {teacher.teacherPhone}</p>
+                    <p className="text-[17px]">{teacher.teacherPhone}</p>
                 </article>
             </div>
 
