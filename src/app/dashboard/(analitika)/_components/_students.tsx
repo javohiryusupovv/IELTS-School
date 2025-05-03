@@ -10,6 +10,9 @@ interface Props{
 }
 
 export default function _students({getStudentsValue}: Props) {
+
+    
+
   return (
     <div className="px-4 pt-3  bg-[#F6FFED] rounded-[8px]">
         <article className="flex items-center gap-4 mb-4">
@@ -20,7 +23,7 @@ export default function _students({getStudentsValue}: Props) {
         </article>
         <div className="relative flex items-start  justify-between">
             <article className="flex items-center gap-3">
-                <ArrowDown className="text-green-500 w-5 h-5 rotate-180" />
+                <ArrowDown className={`w-5 h-5 ${ getStudentsValue.length >= 100 ? "text-green-500 rotate-180" : "text-red-600 rotate-0"}`} />
                 <h6 className="text-[35px] font-bold">{getStudentsValue.length}</h6>
             </article>
             <Image  width={200} src={bgImg} alt="Mentors background img" />

@@ -8,7 +8,6 @@ import { cookies } from "next/headers";
 export const LoginAdmin = async (
   login: string,
   password: string,
-  path: string
 ) => {
   try {
     await ConnectMonogDB();
@@ -26,14 +25,7 @@ export const LoginAdmin = async (
       maxAge: 60 * 90, // 1:30 soat
     });
 
-    revalidatePath(path);
-    return {
-      redirect: "/dashboard",
-      admin: {
-        login: admin.login,
-        _id: admin._id.toString(),
-      },
-    };
+    return true
   } catch (error) {
     console.error("Error during login:", error);
   }

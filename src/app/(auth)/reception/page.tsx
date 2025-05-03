@@ -14,7 +14,6 @@ import LoginLogo from "../../../../public/logo/logo.png"
 export default function ReceptionLogin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const pathname = usePathname();
   const [error, setError] = useState(false);
   const router = useRouter();
   const [isloading, setLoading] = useState(false);
@@ -29,7 +28,7 @@ export default function ReceptionLogin() {
     e.preventDefault();
     setLoading(true);
     try {
-      const admin = await LoginAdmin(username, password, pathname);
+      const admin = await LoginAdmin(username, password);
       topLoading.start()
       if (admin) {
         // Teacher topilsa

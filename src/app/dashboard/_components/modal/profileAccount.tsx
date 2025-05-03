@@ -21,7 +21,6 @@ interface Props{
 }
 
 export default function ProfileAccount({ admin }: Props) {  
-  console.log(admin);
   
   const [isOpen, setIsOpen] = useState(false);
   const handleClose = () => {

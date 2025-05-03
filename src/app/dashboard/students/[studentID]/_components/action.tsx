@@ -1,6 +1,6 @@
 "use client";
 
-import { ActiveStudent } from "@/actions/student.action";
+import { ActiveStudent, addAdminCoins } from "@/actions/student.action";
 import { IStudent } from "@/types/type";
 import { usePathname } from "next/navigation";
 import { toast } from "sonner";
@@ -14,6 +14,7 @@ import { CircleCheckBig, TriangleAlert  } from "lucide-react";
 import Archive from "./Archive";
 import ActiveStudentFunc from "./ActiveStudent";
 import { formatDate, formatReasonText } from "../../../../../../constants/page";
+import { useState } from "react";
 
 interface Props {
   student: IStudent;
@@ -21,6 +22,46 @@ interface Props {
 
 export default function Actions({ student }: Props) {
   const pathname = usePathname();
+  const [coins, setCoins] = useState("");
+  const [coinreason, setCoinreason] = useState("");
+  
+  const handleCoinRes = async() => {
+    if (!coins || !coinreason) {
+      toast.error("Coin miqdori va sababi to‘ldirilishi kerak!");
+      return;
+    }
+    const coinFilter = parseFloat(coins)
+
+    if (coinFilter < 0 && Math.abs(coinFilter) > totalCoins) {
+      toast.error("Coin miqdori yetarli emas!");
+      return;
+    }
+   
+    try{
+      const promise = addAdminCoins(student._id, coinreason, coinFilter, pathname);
+      toast.promise(promise, {
+        loading: "Coin qo'shilmoqda...",
+        success: {
+          message: coinFilter > 0 ? "Coin muvaffaqiyatli qo'shildi!": "Coin jarimasi olindi!",
+          duration: 3000,
+          style: {
+            height: "50px",
+            color: coinFilter > 0 ? "green" : "red",
+            border: coinFilter > 0 ? "1px solid #17be5a" : "1px solid red",
+            backgroundColor: "white",
+          },
+        },
+        error: "Coin qo'shishda xatolik yuz berdi!",
+      });
+  
+      setCoins("");
+      setCoinreason("");
+
+    }catch(error){
+      console.log("Coin qo'shishda Xatolik")
+    }
+    
+  }
 
   const ActiveStudentHande = (isActive: boolean) => {
     const promise = ActiveStudent(student._id, isActive, pathname);
@@ -70,19 +111,6 @@ export default function Actions({ student }: Props) {
     };
   });
 
-  // const handleNotification = () => {
-  //   toast.success("Kurs Yangilandi", {
-  //     duration: 2500,
-  //     style: {
-  //       height: "50px", // fon yashil bo'ladi
-  //       color: "green",
-  //       border: "1px solid #17be5a",
-  //       backgroundColor: "white",
-  //       boxShadow: "0 0px 5px #17be5a56",
-  //     },
-  //   });
-  // };
-
   return (
     <div>
       <div className="grid grid-cols-3 items-start gap-5 mb-4">
@@ -100,7 +128,7 @@ export default function Actions({ student }: Props) {
               {student.surname} {student.name}
             </h6>
             <p className="mb-4 flex items-center gap-2">
-              Studentid:{" "}
+              StudentID:{" "}
               <span className="px-2 text-[14px] rounded-full text-white bg-yellow-500">
                 {student.studentID}
               </span>
@@ -112,10 +140,22 @@ export default function Actions({ student }: Props) {
                 <li className="text-[14px] text-gray-600/65">coins</li>
               </ul>
             </article>
-            <ul>
+            <ul className="mb-5">
               <li className="mb-1 text-[15px] text-gray-500/50">Telefon:</li>
               <li className="text-[15px] text-orange-500">{student.phone}</li>
             </ul>
+            <div className="">
+              <label htmlFor="" className="flex flex-col">
+                <p className="mb-2 text-[14px] text-gray-600/65">Talabaga coin qo'shish</p>
+              </label>
+              <article className="flex items-end justify-between gap-4">
+                <article className="flex flex-col w-[70%] gap-2">
+                <input value={coins} onChange={(e)=> setCoins(e.target.value)} className="px-2 py-1 border outline-none rounded-md" type="text" placeholder="Coin sonini kiriting ?" />
+                <input value={coinreason} onChange={(e)=> setCoinreason(e.target.value)} className="px-2 py-1 border outline-none rounded-md" type="text" placeholder="Coinni sababi ?" />
+                </article>
+                <button onClick={handleCoinRes} className="border rounded-md cursor-pointer px-2 py-1 transition-all duration-200 bg-green-500 text-white hover:border-green-700">Qo'shish</button>
+              </article>
+            </div>
           </div>
         </div>
         <div className="p-4 text-center col-span-2 rounded-lg shadowCustom">

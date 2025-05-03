@@ -101,14 +101,6 @@ export function SearchFuture({ studentList }: StudentListProps) {
 
   );
 
-  console.log(filterStudent);
-  
-  // const dashboard/students = studentList.map((student: any)=> (
-  //     console.log(student.course)
-  // ))
-
-  // console.log(searchStudent);
-
   return (
     <div className="">
       <div className="flex items-center justify-between">

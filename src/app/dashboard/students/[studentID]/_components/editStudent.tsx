@@ -64,7 +64,6 @@ export default function EditStudent({ student }: Props) {
         setPhone("+998 " + value);
     };
 
-    console.log(student.course);
 
 
     return (

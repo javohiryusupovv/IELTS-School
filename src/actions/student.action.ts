@@ -207,37 +207,29 @@ export const updateStudent = async (
     return JSON.parse(JSON.stringify(updatedStudent))
   } catch (error) {
     console.error(`Error updating student ${studentId}:`, error)
-    throw new Error("Talaba ma‘lumotlarini yangilashda xatolik yuz berdi")
+    throw new Error("Talaba ma'lumotlarini yangilashda xatolik yuz berdi")
   }
 }
 
 // Talabaga coin qo‘shish
 export const addCoins = async (studentId: string, reasons: Records_Coins, path: string, date?: string) => {
-  console.log(reasons);
-  
   try {
     if (!mongoose.Types.ObjectId.isValid(studentId)) {
-      throw new Error("Noto‘g‘ri ID!")
+      throw new Error("Noto'g'ri ID!")
     }
-
     const givenDate = date || moment().format("YYYY-MM-DD");
-
     let total = reasons.reduce((acc, item) => acc + item.value, 0);
-
     if (total <= 0) {
-      throw new Error("Hech qanday sabab tanlanmadi, coin qo‘shilmadi.");
+      throw new Error("Hech qanday sabab tanlanmadi, coin qo'shilmadi.");
     }
-
     await ConnectMonogDB()
     const student = await Student.findById(studentId)
     if (!student) {
       throw new Error("Talaba topilmadi!")
     }
-
     const responseReasons = reasons.map((item) => {
       return { reason: item.reason, value: item.value } 
     })
-
     student.coins.push({
       value: total,
       date: givenDate,
@@ -250,10 +242,10 @@ export const addCoins = async (studentId: string, reasons: Records_Coins, path: 
     revalidateTag("students")
     revalidateTag("student")
     revalidatePath(path)
-    return { success: true, message: "Coin muvaffaqiyatli qo‘shildi!" }
+    return { success: true, message: "Coin muvaffaqiyatli qo'shildi!" }
   } catch (error) {
     console.error(`Error adding coins to student ${studentId}:`, error)
-    throw new Error("Coin qo‘shishda xatolik yuz berdi")
+    throw new Error("Coin qo'shishda xatolik yuz berdi")
   }
 }
 
@@ -261,10 +253,10 @@ export const addCoins = async (studentId: string, reasons: Records_Coins, path: 
 export const salesUpdateCoins = async (studentId: string, coinValue: number, path: string) => {
   try {
     if (!mongoose.Types.ObjectId.isValid(studentId)) {
-      throw new Error("Noto‘g‘ri ID!")
+      throw new Error("Noto'g'ri ID!")
     }
     if (coinValue <= 0) {
-      throw new Error("Coin qiymati musbat bo‘lishi kerak!")
+      throw new Error("Coin qiymati musbat bo'lishi kerak!")
     }
     await ConnectMonogDB()
     const student = await Student.findById(studentId)
@@ -288,5 +280,41 @@ export const salesUpdateCoins = async (studentId: string, coinValue: number, pat
   } catch (error) {
     console.error(`Error subtracting coins from student ${studentId}:`, error)
     throw new Error("Coin ayirishda xatolik yuz berdi")
+  }
+}
+
+
+export const addAdminCoins = async(studentID: string, reason: string, value: number, path: string) => {
+  try{
+    if (!mongoose.Types.ObjectId.isValid(studentID)) {
+      throw new Error("Noto'g'ri ID!")
+    }
+    const givenDate = moment().format("YYYY-MM-DD");
+    
+    await ConnectMonogDB();
+    const student = await Student.findById(studentID)
+    if (!student) {
+      throw new Error("Talaba topilmadi!")
+    }
+
+    const formattedValue = Number(value); 
+
+    if (formattedValue === 0) {
+      throw new Error("Coin soni 0 bo‘lishi mumkin emas!");
+    }
+
+    student.coins.push({
+      value: formattedValue,
+      date: givenDate,
+      reasons: [{ reason, value: formattedValue }],
+    });
+
+    student.lastDateCoin = new Date(givenDate);
+    await student.save();
+    revalidateTag("students");
+    revalidateTag("student");
+    revalidatePath(path);
+  }catch(error){
+    throw new Error("Coin Admin qo'shishda Xatolik")
   }
 }

@@ -19,7 +19,7 @@ export default function _mentors({getTeacher}: Props) {
         </article>
         <div className=" relative flex items-start  justify-between">
             <article className="flex items-center gap-3">
-                <ArrowDown className="text-red-600 w-5 h-5" />
+            <ArrowDown className={`w-5 h-5 ${ getTeacher.length >= 10 ? "text-green-500 rotate-180" : "text-red-600 rotate-0"}`} />
                 <h6 className="text-[35px] font-bold">{getTeacher.length}</h6>
             </article>
             <Image  width={200} src={Mentors} alt="Mentors background img" />

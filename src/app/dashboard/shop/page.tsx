@@ -7,7 +7,6 @@ import { IShops } from "../../../../app.types";
 async function ShopAdmin() {
   const productJSON = await getShop();
   const product = await JSON.parse(JSON.stringify(productJSON));
-  console.log(product);
 
   return (
     <div>
