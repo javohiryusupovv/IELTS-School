@@ -22,7 +22,6 @@ export interface ICourse {
 }
 
 export interface ITeacher {
-  length: ReactNode;
   _id: string; // MongoDB ObjectId string sifatida bo'ladi
   teacherName: string;
   teacherSurname: string;
