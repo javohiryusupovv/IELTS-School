@@ -30,7 +30,7 @@ export default async function DashboardTeacher() {
             <div key={id} className='flex items-center py-2 justify-between px-3 border rounded-md'>
               <Link href={`/dashboard/teacher/${teach._id}`} className='group flex items-center gap-2 transition-all duration-200 hover:text-orange-400 hover:underline'>
                 <SquareUser className=" stroke-gray-500"/>
-                {teach?.teacherName} {teach.teacherSurname}
+                <span className='line-clamp-1'>{teach?.teacherName} {teach.teacherSurname}</span>
               </Link>
               <ActionsTeacher teacher={teach}/>
             </div>
