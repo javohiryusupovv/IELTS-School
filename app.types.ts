@@ -27,3 +27,11 @@ export interface ICRMAccount {
     phone: string;
     role: string;
 }
+
+
+export interface IEditTeacher{
+    teacherName: string, 
+    teacherSurname: string, 
+    teacherPhone: string,
+    teacherPassword?: string
+}

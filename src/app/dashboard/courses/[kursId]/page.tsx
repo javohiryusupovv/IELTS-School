@@ -15,7 +15,6 @@ async function CourseDetail({ params, }: { params: Promise<{ kursId: string }> }
   const courseJSON = await getCourseById((await params).kursId)
   const course = JSON.parse(JSON.stringify(courseJSON));
   const students = course.students;
-  console.log(students);
   
 
   if (!course) {
@@ -43,14 +42,14 @@ async function CourseDetail({ params, }: { params: Promise<{ kursId: string }> }
           </div>
 
         </div>
-        <div className="w-full border shadow-md py-3 px-5">
+        <div className="w-full rounded-md shadowCustom py-3 px-5">
           <p className="text-[20px] font-medium text-center mb-5">O'quvchilar Jadvali</p>
           <div className="flex">
             <table className="w-full">
               {students.map((student: IStudent)=> (
                 <tbody key={student._id}>
                   <tr className="group">
-                    <td className=" hover:text-orange-500 transition-all duration-200 py-1">
+                    <td className=" group-hover:text-orange-500 transition-all duration-200 py-1 w-[300px]">
                       <Link href={`/dashboard/students/${student._id}`} className="flex items-center gap-1 font-light text-[13px]">
                         <User className="stroke-1 w-5 h-5"/>
                         {student.surname} {student.name}

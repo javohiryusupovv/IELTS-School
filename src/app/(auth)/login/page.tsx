@@ -36,7 +36,6 @@ export default function login() {
                         color: "green",
                         border: "1px solid #17be5a",
                         backgroundColor: "white",
-                        boxShadow: "0 0px 5px #17be5a56",
                     },
                 });
                 router.push("/teacher")
@@ -48,7 +47,6 @@ export default function login() {
                         color: "red",
                         border: "1px solid #ff4343",
                         backgroundColor: "white",
-                        boxShadow: "0 0px 5px #ff434383",
                     },
                 });
                 router.push("/login")

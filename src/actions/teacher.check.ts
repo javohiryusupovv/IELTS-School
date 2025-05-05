@@ -44,16 +44,3 @@ export const LogoutTeacher = async(path: string) => {
         throw new Error(`Sizda Xatolik yuz berdi, Logoutda , ${error}`)
     }
 }
-
-export const ResetPasswordAction = async(teacherId: string, newpassword: string, path: string) => {
-    try{
-        await ConnectMonogDB();
-
-        const hashPassword = await bcrypt.hash(newpassword, 10);
-        await Teacher.findByIdAndUpdate(teacherId, { teacherPassword: hashPassword }, { new: true });
-        revalidatePath(path);
-        return { success: true, newpassword };
-    }catch(error){
-        throw new Error(`Sizda Xatolik yuz berdi, NewPasswordda , ${error}`)
-    }
-}

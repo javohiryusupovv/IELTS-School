@@ -33,29 +33,7 @@ export default function StudentForm({propCourses}: {propCourses: ICourse[]}) {
       }, [propCourses])
 
 
-    const checkForm = () => {
-        if (!name) {
-            toast.error("Iltimos, ismingizni kiriting!");
-            return false;
-        } 
-        if (!surname) {
-            toast.error("Iltimos, familiyangizni kiriting!");
-            return false;
-        } 
-        if (!courseId) {   
-            toast.error("Iltimos, kursni tanlang!");
-            return false;
-        } 
-        if (!phone) {
-            toast.error("Iltimos, ota yoki ona telefon raqamini to‘liq kiriting!");
-            return false;
-        }
-        return true
-    }
-
     const handleStudentAdd = async () => {
-        const isValid = checkForm();
-        if (!isValid) return;
         try{
 
             const studentGen = generateRandomID();   

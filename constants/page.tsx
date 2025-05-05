@@ -1,9 +1,4 @@
-import macbookm3 from "../public/img/macbook.webp"
-import Macos from "../public/img/macos.jpg"
-import keyboard from "../public/img/keyboard.jpg";
-import magic from "../public/img/magic.jpg";
-import minimac from "../public/img/macmini.jpg"
-import Airpods from "../public/img/aipods.jpg";
+
 
 //rang generator hash code bilan random bulib beriladi render bulganda uzgarmayudi
 

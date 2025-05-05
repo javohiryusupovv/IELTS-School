@@ -8,8 +8,7 @@ import studentImage from "../../../../../../public/img/student.png";
 import Image from "next/image";
 import { BsCoin } from "react-icons/bs";
 import EditStudent from "./editStudent";
-import { CircleCheckBig, TriangleAlert  } from "lucide-react";
-
+import { CircleCheckBig, TriangleAlert } from "lucide-react";
 
 import Archive from "./Archive";
 import ActiveStudentFunc from "./ActiveStudent";
@@ -24,25 +23,33 @@ export default function Actions({ student }: Props) {
   const pathname = usePathname();
   const [coins, setCoins] = useState("");
   const [coinreason, setCoinreason] = useState("");
-  
-  const handleCoinRes = async() => {
+
+  const handleCoinRes = async () => {
     if (!coins || !coinreason) {
       toast.error("Coin miqdori va sababi to‘ldirilishi kerak!");
       return;
     }
-    const coinFilter = parseFloat(coins)
+    const coinFilter = parseFloat(coins);
 
     if (coinFilter < 0 && Math.abs(coinFilter) > totalCoins) {
       toast.error("Coin miqdori yetarli emas!");
       return;
     }
-   
-    try{
-      const promise = addAdminCoins(student._id, coinreason, coinFilter, pathname);
+
+    try {
+      const promise = addAdminCoins(
+        student._id,
+        coinreason,
+        coinFilter,
+        pathname
+      );
       toast.promise(promise, {
         loading: "Coin qo'shilmoqda...",
         success: {
-          message: coinFilter > 0 ? "Coin muvaffaqiyatli qo'shildi!": "Coin jarimasi olindi!",
+          message:
+            coinFilter > 0
+              ? "Coin muvaffaqiyatli qo'shildi!"
+              : "Coin jarimasi olindi!",
           duration: 3000,
           style: {
             height: "50px",
@@ -53,15 +60,13 @@ export default function Actions({ student }: Props) {
         },
         error: "Coin qo'shishda xatolik yuz berdi!",
       });
-  
+
       setCoins("");
       setCoinreason("");
-
-    }catch(error){
-      console.log("Coin qo'shishda Xatolik")
+    } catch (error) {
+      console.log("Coin qo'shishda Xatolik");
     }
-    
-  }
+  };
 
   const ActiveStudentHande = (isActive: boolean) => {
     const promise = ActiveStudent(student._id, isActive, pathname);
@@ -146,15 +151,51 @@ export default function Actions({ student }: Props) {
             </ul>
             <div className="">
               <label htmlFor="" className="flex flex-col">
-                <p className="mb-2 text-[14px] text-gray-600/65">Talabaga coin qo'shish</p>
+                <p className="mb-2 text-[14px] text-gray-600/65">
+                  Talabaga coin qo'shish
+                </p>
               </label>
-              <article className="flex items-end justify-between gap-4">
+              <article className="flex items-end justify-between gap-4 mb-8">
                 <article className="flex flex-col w-[70%] gap-2">
-                <input value={coins} onChange={(e)=> setCoins(e.target.value)} className="px-2 py-1 border outline-none rounded-md" type="text" placeholder="Coin sonini kiriting ?" />
-                <input value={coinreason} onChange={(e)=> setCoinreason(e.target.value)} className="px-2 py-1 border outline-none rounded-md" type="text" placeholder="Coinni sababi ?" />
+                  <input
+                    value={coins}
+                    onChange={(e) => setCoins(e.target.value)}
+                    className="px-2 py-1 border outline-none rounded-md"
+                    type="text"
+                    placeholder="Coin sonini kiriting ?"
+                  />
+                  <input
+                    value={coinreason}
+                    onChange={(e) => setCoinreason(e.target.value)}
+                    className="px-2 py-1 border outline-none rounded-md"
+                    type="text"
+                    placeholder="Coinni sababi ?"
+                  />
                 </article>
-                <button onClick={handleCoinRes} className="border rounded-md cursor-pointer px-2 py-1 transition-all duration-200 bg-green-500 text-white hover:border-green-700">Qo'shish</button>
+                <button
+                  onClick={handleCoinRes}
+                  className="border rounded-md cursor-pointer px-2 py-1 transition-all duration-200 bg-green-500 text-white hover:border-green-700"
+                >
+                  Qo'shish
+                </button>
               </article>
+              <div className="w-full h-[150px]">
+                <p className="mb-4 text-[14px] text-gray-600/65">Coinlar tarixi haqida:</p>
+                <article className="flex flex-col gap-3">
+                  <article className="flex items-center gap-2">
+                    <p className="w-4 h-4 bg-green-500"></p>
+                    <span className="text-[12px] text-gray-600/65">Coin qo'shilgan !</span>
+                  </article>
+                  <article className="flex items-center gap-2">
+                    <p className="w-4 h-4 bg-orange-500"></p>
+                    <span className="text-[12px] text-gray-600/65">Talaba coindan foydalangan !</span>
+                  </article>
+                  <article className="flex items-center gap-2">
+                    <p className="w-4 h-4 bg-red-500"></p>
+                    <span className="text-[12px] text-gray-600/65">Talabadan jarima sabab ajratilan coin !</span>
+                  </article>
+                </article>
+              </div>
             </div>
           </div>
         </div>
@@ -184,12 +225,22 @@ export default function Actions({ student }: Props) {
                 {historyCoins?.map((coin, index) => (
                   <div
                     key={index}
-                    className="flex w-full py-2 px-4 items-center bg-green-300/30 rounded-md mb-3"
+                    className={`flex w-full py-2 px-4 items-center rounded-md mb-3 ${
+                      coin.reason.includes("Coin almashtirildi !")
+                        ? "bg-orange-400/30"
+                        : coin.value < 0
+                        ? "bg-red-500/30"
+                        : "bg-green-300/30"
+                    }`}
                   >
                     <article className="flex-[0.4]">
                       <CircleCheckBig
                         className={`stroke-[1.5] w-5 h-5 ${
-                          coin.value > 0 ? "stroke-green-500" : "stroke-red-500"
+                          coin.reason.includes("Coin almashtirildi !")
+                            ? "stroke-orange-500"
+                            : coin.value > 0
+                            ? "stroke-green-500"
+                            : "stroke-red-500"
                         }`}
                       />
                     </article>
@@ -198,7 +249,13 @@ export default function Actions({ student }: Props) {
                         {coin.reason.map((reason: any, index: number) => (
                           <p
                             key={index}
-                            className="text-[10px] text-white px-3 py-1 rounded-2xl bg-orange-500"
+                            className={`text-[10px] text-white px-3 py-1 rounded-2xl ${
+                              reason.includes("Coin almashtirildi !")
+                                ? "bg-orange-500"
+                                : coin.value > 0
+                                ? "bg-green-500"
+                                : "bg-red-500"
+                            }`}
                           >
                             {formatReasonText(reason)}
                           </p>
@@ -213,7 +270,11 @@ export default function Actions({ student }: Props) {
                     <article className="flex-1 justify-items-end text-right">
                       <p
                         className={`flex justify-center items-center w-14 h-6 rounded-3xl text-[14px] text-white bg-green-500 ${
-                          coin.value > 0 ? "bg-green-500" : "bg-red-500"
+                          coin.reason.includes("Coin almashtirildi !")
+                            ? "bg-orange-500"
+                            : coin.value > 0
+                            ? "bg-green-500"
+                            : "bg-red-500"
                         }`}
                       >
                         {coin.value > 0 ? "+" : ""}
