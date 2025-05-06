@@ -14,9 +14,6 @@
 
 
 @media (max-width: 400px){
-  .container-cus{
-    background-color: red;
-  }
   .container-cus .container-img{
     width: 130px;
     left: 30px;
