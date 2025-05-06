@@ -34,9 +34,9 @@ export default function StudentLogin() {
       if (students) {
         localStorage.setItem("studentID", JSON.stringify(students));
          toast.success("Siz Talabasiz", {
-                            duration: 8000,
+                            duration: 2000,
                             style: {
-                                height: "40px",
+                                height: "50px",
                                 marginTop: "30px",
                                 color: "green",
                                 border: "1px solid #17be5a",

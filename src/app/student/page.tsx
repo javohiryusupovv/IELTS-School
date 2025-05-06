@@ -15,7 +15,7 @@ export default async function StudentDashboard() {
   const student = await getStudentFromCookie();  
   const coins = student?.coins?.reduce((sum: number, coin: any) => sum + coin.value, 0) ?? 0;
   return (
-    <div className="pt-5 min-h-screen pb-20 container-cus">
+    <div className="pt-[100px] min-h-screen pb-20 container-cus">
       <article className="w-11/12 rounded-md m-auto mb-10">
         <div className=" relative top-0 left-0 rounded-[20px] overflow-hidden">
           <Image className="absolute left-10 top-5 w-[150px] container-img" src={IQLogo} alt="ChipCard"/>

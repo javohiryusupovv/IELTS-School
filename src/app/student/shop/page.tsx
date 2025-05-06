@@ -20,7 +20,7 @@ export default async function ShopList() {
   }
 
   return (
-    <div className="container w-full min-h-screen pt-5">
+    <div className="container w-full min-h-screen pt-[75px]">
       <article className="w-full text-center py-2 mb-8">
         <p className="text-[20px] font-medium text-orange-500">Shop Bo'limi</p>
       </article>
