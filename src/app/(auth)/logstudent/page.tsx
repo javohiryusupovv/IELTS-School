@@ -4,9 +4,10 @@ import { StudentCheck } from "@/actions/student.check";
 import { IDSchema } from "@/actions/zod";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { initSDK } from "@/lib/initSDK";
 import { usePathname, useRouter } from "next/navigation";
 import { useTopLoader } from "nextjs-toploader";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export default function StudentLogin() {
@@ -14,6 +15,11 @@ export default function StudentLogin() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const loader = useTopLoader()
+
+
+  useEffect(() => {
+    initSDK().catch(console.error);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
