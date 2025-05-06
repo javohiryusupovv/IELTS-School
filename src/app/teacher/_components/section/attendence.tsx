@@ -10,7 +10,8 @@ import {
   ChevronLeft,
   LockKeyhole,
   CheckCheck,
-  Info
+  Info,
+  User
 } from "lucide-react";
 import {
   Tooltip,
@@ -28,6 +29,7 @@ import { PopoverClose } from "@radix-ui/react-popover";
 import { usePathname } from "next/navigation";
 import { formatDate, reasonsWithValues } from "../../../../../constants/page";
 import { ICourse } from "@/types/type";
+
 
 interface Props {
   students: any;
@@ -239,8 +241,9 @@ export default function Attendence({
                 {students.map((student: any, id: number) => (
                   <tr key={id} className="border-b-[0.3px]">
                     <th className="w-[200px] sticky left-0 z-[10] bg-white">
-                      <div className="w-[200px] text-left py-3">
-                        <p className="text-[12px] overflow-hidden whitespace-nowrap text-ellipsis font-medium">
+                      <div className="flex items-center gap-2 w-[200px] text-left py-3">
+                        <User className="stroke-1"/>
+                        <p className="text-[14px] overflow-hidden whitespace-nowrap text-ellipsis font-normal">
                           {student.surname} {student.name}
                         </p>
                       </div>
