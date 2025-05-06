@@ -11,3 +11,50 @@
 .shadow-text{
   text-shadow: 0px 0px 4px white;
 }
+
+
+@media (max-width: 400px){
+  .container-cus{
+    background-color: red;
+  }
+  .container-cus .container-img{
+    width: 130px;
+    left: 30px;
+  }
+  .container-cus .custom-cardBG{
+    padding: 0px 30px;
+  }
+  .container-cus .chip{
+    width: 35px;
+  }
+  .container-cus .wife{
+    width: 24px;
+  }
+  .container-cus .custom-hold{
+    padding: 0px 30px;
+  }
+}
+
+@media (max-width: 350px){
+  .container-cus .custom-hold{
+    height: 50px;
+    padding: 6px 25px;
+  }
+  .container-cus .custom-hold svg{
+    font-size: 16px;
+  }
+  .container-cus .custom-hold p{
+    font-size: 11px;
+    margin: 0px !important;
+  }
+
+  .container-cus .custom-hold .holder-title{
+    font-size: 11px;
+  }
+  .container-cus .custom-hold .holder-name{
+    font-size: 14px;
+  }
+  .container-cus .custom-hold div, article{
+    margin-top: 0px !important;
+  }
+}
