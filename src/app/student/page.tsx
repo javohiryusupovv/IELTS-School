@@ -3,7 +3,6 @@ import Image from "next/image";
 import { BsCoin } from "react-icons/bs";
 import "./tgbot.css";
 import { getStudentFromCookie } from "@/actions/student.check";
-import { GiTrophyCup } from "react-icons/gi";
 import HistoryCoins from "./_components/page";
 
 import CreditCard from "../../../public/students/card2.png"

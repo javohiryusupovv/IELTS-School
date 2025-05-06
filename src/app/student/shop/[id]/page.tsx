@@ -19,7 +19,7 @@ export default async function ShopId({params,}:{params: Promise<{ id: string }>}
   }
 
   return (
-    <div className="container pb-20 pt-[75px] overflow-y-scroll scrolbars">
+    <div className="container pb-20 pt-[90px] overflow-y-scroll scrolbars">
       <div className="grid w-[80%] m-auto">
         <div className="max-lg:flex max-lg:flex-col">
           <h6 className="text-2xl font-medium mb-5">{products.title}</h6>
@@ -30,7 +30,7 @@ export default async function ShopId({params,}:{params: Promise<{ id: string }>}
               width={400}
               height={300}
               priority
-              className="max-lg:self-center rounded-md mb-4 w-[250px] object-cover"
+              className="max-lg:self-center rounded-md mb-4 w-full object-cover"
             />
           </article>
         </div>
@@ -41,9 +41,9 @@ export default async function ShopId({params,}:{params: Promise<{ id: string }>}
               {product.description}
             </p>
             <article className="w-full">
-              <button className="flex items-center gap-2 px-2 py-1 border rounded-full bg-[#f9d922] mb-8">
+              <button className="flex items-center gap-2 px-2 py-1 border rounded-full bg-yellow-400 mb-8">
                 <BsCoin className="fill-white text-[20px]" />
-                <p className="text-black">{product.price}</p>
+                <p className="text-white">{product.price}</p>
               </button>
               <ClientProps product={product} coins={coins} student={student}/>
             </article>

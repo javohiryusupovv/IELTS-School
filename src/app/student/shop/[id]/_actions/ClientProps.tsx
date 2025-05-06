@@ -14,6 +14,7 @@ import { toast } from "sonner";
 import { useState } from "react";
 import { salesUpdateCoins } from "@/actions/student.action";
 import { usePathname } from "next/navigation";
+import {  handleClickConfetti } from "./confetti";
 
 interface Props {
   product: ICreateShop;
@@ -37,6 +38,8 @@ export default function ClientComponent({ product, coins, student }: Props) {
         );
         if (result.success) {
           handlePurchaseBot();
+          handleClickConfetti();
+
         } else {
           toast.error("Coin ayirishda xatolik: " + result.message);
         }
@@ -55,7 +58,7 @@ export default function ClientComponent({ product, coins, student }: Props) {
     setIsLoading(true);
     const telegramBotId = process.env.NEXT_PUBLIC_TELEGRAM_BOT_API!;
     const telegramChatId = process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID!;
-const message = `
+    const message = `
 👨‍🎓 Name: ${student.name} ${student.surname}
 
 📔 Kurs: ${student.course.courseTitle}
@@ -80,7 +83,7 @@ const message = `
           chat_id: telegramChatId,
           text: message,
           parse_mode: "HTML",
-      }),
+        }),
       }
     ).finally(() => {
       setIsLoading(false);
@@ -93,6 +96,7 @@ const message = `
         duration: 2500,
         style: {
           height: "50px",
+          marginTop: "30px",
           color: "green",
           border: "1px solid #17be5a",
           backgroundColor: "white",
@@ -105,9 +109,7 @@ const message = `
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild className="flex">
-      <button
-          className="w-full flex justify-center py-2 px-4 rounded-md text-white bg-orange-500 hover:bg-orange-400/90 hover:text-white transition-all duration-300"
-        >
+        <button className="w-full flex justify-center py-2 px-4 rounded-md text-white bg-orange-500 hover:bg-orange-400/90 hover:text-white transition-all duration-300">
           Sotib Olish
         </button>
       </DialogTrigger>
@@ -125,7 +127,7 @@ const message = `
             height={360}
             alt={product.title}
             priority
-            className="w-[250px] object-cover rounded-md "
+            className="w-full object-cover rounded-md "
           />
         </article>
         <div className="flex items-center justify-between mb-5">
@@ -134,7 +136,6 @@ const message = `
             <span className="font-normal text-[14px]">{product.price}</span>
           </p>
         </div>
-
         <button
           onClick={handleSubmit}
           disabled={isLoading}
