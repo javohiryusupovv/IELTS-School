@@ -33,7 +33,16 @@ export default function StudentLogin() {
       const students = await StudentCheck(idStudent, pathname);
       if (students) {
         localStorage.setItem("studentID", JSON.stringify(students));
-        toast.success("Siz Talabasiz");
+         toast.success("Siz Talabasiz", {
+                            duration: 8000,
+                            style: {
+                                height: "40px",
+                                marginTop: "30px",
+                                color: "green",
+                                border: "1px solid #17be5a",
+                                backgroundColor: "white",
+                            },
+                        });
         router.push("/student");
       } else {
         toast.warning("Siz Talabalar safida yo'qsiz");
@@ -48,7 +57,7 @@ export default function StudentLogin() {
   };
 
   return (
-    <div className="w-[250px] h-screen flex items-center m-auto">
+    <div className="w-[250px] absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] flex items-center m-auto">
       <form onSubmit={handleSubmit} className="text-center">
         <p className="mb-5">Student ID*</p>
         <Label className="flex p-2 w-full border rounded-md items-center text-[15px] font-medium focus-within:border-orange-500 focus-within:border-1 mb-5">
