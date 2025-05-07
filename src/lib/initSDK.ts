@@ -20,7 +20,7 @@ import {
         await viewport.mount();
         viewport.expand();
       }
-      if (viewport.requestFullscreen.isAvailable()) {
+      if (viewport.requestFullscreen.isAvailable()) { 
         await viewport.requestFullscreen();
       }
     }, 0);

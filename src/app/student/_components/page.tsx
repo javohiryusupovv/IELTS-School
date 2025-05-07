@@ -6,8 +6,7 @@ interface Props {
 }
 
 export default function HistoryCoins({ student }: Props) {
-  console.log(student);
-  const historyCoins = student?.coins?.map((coin: any) => {
+    const historyCoins = student?.coins?.map((coin: any) => {
     return {
       value: coin.value,
       reason: coin.reasons.map((reason: any) => reason.reason),
@@ -31,7 +30,7 @@ export default function HistoryCoins({ student }: Props) {
                 {coin.reason.map((reason: any, index: number) => (
                   <p
                     key={index}
-                    className={`text-[10px] text-white px-3 py-1 rounded-2xl ${
+                    className={`text-[12px] text-white px-3 py-1 rounded-2xl ${
                       reason.includes("Coin almashtirildi !")
                         ? "bg-orange-500"
                         : coin.value > 0

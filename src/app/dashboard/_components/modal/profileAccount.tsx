@@ -14,6 +14,7 @@ import Link from "next/link";
 import EditProfile from "./editProfile";
 import { ICRMAccount } from "../../../../../app.types";
 import { RiRobot2Line } from "react-icons/ri";
+import { BsCashCoin } from "react-icons/bs";
 
 
 interface Props{
@@ -51,12 +52,20 @@ export default function ProfileAccount({ admin }: Props) {
                 <EditProfile/>
             </article>
             <hr className="mb-3" />
-            <Link href={"https://t.me/Javoxir_iq"} target="_blank">
-              <button className="group hover:bg-orange-500 transition-all duration-200 cursor-pointer flex text-white items-center gap-2 w-full py-2 px-4 rounded bg-orange-400/60 mb-3">
-                <BiSupport className="w-5 h-5 text-white transition-all duration-200" />
-                <p className="transition-all duration-200">Yordam markazi</p>
-              </button>
-            </Link>
+            <div className="flex flex-col gap-3">
+              <Link href={"/dashboard/price"} onClick={()=> handleClose()}>
+                <button className="flex gap-2 items-center transition-all duration-200 text-[#72e128] w-full py-2 px-4 rounded border hover:bg-[#72e128c2]/20 hover:border-transparent">
+                  <BsCashCoin/>
+                  <p>To'lov qilish</p>
+                </button>
+              </Link>
+              <Link href={"https://t.me/Javoxir_iq"} target="_blank">
+                <button className="group hover:bg-orange-500 transition-all duration-200 cursor-pointer flex text-white items-center gap-2 w-full py-2 px-4 rounded bg-orange-400/60 mb-3">
+                  <BiSupport className="w-5 h-5 text-white transition-all duration-200" />
+                  <p className="transition-all duration-200">Yordam markazi</p>
+                </button>
+              </Link>
+            </div>
             <div>
               <ModalConfirm handleClose={handleClose} />
             </div>

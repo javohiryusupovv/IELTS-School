@@ -11,7 +11,6 @@ import Logo from "../../../../public/icons/logod.png";
 import Bank from "../../../../public/icons/bank.svg";
 import { RxDashboard } from "react-icons/rx";
 import { GraduationCap, Users, ShoppingBag, Store } from "lucide-react";
-import { BsCoin } from "react-icons/bs";
 import { UserRound } from "lucide-react";
 import { TbShoppingCartPlus } from "react-icons/tb";
 import { BsClockHistory } from "react-icons/bs";

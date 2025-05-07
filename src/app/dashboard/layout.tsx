@@ -52,8 +52,8 @@ export default async function DashboardLayout({ children }: { children: React.Re
         </div>
         <div className="p-5 bg-white min-h-screen mb-4">{children}</div>
         <footer className="w-full py-5 px-4 border rounded-md bg-white">
-        <a href="https://t.me/Javoxir_iq" target="_blank"><p className="flex gap-2 items-center justify-end text-end group cursor-pointer"><span className="anim">👋🏻</span> Tizimni ishlab chiquvchi: <span className="text-[20px] transition-all duration-200 font-medium group-hover:text-orange-500">Javokhir</span></p></a>
-          
+          <a href="https://t.me/Javoxir_iq" target="_blank"><p className="flex gap-2 items-center justify-end text-end group cursor-pointer"><span className="anim">👋🏻</span> Tizimni ishlab chiquvchi: <span className="text-[20px] transition-all duration-200 font-medium group-hover:text-orange-500">Javokhir</span></p></a>
+
         </footer>
       </main>
     </div>
