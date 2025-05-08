@@ -242,7 +242,7 @@ export default function Attendence({
                   <tr key={id} className="border-b-[0.3px]">
                     <th className="w-[200px] sticky left-0 z-[10] bg-white">
                       <div className="flex items-center gap-2 w-[200px] text-left py-3">
-                        <User className="stroke-1"/>
+                        <User className="stroke-1" />
                         <p className="text-[14px] overflow-hidden whitespace-nowrap text-ellipsis font-normal">
                           {student.surname} {student.name}
                         </p>
@@ -255,93 +255,88 @@ export default function Attendence({
                         "day"
                       );
                       const isToday = moment(day).isSame(today, "day");
-                      const isCoinGiven = student.coins && student.coins.some((coin: any) => coin.date === day);
+                      const isCoinGiven = student.coins?.some((coin: any) =>
+                      moment(coin.date).isSame(day, "day")
+                    );
+                    
                       return (
                         <td key={i} className="text-[12px] p-3">
-                          <span
-                            className={`text-white flex items-center justify-center`}
-                          >
+                          <span className="text-white flex items-center justify-center">
                             {isArxivDay ? (
                               isToday ? (
-                                <Popover>
-                                  <PopoverTrigger
-                                    asChild
-                                    onClick={() =>
-                                      handleSelect(student._id, day)
-                                    }
-                                  >
-                                    <button className="w-9 h-7 cursor-pointer border rounded-md hover:border-green-500 transition-all duration-300"></button>
-                                  </PopoverTrigger>
-                                  <PopoverContent className="w-64">
-                                    <div className="">
-                                      <p className="text-orange-500 text-center mb-2">
-                                        Coin sabablari
-                                      </p>
-                                      <hr className="mb-2" />
-                                      <article className="flex items-center gap-2 mb-2">
-                                        <input
-                                          type="checkbox"
-                                          checked={attedence.homework}
-                                          onChange={handleOnChangeChecked}
-                                          id="homework"
-                                          name="attendance"
-                                        />
-                                        -
-                                        <label
-                                          htmlFor="homework"
-                                          className="text-[13px]"
-                                        >
-                                          Uyga vazifa
-                                        </label>
-                                      </article>
-                                      <article className="flex items-center gap-2 mb-4">
-                                        <input
-                                          type="checkbox"
-                                          checked={attedence.keldi}
-                                          onChange={handleOnChangeChecked}
-                                          id="keldi"
-                                          name="attendance"
-                                        />
-                                        -
-                                        <label
-                                          htmlFor="keldi"
-                                          className="text-[13px]"
-                                        >
-                                          Vaqtida keldi
-                                        </label>
-                                      </article>
-                                      {/* <article className="flex items-center gap-2 mb-4">
-                                        <input
-                                          type="checkbox"
-                                          checked={attedence.leader}
-                                          onChange={handleOnChangeChecked}
-                                          id="leader"
-                                          name="attendance"
-                                        />
-                                        -
-                                        <label
-                                          htmlFor="leader"
-                                          className="text-[13px]"
-                                        >
-                                          Vaqtida to'lov
-                                        </label>
-                                      </article> */}
-                                      <PopoverClose
-                                        onClick={handleCheckedValue}
-                                        className="px-2 py-1 text-[13px] rounded-md bg-orange-500 text-white"
+                                isCoinGiven ? (
+                                  // Bugungi kun va coin berilgan holat
+                                  <TooltipProvider>
+                                    <Tooltip>
+                                      <TooltipTrigger
+                                        disabled
+                                        className="cursor-pointer flex justify-center items-center py-1 px-2 rounded-md bg-[#f0f9f3]"
                                       >
-                                        Saqlash
-                                      </PopoverClose>
-                                    </div>
-                                  </PopoverContent>
-                                </Popover>
+                                        <CheckCheck className="stroke-green-500 stroke-[1.4] w-4 h-5" />
+                                      </TooltipTrigger>
+                                      <TooltipContent>
+                                        <p className="text-green-500">Coin berilgan</p>
+                                      </TooltipContent>
+                                    </Tooltip>
+                                  </TooltipProvider>
+                                ) : (
+                                  // Bugungi kun va coin berilmagan holat
+                                  <Popover>
+                                    <PopoverTrigger
+                                      asChild
+                                      onClick={() => handleSelect(student._id, day)}
+                                    >
+                                      <button className="w-9 h-7 cursor-pointer border rounded-md hover:border-green-500 transition-all duration-300"></button>
+                                    </PopoverTrigger>
+                                    <PopoverContent className="w-64">
+                                      <div>
+                                        <p className="text-orange-500 text-center mb-2">
+                                          Coin sabablari
+                                        </p>
+                                        <hr className="mb-2" />
+                                        <article className="flex items-center gap-2 mb-2">
+                                          <input
+                                            type="checkbox"
+                                            checked={attedence.homework}
+                                            onChange={handleOnChangeChecked}
+                                            id="homework"
+                                            name="attendance"
+                                          />
+                                          -
+                                          <label htmlFor="homework" className="text-[13px]">
+                                            Uyga vazifa
+                                          </label>
+                                        </article>
+                                        <article className="flex items-center gap-2 mb-4">
+                                          <input
+                                            type="checkbox"
+                                            checked={attedence.keldi}
+                                            onChange={handleOnChangeChecked}
+                                            id="keldi"
+                                            name="attendance"
+                                          />
+                                          -
+                                          <label htmlFor="keldi" className="text-[13px]">
+                                            Vaqtida keldi
+                                          </label>
+                                        </article>
+                                        <PopoverClose
+                                          onClick={handleCheckedValue}
+                                          className="px-2 py-1 text-[13px] rounded-md bg-orange-500 text-white"
+                                        >
+                                          Saqlash
+                                        </PopoverClose>
+                                      </div>
+                                    </PopoverContent>
+                                  </Popover>
+                                )
                               ) : (
-
+                                // Arxiv kuni lekin bugun emas
                                 <TooltipProvider>
                                   <Tooltip>
                                     <TooltipTrigger
                                       disabled
-                                      className={`cursor-pointer flex justify-center items-center py-1 px-3 border rounded-md`}
+                                      className={`cursor-pointer flex justify-center items-center py-1 px-2 rounded ${isCoinGiven ? "bg-[#f0f9f3]" : "bg-[#ff000013]"}`}
                                     >
                                       {isCoinGiven ? (
                                         <CheckCheck className="stroke-green-500 stroke-[1.4] w-5 h-5" />
@@ -356,16 +351,16 @@ export default function Attendence({
                                     </TooltipContent>
                                   </Tooltip>
                                 </TooltipProvider>
-
                               )
                             ) : (
+                              // Kelajakdagi kun — yopiq
                               <TooltipProvider>
                                 <Tooltip>
                                   <TooltipTrigger
                                     disabled
                                     className="cursor-not-allowed py-1 px-3 border rounded-md"
                                   >
-                                    <LockKeyhole className=" stroke-black/70 stroke-1 w-4 h-5" />
+                                    <LockKeyhole className="stroke-black/70 stroke-1 w-4 h-5" />
                                   </TooltipTrigger>
                                   <TooltipContent>
                                     <p>Yopiq kun</p>
@@ -375,6 +370,7 @@ export default function Attendence({
                             )}
                           </span>
                         </td>
+
                       );
                     })}
                   </tr>

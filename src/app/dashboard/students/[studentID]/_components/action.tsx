@@ -14,6 +14,7 @@ import Archive from "./Archive";
 import ActiveStudentFunc from "./ActiveStudent";
 import { formatDate, formatReasonText } from "../../../../../../constants/page";
 import { useState } from "react";
+import SelecStatus from "./selecStatus";
 
 interface Props {
   student: IStudent;
@@ -23,6 +24,8 @@ export default function Actions({ student }: Props) {
   const pathname = usePathname();
   const [coins, setCoins] = useState("");
   const [coinreason, setCoinreason] = useState("");
+  const [selectStatus, setSelectStatus] = useState("")
+
 
   const handleCoinRes = async () => {
     if (!coins || !coinreason) {
@@ -116,6 +119,20 @@ export default function Actions({ student }: Props) {
     };
   });
 
+  const filteredCoins = historyCoins?.filter((coin: any) => {
+    if (selectStatus === "penalty") {
+      return coin.value < 0 && !coin.reason.includes("Coin almashtirildi !");
+    }
+    if (selectStatus === "used") {
+      return coin.reason.includes("Coin almashtirildi !");
+    }
+    if (selectStatus === "added") {
+      return coin.value > 0 && !coin.reason.includes("Coin almashtirildi !");
+    }
+    return true; 
+  });
+  
+
   return (
     <div>
       <div className="grid grid-cols-3 items-start gap-5 mb-4">
@@ -200,8 +217,11 @@ export default function Actions({ student }: Props) {
           </div>
         </div>
         <div className="p-4 text-center col-span-2 rounded-lg shadowCustom">
-          <p className="mb-4">Studentning Coinlar tarixi</p>
+          <p className="mb-6">Studentning Coinlar tarixi</p>
           <div className="w-full">
+            <div className="flex justify-end mb-5">
+              <SelecStatus selectStatus={selectStatus} onSelectChange={setSelectStatus}/>
+            </div>
             {totalCoins < 1 ? (
               <p className="text-gray-500/50 text-[14px] my-5 underline">
                 Coinlar tarixi mavjud
@@ -222,7 +242,7 @@ export default function Actions({ student }: Props) {
                     <p>Coin</p>
                   </article>
                 </div>
-                {historyCoins?.map((coin, index) => (
+                {filteredCoins?.map((coin, index) => (
                   <div
                     key={index}
                     className={`flex w-full py-2 px-4 items-center rounded-md mb-3 ${
@@ -247,18 +267,24 @@ export default function Actions({ student }: Props) {
                     <article className="flex-1 text-start">
                       <article className="flex gap-2 items-center">
                         {coin.reason.map((reason: any, index: number) => (
-                          <p
-                            key={index}
-                            className={`text-[10px] text-white px-3 py-1 rounded-2xl ${
-                              reason.includes("Coin almashtirildi !")
-                                ? "bg-orange-500"
-                                : coin.value > 0
-                                ? "bg-green-500"
-                                : "bg-red-500"
-                            }`}
-                          >
-                            {formatReasonText(reason)}
-                          </p>
+                           <p
+                           key={index}
+                           className={`text-[10px] text-black px-3 py-1 rounded-2xl bg-accent`}
+                         >
+                           {formatReasonText(reason)}
+                         </p>
+                          // <p
+                          //   key={index}
+                          //   className={`text-[10px] text-white px-3 py-1 rounded-2xl ${
+                          //     reason.includes("Coin almashtirildi !")
+                          //       ? "bg-orange-500"
+                          //       : coin.value > 0
+                          //       ? "bg-green-500"
+                          //       : "bg-red-500"
+                          //   }`}
+                          // >
+                          //   {formatReasonText(reason)}
+                          // </p>
                         ))}
                       </article>
                     </article>
