@@ -22,7 +22,7 @@ export const getStudents =  async () => {
         .populate({
           path: "students",
           model: Student,
-          select: "name surname phone studentID publishStudent course", // Faqat kerakli maydonlar
+          select: "name surname phone studentID publishStudent course coins", // Faqat kerakli maydonlar
           populate: {
             path: "course",
             model: Course, // <<< Shu joy qo‘shiladi!
