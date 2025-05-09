@@ -21,6 +21,7 @@ import { DatapickerEnd } from "../_components/endDay/dataPicker";
 import OddEvenDayFilter from "../_components/selectDay/odd.even";
 import { CalendarDayGet } from "@/components/custom/CalendarDayGet";
 import { CourseSchemaZod } from "@/actions/zod";
+import { FaPlus } from "react-icons/fa6";
 
 
 function CreateCourse() {
@@ -104,10 +105,11 @@ function CreateCourse() {
     <div>
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>
-          <button className="px-5 py-3 rounded-full bg-[#f18024] hover:bg-[#f18024ca] transition-all duration-200">
-            <p className="text-[12px] font-medium text-white">
+          <button className="px-5 py-3 rounded-full bg-[#f18024] hover:bg-[#f18024ca] transition-all duration-200 max-lg:px-3">
+            <p className="text-[12px] font-medium text-white max-lg:hidden">
               Yangi Kurs qushish
             </p>
+            <FaPlus className="text-white lg:hidden max-sm:text-[12px]"/>
           </button>
         </SheetTrigger>
         <SheetContent>
@@ -140,7 +142,7 @@ function CreateCourse() {
               />
               <span className="text-[12px] font-light text-red-600">{iserror[0]}</span>
             </label>
-            <div className="flex w-full justify-between mb-5">
+            <div className="flex justify-between w-full mb-5">
               <div>
                 <p className="text-[15px] mb-2 text-[#d47323cd]">
                   Boshlanish kuni*
@@ -159,7 +161,7 @@ function CreateCourse() {
             >
               Teacherni tanlang*
               <select
-                className="w-full py-2 rounded-md border"
+                className="w-full py-2 border rounded-md"
                 onChange={(e) => setTeacherId(e.target.value)}
                 value={teacherId}
               >

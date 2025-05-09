@@ -53,11 +53,11 @@ export default function ActionsTeacher({ teacher }: Props) {
     <div>
       <Popover>
         <PopoverTrigger>
-          <article className="group rounded-full p-1 hover:bg-orange-500/70 transition-all duration-200 bg-orange-300/20">
+          <article className="p-1 transition-all duration-200 rounded-full group hover:bg-orange-500/70 bg-orange-300/20">
             <EllipsisVertical className="w-4 h-4 group-hover:stroke-white stroke-orange-500" />
           </article>
         </PopoverTrigger>
-        <PopoverContent  className="flex flex-col gap-2 w-32 p-0 px-1 py-2 shadow-none">
+        <PopoverContent  className="flex flex-col w-32 gap-2 p-0 px-1 py-2 shadow-none">
           <EditTeacher teachers={teacher} />
           <DeleteAction handleDelete={handleDelete} />
         </PopoverContent>
@@ -77,7 +77,7 @@ const DeleteAction = ({ handleDelete }: DeleteActionProps) => {
         <Trash className="w-4 h-4 stroke-red-600" />
         O'chirish
       </AlertDialogTrigger>
-      <AlertDialogContent>
+      <AlertDialogContent className="rounded-[8px]">
         <AlertDialogHeader>
           <AlertDialogTitle>O'qituvchini o'chirmoqdasiz !</AlertDialogTitle>
           <AlertDialogDescription>
@@ -85,7 +85,7 @@ const DeleteAction = ({ handleDelete }: DeleteActionProps) => {
             ma'lumotlarini yo'qotadi.
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter>
+        <AlertDialogFooter className="grid items-center grid-cols-2 gap-2">
           <AlertDialogCancel>Yo'q</AlertDialogCancel>
           <AlertDialogAction onClick={handleDelete}>Ha</AlertDialogAction>
         </AlertDialogFooter>
@@ -161,7 +161,7 @@ const EditTeacher = ({ teachers }: EditTeacherProps) => {
               name="name"
               required
               defaultValue={teachers.teacherName}
-              className="peer border w-full p-2 rounded outline-none focus:border-orange-500 transition-all duration-200"
+              className="w-full p-2 transition-all duration-200 border rounded outline-none peer focus:border-orange-500"
               placeholder=" "
             />
             <p
@@ -182,7 +182,7 @@ const EditTeacher = ({ teachers }: EditTeacherProps) => {
               name="surname"
               required
               defaultValue={teachers.teacherSurname}
-              className="peer border w-full p-2 rounded outline-none focus:border-orange-500 transition-all duration-200"
+              className="w-full p-2 transition-all duration-200 border rounded outline-none peer focus:border-orange-500"
               placeholder=" "
             />
             <p
@@ -203,7 +203,7 @@ const EditTeacher = ({ teachers }: EditTeacherProps) => {
               name="phone"
               required
               defaultValue={teachers.teacherPhone}
-              className="peer border w-full p-2 rounded outline-none focus:border-orange-500 transition-all duration-200"
+              className="w-full p-2 transition-all duration-200 border rounded outline-none peer focus:border-orange-500"
               placeholder=" "
             />
             <p
@@ -223,7 +223,7 @@ const EditTeacher = ({ teachers }: EditTeacherProps) => {
               type="text"
               name="password"
               required
-              className="peer border w-full p-2 rounded outline-none focus:border-orange-500 transition-all duration-200"
+              className="w-full p-2 transition-all duration-200 border rounded outline-none peer focus:border-orange-500"
               placeholder=" "
             />
             <p
@@ -239,7 +239,7 @@ const EditTeacher = ({ teachers }: EditTeacherProps) => {
             </p>
           </label>
           <button
-            className="px-4 py-2 rounded bg-orange-500 text-white transition-all duration-200 hover:bg-orange-500/70"
+            className="px-4 py-2 text-white transition-all duration-200 bg-orange-500 rounded hover:bg-orange-500/70"
             type="submit"
           >
             Save changes

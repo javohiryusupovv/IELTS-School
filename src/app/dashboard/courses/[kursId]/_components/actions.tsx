@@ -50,7 +50,7 @@ export default function Actions({ course }: Props) {
         <div>
             <AlertDialog>
                 <AlertDialogTrigger asChild>
-                    <button disabled={textStatus} className="px-7 py-3 rounded-full bg-red-600 hover:bg-red-500/70 transition-all duration-200">
+                    <button disabled={textStatus} className="py-3 transition-all duration-200 bg-red-600 rounded-full px-7 hover:bg-red-500/70">
                         <p className="text-[15px] font-medium text-white">
                             {textStatus ? "O'chirilmoqda" : "O'chirish"}
                         </p>
@@ -64,8 +64,8 @@ export default function Actions({ course }: Props) {
                             account and remove your data from our servers.
                         </AlertDialogDescription>
                     </AlertDialogHeader>
-                    <AlertDialogFooter>
-                        <AlertDialogCancel>Yuq</AlertDialogCancel>
+                    <AlertDialogFooter className="grid items-center grid-cols-2 gap-2">
+                        <AlertDialogCancel>Yo&apos;q</AlertDialogCancel>
                         <AlertDialogAction onClick={onDelete}>Ha</AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>

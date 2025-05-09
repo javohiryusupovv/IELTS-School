@@ -11,8 +11,8 @@ async function CourseAll() {
   const courses = await getCourses();
   return (
     <div>
-      <article className="flex justify-between items-center mb-3">
-        <h6 className="font-semibold text-[26px]">Kurslar</h6>
+      <article className="flex items-center justify-between mb-3">
+        <h6 className="font-semibold text-[26px] max-md:text-[20px] max-sm:text-[17px]">Kurslar</h6>
         <CreateCourse/>
       </article>
       <hr className="mb-7" />
@@ -22,7 +22,7 @@ async function CourseAll() {
           <p className="text-[18px] text-gray-700">Kurs Qo'shing</p>
         </div>
       )}
-        <div className="w-full grid xl:grid-cols-4 lg:grid-cols-3 gap-4">
+        <div className="grid w-full gap-4 xl:grid-cols-4 lg:grid-cols-3">
           {courses?.map((item)=> {
             let titleS = item.courseTitle.split(" ")[0]          
             return(
@@ -31,7 +31,7 @@ async function CourseAll() {
                   <p className="text-center w-full mt-12 text-[15px] font-semibold text-white">{item.courseTitle}</p>
                   <Image className="absolute bottom-0 left-0" src={Frontend} alt="Course Img" />
                 </Link>
-                <article className="px-7 py-4">
+                <article className="py-4 px-7">
                   <p className="text-[18px] mb-2 line-clamp-1">{titleS}</p>
                 </article>
               </div>

@@ -11,24 +11,24 @@ export default async function DashboardTeacher() {
   
   return (
     <div>
-        <article className="flex justify-between items-center mb-3">
-            <h6 className="font-semibold text-[26px]">Bizning Mentorlar</h6>
+        <article className="flex items-center justify-between mb-3">
+            <h6 className="font-semibold text-[26px] max-md:text-[20px] max-sm:text-[17px]">Bizning Mentorlar</h6>
             <TeacherCreated/>
         </article>
         <hr className="mb-7" />
 
           {getTeacher.length < 1 ? (
           <div className='flex  items-center justify-center w-full h-[80vh]'>
-            <article className='flex flex-col gap-2 items-center justify-center'>
+            <article className='flex flex-col items-center justify-center gap-2'>
               <UserRoundPlus className='w-[50px] h-10 stroke-gray-500 stroke-[1.4]'/>
-              <p className='text-gray-500 text-lg'>Teacher qo'shing</p>
+              <p className='text-lg text-gray-500'>Teacher qo'shing</p>
             </article>
           </div>
           ) : (
-        <div className="w-full grid grid-cols-4 gap-3">
+        <div className="grid w-full grid-cols-4 gap-3 max-xl:grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1">
           {getTeacher.map((teach: any, id: number)=> (
-            <div key={id} className='flex items-center py-2 justify-between px-3 border rounded-md'>
-              <Link href={`/dashboard/teacher/${teach._id}`} className='group flex items-center gap-2 transition-all duration-200 hover:text-orange-400 hover:underline'>
+            <div key={id} className='flex items-center justify-between px-3 py-2 border rounded-md'>
+              <Link href={`/dashboard/teacher/${teach._id}`} className='flex items-center gap-2 transition-all duration-200 group hover:text-orange-400 hover:underline'>
                 <SquareUser className=" stroke-gray-500"/>
                 <span className='line-clamp-1'>{teach?.teacherName} {teach.teacherSurname}</span>
               </Link>

@@ -16,6 +16,7 @@ import { formatUzbekPhone } from "@/utils/PhoneFormatter";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
+import { FaPlus } from "react-icons/fa6";
 
 function TeacherCreated() {
   const [open, setOpen] = useState(false);
@@ -78,10 +79,11 @@ function TeacherCreated() {
     <div>
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>
-          <button className="px-5 py-3 rounded-full bg-[#f18024] hover:bg-[#f18024ca] transition-all duration-200">
-            <p className="text-[12px] font-medium text-white">
+          <button className="px-5 py-3 rounded-full bg-[#f18024] hover:bg-[#f18024ca] transition-all duration-200 max-lg:px-3 max-sm:px-2 max-sm:py-2">
+            <p className="text-[12px] font-medium text-white max-lg:hidden">
               Yangi O'qituvchi qo'shish
             </p>
+            <FaPlus className="text-white lg:hidden max-sm:text-[12px]"/>
           </button>
         </SheetTrigger>
         <SheetContent>
@@ -146,7 +148,7 @@ function TeacherCreated() {
               <input
                 onChange={(e) => setTeacherPhone(formatUzbekPhone(e.target.value))}
                 value={teacherPhone}
-                className="py-2 border rounded-md px-2 text-gray-700 border-gray-300"
+                className="px-2 py-2 text-gray-700 border border-gray-300 rounded-md"
                 id="kurs"
                 type="text"
                 placeholder="Teacher uchun raqam kiriting"
