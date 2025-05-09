@@ -23,8 +23,8 @@ function NavbarLayout() {
   return (
     <aside className="py-2 px-3 sticky top-0 z-[10] w-[230px] h-screen overflow-y-auto scrolbars">
       <div className="w-full border bg-white rounded-lg pb-20">
-        <article className="pt-3 mx-3 border-b pb-4 mb-16">
-          <Image src={Logo} alt="Logo" />
+        <article className="pt-7 mx-3 border-b pb-10 mb-10">
+          <Image className="w-[120px]" src={Logo} alt="Logo" />
         </article>
         <ul className="mb-16">
           <li>

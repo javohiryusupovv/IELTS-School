@@ -1,6 +1,7 @@
 import { getStudentFromCookie } from "@/actions/student.check";
 import { formatDate, formatReasonText } from "../../../../../constants/page";
-import { Cog } from "lucide-react";
+import { ChevronLeft, Cog } from "lucide-react";
+import Link from "next/link";
 
 export default async function CoinJarima() {
   const students = await getStudentFromCookie();
@@ -21,9 +22,13 @@ export default async function CoinJarima() {
   );
 
   return (
-    <div className="w-11/12 m-auto pt-[75px]">
+    <div className="w-11/12 m-auto pt-[100px]">
       <article className="w-full">
-        <p className="text-[17px] font-semibold text-gray-400 mb-5">
+      <Link href={`/student`} className="inline-flex items-center gap-1 bg-accent border-[0.8px] mb-10 px-3 py-2 text-[12px] rounded-full cursor-pointer">
+          <ChevronLeft className="w-5 h-5"/>
+          Qaytish
+        </Link>
+        <p className="text-[17px] font-semibold text-gray-400 mb-10">
           Jarima Coinlar
         </p>
         {penaltyCoins && penaltyCoins.length > 0 ? (

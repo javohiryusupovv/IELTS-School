@@ -1,6 +1,7 @@
 import { getStudentFromCookie } from "@/actions/student.check";
 import { formatDate, formatReasonText } from "../../../../../constants/page";
 import { Cog, ChevronLeft  } from "lucide-react";
+import Link from "next/link";
 
 export default async function CoinSucces() {
   const students = await getStudentFromCookie();
@@ -20,12 +21,12 @@ export default async function CoinSucces() {
 
 
   return (
-    <div className="w-11/12 m-auto pt-[75px]">
+    <div className="w-11/12 m-auto pt-[100px]">
       <article className="w-full">
-        <button className="inline-flex items-center gap-1 w-full h-[20px] bg-orange-500 mb-5 px-3 py-2 rounded-full cursor-pointer inl">
-          <ChevronLeft/>
+      <Link href={`/student`} className="inline-flex items-center gap-1 bg-accent border-[0.8px] mb-10 px-3 py-2 text-[12px] rounded-full cursor-pointer">
+          <ChevronLeft className="w-5 h-5"/>
           Qaytish
-        </button>
+        </Link>
         <p className="text-[17px] font-semibold text-gray-400 mb-5">
           Qabul qilingan Coinlar
         </p>
@@ -45,7 +46,7 @@ export default async function CoinSucces() {
                             key={index}
                             className="flex justify-center items-center text-[14px] text-black"
                           >
-                            ( {formatReasonText(reason)} )
+                            {formatReasonText(reason)}
                           </p>
                         ))}
                       </article>
