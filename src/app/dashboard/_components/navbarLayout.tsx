@@ -19,7 +19,7 @@ import { BsClockHistory } from "react-icons/bs";
 function NavbarLayout() {
   const pathnames = usePathname();
   const [select, setSelect] = useState(false)
-  const [isSideBar, setSideBar] = useState(false)
+  const [isSideBar, setSideBar] = useState(true)
 
   const handleActiveSidebar = () => {
     setSideBar(!isSideBar)
@@ -127,7 +127,7 @@ function NavbarLayout() {
           </div>
         </div>
       </aside>
-      <button onClick={handleActiveSidebar} className={`${isSideBar ? "absolute left-[0%]" : "left-0"} transition-all duration-300 sm:hidden absolute z-[999] top-24 left-24 flex justify-center items-center w-[30px] h-[30px] rounded-md border shadow-gray-500 bg-white`}>
+      <button onClick={handleActiveSidebar} className={`${isSideBar ? "fixed left-[0%]" : "left-0"} transition-all duration-300 sm:hidden fixed z-[999] top-24 left-24 flex justify-center items-center w-[30px] h-[30px] rounded-md border shadow-gray-500 bg-white`}>
         <ChevronRight className=" stroke-[#8A98A7]" />
       </button>
     </div>
