@@ -37,7 +37,7 @@ export default function StudentLogin() {
                             duration: 2000,
                             style: {
                                 height: "50px",
-                                marginTop: "30px",
+                                marginTop: "40px",
                                 color: "green",
                                 border: "1px solid #17be5a",
                                 backgroundColor: "white",
@@ -45,8 +45,16 @@ export default function StudentLogin() {
                         });
         router.push("/student");
       } else {
-        toast.warning("Siz Talabalar safida yo'qsiz");
-        setIsLoading(false);
+        toast.warning("Siz Talabalar safida yo'qsiz", {
+          duration: 2000,
+          style: {
+              height: "50px",
+              marginTop: "40px",
+              color: "red",
+              border: "1px solid red",
+              backgroundColor: "white",
+          },
+      });
       }
     } catch (error) {
       toast.error(`Xatolik: ${error}`);
