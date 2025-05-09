@@ -55,6 +55,7 @@ export default function StudentLogin() {
               backgroundColor: "white",
           },
       });
+      setIsLoading(false)
       }
     } catch (error) {
       toast.error(`Xatolik: ${error}`);
