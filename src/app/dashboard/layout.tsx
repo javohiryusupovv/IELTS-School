@@ -40,8 +40,8 @@ export default async function DashboardLayout({ children }: { children: React.Re
   return (
     <div className="flex w-full gap-4 pt-5 bg-gray-500/10">
       <NavbarLayout />
-      <main className="w-[calc(100%-250px)] mr-[20px] mb-10 overflow-y-auto scrolbars mt-3 rounded-md">
-        <div className="w-full flex justify-between items-center h-[60px] rounded-md bg-white mb-4 px-2">
+      <main className="lg:w-[calc(100%-250px)] sm:w-[calc(100%-120px)] w-full md:mr-[20px] mr-[10px] mb-10 overflow-y-auto scrolbars mt-3 rounded-md">
+        <div className="w-full flex justify-between items-center h-[60px] rounded-md bg-white sm:mb-4 mb-10 px-2">
           <article className="w-[120px] h-full flex items-center">
             <Image src={LMSLogo} alt="Logo Learning Center" />
           </article>
@@ -50,13 +50,13 @@ export default async function DashboardLayout({ children }: { children: React.Re
             {adminData && <ProfileAccount admin={adminData} />}
           </div>
         </div>
-        <div className="p-5 bg-white min-h-screen mb-4">{children}</div>
+        <div className="md:p-5 p-3 bg-white min-h-screen mb-4">{children}</div>
         <footer className="w-full py-5 px-4 border rounded-md bg-white">
           <a href="https://t.me/Javoxir_iq" target="_blank"><p className="flex gap-2 items-center justify-end text-end group cursor-pointer"><span className="anim">👋🏻</span> Tizimni ishlab chiquvchi: <span className="text-[20px] transition-all duration-200 font-medium group-hover:text-orange-500">Javokhir</span></p></a>
 
         </footer>
       </main>
     </div>
-
+                                                                                                                                            
   )
 }
