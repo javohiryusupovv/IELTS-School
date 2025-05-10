@@ -58,9 +58,9 @@ export default async function CoinJarima() {
           </ul>
         ) : (
           <div className="flex justify-center items-center h-[600px] relative">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-2">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-2 text-center">
               <Cog className="animate-spin stroke-gray-500" />
-              <span className="text-gray-500">Jarimalar topilmadi !</span>
+              <span className="text-gray-500 text-[14px]">Jarimalar topilmadi !</span>
             </div>
           </div>
         )}

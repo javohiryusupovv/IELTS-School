@@ -10,7 +10,7 @@ export const StudentCheck = async (id: string, path: string) => {
   try {
     await ConnectMonogDB();
     const cleanedId = id.trim();
-    const replaceID = "iqtidor-"+cleanedId
+    const replaceID = "iq-"+cleanedId
     const student = await Student.findOne({ studentID: replaceID }).populate("course");
     
     if (!student) {

@@ -12,6 +12,9 @@
   text-shadow: 0px 0px 4px white;
 }
 
+.personShadow{
+  box-shadow: 0px 0px 5px rgba(128, 128, 128, 0.085);
+}
 
 @media (max-width: 400px){
   .container-cus .container-img{

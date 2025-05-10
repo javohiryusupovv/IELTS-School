@@ -30,7 +30,7 @@ function TeacherCreated() {
     const validateTeacher = TeacherSchemaZod.safeParse({
       name: teacherName,
       surname: teacherSurname,
-      password: teacherPassword
+      password: teacherPassword,
     })
 
     if (!validateTeacher.success) {
@@ -39,12 +39,14 @@ function TeacherCreated() {
       return;
     }    
     const { name, surname, password } = validateTeacher.data;
+    const role = "o'qituvchi"; // Define the role variable
     try {
       const promise = createTeacher(
         name,
         surname,
         teacherPhone,
         password,
+        role,
         pathname
       );
       toast.promise(promise, {

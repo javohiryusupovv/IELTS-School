@@ -31,7 +31,7 @@ export const getCourseById = async (kursId: string) => {
       .populate({
         path: "teacher",
         model: Teacher,
-        select: "teacherName teacherSurname",
+        select: "teacherName teacherSurname role",
       })
       .populate({
         path: "students",

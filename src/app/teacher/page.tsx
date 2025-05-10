@@ -19,6 +19,9 @@ export default function Page() {
         }
     }, []);
 
+    console.log(teacher);
+    
+
     
 
     if (!teacher) return <p>Loading...</p>;

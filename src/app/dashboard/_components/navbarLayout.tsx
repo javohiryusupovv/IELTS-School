@@ -27,11 +27,11 @@ function NavbarLayout() {
 
   return (
     <div>
-      <aside className={`${isSideBar ? "hidden" : "block"} py-2 md:px-3 px-0 sticky top-0 z-[10] lg:w-[230px] sm:w-[180px] w-[120px] h-screen sm:overflow-y-auto sm:ml-2 ml-0 scrolbars`}>
-        <div className={`absolute ${isSideBar ? "-left-[100%]" : "left-0"} transition-all duration-500 w-full border bg-white rounded-lg pb-20`}>
-          <article className="pt-7 mx-3 border-b pb-10 mb-10">
+      <aside className={`${isSideBar ? "sm:block hidden" : "block"} py-2 md:px-3 px-0 sticky top-0 z-[10] lg:w-[230px] sm:w-[180px] w-[120px] h-screen sm:overflow-y-auto sm:ml-2 ml-0 scrolbars`}>
+        <div className={`absolute ${isSideBar ? "sm:left-0 -left-[100%]" : "left-0"} transition-all duration-500 w-full border bg-white rounded-lg pb-20`}>
+          <Link href={"/dashboard"} className="flex pt-7 mx-4 border-b pb-10 mb-10">
             <Image className="w-[120px]" src={Logo} alt="Logo" />
-          </article>
+          </Link>
           <ul className="mb-16">
             <li>
               <Link

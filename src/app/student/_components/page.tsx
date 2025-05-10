@@ -1,11 +1,7 @@
-import { IStudent } from "@/types/type";
 import MenyuCoin from "./action";
 
-interface Props {
-  student: IStudent;
-}
 
-export default function HistoryCoins({ student }: Props) {
+export default function HistoryCoins() {
   return (
     <div className="w-full">
         <MenyuCoin />
