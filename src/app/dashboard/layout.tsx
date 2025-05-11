@@ -9,6 +9,7 @@ import ProfileAccount from "./_components/modal/profileAccount";
 import { cookies } from "next/headers";
 import ConnectMonogDB from "@/lib/mongodb";
 import CrmAccount from "@/models/crmadmin.model";
+import NavbarMedia from "./_components/navbarMedia";
 
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -38,10 +39,15 @@ export default async function DashboardLayout({ children }: { children: React.Re
 
 
   return (
-    <div className="flex w-full gap-4 pt-5 bg-gray-500/10">
-      <NavbarLayout />
-      <main className="lg:w-[calc(100%-250px)] sm:w-[calc(100%-120px)] w-full md:mr-[20px] mr-[10px] mb-10 overflow-y-auto scrolbars mt-3 rounded-md">
-        <div className="w-full flex justify-between items-center h-[60px] rounded-md bg-white sm:mb-4 mb-10 px-2">
+    <div className="sm:flex w-full sm:pt-5 pt-8 bg-gray-500/10">
+      <div className="sm:hidden flex">
+        <NavbarMedia/>
+      </div>
+      <div className="sm:block flex">
+        <NavbarLayout />
+      </div>
+      <main className="lg:w-[calc(100%-250px)] sm:w-[calc(100%-230px)] w-full md:mr-[20px] sm:mx-[10px] mx-1 mb-5 overflow-y-auto scrolbars sm:mt-3 mt-8 rounded-md">
+        <div className="w-full flex justify-between items-center h-[60px] rounded-md bg-white mb-4 px-2">
           <article className="w-[120px] h-full flex items-center">
             <Image src={LMSLogo} alt="Logo Learning Center" />
           </article>

@@ -57,7 +57,13 @@ module.exports = {
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
   			}
-  		}
+			
+  		},
+		screens: {
+			OurMentor: "1110px",
+            OurMentor2: "860px",
+			sidebar: "491px"
+		}
   	},
   	container: {
   		padding: '0px 10px',

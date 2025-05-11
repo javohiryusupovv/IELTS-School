@@ -1,19 +1,20 @@
+
 import { SquareUser, UserRoundPlus } from 'lucide-react';
 import Link from "next/link";
 import TeacherCreated from "../_components/card/teacher-add";
-import { getTeachers } from "@/actions/teacher.action"; 
+import { getTeachers } from "@/actions/teacher.action";
 import ActionsTeacher from './_components/action';
 
 
 export default async function DashboardTeacher() {
-  const getTeacher = await getTeachers();  
+  const getTeacher = await getTeachers();
   console.log(getTeacher);
-  
+
   return (
     <div>
         <article className="flex justify-between items-center mb-3">
-            <h6 className="font-semibold text-[26px]">Bizning Mentorlar</h6>
-            <TeacherCreated/>
+            <h6 className="font-semibold md:text-[26px] text-lg">Bizning Mentorlar</h6>
+            <TeacherCreated />
         </article>
         <hr className="mb-7" />
 
@@ -25,7 +26,7 @@ export default async function DashboardTeacher() {
             </article>
           </div>
           ) : (
-        <div className="w-full grid grid-cols-4 gap-3">
+        <div className="w-full grid OurMentor:grid-cols-4 OurMentor2:grid-cols-3 sm:grid-cols-2 gap-3">
           {getTeacher.map((teach: any, id: number)=> (
             <div key={id} className='flex items-center py-2 justify-between px-3 border rounded-md'>
               <Link href={`/dashboard/teacher/${teach._id}`} className='group flex items-center gap-2 transition-all duration-200 hover:text-orange-400 hover:underline'>
