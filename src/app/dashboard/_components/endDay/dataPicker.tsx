@@ -15,16 +15,15 @@ export function DatapickerEnd({ endDate, setEndDate }: Props) {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button
-          variant={"outline"}
+        <button
           className={cn(
-            "sm:w-[145px] w-full justify-start text-left font-normal px-1 overflow-hidden",
+            "sm:w-[145px] border w-full justify-start text-left font-normal px-1 overflow-hidden",
             !endDate && "text-muted-foreground"
           )}
         >
           <CalendarIcon className="w-[10px] h-[10px]" />
           {endDate ? format(endDate, "PPP") : <span>Tugash kuni</span>}
-        </Button>
+        </button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
         <Calendar
