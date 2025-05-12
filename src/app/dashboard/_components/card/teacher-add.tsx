@@ -112,18 +112,12 @@ function TeacherCreated() {
             >
               Teacher ismi
               <input
-                onChange={(e) => {
-                  setTeacherName(e.target.value);
-                  setError((prev) => {
-                    const newErrors = [...prev];
-                    newErrors[0] = "";
-                    return newErrors;
-                  });
-                }}
+                onChange={(e) => setTeacherName(e.target.value)}
+                autoComplete="off"
                 value={teacherName}
                 className={`py-2 border rounded-md px-2 text-gray-700 transition-all duration-200 ${iserror[0]
-                    ? "border-red-600 border-[1.5px]"
-                    : "border-gray-300"
+                  ? "border-red-600 border-[1.5px]"
+                  : "border-gray-300"
                   }`}
                 id="kurs"
                 type="text"
@@ -140,18 +134,12 @@ function TeacherCreated() {
             >
               Teacher familiyasi
               <input
-                onChange={(e) => {
-                  setTeacherSurname(e.target.value);
-                  setError((prev) => {
-                    const newErrors = [...prev];
-                    newErrors[1] = "";
-                    return newErrors;
-                  });
-                }}
+                onChange={(e) => setTeacherSurname(e.target.value)}
+                autoComplete="off"
                 value={teacherSurname}
                 className={`py-2 border rounded-md px-2 text-gray-700 transition-all duration-200 ${iserror[1]
-                    ? "border-red-600 border-[1.5px]"
-                    : "border-gray-300"
+                  ? "border-red-600 border-[1.5px]"
+                  : "border-gray-300"
                   }`}
                 id="kurs"
                 type="text"
@@ -176,6 +164,7 @@ function TeacherCreated() {
                   className="py-2 w-full text-gray-700 outline-none"
                   id="kurs"
                   type="number"
+                  autoComplete="off"
                   placeholder="Telefon raqam kiriting"
                   required
                 />
@@ -183,24 +172,17 @@ function TeacherCreated() {
 
             </label>
             <label
-              className="flex gap-2 max-sm:text-[14px]  text-[#d47323cd] flex-col sm:mb-5 mb-3"
+              className="flex gap-2 max-sm:text-[14px] text-[#d47323cd] flex-col sm:mb-5 mb-3"
               htmlFor="kurs"
             >
               Teacher password
               <input
-                onChange={(e) => {
-                  setTeacherPassword(e.target.value);
-                  setError((prev) => {
-                    const newErrors = [...prev];
-
-                    newErrors[2] = "";
-                    return newErrors;
-                  });
-                }}
+                onChange={(e) => setTeacherPassword(e.target.value)}
+                autoComplete="off"
                 value={teacherPassword}
                 className={`py-2 border rounded-md px-2 text-gray-700 transition-all duration-200 ${iserror[2]
-                    ? "border-red-600 border-[1.5px]"
-                    : "border-gray-300"
+                  ? "border-red-600 border-[1.5px]"
+                  : "border-gray-300"
                   }`}
                 id="kurs"
                 type="text"

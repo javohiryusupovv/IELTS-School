@@ -4,7 +4,6 @@ import { postAddStudent } from "@/actions/student.action";
 import { StudentSchemaZod } from "@/actions/zod";
 import {
     Sheet,
-    SheetClose,
     SheetContent,
     SheetDescription,
     SheetFooter,
@@ -12,15 +11,23 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet";
+
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+
 import { ICourse } from "@/types/type";
-import { formatUzbekPhone } from "@/utils/PhoneFormatter";
 import { generateRandomID } from "@/utils/generateID";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { FaUserPlus } from "react-icons/fa";
 
-export default function StudentForm({propCourses}: {propCourses: ICourse[]}) {
+export default function StudentForm({ propCourses }: { propCourses: ICourse[] }) {
     const [courses, setCourses] = useState<ICourse[]>([]);
     const [studentName, setStudentName] = useState("");
     const [studentSurname, setStudentSurname] = useState("");
@@ -55,8 +62,8 @@ export default function StudentForm({propCourses}: {propCourses: ICourse[]}) {
 
         try {
 
-            const studentGen = generateRandomID();   
-            const promise = postAddStudent(courseSelect, name, surname, phone, studentGen, pathname);         
+            const studentGen = generateRandomID();
+            const promise = postAddStudent(courseSelect, name, surname, phone, studentGen, pathname);
             toast.promise(promise, {
                 loading: "O'quvchi qo'shilmoqda...",
                 success: {
@@ -101,7 +108,7 @@ export default function StudentForm({propCourses}: {propCourses: ICourse[]}) {
                         <p className="text-[12px] font-medium text-white max-md:hidden">
                             Student yaratish
                         </p>
-                        <FaUserPlus className="text-white md:hidden"/>
+                        <FaUserPlus className="text-white md:hidden" />
                     </button>
                 </SheetTrigger>
                 <SheetContent>
@@ -138,18 +145,24 @@ export default function StudentForm({propCourses}: {propCourses: ICourse[]}) {
                         </label>
                         <article className="sm:mb-5 mb-3">
                             <p className="mb-3 max-sm:text-[14px] text-[#d47323cd]">Kursni tanlang *</p>
-                            <select
-                                className="w-full py-2 rounded-md border"
-                                onChange={(e) => setStudentCourseId(e.target.value)}
-                                value={studentCourseId}
-                            >
-                                <option value="">kursni tanlang ..</option>
-                                {courses.map((course: ICourse)=> (
-                                    <option key={course._id} value={course._id}>
-                                        {course.courseTitle}
-                                    </option>
-                                ))}
-                            </select>
+                            <Select value={studentCourseId} onValueChange={setStudentCourseId}>
+                                <SelectTrigger className="w-full py-2 rounded-md border">
+                                    <SelectValue placeholder="Kursni Tanlang ..." />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {courses.map((course: ICourse) => (
+                                        <SelectItem
+                                            key={course._id}
+                                            value={course._id}
+                                            className="max-sm:text-[14px] hover:bg-orange-400/70 hover:text-white transition-all duration-200"
+                                        >
+                                            {course.courseTitle}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+
+
                         </article>
                         <label className="flex gap-2 max-sm:text-[14px] text-[#d47323cd] flex-col sm:mb-5 mb-3">
                             Phone *
@@ -169,15 +182,15 @@ export default function StudentForm({propCourses}: {propCourses: ICourse[]}) {
                         </label>
                     </div>
                     <SheetFooter>
-                        
-                            <button
-                                onClick={handleStudentAdd}
-                                type="button"
-                                className="px-5 py-2 rounded-full bg-[#f18024] hover:bg-[#f18024ca] transition-all duration-200"
-                            >
-                                <p className="text-[15px] font-medium text-white">Qo'shish</p>
-                            </button>
-                
+
+                        <button
+                            onClick={handleStudentAdd}
+                            type="button"
+                            className="px-5 py-2 rounded-full bg-[#f18024] hover:bg-[#f18024ca] transition-all duration-200"
+                        >
+                            <p className="text-[15px] font-medium text-white">Qo'shish</p>
+                        </button>
+
                     </SheetFooter>
                 </SheetContent>
             </Sheet>

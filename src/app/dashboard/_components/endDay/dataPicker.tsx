@@ -2,7 +2,6 @@
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
@@ -14,24 +13,15 @@ interface Props {
 export function DatapickerEnd({ endDate, setEndDate }: Props) {
   return (
     <Popover>
-      <PopoverTrigger asChild>
-        <Button
-          variant={"outline"}
-          className={cn(
-            "sm:w-[145px] w-full justify-start text-left font-normal px-1 overflow-hidden",
-            !endDate && "text-muted-foreground"
-          )}
-        >
-          <CalendarIcon className="w-[10px] h-[10px]" />
-          {endDate ? format(endDate, "PPP") : <span>Tugash kuni</span>}
-        </Button>
+      <PopoverTrigger type="button" className={cn("sm:w-[155px] [&_svg]:size-4 [&_svg]:shrink-0 w-full flex border whitespace-nowrap items-center gap-2 p-2 rounded-md text-left font-normal focus-within:border-orange-500 overflow-hidden",!endDate && "text-muted-foreground" )}>
+          <CalendarIcon className="w-[8px] h-[8px]" />
+          {endDate ? format(endDate, "PPP") : <span>Boshlanish kuni</span>}
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
         <Calendar
           mode="single"
           selected={endDate || undefined} // Agar null bo'lsa, undefined yuboramiz
           onSelect={(date) => setEndDate(date ?? null)} // Agar undefined bo'lsa, nullga aylantiramiz
-          initialFocus
         />
       </PopoverContent>
     </Popover>

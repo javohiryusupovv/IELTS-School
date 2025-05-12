@@ -12,6 +12,14 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 import { ITeacher } from "@/types/type";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -142,11 +150,10 @@ function CreateCourse() {
                   });
                 }}
                 value={courseTitle}
-                className={`py-2 border rounded-md px-2 text-gray-700 transition-all duration-200 ${
-                  iserror[0]
+                className={`py-2 border rounded-md px-2 text-gray-700 transition-all duration-200 ${iserror[0]
                     ? "border-red-600 border-[1.5px]"
                     : "border-gray-300"
-                }`}
+                  }`}
                 id="kurs"
                 type="text"
                 placeholder="Kurs nomini kiriting !"
@@ -174,27 +181,26 @@ function CreateCourse() {
               filterDay={handleSelectDay}
             />
             <label
-              className="flex gap-2 max-sm:py-1 text-[#d47323cd] max-sm:text-[14px] flex-col mb-5"
-              htmlFor="kurs"
-            >
+              className="flex gap-2 max-sm:py-1 text-[#d47323cd] max-sm:text-[14px] flex-col mb-1"
+              htmlFor="kurs">
               Teacherni tanlang*
-              <select
-                className="w-full py-2 rounded-md border"
-                onChange={(e) => setTeacherId(e.target.value)}
-                value={teacherId}
-              >
-                <option value="">Tanlang ...</option>
-                {teachers.map((teach: ITeacher) => (
-                  <option
-                    key={teach._id}
-                    value={teach._id}
-                    className="max-sm:text-[15px]"
-                  >
-                    {teach.teacherName} {teach.teacherSurname}
-                  </option>
-                ))}
-              </select>
             </label>
+              <Select value={teacherId} onValueChange={setTeacherId}>
+                <SelectTrigger className="w-full py-2 rounded-md border">
+                  <SelectValue placeholder="Tanlang ..." />
+                </SelectTrigger>
+                <SelectContent>
+                  {teachers.map((teach) => (
+                    <SelectItem
+                      key={teach._id}
+                      value={teach._id}
+                      className="max-sm:text-[14px] hover:bg-orange-400/70 hover:text-white transition-all duration-200"
+                    >
+                      {teach.teacherName} {teach.teacherSurname}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
           </div>
           <SheetFooter>
             <SheetClose asChild>
