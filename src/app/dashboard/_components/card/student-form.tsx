@@ -1,6 +1,7 @@
 "use client"
 
 import { postAddStudent } from "@/actions/student.action";
+import { StudentSchemaZod } from "@/actions/zod";
 import {
     Sheet,
     SheetClose,
@@ -17,31 +18,47 @@ import { generateRandomID } from "@/utils/generateID";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
-export default function StudentForm({propCourses}: {propCourses: ICourse[]}) {
+export default function StudentForm({ propCourses }: { propCourses: ICourse[] }) {
     const [courses, setCourses] = useState<ICourse[]>([]);
-    const [name, setName] = useState("");
-    const [surname, setSurname] = useState("");
+    const [studentName, setStudentName] = useState("");
+    const [studentSurname, setStudentSurname] = useState("");
     const [studentID, setStudentID] = useState("");
-    const [courseId, setCourseId] = useState("");
-    const [phone, setPhone] = useState("+998 ");
+    const [studentCourseId, setStudentCourseId] = useState("");
+    const [phone, setPhone] = useState("");
     const [open, setOpen] = useState(false);
+    const [iserror, setError] = useState<string[]>([]);
     const pathname = usePathname()
-    
-    
+
+
     useEffect(() => {
-          setCourses(propCourses)
-      }, [propCourses])
+        setCourses(propCourses)
+    }, [propCourses])
 
 
     const handleStudentAdd = async () => {
-        try{
 
-            const studentGen = generateRandomID();   
-            const promise = postAddStudent(courseId, name, surname, phone, studentGen, pathname);         
+        const validateStudent = StudentSchemaZod.safeParse({
+            courseSelect: studentCourseId,
+            name: studentName,
+            surname: studentSurname
+        })
+
+        if (!validateStudent.success) {
+            const errorMessage = validateStudent.error.errors.map((err) => err.message)
+            setError(errorMessage)
+            return
+        }
+
+        const { courseSelect, name, surname } = validateStudent.data;
+
+        try {
+
+            const studentGen = generateRandomID();
+            const promise = postAddStudent(courseSelect, name, surname, phone, studentGen, pathname);
             toast.promise(promise, {
                 loading: "O'quvchi qo'shilmoqda...",
                 success: {
-                    message: `O'quvchi yaratildi! (${name} ${surname})`,
+                    message: `O'quvchi yaratildi! (${studentName} ${studentSurname})`,
                     duration: 2500,
                     style: {
                         height: "50px", // fon yashil bo'ladi
@@ -53,15 +70,24 @@ export default function StudentForm({propCourses}: {propCourses: ICourse[]}) {
                 error: "O'quvchini qo'shishda xatolik!",
             });
             await promise;
-        }catch(error){
+            setOpen(false)
+        } catch (error) {
             console.error("Xatolik yuz berdi, o'quvchini qo'shishda!");
             return;
         }
-        setName("");
-        setSurname("");
-        setCourseId("");
+        setStudentName("");
+        setStudentSurname("");
+        setStudentCourseId("");
         setPhone("+998 ");
-        setStudentID("")
+        setStudentID("");
+        setError([])
+    };
+    const handlePhoneNumberInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+        let value = e.target.value;
+        let resValue = value.replace(/\D/g, "")
+        if (resValue.length >= 8) {
+            e.target.value = resValue.slice(0, 9); // Limit to 8 characters
+        }
     };
 
     return (
@@ -85,8 +111,10 @@ export default function StudentForm({propCourses}: {propCourses: ICourse[]}) {
                         <label className="flex gap-2 text-[#d47323cd] flex-col mb-5">
                             Ismi *
                             <input
-                                onChange={(e) => setName(e.target.value)}
-                                value={name}
+                                onChange={(e) =>
+                                    setStudentName(e.target.value)
+                                }
+                                value={studentName}
                                 className="py-2 border rounded-md px-2 text-gray-700"
                                 type="text"
                                 placeholder="O'quvchi ismi!"
@@ -95,8 +123,10 @@ export default function StudentForm({propCourses}: {propCourses: ICourse[]}) {
                         <label className="flex gap-2 text-[#d47323cd] flex-col mb-5">
                             Familiya *
                             <input
-                                onChange={(e) => setSurname(e.target.value)}
-                                value={surname}
+                                onChange={(e) =>
+                                    setStudentSurname(e.target.value)
+                                }
+                                value={studentSurname}
                                 className="py-2 border rounded-md px-2 text-gray-700"
                                 type="text"
                                 placeholder="O'quvchi Familiyasi!"
@@ -106,11 +136,11 @@ export default function StudentForm({propCourses}: {propCourses: ICourse[]}) {
                             <p className="mb-3 text-[#d47323cd]">Kursni tanlang *</p>
                             <select
                                 className="w-full py-2 rounded-md border"
-                                onChange={(e) => setCourseId(e.target.value)}
-                                value={courseId}
+                                onChange={(e) => setStudentCourseId(e.target.value)}
+                                value={studentCourseId}
                             >
                                 <option value="">kursni tanlang ..</option>
-                                {courses.map((course: ICourse)=> (
+                                {courses.map((course: ICourse) => (
                                     <option key={course._id} value={course._id}>
                                         {course.courseTitle}
                                     </option>
@@ -119,25 +149,29 @@ export default function StudentForm({propCourses}: {propCourses: ICourse[]}) {
                         </article>
                         <label className="flex gap-2 text-[#d47323cd] flex-col mb-5">
                             Phone *
-                            <input
-                                onChange={(e) => setPhone(formatUzbekPhone(e.target.value))}
-                                value={phone}
-                                className="py-2 border rounded-md px-2 text-gray-700"
-                                type="text"
-                                placeholder="Ota-Ona Telefon raqami!"
-                            />
+                            <article className={`group flex gap-2 items-center rounded border px-3 focus-within:border-orange-500 transition-all duration-200`}>
+                                <span className="text-[14px] text-gray-500">+998 </span>
+                                <input
+                                    onChange={(e) => setPhone(e.target.value)}
+                                    onInput={handlePhoneNumberInput}
+                                    value={phone}
+                                    className="py-2 w-full text-gray-700 outline-none"
+                                    id="kurs"
+                                    type="number"
+                                    placeholder="Telefon raqam kiriting"
+                                    required
+                                />
+                            </article>
                         </label>
                     </div>
                     <SheetFooter>
-                        <SheetClose asChild>
-                            <button
-                                onClick={handleStudentAdd}
-                                type="button"
-                                className="px-5 py-2 rounded-full bg-[#f18024] hover:bg-[#f18024ca] transition-all duration-200"
-                            >
-                                <p className="text-[15px] font-medium text-white">Qo'shish</p>
-                            </button>
-                        </SheetClose>
+                        <button
+                            onClick={handleStudentAdd}
+                            type="button"
+                            className="px-5 py-2 rounded-full bg-[#f18024] hover:bg-[#f18024ca] transition-all duration-200"
+                        >
+                            <p className="text-[15px] font-medium text-white">Qo'shish</p>
+                        </button>
                     </SheetFooter>
                 </SheetContent>
             </Sheet>

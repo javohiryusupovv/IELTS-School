@@ -4,7 +4,6 @@ import { createTeacher } from "@/actions/teacher.action";
 import { TeacherSchemaZod } from "@/actions/zod";
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
   SheetFooter,
@@ -12,7 +11,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { formatUzbekPhone } from "@/utils/PhoneFormatter";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -22,7 +20,7 @@ function TeacherCreated() {
   const [open, setOpen] = useState(false);
   const [teacherName, setTeacherName] = useState("");
   const [teacherSurname, setTeacherSurname] = useState("");
-  const [teacherPhone, setTeacherPhone] = useState("+998 ");
+  const [teacherPhone, setTeacherPhone] = useState("");
   const [teacherPassword, setTeacherPassword] = useState("");
   const [iserror, setError] = useState<string[]>([]);
   const pathname = usePathname();
@@ -32,6 +30,7 @@ function TeacherCreated() {
       name: teacherName,
       surname: teacherSurname,
       password: teacherPassword,
+      phoneNumber: teacherPhone
     });
 
     if (!validateTeacher.success) {
@@ -41,13 +40,13 @@ function TeacherCreated() {
       setError(errorMessage);
       return;
     }
-    const { name, surname, password } = validateTeacher.data;
+    const { name, surname, password, phoneNumber } = validateTeacher.data;
     const role = "o'qituvchi"; // Define the role variable
     try {
       const promise = createTeacher(
         name,
         surname,
-        teacherPhone,
+        phoneNumber,
         password,
         role,
         pathname
@@ -69,7 +68,7 @@ function TeacherCreated() {
       await promise;
       setTeacherName("");
       setTeacherSurname("");
-      setTeacherPhone("+998 ");
+      setTeacherPhone("");
       setTeacherPassword("");
       setError([]);
       setOpen(false);
@@ -78,6 +77,16 @@ function TeacherCreated() {
       toast.error("Xatolik yuz berdi!");
     }
   };
+
+  const handlePhoneNumberInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value;
+    let resValue = value.replace(/\D/g, "")
+    if (resValue.length >= 8) {
+      e.target.value = resValue.slice(0, 9); // Limit to 8 characters
+    }
+  };
+
+
 
   return (
     <div>
@@ -113,11 +122,10 @@ function TeacherCreated() {
                   });
                 }}
                 value={teacherName}
-                className={`py-2 border rounded-md px-2 text-gray-700 transition-all duration-200 ${
-                  iserror[0]
+                className={`py-2 border rounded-md px-2 text-gray-700 transition-all duration-200 ${iserror[0]
                     ? "border-red-600 border-[1.5px]"
                     : "border-gray-300"
-                }`}
+                  }`}
                 id="kurs"
                 type="text"
                 placeholder="Teacher ismini kiriting !"
@@ -142,11 +150,10 @@ function TeacherCreated() {
                   });
                 }}
                 value={teacherSurname}
-                className={`py-2 border rounded-md px-2 text-gray-700 transition-all duration-200 ${
-                  iserror[1]
+                className={`py-2 border rounded-md px-2 text-gray-700 transition-all duration-200 ${iserror[1]
                     ? "border-red-600 border-[1.5px]"
                     : "border-gray-300"
-                }`}
+                  }`}
                 id="kurs"
                 type="text"
                 placeholder="Teacher ismini kiriting !"
@@ -161,17 +168,20 @@ function TeacherCreated() {
               htmlFor="kurs"
             >
               Teacher number
-              <input
-                onChange={(e) =>
-                  setTeacherPhone(formatUzbekPhone(e.target.value))
-                }
-                value={teacherPhone}
-                className="py-2 border rounded-md px-2 text-gray-700 border-gray-300"
-                id="kurs"
-                type="text"
-                placeholder="Teacher uchun raqam kiriting"
-                required
-              />
+              <article className={`group flex gap-2 items-center rounded border px-3 focus-within:border-orange-500 transition-all duration-200`}>
+                <span className="text-[14px] text-gray-500">+998 </span>
+                <input
+                  onChange={(e) => setTeacherPhone(e.target.value)}
+                  onInput={handlePhoneNumberInput}
+                  value={teacherPhone}
+                  className="py-2 w-full text-gray-700 outline-none"
+                  id="kurs"
+                  type="number"
+                  placeholder="Telefon raqam kiriting"
+                  required
+                />
+              </article>
+
             </label>
             <label
               className="flex gap-2 text-[#d47323cd] flex-col mb-5"
@@ -188,11 +198,10 @@ function TeacherCreated() {
                   });
                 }}
                 value={teacherPassword}
-                className={`py-2 border rounded-md px-2 text-gray-700 transition-all duration-200 ${
-                  iserror[2]
+                className={`py-2 border rounded-md px-2 text-gray-700 transition-all duration-200 ${iserror[2]
                     ? "border-red-600 border-[1.5px]"
                     : "border-gray-300"
-                }`}
+                  }`}
                 id="kurs"
                 type="text"
                 placeholder="Teacher uchun password kiriting !"

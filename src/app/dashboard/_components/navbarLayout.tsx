@@ -23,7 +23,7 @@ function NavbarLayout() {
   return (
     <div>
       <div className="max-sm:hidden block">
-        <aside className={`py-2 md:px-2 sticky top-0 z-[10] w-[230px] h-screen sm:overflow-y-auto ml-2 scrolbars`}>
+        <aside className={`py-2 md:px-2 sticky top-0 z-[10] w-[230px] min-h-screen max-h-full sm:overflow-y-auto ml-2 scrolbars`}>
           <div className={`absolute transition-all duration-500 border bg-white rounded-lg pb-20`}>
             <Link href={"/dashboard"} className="flex pt-7 mx-4 border-b pb-10 mb-10">
               <Image className="w-[120px]" src={Logo} alt="Logo" />

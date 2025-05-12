@@ -62,7 +62,7 @@ export default async function StudentAll() {
                           {student.studentID}
                         </span>
                       </td>
-                      <td className="py-2 text-[14px] font-normal">{student.phone}</td>
+                      <td className="py-2 text-[14px] font-normal">+998 {student.phone}</td>
                       <td className="py-2">
                         <Action student={student} />
                       </td>
@@ -84,7 +84,7 @@ export default async function StudentAll() {
                           * * * * *
                         </span>
                       </td>
-                      <td className="py-2 text-[14px] font-normal text-gray-400">{student.phone}</td>
+                      <td className="py-2 text-[14px] font-normal text-gray-400">+998 {student.phone}</td>
                       <td className="py-2">
                         <Action student={student} />
                       </td>

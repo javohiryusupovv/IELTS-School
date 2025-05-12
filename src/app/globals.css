@@ -128,3 +128,22 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+/* Chrome, Safari va Edge uchun */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox uchun */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Hover holatida arrow tugmalarini yashirish */
+input[type="number"]:hover::-webkit-outer-spin-button,
+input[type="number"]:hover::-webkit-inner-spin-button {
+  display: none;
+}

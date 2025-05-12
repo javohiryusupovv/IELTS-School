@@ -31,7 +31,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
           phone: admin.phone,
           role: admin.role
         };
-      }
+      } 
     } catch (error) {
       console.error("Error fetching admin data", error);
     }

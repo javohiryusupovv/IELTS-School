@@ -31,7 +31,7 @@ export default async function DetailTeacher({
               <h6 className="flex flex-col  gap-1 font-medium text-[16px] mb-4">
                 Telefon:
                 <span className="py-1 px-2 rounded-full text-[13px] font-normal bg-green-400 text-white">
-                  {teacher.teacherPhone}
+                  +998 {teacher.teacherPhone}
                 </span>
               </h6>
               <h6 className="flex flex-col gap-1 font-medium text-[16px]">

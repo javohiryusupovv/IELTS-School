@@ -164,7 +164,7 @@ export default function Actions({ student }: Props) {
             </article>
             <ul className="mb-5">
               <li className="mb-1 text-[15px] text-gray-500/50">Telefon:</li>
-              <li className="text-[15px] text-orange-500">{student.phone}</li>
+              <li className="text-[15px] text-orange-500">+998 {student.phone}</li>
             </ul>
             <div className="">
               <label htmlFor="" className="flex flex-col">
