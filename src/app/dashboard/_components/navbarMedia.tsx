@@ -19,33 +19,33 @@ export default function NavbarMedia() {
       </button>
       <div className="absolute left-0 -top-4 w-full py-1.5 px-2 shadowMedia">
         <ul className="flex justify-between items-center">
-          <li className="w-[80px] group cursor-pointer px-2 py-2 rounded-sm bg-white">
+          <li className="navbarmedia:w-[80px] w-[70px] group cursor-pointer px-2 py-2 rounded-sm bg-white">
             <Link href={`/dashboard`} className="flex items-center justify-center flex-col text-center">
-              <RxDashboard className="text-[20px] w-6 h-6 flex justify-center items-center group-hover:text-orange-500" />
+              <RxDashboard className="navbarmedia:w-6 navbarmedia:h-6 w-5 h-5 flex justify-center items-center group-hover:text-orange-500" />
                 <span className="text-[12px] text-black group-hover:text-orange-500">Dashboard</span>
             </Link>
           </li>
-          <li className="w-[80px] group cursor-pointer px-2 py-2 rounded-sm bg-white">
+          <li className="navbarmedia:w-[80px] w-[70px] group cursor-pointer px-2 py-2 rounded-sm bg-white">
             <Link href={"/dashboard/teacher"} className="flex items-center justify-center flex-col text-center">
-              <UserRound className="text-[20px] w-6 h-6 flex justify-center items-center group-hover:text-orange-500" />
-                <span className="text-[12px] text-black group-hover:text-orange-500">O'qituvchilar</span>
+              <UserRound className="navbarmedia:w-6 navbarmedia:h-6 w-5 h-5 flex justify-center items-center group-hover:text-orange-500" />
+                <span className=" navbarmedia:text-[12px] text-[11.5px] text-black group-hover:text-orange-500">O'qituvchilar</span>
             </Link>
           </li>
-          <li className="w-[80px] group cursor-pointer px-2 py-2 rounded-sm bg-white">
+          <li className="navbarmedia:w-[80px] w-[70px] group cursor-pointer px-2 py-2 rounded-sm bg-white">
             <Link href={"/dashboard/courses"} className="flex items-center justify-center flex-col text-center">
-              <GraduationCap className="text-[20px] w-6 h-6 flex justify-center items-center group-hover:text-orange-500" />
+              <GraduationCap className="navbarmedia:w-6 navbarmedia:h-6 w-5 h-5 flex justify-center items-center group-hover:text-orange-500" />
                 <span className="text-[12px] text-black group-hover:text-orange-500">Kurslar</span>
             </Link>
           </li>
-          <li className="w-[80px] group cursor-pointer px-2 py-2 rounded-sm bg-white">
+          <li className="navbarmedia:w-[80px] w-[70px] group cursor-pointer px-2 py-2 rounded-sm bg-white">
             <Link href={"/dashboard/students"} className="flex items-center justify-center flex-col text-center">
-              <Users className="text-[20px] w-6 h-6 flex justify-center items-center group-hover:text-orange-500" />
+              <Users className="navbarmedia:w-6 navbarmedia:h-6 w-5 h-5 flex justify-center items-center group-hover:text-orange-500" />
                 <span className="text-[12px] text-black group-hover:text-orange-500">O'quvchilar</span>
             </Link>
           </li>
-          <li className="w-[80px] group cursor-pointer px-2 py-2 rounded-sm bg-white">
+          <li className="navbarmedia:w-[80px] w-[70px] group cursor-pointer px-2 py-2 rounded-sm bg-white">
             <Link href={"/dashboard/shop"} className="flex items-center justify-center flex-col text-center">
-              <TbShoppingCartPlus className="text-[20px] w-6 h-6 flex justify-center items-center group-hover:text-orange-500" />
+              <TbShoppingCartPlus className="navbarmedia:w-6 navbarmedia:h-6 w-5 h-5 flex justify-center items-center group-hover:text-orange-500" />
                 <span className="text-[12px] text-black group-hover:text-orange-500">Magazin</span>
             </Link>
           </li>

@@ -1,7 +1,3 @@
-
-
-
-
 import {
     Popover,
     PopoverContent,
@@ -22,10 +18,10 @@ export default function NotificationModal() {
                         </span>
                     </article>
                 </PopoverTrigger>
-                <PopoverContent className="w-80 absolute right-2">
+                <PopoverContent className="w-80 absolute sm:right-2 -right-[70px]">
                     <div>
-                        <p className="mb-2">Tizimdagi Yangiliklar</p>
-                        <hr className="mb-4"/>
+                        <p className="sm:mb-2 max-sm:text-[14px]">Tizimdagi Yangiliklar</p>
+                        <hr className="sm:mb-4 mb-2"/>
                         <div className="w-full">
                             <article className="p-2 border rounded mb-3">
                                 <h6 className="mb-2 text-orange-500/80">📢 Yangi imkoniyatlar haqida:</h6>

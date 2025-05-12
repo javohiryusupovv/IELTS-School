@@ -21,10 +21,12 @@ export default function EditProfile() {
             </p>
           </button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Profile tahrirlash</DialogTitle>
-            <DialogDescription>
+        <DialogContent className="sm:max-w-[425px] max-w-[340px] max-sm:rounded-lg">
+          <DialogHeader className="space-y-0">
+            <DialogTitle className="text-[20px] max-sm:text-[17px]">
+              Profile tahrirlash
+            </DialogTitle>
+            <DialogDescription className="max-sm:text-[12px] text-[15px]">
               Siz o'z profilingizni tahrirlashingiz mumkin
             </DialogDescription>
           </DialogHeader>
@@ -39,11 +41,11 @@ export default function EditProfile() {
               />
               <p
                 className="absolute left-2 bg-white px-2 text-gray-500 text-[12px] transition-all duration-200
-              peer-placeholder-shown:top-[10px] 
+              peer-placeholder-shown:top-[10px]
               peer-placeholder-shown:text-gray-400
-              peer-focus:-top-3 
+              peer-focus:-top-3
               peer-focus:text-orange-500
-              peer-valid:-top-3 
+              peer-valid:-top-3
               peer-valid:text-[14px]"
               >
                 Ism va Familiya?
@@ -59,11 +61,11 @@ export default function EditProfile() {
               />
               <p
                 className="absolute left-2 bg-white px-2 text-gray-500 text-[12px] transition-all duration-200
-              peer-placeholder-shown:top-[10px] 
+              peer-placeholder-shown:top-[10px]
               peer-placeholder-shown:text-gray-400
-              peer-focus:-top-3 
+              peer-focus:-top-3
               peer-focus:text-orange-500
-              peer-valid:-top-3 
+              peer-valid:-top-3
               peer-valid:text-[14px]"
               >
                 Phone number
@@ -79,11 +81,11 @@ export default function EditProfile() {
               />
               <p
                 className="absolute left-2 bg-white px-2 text-gray-500 text-[12px] transition-all duration-200
-              peer-placeholder-shown:top-[10px] 
+              peer-placeholder-shown:top-[10px]
               peer-placeholder-shown:text-gray-400
-              peer-focus:-top-3 
+              peer-focus:-top-3
               peer-focus:text-orange-500
-              peer-valid:-top-3 
+              peer-valid:-top-3
               peer-valid:text-[14px]"
               >
                 Login
@@ -99,11 +101,12 @@ export default function EditProfile() {
               />
               <p
                 className="absolute left-2 bg-white px-2 text-gray-500 text-[12px] transition-all duration-200
-              peer-placeholder-shown:top-[10px] 
+
+              peer-placeholder-shown:top-[10px]
               peer-placeholder-shown:text-gray-400
-              peer-focus:-top-3 
+              peer-focus:-top-3
               peer-focus:text-orange-500
-              peer-valid:-top-3 
+              peer-valid:-top-3
               peer-valid:text-[14px]"
               >
                 Password
@@ -111,7 +114,12 @@ export default function EditProfile() {
             </label>
           </div>
           <DialogFooter>
-            <button className="px-4 py-2 rounded bg-orange-500 text-white transition-all duration-200 hover:bg-orange-500/70" type="submit">Save changes</button>
+            <button
+              className="px-4 sm:py-2 py-1.5 rounded bg-orange-500 text-white transition-all duration-200 hover:bg-orange-500/70"
+              type="submit"
+            >
+              Save changes
+            </button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

@@ -18,7 +18,9 @@ import { generateRandomID } from "@/utils/generateID";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
-export default function StudentForm({ propCourses }: { propCourses: ICourse[] }) {
+import { FaUserPlus } from "react-icons/fa";
+
+export default function StudentForm({propCourses}: {propCourses: ICourse[]}) {
     const [courses, setCourses] = useState<ICourse[]>([]);
     const [studentName, setStudentName] = useState("");
     const [studentSurname, setStudentSurname] = useState("");
@@ -53,8 +55,8 @@ export default function StudentForm({ propCourses }: { propCourses: ICourse[] })
 
         try {
 
-            const studentGen = generateRandomID();
-            const promise = postAddStudent(courseSelect, name, surname, phone, studentGen, pathname);
+            const studentGen = generateRandomID();   
+            const promise = postAddStudent(courseSelect, name, surname, phone, studentGen, pathname);         
             toast.promise(promise, {
                 loading: "O'quvchi qo'shilmoqda...",
                 success: {
@@ -90,25 +92,27 @@ export default function StudentForm({ propCourses }: { propCourses: ICourse[] })
         }
     };
 
+
     return (
         <div>
             <Sheet open={open} onOpenChange={setOpen}>
                 <SheetTrigger asChild>
                     <button className="px-5 py-3 rounded-full bg-[#f18024] hover:bg-[#f18024ca] transition-all duration-200">
-                        <p className="text-[12px] font-medium text-white">
+                        <p className="text-[12px] font-medium text-white max-md:hidden">
                             Student yaratish
                         </p>
+                        <FaUserPlus className="text-white md:hidden"/>
                     </button>
                 </SheetTrigger>
                 <SheetContent>
-                    <SheetHeader className="mb-5">
-                        <SheetTitle>Yangi o'quvchi qo'shish</SheetTitle>
-                        <SheetDescription>
+                    <SheetHeader className="sm:mb-5 mb-3 max-sm:space-y-0">
+                        <SheetTitle className="text-[20px] max-sm:text-[17px]">Yangi o'quvchi qo'shish</SheetTitle>
+                        <SheetDescription className="max-sm:text-[12px] text-[15px]">
                             O'quvchi yaratish uchun to&apos;ldirib chiqing!
                         </SheetDescription>
                     </SheetHeader>
-                    <div className="w-full mb-5">
-                        <label className="flex gap-2 text-[#d47323cd] flex-col mb-5">
+                    <div className="w-full sm:mb-5 mb-3">
+                        <label className="flex gap-2 max-sm:text-[14px] text-[#d47323cd] flex-col sm:mb-5 mb-3">
                             Ismi *
                             <input
                                 onChange={(e) =>
@@ -120,7 +124,7 @@ export default function StudentForm({ propCourses }: { propCourses: ICourse[] })
                                 placeholder="O'quvchi ismi!"
                             />
                         </label>
-                        <label className="flex gap-2 text-[#d47323cd] flex-col mb-5">
+                        <label className="flex gap-2 max-sm:text-[14px] text-[#d47323cd] flex-col sm:mb-5 mb-3">
                             Familiya *
                             <input
                                 onChange={(e) =>
@@ -132,22 +136,22 @@ export default function StudentForm({ propCourses }: { propCourses: ICourse[] })
                                 placeholder="O'quvchi Familiyasi!"
                             />
                         </label>
-                        <article className="mb-5">
-                            <p className="mb-3 text-[#d47323cd]">Kursni tanlang *</p>
+                        <article className="sm:mb-5 mb-3">
+                            <p className="mb-3 max-sm:text-[14px] text-[#d47323cd]">Kursni tanlang *</p>
                             <select
                                 className="w-full py-2 rounded-md border"
                                 onChange={(e) => setStudentCourseId(e.target.value)}
                                 value={studentCourseId}
                             >
                                 <option value="">kursni tanlang ..</option>
-                                {courses.map((course: ICourse) => (
+                                {courses.map((course: ICourse)=> (
                                     <option key={course._id} value={course._id}>
                                         {course.courseTitle}
                                     </option>
                                 ))}
                             </select>
                         </article>
-                        <label className="flex gap-2 text-[#d47323cd] flex-col mb-5">
+                        <label className="flex gap-2 max-sm:text-[14px] text-[#d47323cd] flex-col sm:mb-5 mb-3">
                             Phone *
                             <article className={`group flex gap-2 items-center rounded border px-3 focus-within:border-orange-500 transition-all duration-200`}>
                                 <span className="text-[14px] text-gray-500">+998 </span>
@@ -165,13 +169,15 @@ export default function StudentForm({ propCourses }: { propCourses: ICourse[] })
                         </label>
                     </div>
                     <SheetFooter>
-                        <button
-                            onClick={handleStudentAdd}
-                            type="button"
-                            className="px-5 py-2 rounded-full bg-[#f18024] hover:bg-[#f18024ca] transition-all duration-200"
-                        >
-                            <p className="text-[15px] font-medium text-white">Qo'shish</p>
-                        </button>
+                        
+                            <button
+                                onClick={handleStudentAdd}
+                                type="button"
+                                className="px-5 py-2 rounded-full bg-[#f18024] hover:bg-[#f18024ca] transition-all duration-200"
+                            >
+                                <p className="text-[15px] font-medium text-white">Qo'shish</p>
+                            </button>
+                
                     </SheetFooter>
                 </SheetContent>
             </Sheet>

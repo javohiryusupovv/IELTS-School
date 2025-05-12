@@ -21,7 +21,7 @@ async function ShopAdmin() {
           <Plus className="text-white h-5 w-5" />
         </Link>
       </article>
-      <div className="grid max-shopgrid:grid-cols-1 grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-4 justify-center w-full ">
+      <div className="grid max-shopgrid:grid-cols-1 lg:grid-cols-3 grid-cols-2 sm:grid-cols-2 xl:grid-cols-4 gap-4 justify-center w-full ">
         {product.map((item: IShops) => (
           <div
             key={item._id}

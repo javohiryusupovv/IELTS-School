@@ -78,6 +78,7 @@ function TeacherCreated() {
     }
   };
 
+
   const handlePhoneNumberInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value;
     let resValue = value.replace(/\D/g, "")
@@ -85,8 +86,6 @@ function TeacherCreated() {
       e.target.value = resValue.slice(0, 9); // Limit to 8 characters
     }
   };
-
-
 
   return (
     <div>
@@ -100,15 +99,15 @@ function TeacherCreated() {
           </button>
         </SheetTrigger>
         <SheetContent>
-          <SheetHeader className="mb-5">
-            <SheetTitle>Yangi O'qituvchi Yaratish</SheetTitle>
-            <SheetDescription>
+          <SheetHeader className="sm:mb-5 mb-3 max-sm:space-y-0">
+            <SheetTitle className="text-[20px] max-sm:text-[17px]">Yangi O'qituvchi Yaratish</SheetTitle>
+            <SheetDescription className="max-sm:text-[12px] text-[15px]">
               O'qituvchi yaratish uchun to&apos;ldirib chiqing !
             </SheetDescription>
           </SheetHeader>
-          <div className="w-full mb-5">
+          <div className="w-full sm:mb-5 mb-3">
             <label
-              className="flex gap-2 text-[#d47323cd] flex-col mb-5"
+              className="flex gap-2 max-sm:text-[14px] text-[#d47323cd] flex-col sm:mb-5 mb-3"
               htmlFor="kurs"
             >
               Teacher ismi
@@ -136,7 +135,7 @@ function TeacherCreated() {
               </span>
             </label>
             <label
-              className="flex gap-2 text-[#d47323cd] flex-col mb-5"
+              className="flex gap-2 max-sm:text-[14px] text-[#d47323cd] flex-col sm:mb-5 mb-3"
               htmlFor="kurs"
             >
               Teacher familiyasi
@@ -164,7 +163,7 @@ function TeacherCreated() {
               </span>
             </label>
             <label
-              className="flex gap-2 text-[#d47323cd] flex-col mb-5"
+              className="flex gap-2 max-sm:text-[14px] text-[#d47323cd] flex-col sm:mb-5 mb-3"
               htmlFor="kurs"
             >
               Teacher number
@@ -184,7 +183,7 @@ function TeacherCreated() {
 
             </label>
             <label
-              className="flex gap-2 text-[#d47323cd] flex-col mb-5"
+              className="flex gap-2 max-sm:text-[14px]  text-[#d47323cd] flex-col sm:mb-5 mb-3"
               htmlFor="kurs"
             >
               Teacher password
@@ -193,6 +192,7 @@ function TeacherCreated() {
                   setTeacherPassword(e.target.value);
                   setError((prev) => {
                     const newErrors = [...prev];
+
                     newErrors[2] = "";
                     return newErrors;
                   });
@@ -216,9 +216,9 @@ function TeacherCreated() {
             <button
               onClick={handleTotal}
               type="submit"
-              className="px-5 py-2 rounded-full bg-[#f18024] hover:bg-[#f18024ca] transition-all duration-200"
+              className="sm:px-5 sm:py-2 px-3 py-1.5 rounded-full bg-[#f18024] hover:bg-[#f18024ca] transition-all duration-200"
             >
-              <p className="text-[15px] font-medium text-white">Saqlash</p>
+              <p className="sm:text-[15px] text-[13px] font-medium text-white">Saqlash</p>
             </button>
           </SheetFooter>
         </SheetContent>
