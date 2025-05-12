@@ -174,7 +174,7 @@ function CreateCourse() {
               filterDay={handleSelectDay}
             />
             <label
-              className="flex gap-2 text-[#d47323cd] max-sm:text-[14px] flex-col mb-5"
+              className="flex gap-2 max-sm:py-1 text-[#d47323cd] max-sm:text-[14px] flex-col mb-5"
               htmlFor="kurs"
             >
               Teacherni tanlang*
