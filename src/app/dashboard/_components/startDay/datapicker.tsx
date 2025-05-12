@@ -14,8 +14,9 @@ interface Props {
 export function Datapicker({ startDate, setStartDate }: Props) {
   return (
     <Popover>
-      <PopoverTrigger asChild>
+      <PopoverTrigger>
         <Button
+        type="button"
           variant={"outline"}
           className={cn(
             "sm:w-[145px] w-full justify-start text-left font-normal px-1 overflow-hidden",
@@ -31,7 +32,6 @@ export function Datapicker({ startDate, setStartDate }: Props) {
           mode="single"
           selected={startDate || undefined} // Agar null bo'lsa, undefined yuboramiz
           onSelect={(date) => setStartDate(date ?? null)} // Agar undefined bo'lsa, nullga aylantiramiz
-          initialFocus
         />
       </PopoverContent>
     </Popover>
