@@ -17,7 +17,7 @@ export function DatapickerEnd({ endDate, setEndDate }: Props) {
       <PopoverTrigger asChild>
         <button
           className={cn(
-            "sm:w-[145px] border w-full justify-start text-left font-normal px-1 overflow-hidden",
+            "sm:w-[145px] border w-full justify-start text-left font-normal px-1",
             !endDate && "text-muted-foreground"
           )}
         >
