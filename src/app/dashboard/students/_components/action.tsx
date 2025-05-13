@@ -102,9 +102,9 @@ export function SearchFuture({ studentList }: StudentListProps) {
   );
 
   return (
-    <div className="">
+    <div className="w-full">
       <div className="flex items-center justify-between">
-        <label className=" transition-all duration-300 flex justify-between w-64 items-center gap-2 border py-3 px-2 rounded-md focus-within:border-orange-500">
+        <label className=" transition-all duration-300 flex justify-between max-sm:w-full w-full lg:w-64 items-center gap-2 border py-3 px-2 rounded-md focus-within:border-orange-500">
           {searchStudent.length >= 1 ? (
             ""
           ) : (
