@@ -62,7 +62,8 @@ module.exports = {
 		screens: {
 			OurMentor: "1110px",
             OurMentor2: "860px",
-			sidebar: "491px"
+			sidebar: "491px",
+			medSmall: "660px"
 		}
   	},
   	container: {
