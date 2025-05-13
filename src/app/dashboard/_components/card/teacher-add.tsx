@@ -95,7 +95,7 @@ function TeacherCreated() {
             <p className="text-[12px] font-medium text-white max-md:hidden">
               Yangi O'qituvchi qo'shish
             </p>
-            <FaUserPlus color="white" className=" md:hidden" />
+            <FaUserPlus color="white" className="md:hidden" />
           </button>
         </SheetTrigger>
         <SheetContent>

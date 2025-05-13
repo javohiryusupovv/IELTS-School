@@ -21,18 +21,16 @@ async function CourseDetail({ params, }: { params: Promise<{ kursId: string }> }
     return <h1>Kurs topilmadi</h1>;
   }
 
-  
-
 
   return (
     <div className={`w-full`}>
       <article className="flex justify-between">
-        <h5 className="mb-5 text-[25px] ">{course.courseTitle}</h5>
+        <h5 className="mb-5 text-[25px] max-md:text-[20px] max-sm:text-[17px]">{course.courseTitle}</h5>
         <EditCourse course={course} />
       </article>
-      <div className="w-full flex gap-10">
+      <div className="flex w-full gap-10 max-xl:flex-wrap">
         <div>
-          <div className={`relative top-0 flex justify-center items-end border mb-5 w-[500px] h-[300px] rounded-xl`} style={{ backgroundColor: getStableColor(course._id) }}>
+          <div className={`relative top-0 flex justify-center items-end border mb-5 w-[500px] h-[300px] rounded-xl max-md:h-[250px] max-sm:h-[200px] max-md:w-[380px] max-sm:w-[250px]`} style={{ backgroundColor: getStableColor(course._id) }}>
             <p className="absolute top-8 left-0 text-center w-full mt-12 text-[20px] font-semibold text-white">{course.courseTitle}</p>
             <Image className="w-[500px] object-cover" src={Frontend} alt="Course Detail Img" />
           </div>
@@ -42,7 +40,7 @@ async function CourseDetail({ params, }: { params: Promise<{ kursId: string }> }
           </div>
 
         </div>
-        <div className="w-full rounded-md shadowCustom py-3 px-5">
+        <div className="w-full px-5 py-3 rounded-md shadowCustom">
           <p className="text-[20px] font-medium text-center mb-5">O'quvchilar Jadvali</p>
           <div className="flex">
             <table className="w-full">
@@ -50,8 +48,8 @@ async function CourseDetail({ params, }: { params: Promise<{ kursId: string }> }
                 <tbody key={student._id}>
                   <tr className="group">
                     <td className=" group-hover:text-orange-500 transition-all duration-200 py-1 w-[300px]">
-                      <Link href={`/dashboard/students/${student._id}`} className="flex items-center gap-1 font-light text-[13px]">
-                        <User className="stroke-1 w-5 h-5"/>
+                      <Link href={`/dashboard/students/${student._id}`} className="flex items-center gap-1 font-light text-[13px] max-sm:items-start">
+                        <User className="w-5 h-5 stroke-1"/>
                         {student.surname} {student.name}
                       </Link>
                     </td>
@@ -63,7 +61,6 @@ async function CourseDetail({ params, }: { params: Promise<{ kursId: string }> }
           </div>
         </div>
       </div>
-
     </div>
   )
 }
