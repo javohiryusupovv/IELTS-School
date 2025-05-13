@@ -83,8 +83,8 @@ export default function CardAddProduct() {
   return (
     <div className="flex justify-center">
       <form onSubmit={handleSubmitProduct} className="">
-        <div className="flex max-sm:flex-col gap-6">
-          <article className="w-[400px]">
+        <div className="flex max-lg:flex-col gap-6 space-y-0">
+          <article className="md:w-[400px] w-[350px]">
             {/* title */}
             <label className="flex flex-col gap-2 mb-4">
               <p>
@@ -112,7 +112,7 @@ export default function CardAddProduct() {
             </label>
 
             {/* price */}
-            <label className="flex flex-col gap-3 mb-6">
+            <label className="flex flex-col gap-3 lg:mb-6">
               <p>
                 price <span className="text-red-600">*</span>
               </p>
@@ -129,7 +129,7 @@ export default function CardAddProduct() {
           <div>
             <div
             onClick={handleClick}
-            className={`group w-[250px] h-[250px] mt-5 border flex justify-center items-center flex-col rounded-md overflow-hidden cursor-pointer order-4 ${
+            className={`group sm:w-[250px] h-[240px] sm:h-[250px] border flex justify-center items-center flex-col rounded-md overflow-hidden cursor-pointer mb-5 ${
               prevImg
                 ? ""
                 : "hover:border-[#00b7ff49] hover:shadow-blue-300 hover:shadow-sm"
