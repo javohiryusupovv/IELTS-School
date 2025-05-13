@@ -6,6 +6,7 @@ const TeacherSchema = new Schema({
   teacherSurname: String,
   teacherPhone: String,
   teacherPassword: String,
+  role: String,
   courses: [{ type: Schema.Types.ObjectId, ref: "Course" }] // Kurslar bilan bog‘lanish
 }, { timestamps: true });
 

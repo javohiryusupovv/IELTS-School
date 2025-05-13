@@ -27,6 +27,7 @@ export interface ITeacher {
   teacherSurname: string;
   teacherPhone?: string;
   teacherPassword?: string;
+  role?: string;
   courses: ICourse[]; // Kurslar ID-lari bo'lishi mumkin
 }
 

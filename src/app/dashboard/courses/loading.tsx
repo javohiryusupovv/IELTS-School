@@ -11,7 +11,7 @@ export default async function Loading() {
         <Skeleton className="h-11 w-[150px] rounded-full" />
       </article>
       <hr className="mb-7" />
-      <div className="w-full grid grid-cols-4 gap-4">
+      <div className="w-full grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 gap-4">
         {Array.from({length: 5}).map((_, ) => (
           <div key={uuid4()}>
             <Skeleton className="w-full h-[200px] mb-5" />

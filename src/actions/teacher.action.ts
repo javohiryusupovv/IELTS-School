@@ -13,12 +13,14 @@ export const createTeacher = async (
   teacherSurname: string,
   teacherPhone: string,
   teacherPassword1: string,
+  role: string,
   path: string
 ) => {
   if (
     !teacherName.trim() ||
     !teacherSurname.trim() ||
     !teacherPhone.trim() ||
+    !role.trim() ||
     !teacherPassword1.trim()
   )
     throw new Error("Teacher nomi kiritilmagan!");
@@ -31,6 +33,7 @@ export const createTeacher = async (
       teacherSurname,
       teacherPhone,
       teacherPassword,
+      role
     });
     await newTeacher.save();
     revalidateTag("teachers");
@@ -53,6 +56,7 @@ export const getTeachers = async () => {
       teacherName: teacher.teacherName,
       teacherSurname: teacher.teacherSurname,
       teacherPhone: teacher.teacherPhone,
+      teacherRole: teacher.role,
       courses: teacher.courses || [], // Endi bu yerda to'liq kurs obyektlari massivi bo'ladi
     }));
   } catch (error) {

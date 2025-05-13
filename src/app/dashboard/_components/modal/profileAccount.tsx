@@ -21,8 +21,8 @@ interface Props{
   admin: ICRMAccount
 }
 
-export default function ProfileAccount({ admin }: Props) {  
-  
+export default function ProfileAccount({ admin }: Props) {
+
   const [isOpen, setIsOpen] = useState(false);
   const handleClose = () => {
     setIsOpen(false);
@@ -35,7 +35,7 @@ export default function ProfileAccount({ admin }: Props) {
             <RiRobot2Line className="w-[25px] h-[25px]"/>
           </article>
         </PopoverTrigger>
-        <PopoverContent className="w-[350px] absolute right-2">
+        <PopoverContent className="sm:w-[350px] absolute sm:right-2 right-0">
           <div>
             <article className="flex items-center justify-between mb-2">
               <article className="flex items-center gap-3">
@@ -43,7 +43,7 @@ export default function ProfileAccount({ admin }: Props) {
                     <RiRobot2Line className="w-[25px] h-[25px]"/>
                   </article>
                 <article>
-                  <p className="text-[16px] font-medium">{admin.fullname} - <span className="text-green-500 text-[12px] font-normal underline">({admin.role})</span></p>
+                  <p className="sm:text-[16px] text-[13px] font-medium max-sm:flex items-center gap-1">{admin.fullname} - <span className="text-green-500 sm:text-[12px] text-[10px] font-normal underline">({admin.role})</span></p>
                   <span className="text-[13px] text-green-500">
                     +998 {admin.phone}
                   </span>
@@ -54,13 +54,13 @@ export default function ProfileAccount({ admin }: Props) {
             <hr className="mb-3" />
             <div className="flex flex-col gap-3">
               <Link href={"/dashboard/price"} onClick={()=> handleClose()}>
-                <button className="flex gap-2 items-center transition-all duration-200 text-[#72e128] w-full py-2 px-4 rounded border hover:bg-[#72e128c2]/20 hover:border-transparent">
+                <button className="flex gap-2 items-center transition-all duration-200 text-[#72e128] w-full sm:py-2 py-1.5 px-4 rounded border hover:bg-[#72e128c2]/20 hover:border-transparent">
                   <BsCashCoin/>
                   <p>To'lov qilish</p>
                 </button>
               </Link>
               <Link href={"https://t.me/Javoxir_iq"} target="_blank">
-                <button className="group hover:bg-orange-500 transition-all duration-200 cursor-pointer flex text-white items-center gap-2 w-full py-2 px-4 rounded bg-orange-400/60 mb-3">
+                <button className="group hover:bg-orange-500 transition-all duration-200 cursor-pointer flex text-white items-center gap-2 w-full sm:py-2 py-1.5 px-4 rounded bg-orange-400/60 mb-3">
                   <BiSupport className="w-5 h-5 text-white transition-all duration-200" />
                   <p className="transition-all duration-200">Yordam markazi</p>
                 </button>

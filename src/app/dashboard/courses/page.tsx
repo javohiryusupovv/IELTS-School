@@ -11,8 +11,8 @@ async function CourseAll() {
   const courses = await getCourses();
   return (
     <div>
-      <article className="flex items-center justify-between mb-3">
-        <h6 className="font-semibold text-[26px] max-md:text-[20px] max-sm:text-[17px]">Kurslar</h6>
+      <article className="flex justify-between items-center mb-3">
+        <h6 className="font-semibold text-[26px]">Kurslar</h6>
         <CreateCourse/>
       </article>
       <hr className="mb-7" />
@@ -22,16 +22,16 @@ async function CourseAll() {
           <p className="text-[18px] text-gray-700">Kurs Qo'shing</p>
         </div>
       )}
-        <div className="grid w-full gap-4 xl:grid-cols-4 lg:grid-cols-3">
+        <div className="w-full grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 gap-4">
           {courses?.map((item)=> {
-            let titleS = item.courseTitle.split(" ")[0]          
+            let titleS = item.courseTitle.split(" ")[0]
             return(
               <div key={item._id} className={`border drop-shadow-sm shadow-black rounded-lg overflow-hidden `}>
-                <Link href={`/dashboard/courses/${item._id}`} className={`mb-4 relative flex top-0 left-0 w-full h-[200px]`} style={{backgroundColor: getStableColor(item._id.toString())}}>
+                <Link href={`/dashboard/courses/${item._id}`} className={`mb-4 relative flex top-0 left-0 w-full h-[200px] sm:h-[150px] md:h-[200px]`} style={{backgroundColor: getStableColor(item._id.toString())}}>
                   <p className="text-center w-full mt-12 text-[15px] font-semibold text-white">{item.courseTitle}</p>
                   <Image className="absolute bottom-0 left-0" src={Frontend} alt="Course Img" />
                 </Link>
-                <article className="py-4 px-7">
+                <article className="px-7 py-2 md:py-4">
                   <p className="text-[18px] mb-2 line-clamp-1">{titleS}</p>
                 </article>
               </div>

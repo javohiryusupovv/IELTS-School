@@ -82,85 +82,88 @@ export default function CardAddProduct() {
 
   return (
     <div className="flex justify-center">
-      <form onSubmit={handleSubmitProduct} className="flex gap-6">
-        <article className="w-[400px]">
-          {/* title */}
-          <label className="flex flex-col gap-2 mb-4">
-            <p>
-              title <span className="text-red-600">*</span>
-            </p>
-            <input
-              name="title"
-              type="text"
-              className="px-3 py-2 outline-none rounded-md border focus:border-orange-600"
-              placeholder="namuna: Keyboard keychrone k900..."
-            />
-          </label>
-
-          {/* description */}
-          <label className="flex flex-col gap-2 mb-4">
-            <p>
-              description <span className="text-red-600">*</span>
-            </p>
-            <input
-              name="description"
-              type="text"
-              className="px-3 py-2 outline-none rounded-md border focus:border-orange-600"
-              placeholder="namuna: mexanik klaviatura, rangi qora, simli..."
-            />
-          </label>
-
-          {/* price */}
-          <label className="flex flex-col gap-3 mb-6">
-            <p>
-              price <span className="text-red-600">*</span>
-            </p>
-            <input
-              name="price"
-              type="text"
-              className="px-3 py-2 outline-none rounded-md border focus:border-orange-600"
-              placeholder="namuna: 200 (coin)"
-            />
-          </label>
-
-          <button className="px-6 py-2 border rounded-md bg-orange-500 text-white font-medium hover:bg-orange-500/80 hover:border-transparent transition-all duration-200">
-            Submit
-          </button>
-        </article>
-
-        {/* Image preview */}
-        <div
-          onClick={handleClick}
-          className={`group w-[250px] h-[250px] mt-5 border flex justify-center items-center flex-col rounded-md overflow-hidden cursor-pointer ${
-            prevImg
-              ? ""
-              : "hover:border-[#00b7ff49] hover:shadow-blue-300 hover:shadow-sm"
-          }`}
-        >
-          {prevImg ? (
-            <img
-              src={prevImg}
-              alt="Mahsulot rasmi"
-              className="w-full h-full object-cover cursor-not-allowed"
-            />
-          ) : (
-            <>
-              <ImagePlus className="w-10 h-10 stroke-1 stroke-gray-600 mb-3 group-hover:stroke-blue-300" />
-              <p className="text-[12px] font-normal group-hover:text-blue-300">
-                Mahsulot rasmini yuklang
+      <form onSubmit={handleSubmitProduct} className="">
+        <div className="flex max-lg:flex-col gap-6 space-y-0">
+          <article className="md:w-[400px] w-[350px]">
+            {/* title */}
+            <label className="flex flex-col gap-2 mb-4">
+              <p>
+                title <span className="text-red-600">*</span>
               </p>
-            </>
-          )}
-        </div>
+              <input
+                name="title"
+                type="text"
+                className="px-3 py-2 outline-none rounded-md border focus:border-orange-600"
+                placeholder="namuna: Keyboard keychrone k900..."
+              />
+            </label>
 
-        <input
-          type="file"
-          name="image"
-          accept="image/*"
-          ref={inputRef}
-          onChange={handleFileChange}
-          style={{ display: "none" }}
-        />
+            {/* description */}
+            <label className="flex flex-col gap-2 mb-4">
+              <p>
+                description <span className="text-red-600">*</span>
+              </p>
+              <input
+                name="description"
+                type="text"
+                className="px-3 py-2 outline-none rounded-md border focus:border-orange-600"
+                placeholder="namuna: mexanik klaviatura, rangi qora, simli..."
+              />
+            </label>
+
+            {/* price */}
+            <label className="flex flex-col gap-3 lg:mb-6">
+              <p>
+                price <span className="text-red-600">*</span>
+              </p>
+              <input
+                name="price"
+                type="text"
+                className="px-3 py-2 outline-none rounded-md border focus:border-orange-600"
+                placeholder="namuna: 200 (coin)"
+              />
+            </label>
+          </article>
+
+          {/* Image preview */}
+          <div>
+            <div
+            onClick={handleClick}
+            className={`group sm:w-[250px] h-[240px] sm:h-[250px] border flex justify-center items-center flex-col rounded-md overflow-hidden cursor-pointer mb-5 ${
+              prevImg
+                ? ""
+                : "hover:border-[#00b7ff49] hover:shadow-blue-300 hover:shadow-sm"
+            }`}
+          >
+            {prevImg ? (
+              <img
+                src={prevImg}
+                alt="Mahsulot rasmi"
+                className="w-full h-full object-cover cursor-not-allowed"
+              />
+            ) : (
+              <>
+                <ImagePlus className="w-10 h-10 stroke-1 stroke-gray-600 mb-3 group-hover:stroke-blue-300" />
+                <p className="text-[12px] font-normal group-hover:text-blue-300">
+                  Mahsulot rasmini yuklang
+                </p>
+              </>
+            )}
+          </div>
+
+          <input
+            type="file"
+            name="image"
+            accept="image/*"
+            ref={inputRef}
+            onChange={handleFileChange}
+            style={{ display: "none" }}
+          />
+          </div>
+        </div>
+        <button className="order-5 px-6 py-2 border rounded-md bg-orange-500 text-white font-medium hover:bg-orange-500/80 hover:border-transparent transition-all duration-200">
+              Submit
+        </button>
       </form>
     </div>
   );

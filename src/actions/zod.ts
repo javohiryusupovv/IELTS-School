@@ -21,6 +21,10 @@ export const TeacherSchemaZod = z.object({
         .min(3, "Familiya bo'sh bo'lmasligi kerak")
         .transform(val => val.charAt(0).toUpperCase() + val.slice(1).toLowerCase()),
     password: z.string().trim().min(5, "Parol kamida 4 ta belgidan iborat bo'lishi kerak"),
+    phoneNumber: z
+        .string()
+        .trim()
+        .min(8, "Telefon raqam xato kiritildi !")
 })
 
 
@@ -30,4 +34,22 @@ export const CourseSchemaZod = z.object({
     .trim()
     .min(2, "Kurs nomi kiritilmadi")
     .transform(val => val.charAt(0).toUpperCase() + val.slice(1).toLowerCase())
+})
+
+export const StudentSchemaZod = z.object({
+    name: z
+        .string()
+        .trim()
+        .min(3, "Ism to'gri kiriting !")
+        .transform(val => val.charAt(0).toUpperCase() + val.slice(1).toLowerCase()),
+
+    surname: z
+        .string()
+        .trim()
+        .min(3, "Familiyani to'gri kiriting !")    
+        .transform(val => val.charAt(0).toUpperCase() + val.slice(1).toLowerCase()),
+    courseSelect: z
+        .string()    
+        .min(1, "Kursni tanlang !")
+        .trim()
 })

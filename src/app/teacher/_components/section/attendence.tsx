@@ -36,7 +36,8 @@ interface Props {
   days: string[];
   titleCourse: string;
   teacherName: string;
-  course: ICourse
+  course: ICourse,
+  roleTeacher: string
 }
 
 export default function Attendence({
@@ -45,6 +46,7 @@ export default function Attendence({
   days,
   titleCourse,
   teacherName,
+  roleTeacher
 }: Props) {
   const [selectedCell, setSelectedCell] = useState<{
     studentID: string;
@@ -57,9 +59,7 @@ export default function Attendence({
     leader: false,
   });
   const pathname = usePathname();
-
-
-
+  
 
 
   const handleOnChangeChecked = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -213,6 +213,9 @@ export default function Attendence({
           </article>
           <article className="flex gap-3 items-center text-[14px]">
             <p><strong className="font-medium text-[13px]">O'qituvchi: </strong> {teacherName}</p>
+          </article>
+          <article>
+             <p><strong className="font-medium text-[13px]">Role: </strong> {roleTeacher}</p>
           </article>
           <article className="flex gap-3 items-center text-[14px]">
             <p><strong className="font-medium text-[13px]">O'quvchilar soni: </strong> {students.length} ta</p>

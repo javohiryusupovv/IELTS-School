@@ -9,6 +9,7 @@ export default async function KursDetai({ params, }: { params: Promise<{ kursID:
     const students = course.students;
     const titleCourse = course.courseTitle;
     const teacherName = course.teacher.teacherSurname + " " + course.teacher.teacherName;
+    const roleTeacher = course.teacher.role
 
     if(course === null){
         return <h6>Siz Qidirgan ma'lumotlar hali yaratilmagan</h6>
@@ -16,7 +17,7 @@ export default async function KursDetai({ params, }: { params: Promise<{ kursID:
     
   return (
     <div>
-        <Attendence course={course} students={students} days={days} titleCourse={titleCourse} teacherName={teacherName} />
+        <Attendence course={course} students={students} days={days} titleCourse={titleCourse} teacherName={teacherName} roleTeacher={roleTeacher} />
     </div>
   )
 }

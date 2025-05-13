@@ -9,6 +9,10 @@ import { usePathname, useRouter } from "next/navigation";
 import { useTopLoader } from "nextjs-toploader";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import LogoStudent from "../../../../public/logo/logo.png"
+import Image from "next/image";
+
+
 
 export default function StudentLogin() {
   const pathname = usePathname();
@@ -37,7 +41,7 @@ export default function StudentLogin() {
                             duration: 2000,
                             style: {
                                 height: "50px",
-                                marginTop: "30px",
+                                marginTop: "40px",
                                 color: "green",
                                 border: "1px solid #17be5a",
                                 backgroundColor: "white",
@@ -45,8 +49,17 @@ export default function StudentLogin() {
                         });
         router.push("/student");
       } else {
-        toast.warning("Siz Talabalar safida yo'qsiz");
-        setIsLoading(false);
+        toast.warning("Siz Talabalar safida yo'qsiz", {
+          duration: 2000,
+          style: {
+              height: "50px",
+              marginTop: "40px",
+              color: "red",
+              border: "1px solid red",
+              backgroundColor: "white",
+          },
+      });
+      setIsLoading(false)
       }
     } catch (error) {
       toast.error(`Xatolik: ${error}`);
@@ -57,11 +70,14 @@ export default function StudentLogin() {
   };
 
   return (
-    <div className="w-[250px] absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] flex items-center m-auto">
+    <div className="w-[250px] absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] flex flex-col items-center m-auto">
+      <article className="w-[150px] mb-10">
+        <Image src={LogoStudent} alt="Logo Student" />
+      </article>
       <form onSubmit={handleSubmit} className="text-center">
         <p className="mb-5">Student ID*</p>
         <Label className="flex p-2 w-full border rounded-md items-center text-[15px] font-medium focus-within:border-orange-500 focus-within:border-1 mb-5">
-          <span className="text-gray-500 font-normal">iqtidor-</span>
+          <span className="text-gray-400 font-normal text-[17px]">iq-</span>
           <input
             className="w-full outline-none h-full bg-transparent"
             type="text"
