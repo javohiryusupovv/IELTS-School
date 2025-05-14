@@ -62,7 +62,7 @@ export default function LeaderBoardPages({ studentsSort }: SortProps) {
             >
               <article
                 className={`absolute z-[1] -top-10 ${
-                  pos === 2 ? "right-4" : pos === 0 ? "left-[18%]" : "left-[18px]"
+                  pos === 2 ? "right-6" : pos === 0 ? "left-[21%]" : "left-[24px]"
                 } w-20 h-20 border-2 rounded-full ${styles.border}`}
               >
                 {styles.icon}
