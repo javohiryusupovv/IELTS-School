@@ -30,9 +30,9 @@ async function CourseDetail({ params, }: { params: Promise<{ kursId: string }> }
       </article>
       <div className="flex w-full gap-10 max-xl:flex-wrap">
         <div>
-          <div className={`relative top-0 flex justify-center items-end border mb-5 w-[500px] h-[300px] rounded-xl max-md:h-[250px] max-sm:h-[200px] max-md:w-[380px] max-sm:w-[250px]`} style={{ backgroundColor: getStableColor(course._id) }}>
-            <p className="absolute top-8 left-0 text-center w-full mt-12 text-[20px] font-semibold text-white">{course.courseTitle}</p>
-            <Image className="w-[500px] object-cover" src={Frontend} alt="Course Detail Img" />
+          <div className={`relative top-0 flex justify-center items-end border mb-5 w-[500px] max-sm:w-full h-[300px] rounded-xl max-md:h-[250px] max-sm:h-[200px] max-md:w-[380px]`} style={{ backgroundColor: getStableColor(course._id) }}>
+            <p className="absolute top-8 max-sm:top-0 left-0 text-center w-full mt-12 text-[20px] font-semibold text-white">{course.courseTitle}</p>
+            <Image className="w-[500px] max-sm:w-full object-cover" src={Frontend} alt="Course Detail Img" />
           </div>
           <h4 className="mb-3">O'qituvchi: <span className="font-semibold text-[19px]">{course.teacher.teacherName} {course.teacher.teacherSurname}</span></h4>
           <div className="flex items-center gap-3">

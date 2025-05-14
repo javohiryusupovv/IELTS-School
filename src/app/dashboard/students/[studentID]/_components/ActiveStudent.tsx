@@ -36,7 +36,7 @@ export default function ActiveStudentFunc({ ActiveStudentHande }: Props) {
                             O'quvchini active qilish uchun tasdiqlang.
                         </AlertDialogDescription>
                     </AlertDialogHeader>
-                    <AlertDialogFooter>
+                    <AlertDialogFooter className="max-sm:gap-2">
                         <AlertDialogCancel>yo'q</AlertDialogCancel>
                         <AlertDialogAction onClick={() => ActiveStudentHande(true)}>Ha</AlertDialogAction>
                     </AlertDialogFooter>

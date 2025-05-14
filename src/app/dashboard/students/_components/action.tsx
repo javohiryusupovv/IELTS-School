@@ -74,15 +74,15 @@ export default function Action({student}: Props) {
           <Trash className="w-[14px] h-[14px] group-hover:stroke-white stroke-1 stroke-red-600 transition-all duration-300 group-hover:border-transparent" />
         </button>
       </AlertDialogTrigger>
-      <AlertDialogContent>
+      <AlertDialogContent className="max-sm:w-[400px] max-sm:rounded-md max-sidebar:w-[320px]">
         <AlertDialogHeader>
-          <AlertDialogTitle>Siz Talabani o'chirmoqchimisz ?</AlertDialogTitle>
-          <AlertDialogDescription className="text-gray-500 text-[14px]">
+          <AlertDialogTitle className="max-sidebar:text-[15px] leading-4">Siz Talabani o'chirmoqchimisz ?</AlertDialogTitle>
+          <AlertDialogDescription className="text-gray-500 text-[14px] max-sidebar:text-[12px]">
             Talabani o'chirish orqali siz barcha ma'lumotlarni o'chirasiz.
             O'chirishni davom ettirishni xohlaysizmi ?
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter>
+        <AlertDialogFooter className="max-sm:gap-2">
           <AlertDialogCancel>Yuq</AlertDialogCancel>
           <AlertDialogAction onClick={handleDelete}>Ha</AlertDialogAction>
         </AlertDialogFooter>

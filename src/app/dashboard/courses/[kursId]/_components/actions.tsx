@@ -56,12 +56,11 @@ export default function Actions({ course }: Props) {
                         </p>
                     </button>
                 </AlertDialogTrigger>
-                <AlertDialogContent>
+                <AlertDialogContent className="max-sm:w-[400px] max-sm:rounded-md max-sidebar:w-[320px]">
                     <AlertDialogHeader>
-                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                        <AlertDialogDescription>
-                            This action cannot be undone. This will permanently delete your
-                            account and remove your data from our servers.
+                        <AlertDialogTitle className="max-sidebar:text-[15px] leading-4">Kursni o'chirishni xoxlaysizmi ?</AlertDialogTitle>
+                        <AlertDialogDescription className="max-sidebar:text-[12px]">
+                            Kursni o'chirish uchun Tasdinglang !
                         </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter className="grid items-center grid-cols-2 gap-2">
