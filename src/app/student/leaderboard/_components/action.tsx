@@ -41,8 +41,8 @@ const medalColors = [
 export default function LeaderBoardPages({ studentsSort }: SortProps) {
 
     const topThree = studentsSort.slice(0, 3);
-    console.log(studentsSort);
 
+    
     return (
         <div className="pt-[75px] w-11/12 m-auto">
             <p className="text-center mb-10 font-bold text-[18px]">
