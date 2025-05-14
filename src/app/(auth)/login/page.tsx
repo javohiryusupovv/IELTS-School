@@ -11,7 +11,7 @@ import { formatUzbekPhone } from "@/utils/PhoneFormatter";
 
 
 export default function login() {
-    const [phone, setPhone] = useState("+998 ");
+    const [phone, setPhone] = useState("");
     const [isloading, setLoading] = useState(false)
     const [ispassword, setIsPassword] = useState("");
     const router = useRouter();
@@ -61,13 +61,25 @@ export default function login() {
         }
     };
 
+    const handlePhoneNumberInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+        let value = e.target.value;
+        let resValue = value.replace(/\D/g, "")
+        if (resValue.length >= 8) {
+          e.target.value = resValue.slice(0, 9); // Limit to 8 characters
+        }
+      };
+
 
     return (
         <div className="w-full h-screen flex justify-center items-center">
             <div className="w-[400px] text-center px-8 py-16 border">
                 <form onSubmit={handleCheckTeacher}>
                     <p className="text-[23px] font-semibold mb-5 text-orange-500">Login</p>
-                    <input autoComplete="off" onChange={(e) => setPhone(formatUzbekPhone(e.target.value))} value={phone} disabled={isloading} className="mb-3 border px-2 w-full py-3 rounded-md outline-none text-[15px] font-normal focus-within:border-orange-500 focus-within:border-1" type="text" placeholder="Login kiriting ..." />
+                    <article className={`group flex gap-2 items-center rounded border px-3 focus-within:border-orange-500 transition-all duration-200 mb-5`}>
+                        <span className="text-[14px] text-gray-500">+998 </span>
+                        <input autoComplete="off" onChange={(e) => setPhone(e.target.value)} value={phone} onInput={handlePhoneNumberInput} disabled={isloading} className="py-2 w-full text-gray-700 outline-none"  type="text" placeholder="Login kiriting ..." />
+                    </article>
+                    
                     <Label className="flex items-center justify-between gap-2 border px-2 rounded-md focus-within:border-orange-500 focus-within:border-1 mb-5">
                         <input autoComplete="new-password" onChange={(e) => setIsPassword(e.target.value)} value={ispassword} disabled={isloading} className="border-0 outline-none py-3 w-full text-[15px] font-normal" type={eye ? "text" : "password"} placeholder="Password kiriting" />
                         <p className="cursor-pointer"  onClick={hidePassword}>{eye ? <Eye/> : <EyeClosed/>}</p>

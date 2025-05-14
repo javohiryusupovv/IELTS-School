@@ -63,7 +63,7 @@ export default function Actions({ course }: Props) {
                             Kursni o'chirish uchun Tasdinglang !
                         </AlertDialogDescription>
                     </AlertDialogHeader>
-                    <AlertDialogFooter className="max-sm:gap-2">
+                    <AlertDialogFooter className="grid items-center grid-cols-2 gap-2">
                         <AlertDialogCancel>Yo&apos;q</AlertDialogCancel>
                         <AlertDialogAction onClick={onDelete}>Ha</AlertDialogAction>
                     </AlertDialogFooter>
