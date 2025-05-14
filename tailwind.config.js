@@ -62,6 +62,7 @@ module.exports = {
         OurMentor: "1110px",
         OurMentor2: "860px",
         sidebar: "491px",
+        leaderContainer: "382px",
         medSmall: "660px",
         strelka: "902px",
         btn: "1300px",
