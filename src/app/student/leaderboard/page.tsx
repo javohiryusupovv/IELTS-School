@@ -33,7 +33,7 @@ export default function Leaderboard() {
       } catch (err: any) {
         console.error("Xatolik yuz berdi:", err);
       } finally {
-        setLoading(true); // har qanday holatda loading false bo'ladi
+        setLoading(false); // har qanday holatda loading false bo'ladi
       }
     };
     students();
