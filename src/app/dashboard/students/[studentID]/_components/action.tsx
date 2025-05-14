@@ -24,8 +24,7 @@ export default function Actions({ student }: Props) {
   const pathname = usePathname();
   const [coins, setCoins] = useState("");
   const [coinreason, setCoinreason] = useState("");
-  const [selectStatus, setSelectStatus] = useState("")
-
+  const [selectStatus, setSelectStatus] = useState("");
 
   const handleCoinRes = async () => {
     if (!coins || !coinreason) {
@@ -129,15 +128,14 @@ export default function Actions({ student }: Props) {
     if (selectStatus === "added") {
       return coin.value > 0 && !coin.reason.includes("Coin almashtirildi !");
     }
-    return true; 
+    return true;
   });
-  
 
   return (
     <div>
-      <div className="grid grid-cols-3 items-start gap-5 mb-4">
-        <div className=" relative top-0 right-0 col-span-1 px-4 py-5 rounded-md shadowCustom">
-          <div className="absolute top-5 right-3 flex flex-col items-center gap-2">
+      <div className="grid grid-cols-3 items-start gap-5 mb-4 max-studentCard:grid-cols-1">
+        <div className=" relative top-0 right-0 col-span-1 max-studentCard:col-span-2 px-4 py-5 rounded-md shadowCustom">
+          <div className="absolute top-5 right-6 flex flex-col items-center gap-2 overflow-hidden">
             <EditStudent student={student} />
             <ActiveStudentFunc ActiveStudentHande={ActiveStudentHande} />
             <Archive ArxiveStudentHande={ArxiveStudentHande} />
@@ -164,7 +162,9 @@ export default function Actions({ student }: Props) {
             </article>
             <ul className="mb-5">
               <li className="mb-1 text-[15px] text-gray-500/50">Telefon:</li>
-              <li className="text-[15px] text-orange-500">+998 {student.phone}</li>
+              <li className="text-[15px] text-orange-500">
+                +998 {student.phone}
+              </li>
             </ul>
             <div className="">
               <label htmlFor="" className="flex flex-col">
@@ -172,12 +172,12 @@ export default function Actions({ student }: Props) {
                   Talabaga coin qo'shish
                 </p>
               </label>
-              <article className="flex items-end justify-between gap-4 mb-8">
+              <article className="flex items-end justify-between gap-4 mb-8 max-btn:block">
                 <article className="flex flex-col w-[70%] gap-2">
                   <input
                     value={coins}
                     onChange={(e) => setCoins(e.target.value)}
-                    className="px-2 py-1 border outline-none rounded-md"
+                    className="px-2 py-1 border outline-none rounded-md max-studentCard: "
                     type="text"
                     placeholder="Coin sonini kiriting ?"
                   />
@@ -191,25 +191,33 @@ export default function Actions({ student }: Props) {
                 </article>
                 <button
                   onClick={handleCoinRes}
-                  className="border rounded-md cursor-pointer px-2 py-1 transition-all duration-200 bg-green-500 text-white hover:border-green-700"
+                  className="border rounded-md cursor-pointer px-2 py-1 transition-all duration-200 bg-green-500 text-white hover:border-green-700 max-btn:mt-2"
                 >
                   Qo'shish
                 </button>
               </article>
               <div className="w-full h-[150px]">
-                <p className="mb-4 text-[14px] text-gray-600/65">Coinlar tarixi haqida:</p>
+                <p className="mb-4 text-[14px] text-gray-600/65">
+                  Coinlar tarixi haqida:
+                </p>
                 <article className="flex flex-col gap-3">
                   <article className="flex items-center gap-2">
                     <p className="w-4 h-4 bg-green-500"></p>
-                    <span className="text-[12px] text-gray-600/65">Coin qo'shilgan !</span>
+                    <span className="text-[12px] text-gray-600/65">
+                      Coin qo'shilgan !
+                    </span>
                   </article>
                   <article className="flex items-center gap-2">
                     <p className="w-4 h-4 bg-orange-500"></p>
-                    <span className="text-[12px] text-gray-600/65">Talaba coindan foydalangan !</span>
+                    <span className="text-[12px] text-gray-600/65">
+                      Talaba coindan foydalangan !
+                    </span>
                   </article>
                   <article className="flex items-center gap-2">
                     <p className="w-4 h-4 bg-red-500"></p>
-                    <span className="text-[12px] text-gray-600/65">Talabadan jarima sabab ajratilan coin !</span>
+                    <span className="text-[12px] text-gray-600/65">
+                      Talabadan jarima sabab ajratilan coin !
+                    </span>
                   </article>
                 </article>
               </div>
@@ -220,7 +228,10 @@ export default function Actions({ student }: Props) {
           <p className="mb-6">Studentning Coinlar tarixi</p>
           <div className="w-full">
             <div className="flex justify-end mb-5">
-              <SelecStatus selectStatus={selectStatus} onSelectChange={setSelectStatus}/>
+              <SelecStatus
+                selectStatus={selectStatus}
+                onSelectChange={setSelectStatus}
+              />
             </div>
             {totalCoins < 1 ? (
               <p className="text-gray-500/50 text-[14px] my-5 underline">
@@ -230,16 +241,16 @@ export default function Actions({ student }: Props) {
               <div className="w-full flex flex-col gap-2 items-center">
                 <div className="flex w-full py-2 px-4 border-b items-center  mb-3">
                   <article className="flex-[0.4] text-left ">
-                    <p>Status</p>
+                    <p className="max-sm:text-[13px] text-[14px]">Status</p>
                   </article>
-                  <article className="flex-1 text-start">
-                    <p>Sabab</p>
+                  <article className="flex-1 text-centre">
+                    <p className="max-sm:text-[13px] text-[14px]">Sabab</p>
                   </article>
                   <article className="flex-1 text-center ">
-                    <p>Sana</p>
+                    <p className="max-sm:text-[13px] text-[14px]">Sana</p>
                   </article>
                   <article className="flex-1 text-right mr-4">
-                    <p>Coin</p>
+                    <p className="max-sm:text-[13px] text-[14px]">Coin</p>
                   </article>
                 </div>
                 {filteredCoins?.map((coin, index) => (
@@ -255,7 +266,7 @@ export default function Actions({ student }: Props) {
                   >
                     <article className="flex-[0.4]">
                       <CircleCheckBig
-                        className={`stroke-[1.5] w-5 h-5 ${
+                        className={`stroke-[1.5] w-5 h-5 max-md:w-[16px] ${
                           coin.reason.includes("Coin almashtirildi !")
                             ? "stroke-orange-500"
                             : coin.value > 0
@@ -265,37 +276,25 @@ export default function Actions({ student }: Props) {
                       />
                     </article>
                     <article className="flex-1 text-start">
-                      <article className="flex gap-2 items-center">
+                      <article className="flex max-sm:flex-col gap-2 items-center">
                         {coin.reason.map((reason: any, index: number) => (
-                           <p
-                           key={index}
-                           className={`text-[10px] text-black px-3 py-1 rounded-2xl bg-accent`}
-                         >
-                           {formatReasonText(reason)}
-                         </p>
-                          // <p
-                          //   key={index}
-                          //   className={`text-[10px] text-white px-3 py-1 rounded-2xl ${
-                          //     reason.includes("Coin almashtirildi !")
-                          //       ? "bg-orange-500"
-                          //       : coin.value > 0
-                          //       ? "bg-green-500"
-                          //       : "bg-red-500"
-                          //   }`}
-                          // >
-                          //   {formatReasonText(reason)}
-                          // </p>
+                          <p
+                            key={index}
+                            className={`text-[10px] text-black px-3 py-1 rounded-2xl bg-accent max-md:text-[7.5px]`}
+                          >
+                            {formatReasonText(reason)}
+                          </p>
                         ))}
                       </article>
                     </article>
                     <article className="flex-1 text-center">
-                      <p className="text-gray-500/50">
+                      <p className="text-gray-500/50 max-md:text-[11px]">
                         {formatDate(coin.date)}
                       </p>
                     </article>
                     <article className="flex-1 justify-items-end text-right">
                       <p
-                        className={`flex justify-center items-center w-14 h-6 rounded-3xl text-[14px] text-white bg-green-500 ${
+                        className={`flex justify-center items-center w-14 h-6 rounded-3xl text-[14px] text-white bg-green-500 max-md:text-[10px] ${
                           coin.reason.includes("Coin almashtirildi !")
                             ? "bg-orange-500"
                             : coin.value > 0

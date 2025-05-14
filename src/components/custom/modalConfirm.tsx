@@ -39,10 +39,10 @@ export default function ModalConfirm({handleClose}: Props) {
                 <AlertDialogTrigger asChild>
                     <button className="flex items-center gap-2 justify-center w-full py-2 border bg-red-600 hover:bg-red-500/80 transition-all duration-200 text-white rounded-md"><LogOut /> Chiqish</button>
                 </AlertDialogTrigger>
-                <AlertDialogContent>
+                <AlertDialogContent className="max-sm:w-[400px] max-sm:rounded-md max-sidebar:w-[320px]">
                     <AlertDialogHeader>
-                        <AlertDialogTitle>Tizimdan chiqmoqdasiz !</AlertDialogTitle>
-                        <AlertDialogDescription>
+                        <AlertDialogTitle className="max-sidebar:text-[17px] leading-4">Tizimdan chiqmoqdasiz !</AlertDialogTitle>
+                        <AlertDialogDescription className="max-sidebar:text-[12px]">
                             <span className="text-green-500 underline">Ha</span> ni bosish orqali tizimdan chiqasiz !!!
                         </AlertDialogDescription>
                     </AlertDialogHeader>

@@ -29,10 +29,10 @@ export default function ActiveStudentFunc({ ActiveStudentHande }: Props) {
                         <Image width={35} src={Active} alt="Active" />                  
                     </button>
                 </AlertDialogTrigger>
-                <AlertDialogContent>
+                <AlertDialogContent className="max-sm:w-[400px] max-sm:rounded-md max-sidebar:w-[320px]">
                     <AlertDialogHeader>
-                        <AlertDialogTitle>O'quvchini Active qilasizmi !!!</AlertDialogTitle>
-                        <AlertDialogDescription>
+                        <AlertDialogTitle className="max-sidebar:text-[15px] leading-4">O'quvchini Active qilasizmi !!!</AlertDialogTitle>
+                        <AlertDialogDescription className="max-sidebar:text-[12px]">
                             O'quvchini active qilish uchun tasdiqlang.
                         </AlertDialogDescription>
                     </AlertDialogHeader>
