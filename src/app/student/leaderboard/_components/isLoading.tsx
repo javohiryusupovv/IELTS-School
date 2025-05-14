@@ -10,7 +10,7 @@ export default function ISLoading() {
               <Skeleton className=" absolute z-[1] -top-10 left-[18px] w-20 h-20 rounded-full bg-[#ffffff83]"></Skeleton>
             </Skeleton>
             <Skeleton className="relative -top-6 w-[130px] h-[150px] bg-[#ffffff83] rounded-none rounded-t-3xl">
-              <Skeleton className="absolute z-[1] -top-12 left-[20%] w-20 h-20 rounded-full bg-[#ffffff83]"></Skeleton>
+              <Skeleton className="absolute z-[1] -top-12 left-[19%] w-20 h-20 rounded-full bg-[#ffffff83]"></Skeleton>
             </Skeleton>
             <Skeleton className="w-[130px] h-[150px] bg-[#ffffff83] rounded-none rounded-t-3xl">
               <Skeleton className=" absolute z-[1] -top-10 right-4 w-20 h-20 rounded-full bg-[#ffffff83]"></Skeleton>
