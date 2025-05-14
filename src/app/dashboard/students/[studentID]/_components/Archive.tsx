@@ -28,10 +28,10 @@ export default function Archive({ ArxiveStudentHande }: Props) {
                         <Ghost className=" w-5 h-5 group-hover:stroke-white stroke-red-500 transition-all duration-300 group-hover:border-transparent" />
                     </button>
                 </AlertDialogTrigger>
-                <AlertDialogContent>
+                <AlertDialogContent className="max-sm:w-[400px] max-sm:rounded-md max-sidebar:w-[320px]">
                     <AlertDialogHeader>
-                        <AlertDialogTitle>O'quvchini Arxive qilasizmi !!!</AlertDialogTitle>
-                        <AlertDialogDescription>
+                        <AlertDialogTitle className="max-sidebar:text-[15px] leading-4">O'quvchini Arxive qilasizmi !!!</AlertDialogTitle>
+                        <AlertDialogDescription className="max-sidebar:text-[12px]">
                             O'quvchini arxive qilish uchun tasdiqlang.
                         </AlertDialogDescription>
                     </AlertDialogHeader>
