@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { PiCrownLight } from "react-icons/pi";
 import AccountImg from "../../../../../public/accountImg/azizbek.jpg";
+import Erik from "../../../../../public/icons/erik.png"
 import { GiCrown } from "react-icons/gi";
 
 interface StudentType {
@@ -61,13 +62,13 @@ export default function LeaderBoardPages({ studentsSort }: SortProps) {
             >
               <article
                 className={`absolute z-[1] -top-10 ${
-                  pos === 2 ? "right-6" : pos === 0 ? "left-[20%]" : "left-6"
+                  pos === 2 ? "right-4" : pos === 0 ? "left-[18%]" : "left-[18px]"
                 } w-20 h-20 border-2 rounded-full ${styles.border}`}
               >
                 {styles.icon}
                 <Image
                   className="absolute left-0 top-0 rounded-full object-cover z-[1]"
-                  src={AccountImg}
+                  src={Erik}
                   alt="LeaderBoard Img"
                 />
                 <span
@@ -102,7 +103,7 @@ export default function LeaderBoardPages({ studentsSort }: SortProps) {
               <article className="flex items-center gap-3">
                 <Image
                   className="w-10 h-10 rounded-full"
-                  src={AccountImg}
+                  src={Erik}
                   alt="AccountImg LeaderBoard"
                 />
                 <p className="text-[15px] font-semibold">
