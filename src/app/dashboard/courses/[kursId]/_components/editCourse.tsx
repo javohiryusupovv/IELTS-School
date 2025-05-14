@@ -19,6 +19,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { IUpdateCourse } from "../../../../../../app.types";
+import { FaEdit } from "react-icons/fa";
 
 interface Props {
   course: ICourse;
@@ -98,10 +99,11 @@ export default function EditCourse({ course }: Props) {
     <div>
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>
-          <button className="px-5 py-3 rounded-full bg-[#f18024] hover:bg-[#f18024ca] transition-all duration-200">
-            <p className="text-[12px] font-medium text-white">
+          <button className="px-5 py-3 rounded-full bg-[#f18024] hover:bg-[#f18024ca] transition-all duration-200 max-lg:px-3">
+            <p className="text-[12px] font-medium text-white max-lg:hidden">
               Kursni tahrirlash
             </p>
+            <FaEdit className="text-white lg:hidden max-sm:text-[12px]"/>
           </button>
         </SheetTrigger>
         <SheetContent>
@@ -120,13 +122,13 @@ export default function EditCourse({ course }: Props) {
               <input
                 defaultValue={course.courseTitle}
                 name="title"
-                className="py-2 border rounded-md px-2 text-gray-700 "
+                className="px-2 py-2 text-gray-700 border rounded-md "
                 id="kurs"
                 type="text"
                 placeholder="Kurs nomini kiriting !"
               />
             </label>
-            <div className="flex w-full justify-between mb-5">
+            <div className="flex justify-between w-full mb-5">
               <div>
                 <p className="text-[15px] mb-2 text-[#d47323cd]">
                   Boshlanish kuni*
@@ -149,7 +151,7 @@ export default function EditCourse({ course }: Props) {
               htmlFor="kurs"
             >
               Teacherni tanlang*
-              <p className="relative top-0 left-0 group py-2 px-3 rounded-md bg-gray-100 cursor-not-allowed">
+              <p className="relative top-0 left-0 px-3 py-2 bg-gray-100 rounded-md cursor-not-allowed group">
                 {typeof course.teacher === "object"
                   ? `${course.teacher.teacherName} ${course.teacher.teacherSurname}`
                   : null}

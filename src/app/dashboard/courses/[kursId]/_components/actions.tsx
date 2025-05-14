@@ -50,22 +50,21 @@ export default function Actions({ course }: Props) {
         <div>
             <AlertDialog>
                 <AlertDialogTrigger asChild>
-                    <button disabled={textStatus} className="px-7 py-3 rounded-full bg-red-600 hover:bg-red-500/70 transition-all duration-200">
+                    <button disabled={textStatus} className="py-3 transition-all duration-200 bg-red-600 rounded-full px-7 hover:bg-red-500/70">
                         <p className="text-[15px] font-medium text-white">
                             {textStatus ? "O'chirilmoqda" : "O'chirish"}
                         </p>
                     </button>
                 </AlertDialogTrigger>
-                <AlertDialogContent>
+                <AlertDialogContent className="max-sm:w-[400px] max-sm:rounded-md max-sidebar:w-[320px]">
                     <AlertDialogHeader>
-                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                        <AlertDialogDescription>
-                            This action cannot be undone. This will permanently delete your
-                            account and remove your data from our servers.
+                        <AlertDialogTitle className="max-sidebar:text-[15px] leading-4">Kursni o'chirishni xoxlaysizmi ?</AlertDialogTitle>
+                        <AlertDialogDescription className="max-sidebar:text-[12px]">
+                            Kursni o'chirish uchun Tasdinglang !
                         </AlertDialogDescription>
                     </AlertDialogHeader>
-                    <AlertDialogFooter>
-                        <AlertDialogCancel>Yuq</AlertDialogCancel>
+                    <AlertDialogFooter className="max-sm:gap-2">
+                        <AlertDialogCancel>Yo&apos;q</AlertDialogCancel>
                         <AlertDialogAction onClick={onDelete}>Ha</AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>

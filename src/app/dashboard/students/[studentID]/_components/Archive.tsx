@@ -35,7 +35,7 @@ export default function Archive({ ArxiveStudentHande }: Props) {
                             O'quvchini arxive qilish uchun tasdiqlang.
                         </AlertDialogDescription>
                     </AlertDialogHeader>
-                    <AlertDialogFooter>
+                    <AlertDialogFooter className="max-sm:gap-2">
                         <AlertDialogCancel>yo'q</AlertDialogCancel>
                         <AlertDialogAction onClick={() => ArxiveStudentHande(false)}>Ha</AlertDialogAction>
                     </AlertDialogFooter>

@@ -77,15 +77,15 @@ const DeleteAction = ({ handleDelete }: DeleteActionProps) => {
         <Trash className="w-4 h-4 stroke-red-600" />
         O'chirish
       </AlertDialogTrigger>
-      <AlertDialogContent>
+      <AlertDialogContent className="max-sm:w-[400px] max-sm:rounded-md max-sidebar:w-[320px]">
         <AlertDialogHeader>
-          <AlertDialogTitle>O'qituvchini o'chirmoqdasiz !</AlertDialogTitle>
-          <AlertDialogDescription>
+          <AlertDialogTitle className="max-sidebar:text-[15px] leading-4">O'qituvchini o'chirmoqdasiz !</AlertDialogTitle>
+          <AlertDialogDescription className="max-sidebar:text-[12px]">
             O'qituvchini o'chirishni tasdiqlaysizmi? Bu orqali o'qituvchi barcha
             ma'lumotlarini yo'qotadi.
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter>
+        <AlertDialogFooter className="max-sm:gap-2">
           <AlertDialogCancel>Yo'q</AlertDialogCancel>
           <AlertDialogAction onClick={handleDelete}>Ha</AlertDialogAction>
         </AlertDialogFooter>

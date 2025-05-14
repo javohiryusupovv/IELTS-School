@@ -59,18 +59,18 @@ export default function DeleteProduct({ products }: Props) {
           <Trash className="w-4 h-4 " />
         </button>
       </AlertDialogTrigger>
-      <AlertDialogContent>
+      <AlertDialogContent className="max-sm:w-[400px] max-sm:rounded-md max-sidebar:w-[320px]">
         <AlertDialogHeader>
-            <AlertDialogTitle>
+            <AlertDialogTitle className="max-sidebar:text-[15px] leading-4">
             <span className="text-red-500 underline">{products.title}</span>{" "}
             Mahsulotini o'chirishni xoxlaysizmi ?
             </AlertDialogTitle>
-            <AlertDialogDescription className="text-gray-500 text-[14px]">
+            <AlertDialogDescription className="text-gray-500 text-[14px] max-sidebar:text-[12px]">
             Mahsulotni o'chirish orqali siz barcha ma'lumotlarni o'chirasiz.
             O'chirishni davom ettirishni xohlaysizmi ?
             </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter>
+        <AlertDialogFooter className="max-sm:gap-2">
           <AlertDialogCancel>Yuq</AlertDialogCancel>
           <AlertDialogAction onClick={deleteProduct}>Ha</AlertDialogAction>
         </AlertDialogFooter>
