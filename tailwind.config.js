@@ -67,6 +67,8 @@ module.exports = {
         strelka: "902px",
         btn: "1300px",
         studentCard: "1089px",
+        teacher:"530px",
+        course:"500px"
       },
     },
     container: {

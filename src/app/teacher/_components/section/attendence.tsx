@@ -59,7 +59,7 @@ export default function Attendence({
     leader: false,
   });
   const pathname = usePathname();
-  
+
 
 
   const handleOnChangeChecked = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -174,16 +174,16 @@ export default function Attendence({
 
   return (
     <div className="p-4">
-      <div className="flex w-full flex-col">
+      <div className="flex w-full flex-col relative">
         <article className="flex items-center gap-3 mb-7">
           <p className="w-[6] h-[6] rounded-full bg-orange-400"></p>
-          <h6 className="flex gap-3 items-center text-[25px]">
+          <h6 className="flex gap-3 items-center md:text-[25px] text-lg">
             {titleCourse}
             <p className="w-[6] h-[6] rounded-full bg-orange-400"></p>
             {teacherName}
           </h6>
         </article>
-        <div className="flex items-center justify-end mr-10 gap-4 mb-5">
+        <div className="flex items-center justify-end mr-10 gap-4 mb-5 max-btn:absolute -bottom-[270px] -right-10">
           <button
             onClick={prevMonth}
             className="flex items-center py-[2px] px-2 border rounded-sm  focus:bg-orange-500 bg-[#ffa600b8]"
@@ -206,8 +206,8 @@ export default function Attendence({
           </button>
         </div>
       </div>
-      <div className="grid grid-cols-4 gap-10">
-        <div className="border px-5 pt-5 pb-16 col-span-1 rounded shadow-md shadow-gray-500/10">
+      <div className="grid btn:grid-cols-4 grid-cols-3 justify-between gap-10">
+        <div className="max-btn:w-[400px] max-sm:w-[300px] max-teacher:w-[250px] border px-5 pt-5 pb-16 col-span-1 rounded shadow-md shadow-gray-500/10">
           <article>
             <p className="flex gap-3 items-center text-[14px]"><strong className="font-medium text-[13px]">Kurs: </strong> {course.courseTitle}</p>
           </article>
@@ -225,12 +225,12 @@ export default function Attendence({
             <p>{formatDate(course.startDate)} — {formatDate(course.endDate)}</p>
           </article>
         </div>
-        <div className="col-span-3 overflow-hidden">
+        <div className="col-span-3  xl:w-full overflow-hidden">
           <div className="w-full overflow-x-auto">
             <table className="w-full pr-28">
               <thead className="overflow-x-auto w-full whitespace-nowrap border-t border-b mr-[100px]">
                 <tr className="text-left whitespace-nowrap">
-                  <th className="w-[150px] sticky left-0 z-[10] bg-white">
+                  <th className="w-[150px] bg-white sticky left-0 z-[10]">
                     <p className="text-[15px] font-medium py-2">Ism</p>
                   </th>
                   {filterDays.map((month, i) => (
@@ -244,7 +244,7 @@ export default function Attendence({
                 {students.map((student: any, id: number) => (
                   <tr key={id} className="border-b-[0.3px]">
                     <th className="w-[200px] sticky left-0 z-[10] bg-white">
-                      <div className="flex items-center gap-2 w-[200px] text-left py-3">
+                      <div className="flex items-center gap-2 md:w-[200px] max-w-max pr-5 text-left py-3">
                         <User className="stroke-1" />
                         <p className="text-[14px] overflow-hidden whitespace-nowrap text-ellipsis font-normal">
                           {student.surname} {student.name}
@@ -261,7 +261,7 @@ export default function Attendence({
                       const isCoinGiven = student.coins?.some((coin: any) =>
                       moment(coin.date).isSame(day, "day")
                     );
-                    
+
                       return (
                         <td key={i} className="text-[12px] p-3">
                           <span className="text-white flex items-center justify-center">

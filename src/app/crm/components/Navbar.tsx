@@ -18,9 +18,6 @@ export default function Topbar() {
             3
           </span>
         </button>
-        <button className="bg-orange-600 text-white rounded-full p-2 hover:bg-orange-700 transition">
-          <Plus size={18} />
-        </button>
         <div className="flex items-center gap-2">
           <Image src={"/img/bgID.png"} alt="Profile" width={18} height={18} className="w-8 h-8 rounded-full object-cover" />
           <span className="font-semibold text-gray-700">Zafar Uralov</span>
