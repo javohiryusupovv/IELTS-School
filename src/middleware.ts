@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
   const studentAuth = request.cookies.get("student-auth");
@@ -12,11 +12,17 @@ export async function middleware(request: NextRequest) {
   }
 
   // 2. Admin auth mavjud emas — dashboard yoki crm sahifalariga yo‘naltirmaslik
-  if (!adminAuthRaw && (path.startsWith("/dashboard") || path.startsWith("/crm"))) {
+  if (
+    !adminAuthRaw &&
+    (path.startsWith("/dashboard") || path.startsWith("/crm"))
+  ) {
     return NextResponse.redirect(new URL("/reception", request.url));
   }
 
-  // 4. CRM sahifasiga faqat owner kirishi kerak
+  // 3. Agar admin bo‘lsa va reception sahifasiga kirmoqchi bo‘lsa, uni tegishli panelga yo‘naltiramiz
+  if (adminAuthRaw && path === "/reception") {
+    return NextResponse.redirect(new URL("/dashboard", request.url));
+  }
   if (path.startsWith("/crm")) {
     try {
       const decoded = decodeURIComponent(adminAuthRaw!);
@@ -32,9 +38,16 @@ export async function middleware(request: NextRequest) {
     }
   }
 
+  // 4. CRM sahifasiga faqat owner kirishi kerak
+
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/student/:path*', '/dashboard/:path*', '/reception', '/crm/:path*'],
+  matcher: [
+    "/student/:path*",
+    "/dashboard/:path*",
+    "/reception",
+    "/crm/:path*",
+  ],
 };
