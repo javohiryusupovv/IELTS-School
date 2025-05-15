@@ -1,7 +1,5 @@
-import { ShoppingBag } from "lucide-react";
-import Link from "next/link";
-import Sidebar from "./components/Sidebar";
-import Navbar from "./components/Navbar";
+import Sidebar from "./_components/Sidebar";
+import Navbar from "./_components/Navbar";
 
 export default async function Student({
   children,

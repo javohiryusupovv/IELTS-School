@@ -39,3 +39,8 @@ export const formatDate = (dateString: string) => {
 export const formatReasonText = (str: string) => {
   return str.replace(/([a-z])([A-Z])/g, "$1 $2");
 };
+
+
+
+export const lastPaymentDate = new Date('2025-04-20'); // statik to‘lov sanasi
+

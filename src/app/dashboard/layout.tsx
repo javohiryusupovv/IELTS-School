@@ -1,8 +1,6 @@
 import NavbarLayout from "./_components/navbarLayout";
 import LMSLogo from "../../../public/logo/logo.png";
 import "./custom.css";
-import Marquee from "react-fast-marquee";
-import { Banknote, CalendarClock } from "lucide-react";
 
 import Image from "next/image";
 import NotificationModal from "./_components/modal/notificationModal";
@@ -11,6 +9,7 @@ import { cookies } from "next/headers";
 import ConnectMonogDB from "@/lib/mongodb";
 import CrmAccount from "@/models/crmadmin.model";
 import NavbarMedia from "./_components/navbarMedia";
+import PaymentSend from "../crm/_components/payment/page";
 
 export default async function DashboardLayout({
   children,
@@ -60,38 +59,7 @@ export default async function DashboardLayout({
           </div>
         </div>
         <div className="w-full mb-4 overflow-hidden">
-          <Marquee
-            className="mb-4"
-            direction="right"
-            speed={50}
-            gradient
-            gradientColor="#f0f1f2"
-          >
-            <article className="flex items-center gap-32 py-[5px]">
-              <p className="flex items-center gap-2 text-red-600 font-medium">
-                <Banknote className="text-green-500" /> To'lov qilish vaqti
-                keldi
-              </p>
-              <p className="flex items-center gap-2 text-red-600 font-medium">
-                <Banknote className="text-green-500" /> To'lov qilish vaqti
-                keldi
-              </p>
-              <p className="flex items-center gap-2 text-red-600 font-medium">
-                <Banknote className="text-green-500" /> To'lov qilish vaqti
-                keldi
-              </p>
-              <p className="flex items-center gap-2 text-red-600 font-medium">
-                <Banknote className="text-green-500" /> To'lov qilish vaqti
-                keldi
-              </p>
-              <p className="flex items-center gap-2 text-red-600 font-medium">
-                <Banknote className="text-green-500" /> To'lov qilish vaqti
-                keldi
-              </p>
-            </article>
-          </Marquee>
-
-          <p className="flex items-center gap-2 text-red-600 underline font-medium"><CalendarClock className="stroke-1 text-red-700 w-5 h-5"/> 30.06.2025 Oxirgi kun to'lovni</p>
+         <PaymentSend/>
         </div>
         <div className="md:p-5 p-3 bg-white min-h-screen mb-4">{children}</div>
         <footer className="w-full py-5 px-4 border rounded-md bg-white">
