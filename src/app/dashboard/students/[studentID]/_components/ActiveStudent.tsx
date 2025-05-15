@@ -25,7 +25,7 @@ export default function ActiveStudentFunc({ ActiveStudentHande }: Props) {
             <AlertDialog>
                 <AlertDialogTrigger asChild>
                     <button className=" relative top-0 left-0 group transition-all duration-300 border-orange-400">
-                        <p className=" absolute top-[2px] left-10 rounded-sm px-2 py-1 text-[12px] border text-green-600 border-green-500 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">Activ</p>
+                        <p className=" absolute top-[2px] left-10 max-studentCard:-left-[50px] max-studentCard:top-1 rounded-sm px-2 py-1 text-[12px] border text-green-600 border-green-500 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">Activ</p>
                         <Image width={35} src={Active} alt="Active" />                  
                     </button>
                 </AlertDialogTrigger>

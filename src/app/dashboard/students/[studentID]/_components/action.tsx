@@ -135,7 +135,7 @@ export default function Actions({ student }: Props) {
     <div>
       <div className="grid grid-cols-3 items-start gap-5 mb-4 max-studentCard:grid-cols-1">
         <div className=" relative top-0 right-0 col-span-1 max-studentCard:col-span-2 px-4 py-5 rounded-md shadowCustom">
-          <div className="absolute top-5 right-6 flex flex-col items-center gap-2 overflow-hidden">
+          <div className="absolute top-5 right-6 flex flex-col items-center gap-2">
             <EditStudent student={student} />
             <ActiveStudentFunc ActiveStudentHande={ActiveStudentHande} />
             <Archive ArxiveStudentHande={ArxiveStudentHande} />

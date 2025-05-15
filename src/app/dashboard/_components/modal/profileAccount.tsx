@@ -40,8 +40,8 @@ export default function ProfileAccount({ admin }: Props) {
                   <RiRobot2Line className="w-[25px] h-[25px]" />
                 </article>
                 <article>
-                  <p className="sm:text-[16px] text-[13px] font-medium max-sm:flex items-center gap-1">
-                    {admin.fullname} -{" "}
+                  <p className="sm:text-[16px] text-[13px] font-medium max-sm:flex-col max-sm:items-start max-sm:gap-0 flex items-center gap-1">
+                    {admin.fullname} - 
                     <span className="text-green-500 sm:text-[12px] text-[10px] font-normal underline">
                       ({admin.role})
                     </span>

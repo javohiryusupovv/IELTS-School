@@ -1,6 +1,8 @@
 
 export default function page() {
   return (
-    <div>CRM</div>
+    <div>
+      <p>Leadlar shu yerda kelib tushadi</p>
+    </div>
   );
 }

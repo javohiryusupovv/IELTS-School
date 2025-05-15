@@ -9,7 +9,7 @@ import { cookies } from "next/headers";
 import ConnectMonogDB from "@/lib/mongodb";
 import CrmAccount from "@/models/crmadmin.model";
 import NavbarMedia from "./_components/navbarMedia";
-import PaymentSend from "../crm/_components/payment/page";
+import PaymentSend from "../crm/_components/PaymentDays";
 
 export default async function DashboardLayout({
   children,

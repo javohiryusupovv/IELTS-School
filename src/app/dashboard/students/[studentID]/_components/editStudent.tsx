@@ -72,7 +72,7 @@ export default function EditStudent({ student }: Props) {
             <Sheet>
                 <SheetTrigger asChild>
                     <button className=" relative top-0 left-0 group border rounded-full p-[5px] hover:bg-orange-500 transition-all duration-300 border-orange-400">
-                        <p className=" absolute top-0 left-9 rounded-sm px-2 py-1 text-[12px] border text-orange-600 border-orange-500 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">Tahrirlash</p>
+                        <p className=" absolute top-0 left-9 rounded-sm max-studentCard:-left-[78px] max-studentCard:top-0 px-2 py-1 text-[12px] border text-orange-600 border-orange-500 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">Tahrirlash</p>
                         <UserPen className=" w-5 h-5 group-hover:stroke-white stroke-1 transition-all duration-300 group-hover:border-transparent" />
                     </button>
                 </SheetTrigger>
