@@ -7,7 +7,6 @@ import { usePathname, useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "sonner";
 import { Eye, EyeClosed } from 'lucide-react';
-import { formatUzbekPhone } from "@/utils/PhoneFormatter";
 
 
 export default function login() {

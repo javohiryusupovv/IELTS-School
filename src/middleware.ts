@@ -1,27 +1,40 @@
-// middleware.ts
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export async function middleware(request: NextRequest) {
   const studentAuth = request.cookies.get("student-auth");
-  const adminAuth = request.cookies.get("admin-auth")?.value;
+  const adminAuthRaw = request.cookies.get("admin-auth")?.value;
   const path = request.nextUrl.pathname;
-  // Agar student-auth cookie yo'q va u /student sahifasiga kirmoqchi bo‘lsa:
-  if (!studentAuth && request.nextUrl.pathname.startsWith("/student")) {
+
+  // 1. Student auth tekshiruvi
+  if (!studentAuth && path.startsWith("/student")) {
     return NextResponse.redirect(new URL("/logstudent", request.url));
   }
 
-  if (!adminAuth && path.startsWith("/dashboard")) {
+  // 2. Admin auth mavjud emas — dashboard yoki crm sahifalariga yo‘naltirmaslik
+  if (!adminAuthRaw && (path.startsWith("/dashboard") || path.startsWith("/crm"))) {
     return NextResponse.redirect(new URL("/reception", request.url));
   }
 
-  // ✅ Agar tizimga kirgan bo‘lsa va login sahifasiga qaytmoqchi bo‘lsa, uni dashboardga qaytaramiz
-  if (adminAuth && path === "/reception") {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
+  // 4. CRM sahifasiga faqat owner kirishi kerak
+  if (path.startsWith("/crm")) {
+    try {
+      const decoded = decodeURIComponent(adminAuthRaw!);
+      const parsed = JSON.parse(decoded);
+      const role = parsed?.role;
+
+      if (role !== "owner") {
+        return NextResponse.redirect(new URL("/reception", request.url));
+      }
+    } catch (error) {
+      console.error("Invalid CRM access", error);
+      return NextResponse.redirect(new URL("/reception", request.url));
+    }
   }
+
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/student/:path*', '/dashboard/:path*', '/reception'],
+  matcher: ['/student/:path*', '/dashboard/:path*', '/reception', '/crm/:path*'],
 };

@@ -1,7 +1,8 @@
-
 import NavbarLayout from "./_components/navbarLayout";
-import LMSLogo from "../../../public/logo/logo.png"
-import "./custom.css"
+import LMSLogo from "../../../public/logo/logo.png";
+import "./custom.css";
+import Marquee from "react-fast-marquee";
+import { Banknote, CalendarClock } from "lucide-react";
 
 import Image from "next/image";
 import NotificationModal from "./_components/modal/notificationModal";
@@ -11,10 +12,13 @@ import ConnectMonogDB from "@/lib/mongodb";
 import CrmAccount from "@/models/crmadmin.model";
 import NavbarMedia from "./_components/navbarMedia";
 
-
-export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
+export default async function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const cookie = (await cookies()).get("admin-auth");
-  let adminData = null
+  let adminData = null;
 
   if (cookie && cookie.value) {
     try {
@@ -29,19 +33,18 @@ export default async function DashboardLayout({ children }: { children: React.Re
           password: admin.password,
           fullname: admin.fullname,
           phone: admin.phone,
-          role: admin.role
+          role: admin.role,
         };
-      } 
+      }
     } catch (error) {
       console.error("Error fetching admin data", error);
     }
   }
 
-
   return (
     <div className="sm:flex w-full sm:pt-5 pt-8 bg-gray-500/10">
       <div className="sm:hidden flex">
-        <NavbarMedia/>
+        <NavbarMedia />
       </div>
       <div className="sm:block flex">
         <NavbarLayout />
@@ -56,13 +59,52 @@ export default async function DashboardLayout({ children }: { children: React.Re
             {adminData && <ProfileAccount admin={adminData} />}
           </div>
         </div>
+        <div className="w-full mb-4 overflow-hidden">
+          <Marquee
+            className="mb-4"
+            direction="right"
+            speed={50}
+            gradient
+            gradientColor="#f0f1f2"
+          >
+            <article className="flex items-center gap-32 py-[5px]">
+              <p className="flex items-center gap-2 text-red-600 font-medium">
+                <Banknote className="text-green-500" /> To'lov qilish vaqti
+                keldi
+              </p>
+              <p className="flex items-center gap-2 text-red-600 font-medium">
+                <Banknote className="text-green-500" /> To'lov qilish vaqti
+                keldi
+              </p>
+              <p className="flex items-center gap-2 text-red-600 font-medium">
+                <Banknote className="text-green-500" /> To'lov qilish vaqti
+                keldi
+              </p>
+              <p className="flex items-center gap-2 text-red-600 font-medium">
+                <Banknote className="text-green-500" /> To'lov qilish vaqti
+                keldi
+              </p>
+              <p className="flex items-center gap-2 text-red-600 font-medium">
+                <Banknote className="text-green-500" /> To'lov qilish vaqti
+                keldi
+              </p>
+            </article>
+          </Marquee>
+
+          <p className="flex items-center gap-2 text-red-600 underline font-medium"><CalendarClock className="stroke-1 text-red-700 w-5 h-5"/> 30.06.2025 Oxirgi kun to'lovni</p>
+        </div>
         <div className="md:p-5 p-3 bg-white min-h-screen mb-4">{children}</div>
         <footer className="w-full py-5 px-4 border rounded-md bg-white">
-          <a href="https://t.me/Javoxir_iq" target="_blank"><p className="flex gap-2 items-center justify-end text-end group cursor-pointer"><span className="anim">👋🏻</span> Tizimni ishlab chiquvchi: <span className="text-[20px] transition-all duration-200 font-medium group-hover:text-orange-500">Javokhir</span></p></a>
-
+          <a href="https://t.me/Javoxir_iq" target="_blank">
+            <p className="flex gap-2 items-center justify-end text-end group cursor-pointer">
+              <span className="anim">👋🏻</span> Tizimni ishlab chiquvchi:{" "}
+              <span className="text-[20px] transition-all duration-200 font-medium group-hover:text-orange-500">
+                Javokhir
+              </span>
+            </p>
+          </a>
         </footer>
       </main>
     </div>
-                                                                                                                                            
-  )
+  );
 }

@@ -14,8 +14,8 @@ export const NvLinks =[
         icons: <Users />
     },
     {
-        name:"Documents",
-        href:"/crm/documents",
+        name:"Payment",
+        href:"/crm/payment",
         icons:  <FileText />
     },
     {

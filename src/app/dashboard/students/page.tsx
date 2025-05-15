@@ -94,7 +94,7 @@ export default async function StudentAll() {
                           {student.course.courseTitle}
                         </td>
                         <td className="py-2 text-[14px] font-normal max-lg:text-[11px] max-md:text-[9px]">
-                          <span className="py-1 px-1 text-center rounded-full border bg-[#04b94f] text-white inline-flex">
+                          <span className="py-1 px-2 text-center rounded-full border bg-[#04b94f] text-white inline-flex">
                             {student.studentID}
                           </span>
                         </td>
@@ -122,7 +122,7 @@ export default async function StudentAll() {
                           {student.course.courseTitle}
                         </td>
                         <td className="py-2 text-[14px] font-normal text-gray-400 max-lg:text-[11px] max-md:text-[9px]">
-                          <span className="w-[105px] py-1 px-1 text-center rounded-full border bg-[#b90404] text-white flex justify-center">
+                          <span className="w-[100px] py-1 px-1 text-center rounded-full border bg-[#b90404] text-white flex justify-center">
                             * * * * *
                           </span>
                         </td>

@@ -2,7 +2,6 @@
 
 import ConnectMonogDB from "@/lib/mongodb";
 import CrmAccount from "@/models/crmadmin.model";
-import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
 export const LoginAdmin = async (
@@ -19,6 +18,7 @@ export const LoginAdmin = async (
 
     (await cookies()).set("admin-auth", JSON.stringify({
       _id: admin._id.toString(),
+      role: admin.role
     }), {
       httpOnly: true,
       path: "/",

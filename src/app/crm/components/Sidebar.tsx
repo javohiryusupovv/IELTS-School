@@ -26,8 +26,8 @@ export default function Sidebar() {
                   : "bg-gray-100 hover:bg-gray-200"
               }`}
             >
-              <h1 className="text-xl font-bold text-gray-700">{link.name}</h1>
               {link.icons && link.icons}
+              <h1 className={`text-[15px] font-bold text-gray-700 ${active ? "text-white" : "text-black"}`}>{link.name}</h1>
             </Link>
           );
         })}

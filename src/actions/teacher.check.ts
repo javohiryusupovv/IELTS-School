@@ -16,10 +16,6 @@ export const TeacherLogin = async(phoneNumber: string, password: string, path: s
             return null
         }        
         const passwordmatch = await bcrypt.compare(password, teacher.teacherPassword)
-        console.log('Kiritilgan parol:', password); 
-        console.log('Saqlangan hash:', teacher.teacherPassword);
-
-
         if(!passwordmatch){
             console.log(`Password topilmadi`);
             return null
