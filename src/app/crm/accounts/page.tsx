@@ -1,5 +1,5 @@
-import DialogsModal from "../components/Modal";
-import TableUsers from "../components/TableUsers";
+import DialogsModal from "../_components/Modal";
+import TableUsers from "../_components/TableUsers";
 
 export default function page() {
   return (
