@@ -58,9 +58,9 @@ export default async function DashboardLayout({
             {adminData && <ProfileAccount admin={adminData} />}
           </div>
         </div>
-        <div className="w-full mb-4 overflow-hidden">
+        {/* <div className="w-full mb-4 overflow-hidden">
          <PaymentSend/>
-        </div>
+        </div> */}
         <div className="md:p-5 p-3 bg-white min-h-screen mb-4">{children}</div>
         <footer className="w-full py-5 px-4 border rounded-md bg-white">
           <a href="https://t.me/Javoxir_iq" target="_blank">
