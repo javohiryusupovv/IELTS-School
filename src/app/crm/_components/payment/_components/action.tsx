@@ -17,26 +17,36 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { useState } from "react"
+import { CalendarPayment } from "./calendar"
+import { IPaymentAdd } from "../../../../../../app.types"
+import { usePathname } from "next/navigation"
+import { paymentDaysAdd } from "@/actions/crmaccount.action"
 
 
 
 export default function PaymentModal() {
     const [cashStatus, setCashStatus] = useState<string>("")
-    const [isOpen, setIsOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(false);
+    const [paymentDate, setPaymentDate] = useState<Date | null>(null);
+    const pathname = usePathname()
 
-    const handleCashPayment = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleCashPayment = async(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const data = new FormData(e.currentTarget);
-
-        const info = {
-            manager: data.get("managerName") as string,
+        
+        const payment: IPaymentAdd = {
+            managerName: data.get("managerName") as string,
             markazTitle: data.get("nameMarkaz") as string,
-            lastPayment: data.get("cashdays") as string,
+            lastPayment: paymentDate ? paymentDate.toLocaleDateString("ru-RU") : "",
             cashStatus: cashStatus,
             cashType: data.get("cashtype") as string
         }
 
-        console.log(info);
+        const payPromise = paymentDaysAdd(payment, pathname)
+        await payPromise
+
+        setPaymentDate(null);    // calendarni tozalaydi
+        setCashStatus("");
         setIsOpen(false);
     }
 
@@ -62,12 +72,12 @@ export default function PaymentModal() {
                             <label htmlFor="" className="mb-2">Tashkilot nomi</label>
                             <input name="nameMarkaz" type="text" className="w-full py-2 px-4 border outline-none rounded-md" placeholder="Tashkilot nomini kiriting ..." />
                         </article>
-                        <article className="flex flex-col justify-start">
-                            <label htmlFor="" className="mb-2">To'lov kuni</label>
-                            <input name="cashdays" type="text" className="w-full py-2 px-4 border outline-none rounded-md" placeholder="To'lov qilingan kun ..." />
-                        </article>
-                        <div className="flex items-center gap-2 mb-4">
-                            <article className="flex grow flex-col justify-start">
+                        <div className="flex items-center justify-between gap-2 mb-2">
+                            <article className="flex flex-col justify-start">
+                                <label htmlFor="" className="mb-2">To'lov kuni</label>
+                                <CalendarPayment paymentDay={paymentDate} setPaymentDay={setPaymentDate} />
+                            </article>
+                            <article className="flex flex-col justify-start">
                                 <label htmlFor="" className="mb-2">To'lov statusi</label>
                                 <Select onValueChange={(value) => setCashStatus(value)}>
                                     <SelectTrigger className="w-[180px]">
@@ -81,11 +91,11 @@ export default function PaymentModal() {
                                     </SelectContent>
                                 </Select>
                             </article>
-                            <article className="flex flex-col justify-start">
-                                <label htmlFor="" className="mb-2">To'lov turi  </label>
-                                <input name="cashtype" type="text" className="w-full py-2 px-4 border outline-none rounded-md" placeholder="To'lov turini kiriting ..." />
-                            </article>
                         </div>
+                        <article className="flex flex-col justify-start">
+                            <label htmlFor="" className="mb-2">To'lov turi  </label>
+                            <input name="cashtype" type="text" className="w-full py-2 px-4 border outline-none rounded-md" placeholder="To'lov turini kiriting ..." />
+                        </article>
                         <button type="submit" className="px-2 py-2 border rounded-md cursor-pointer bg-green-500 text-white">Saqlash</button>
                     </form>
                 </DialogContent>

@@ -35,3 +35,11 @@ export interface IEditTeacher{
     teacherPhone: string,
     teacherPassword?: string
 }
+
+export interface IPaymentAdd{
+    managerName: string,
+    markazTitle: string,
+    lastPayment: string,
+    cashStatus: string,
+    cashType: string
+}

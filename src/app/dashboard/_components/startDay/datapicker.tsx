@@ -11,17 +11,18 @@ interface Props {
 }
 
 export function Datapicker({ startDate, setStartDate }: Props) {
+  const selectedDate = startDate ?? new Date();
   return (
     <Popover>
       <PopoverTrigger type="button" className={cn("sm:w-[155px] [&_svg]:size-4 [&_svg]:shrink-0 w-full flex border whitespace-nowrap items-center gap-2 p-2 rounded-md text-left font-normal focus-within:border-orange-500 overflow-hidden",!startDate && "text-muted-foreground" )}>
           <CalendarIcon className="w-[8px] h-[8px]" />
-          {startDate ? format(startDate, "PPP") : <span>Boshlanish kuni</span>}
+          {startDate ? format(selectedDate, "dd.MM.yyyy") : <span>Boshlanish kuni</span>}
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
         <Calendar
           mode="single"
-          selected={startDate || undefined} // Agar null bo'lsa, undefined yuboramiz
-          onSelect={(date) => setStartDate(date ?? null)} // Agar undefined bo'lsa, nullga aylantiramiz
+          selected={startDate || new Date()} // Agar null bo'lsa, undefined yuboramiz
+          onSelect={(date) => setStartDate(date ?? new Date())} // Agar undefined bo'lsa, nullga aylantiramiz
         />
       </PopoverContent>
     </Popover>
