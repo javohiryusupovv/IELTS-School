@@ -37,7 +37,7 @@ export interface IEditTeacher{
 }
 
 export interface IPaymentAdd{
-    _id: string,
+    _id?: string,
     managerName: string,
     markazTitle: string,
     lastPayment: string,
