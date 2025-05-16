@@ -7,12 +7,12 @@ export interface IShops{
     price: number;
     image: string;
     activeProduct: boolean;
-    
-} 
+
+}
 
 export interface IUpdateCourse{
     _id: string;
-    courseTitle: string, 
+    courseTitle: string,
     startDate: string;
     endDate: string;
     days: string[];
@@ -30,13 +30,14 @@ export interface ICRMAccount {
 
 
 export interface IEditTeacher{
-    teacherName: string, 
-    teacherSurname: string, 
+    teacherName: string,
+    teacherSurname: string,
     teacherPhone: string,
     teacherPassword?: string
 }
 
 export interface IPaymentAdd{
+    _id: string,
     managerName: string,
     markazTitle: string,
     lastPayment: string,
