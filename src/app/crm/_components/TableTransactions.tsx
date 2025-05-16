@@ -1,6 +1,5 @@
 import React from "react";
 import { CheckCircle, Clock } from "lucide-react";
-import { data } from "./_constants";
 import { getPayments } from "@/actions/crmaccount.action";
 import { IPaymentAdd } from "../../../../app.types";
 import ImageCoin from "../../../../public/icons/roleTeacher.png"
