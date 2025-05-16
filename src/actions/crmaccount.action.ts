@@ -38,7 +38,7 @@ export const paymentDaysAdd = async(payment: IPaymentAdd, path: string) => {
 export const getPayments = async () => {
     try {
       await ConnectMonogDB();
-      const payments = await PaymentAdd.find().sort({ createdAt: -1 }); // eng oxirgi to'lovlar birinchi chiqadi
+      const payments = await PaymentAdd.find(); // eng oxirgi to'lovlar birinchi chiqadi
       return JSON.parse(JSON.stringify(payments));
     } catch (error) {
       throw new Error("To'lovlarni olishda xatolik");
