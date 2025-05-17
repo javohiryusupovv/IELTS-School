@@ -7,6 +7,8 @@ import { revalidatePath, revalidateTag } from "next/cache";
 import PaymentAdd from "@/models/payment.model";
 import Education from "@/models/courseBox.model";
 
+import {Course, Student, Teacher, Shop} from "@/models/index"
+
 export const educationCreate = async (
   education: IEducationCenter,
   path: string
@@ -45,7 +47,7 @@ export const getEducationData = async () => {
       },
       {
         path: "shops",
-        select: "title description price image activeProduct educationCenterId",
+        select: "title description price image activeProduct educationID",
         options: { strictPopulate: false },
       },
     ]);

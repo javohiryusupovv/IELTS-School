@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 import ConnectMonogDB from "@/lib/mongodb";
 import { revalidatePath } from "next/cache";
 
-import {Course, Student, Teacher} from "@/models/index"
+import {Course, Student, Teacher, Shop} from "@/models/index"
 
 
 export const TeacherLogin = async(phoneNumber: string, password: string, path: string) => {

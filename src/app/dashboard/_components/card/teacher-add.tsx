@@ -18,7 +18,9 @@ import { FaUserPlus } from "react-icons/fa";
 import { IEducationCenter } from "../../../../../app.types";
 
 interface Props{
-  educationProp: IEducationCenter
+  educationProp: {
+    _id: string
+  }
 }
 
 function TeacherCreated({educationProp}: Props) {
@@ -47,7 +49,7 @@ function TeacherCreated({educationProp}: Props) {
       return;
     }
     const { name, surname, password, phoneNumber } = validateTeacher.data;
-    const role = "o'qituvchi"; // Define the role variable
+    const role = "adminstrator"; // Define the role variable
     try {
       if (!educationProp._id) {
         setError(["Ta'lim markazi aniqlanmadi"]);

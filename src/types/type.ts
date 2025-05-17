@@ -38,6 +38,7 @@ export interface ICreateShop {
   price: number;
   image: string;
   activeProduct: boolean;
+  educationID: string;
 }
 
 export interface Records_Coins{

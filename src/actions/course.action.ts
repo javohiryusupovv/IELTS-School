@@ -3,10 +3,9 @@
 import ConnectMonogDB from "@/lib/mongodb";
 import { ICourse } from "@/types/type";
 import mongoose from "mongoose";
-import { unstable_cache } from "next/cache";
 import { revalidatePath, revalidateTag } from "next/cache";
 
-import { Course, Student, Teacher } from "@/models/index";
+import {Course, Student, Teacher, Shop} from "@/models/index"
 import { IUpdateCourse } from "../../app.types";
 import Education from "@/models/courseBox.model";
 

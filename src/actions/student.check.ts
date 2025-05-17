@@ -3,7 +3,7 @@
 import ConnectMonogDB from "@/lib/mongodb";
 import { revalidatePath } from "next/cache";
 
-import {Course, Student, Teacher} from "@/models/index"
+import {Course, Student, Teacher, Shop} from "@/models/index"
 import { cookies } from "next/headers";
 
 export const StudentCheck = async (id: string, path: string) => {

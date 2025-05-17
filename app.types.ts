@@ -7,7 +7,7 @@ export interface IShops{
     price: number;
     image: string;
     activeProduct: boolean;
-
+    educationID: string;
 }
 
 export interface IUpdateCourse{

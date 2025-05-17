@@ -6,12 +6,13 @@ import { ImagePlus } from "lucide-react";
 import { redirect, usePathname } from "next/navigation";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
-import { IEducationCenter } from "../../../../../../app.types";
-
 
 interface Props{
-  educationData: IEducationCenter
+  educationData: {
+    _id: string;
+  }
 }
+
 
 export default function CardAddProduct({educationData}: Props) {
   const pathname = usePathname();
@@ -64,8 +65,7 @@ export default function CardAddProduct({educationData}: Props) {
       price: Number(data.get("price")),
       image: imageUrl || "",
       activeProduct: false,
-      educationCenterId: educationData._id,
-      
+      educationID: educationData._id
     };
     const promise = postShop({ ...product }, pathname);
     toast.promise(promise, {

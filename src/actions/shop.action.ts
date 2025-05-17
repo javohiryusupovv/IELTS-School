@@ -1,10 +1,11 @@
 "use server"
 
 import ConnectMonogDB from "@/lib/mongodb";
-import Shop from "@/models/shop.model";
 import { ICreateShop } from "@/types/type";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { IShops } from "../../app.types";
+import Education from "@/models/courseBox.model";
+import {Course, Student, Teacher, Shop} from "@/models/index"
 
 
 export const getShop = async () => {
@@ -17,15 +18,19 @@ export const getShop = async () => {
     }
 }
 
- 
+export const postShop = async ( data: ICreateShop, path: string) => {
 
-export const postShop = async (data: ICreateShop, path: string) => {
-    if (!data.title || !data.description || !data.price || !data.image) {
+    if (!data.title || !data.description || !data.price || !data.image || !data.educationID) {
         throw new Error("Data not found")
     }
     try {
         await ConnectMonogDB()
-        await Shop.create(data)
+        const newShop = await Shop.create(data);
+      
+          // 2. EducationCenter hujjatiga push qilish
+          await Education.findByIdAndUpdate(data.educationID, {
+            $push: { shops: newShop._id },
+          });
         revalidatePath(path)
     } catch (error) {
         throw new Error(`Xatolik yuz berid POST Shopda, ${error}`)

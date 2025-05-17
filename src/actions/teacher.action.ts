@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 import { revalidatePath, revalidateTag, unstable_cache } from "next/cache";
 import bcrypt from "bcryptjs";
 
-import { Course, Student, Teacher } from "@/models/index";
+import {Course, Student, Teacher, Shop} from "@/models/index"
 import { IEditTeacher } from "../../app.types";
 import Education from "@/models/courseBox.model";
 
