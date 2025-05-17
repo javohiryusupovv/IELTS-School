@@ -27,6 +27,7 @@ export default function EducationAction() {
             phoneNumber: data.get("phoneNumber") as string,
             login: data.get("login") as string,
             password: data.get("ispassword") as string,
+            role: "owner"
         };
 
         const edu = educationCreate(info, pathname);

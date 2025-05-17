@@ -6,6 +6,7 @@ const EducationCenterSchema = new Schema({
   phoneNumber: String,
   login: String,
   password: String,
+  role: String,
   teachers: [{ type: Schema.Types.ObjectId, ref: "Teacher" }],
   students: [{ type: Schema.Types.ObjectId, ref: "Student" }],
   courses: [{ type: Schema.Types.ObjectId, ref: "Course" }],

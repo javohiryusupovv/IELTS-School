@@ -17,7 +17,8 @@ export const LoginAdmin = async (
     }
 
     (await cookies()).set("admin-auth", JSON.stringify({
-      _id: admin._id.toString()
+      _id: admin._id.toString(),
+      role: admin.role
     }), {
       httpOnly: true,
       path: "/",

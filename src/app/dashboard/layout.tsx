@@ -32,7 +32,7 @@ export default async function DashboardLayout({
           password: admin.password,
           fullname: admin.ownerName,
           phone: admin.phoneNumber,
-          role: admin.educationTitle,
+          role: admin.role,
         };
       }
     } catch (error) {

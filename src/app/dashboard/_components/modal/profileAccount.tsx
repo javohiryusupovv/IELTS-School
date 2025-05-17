@@ -61,21 +61,23 @@ export default function ProfileAccount({ admin }: Props) {
                   <p>To'lov qilish</p>
                 </button>
               </Link>
-              <Link href={`/crm`}>
-                <button className="flex gap-2 mb-3 items-center transition-all duration-200 w-full sm:py-2 py-1.5 px-4 rounded border bg-orange-500 text-white hover:border-transparent">
-                  <p>AdminPage</p>
-                </button>
-              </Link>
-              <Link href={"https://t.me/Javoxir_iq"} target="_blank">
-                <button className="group hover:bg-orange-500 transition-all duration-200 cursor-pointer flex text-white items-center gap-2 w-full sm:py-2 py-1.5 px-4 rounded bg-orange-400/60 mb-3">
-                  <BiSupport className="w-5 h-5 text-white transition-all duration-200" />
-                  <p className="transition-all duration-200">Yordam markazi</p>
-                </button>
-              </Link>
-              {/* {admin.role === "owner" && (
+              {admin.role === "owner" && (
+                <Link href={`/crm`}>
+                  <button className="flex gap-2 mb-3 items-center transition-all duration-200 w-full sm:py-2 py-1.5 px-4 rounded border bg-orange-500 text-white hover:border-transparent">
+                    <p>AdminPage</p>
+                  </button>
+                </Link>
               )}
               {admin.role === "adminstrator" && (
-              )} */}
+                <Link href={"https://t.me/Javoxir_iq"} target="_blank">
+                  <button className="group hover:bg-orange-500 transition-all duration-200 cursor-pointer flex text-white items-center gap-2 w-full sm:py-2 py-1.5 px-4 rounded bg-orange-400/60 mb-3">
+                    <BiSupport className="w-5 h-5 text-white transition-all duration-200" />
+                    <p className="transition-all duration-200">
+                      Yordam markazi
+                    </p>
+                  </button>
+                </Link>
+              )}
             </div>
             <div>
               <ModalConfirm handleClose={handleClose} />

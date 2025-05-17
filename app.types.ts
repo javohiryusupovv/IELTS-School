@@ -54,4 +54,5 @@ export interface IEducationCenter{
     phoneNumber: string,
     login: string,
     password: string,
+    role: string
 }

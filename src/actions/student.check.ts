@@ -18,7 +18,7 @@ export const StudentCheck = async (id: string, path: string) => {
       return null;
     }
 
-    (await cookies()).set("student-auth", student._id.toString(), {
+    (await cookies()).set("student-auth", student._id.toString(),  {
       httpOnly: true,
       path: "/",
       maxAge: 60 * 60, // 1 hafta
