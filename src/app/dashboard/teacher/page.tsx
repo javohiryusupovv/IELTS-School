@@ -4,17 +4,19 @@ import Link from "next/link";
 import TeacherCreated from "../_components/card/teacher-add";
 import { getTeachers } from "@/actions/teacher.action";
 import ActionsTeacher from './_components/action';
+import { getEducationData } from '@/actions/crmaccount.action';
 
 
 export default async function DashboardTeacher() {
   const getTeacher = await getTeachers();
+  const getEducation = await getEducationData()  
   console.log(getTeacher);
 
   return (
     <div>
         <article className="flex justify-between items-center mb-3">
             <h6 className="font-semibold md:text-[26px] text-lg">Bizning Mentorlar</h6>
-            <TeacherCreated />
+            <TeacherCreated educationProp={getEducation}/>
         </article>
         <hr className="mb-7" />
 

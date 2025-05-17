@@ -7,6 +7,7 @@ import bcrypt from "bcryptjs";
 
 import { Course, Student, Teacher } from "@/models/index";
 import { IEditTeacher } from "../../app.types";
+import Education from "@/models/courseBox.model";
 
 export const createTeacher = async (
   teacherName: string,
@@ -14,6 +15,7 @@ export const createTeacher = async (
   teacherPhone: string,
   teacherPassword1: string,
   role: string,
+  educationCenterId: string,
   path: string
 ) => {
   if (
@@ -33,9 +35,17 @@ export const createTeacher = async (
       teacherSurname,
       teacherPhone,
       teacherPassword,
-      role
+      educationCenter: educationCenterId,
+      role,
     });
+
+    const education = await Education.findById(educationCenterId);
+    if (!education) throw new Error("Education center topilmadi");
+    education.teachers.push(newTeacher._id);
+
+    await education.save();   
     await newTeacher.save();
+
     revalidateTag("teachers");
     revalidatePath(path);
     return { success: true, message: "Teacher muvaffaqiyatli qo‘shildi!" };
@@ -88,9 +98,16 @@ export const deleteTeachers = async (teacherId: string, path: string) => {
     await ConnectMonogDB();
     await Course.deleteMany({ teacher: teacherId });
     const teacher = await Teacher.findByIdAndDelete(teacherId);
+    if (teacher.educationCenter) {
+      await Education.findByIdAndUpdate(teacher.educationCenter, {
+        $pull: { teachers: teacher._id },
+      });
+    }
     if (!teacher) {
       throw new Error(`ID: ${teacherId} bo‘yicha o‘qituvchi topilmadi`);
     }
+
+
     revalidatePath(path);
     return { success: true, message: "O'qituvchi muvaffaqiyatli o'chirildi!" };
   } catch (error) {

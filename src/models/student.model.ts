@@ -22,6 +22,7 @@ const StudentSchema = new Schema({
   course: { type: Schema.Types.ObjectId, ref: "Course" }, // Kursga referens
   coins: [CoinSchema],
   lastDateCoin: { type: Date, default: null },
+  educationCenter: { type: Schema.Types.ObjectId, ref: "EducationCenter" },
   publishStudent: { type: Boolean, default: false }, // Talabani ko'rsatish
   
 }, { timestamps: true });

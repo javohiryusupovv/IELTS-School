@@ -7,9 +7,9 @@ import NotificationModal from "./_components/modal/notificationModal";
 import ProfileAccount from "./_components/modal/profileAccount";
 import { cookies } from "next/headers";
 import ConnectMonogDB from "@/lib/mongodb";
-import CrmAccount from "@/models/crmadmin.model";
 import NavbarMedia from "./_components/navbarMedia";
 import PaymentSend from "../crm/_components/PaymentDays";
+import Education from "@/models/courseBox.model";
 
 export default async function DashboardLayout({
   children,
@@ -24,15 +24,15 @@ export default async function DashboardLayout({
       const adminInfo = JSON.parse(cookie?.value);
       // Fetch admin data from the database
       await ConnectMonogDB();
-      const admin = await CrmAccount.findById(adminInfo._id);
+      const admin = await Education.findById(adminInfo._id);
       if (admin) {
         adminData = {
           _id: admin._id.toString(),
           login: admin.login,
           password: admin.password,
-          fullname: admin.fullname,
-          phone: admin.phone,
-          role: admin.role,
+          fullname: admin.ownerName,
+          phone: admin.phoneNumber,
+          role: admin.educationTitle,
         };
       }
     } catch (error) {

@@ -9,8 +9,8 @@ const CourseSchema = new Schema(
     students: [{ type: Schema.Types.ObjectId, ref: "Student" }], // Har bir kurs ichida studentlar massiv shaklida saqlanadi
     startDate: {type: Date, required: true},
     endDate: {type: Date, required: true},
-    days: { type: [String], required: true }
-
+    days: { type: [String], required: true },
+    educationCenter: { type: Schema.Types.ObjectId, ref: "EducationCenter" }
   },
   { timestamps: true }
 );

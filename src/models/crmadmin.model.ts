@@ -7,6 +7,7 @@ const CrmSchema = new Schema(
         password: { type: String, required: true, unique: true},
         phone: { type: String, required: true},
         role: {type: String, enum: ['owner', 'adminstrator'], required: true },
+        educationCenter: { type: Schema.Types.ObjectId, ref: "EducationCenter" },
     },
     { timestamps: true }
 )

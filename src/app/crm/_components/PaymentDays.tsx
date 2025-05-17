@@ -7,6 +7,8 @@ import { getPayments } from "@/actions/crmaccount.action";
 export default async function PaymentSend() {
   const paymentLastDate = await getPayments();
   console.log(paymentLastDate);
+
+  
   
   const now = new Date();
   const diffDays = Math.floor(

@@ -8,6 +8,7 @@ import { revalidatePath, revalidateTag } from "next/cache";
 
 import { Course, Student, Teacher } from "@/models/index";
 import { IUpdateCourse } from "../../app.types";
+import Education from "@/models/courseBox.model";
 
 export const getCourses = async () => {
   try {
@@ -74,18 +75,27 @@ export const postCourse = async (
     if (!teacher) {
       throw new Error("Bunday ismli teacher topilmadi");
     }
+
+    const educationCenterId = teacher.educationCenter;
+
     const newCourse = new Course({
       courseTitle,
       teacher: teacher._id,
       startDate: new Date(startDate),
       endDate: new Date(endDate),
       days,
+      educationCenter: educationCenterId,
     });
     await newCourse.save();
 
     await Teacher.findByIdAndUpdate(teacherId, {
       $push: { courses: newCourse._id },
     });
+    if (educationCenterId) {
+      await Education.findByIdAndUpdate(educationCenterId, {
+        $push: { courses: newCourse._id },
+      });
+    }
 
     // Keshni yangilash
     revalidateTag("courses");
@@ -124,6 +134,11 @@ export const DeleteCourse = async (id: string, path: string) => {
     }
     await ConnectMonogDB();
     const course = await Course.findByIdAndDelete(id);
+    if (course.educationCenter) {
+      await Education.findByIdAndUpdate(course.educationCenter, {
+        $pull: { courses: course._id },
+      });
+    }
     if (!course) {
       throw new Error("Kurs topilmadi");
     }

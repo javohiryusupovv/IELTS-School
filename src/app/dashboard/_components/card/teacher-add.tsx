@@ -15,8 +15,13 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import { FaUserPlus } from "react-icons/fa";
+import { IEducationCenter } from "../../../../../app.types";
 
-function TeacherCreated() {
+interface Props{
+  educationProp: IEducationCenter
+}
+
+function TeacherCreated({educationProp}: Props) {
   const [open, setOpen] = useState(false);
   const [teacherName, setTeacherName] = useState("");
   const [teacherSurname, setTeacherSurname] = useState("");
@@ -24,6 +29,7 @@ function TeacherCreated() {
   const [teacherPassword, setTeacherPassword] = useState("");
   const [iserror, setError] = useState<string[]>([]);
   const pathname = usePathname();
+  
 
   const handleTotal = async () => {
     const validateTeacher = TeacherSchemaZod.safeParse({
@@ -43,12 +49,18 @@ function TeacherCreated() {
     const { name, surname, password, phoneNumber } = validateTeacher.data;
     const role = "o'qituvchi"; // Define the role variable
     try {
+      if (!educationProp._id) {
+        setError(["Ta'lim markazi aniqlanmadi"]);
+        toast.error("Ta'lim markazi aniqlanmadi!");
+        return;
+      }
       const promise = createTeacher(
         name,
         surname,
         phoneNumber,
         password,
         role,
+        educationProp._id,
         pathname
       );
       toast.promise(promise, {

@@ -44,3 +44,14 @@ export interface IPaymentAdd{
     cashStatus: string,
     cashType: string
 }
+
+
+
+export interface IEducationCenter{
+    _id?: string,
+    educationTitle: string, 
+    ownerName: string,
+    phoneNumber: string,
+    login: string,
+    ispassword: string,
+}

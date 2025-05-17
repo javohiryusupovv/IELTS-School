@@ -41,7 +41,7 @@ export default function ProfileAccount({ admin }: Props) {
                 </article>
                 <article>
                   <p className="sm:text-[16px] text-[13px] font-medium max-sm:flex-col max-sm:items-start max-sm:gap-0 flex items-center gap-1">
-                    {admin.fullname} - 
+                    {admin.fullname} -
                     <span className="text-green-500 sm:text-[12px] text-[10px] font-normal underline">
                       ({admin.role})
                     </span>
@@ -61,21 +61,21 @@ export default function ProfileAccount({ admin }: Props) {
                   <p>To'lov qilish</p>
                 </button>
               </Link>
-              {admin.role === "owner" && (
-                <Link href={`/crm`}>
-                  <button className="flex gap-2 mb-3 items-center transition-all duration-200 w-full sm:py-2 py-1.5 px-4 rounded border bg-orange-500 text-white hover:border-transparent">
+              <Link href={`/crm`}>
+                <button className="flex gap-2 mb-3 items-center transition-all duration-200 w-full sm:py-2 py-1.5 px-4 rounded border bg-orange-500 text-white hover:border-transparent">
                   <p>AdminPage</p>
                 </button>
-                </Link>
+              </Link>
+              <Link href={"https://t.me/Javoxir_iq"} target="_blank">
+                <button className="group hover:bg-orange-500 transition-all duration-200 cursor-pointer flex text-white items-center gap-2 w-full sm:py-2 py-1.5 px-4 rounded bg-orange-400/60 mb-3">
+                  <BiSupport className="w-5 h-5 text-white transition-all duration-200" />
+                  <p className="transition-all duration-200">Yordam markazi</p>
+                </button>
+              </Link>
+              {/* {admin.role === "owner" && (
               )}
               {admin.role === "adminstrator" && (
-                <Link href={"https://t.me/Javoxir_iq"} target="_blank">
-                  <button className="group hover:bg-orange-500 transition-all duration-200 cursor-pointer flex text-white items-center gap-2 w-full sm:py-2 py-1.5 px-4 rounded bg-orange-400/60 mb-3">
-                    <BiSupport className="w-5 h-5 text-white transition-all duration-200" />
-                    <p className="transition-all duration-200">Yordam markazi</p>
-                  </button>
-                </Link>
-              )}
+              )} */}
             </div>
             <div>
               <ModalConfirm handleClose={handleClose} />

@@ -1,94 +1,102 @@
-"use server"
+"use server";
 
-import ConnectMonogDB from "@/lib/mongodb"
-import mongoose from "mongoose"
-import { unstable_cache } from "next/cache"
-import { revalidatePath, revalidateTag } from "next/cache"
-import moment from "moment"
+import ConnectMonogDB from "@/lib/mongodb";
+import mongoose from "mongoose";
+import { unstable_cache } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
+import moment from "moment";
 
-import { Course, Student, Teacher } from "@/models/index"
-
+import { Course, Student, Teacher } from "@/models/index";
+import Education from "@/models/courseBox.model";
 
 type Records_Coins = {
   reason: string;
   value: number;
-}[]
+}[];
 
 // Barcha talabalarni olish (kesh bilan)
-export const getStudents =  async () => {
-    try {
-      await ConnectMonogDB()
-      const courses = await Course.find()
-        .populate({
-          path: "students",
-          model: Student,
-          select: "name surname phone studentID publishStudent course coins", // Faqat kerakli maydonlar
-          populate: {
-            path: "course",
-            model: Course, // <<< Shu joy qo‘shiladi!
-            select: "_id courseTitle", // Kursdan kerakli maydonlarni tanlab olasan
-          },
-        }).lean()
-      const plainCourses = courses.map((course) => ({
-        ...course,
-        _id: course._id?.toString(),
-        students: course.students.map((student: any) => ({
-          ...student,
-          _id: student._id.toString(),
-          course: {
-            _id: student.course._id.toString(),
-            courseTitle: student.course.courseTitle,
-          },
-        })),
-        teacher: course.teacher.toString(),
-      }))
-      const allStudents = plainCourses.flatMap(course => course.students);
-      return allStudents
-    } catch (error) {
-      console.error("Error fetching students:", error)
-      throw new Error("Talabalarni olishda xatolik yuz berdi")
-    }
+export const getStudents = async () => {
+  try {
+    await ConnectMonogDB();
+    const courses = await Course.find()
+      .populate({
+        path: "students",
+        model: Student,
+        select: "name surname phone studentID publishStudent course coins", // Faqat kerakli maydonlar
+        populate: {
+          path: "course",
+          model: Course, // <<< Shu joy qo‘shiladi!
+          select: "_id courseTitle", // Kursdan kerakli maydonlarni tanlab olasan
+        },
+      })
+      .lean();
+    const plainCourses = courses.map((course) => ({
+      ...course,
+      _id: course._id?.toString(),
+      students: course.students.map((student: any) => ({
+        ...student,
+        _id: student._id.toString(),
+        course: {
+          _id: student.course._id.toString(),
+          courseTitle: student.course.courseTitle,
+        },
+      })),
+      teacher: course.teacher.toString(),
+    }));
+    const allStudents = plainCourses.flatMap((course) => course.students);
+    return allStudents;
+  } catch (error) {
+    console.error("Error fetching students:", error);
+    throw new Error("Talabalarni olishda xatolik yuz berdi");
   }
+};
 
 // Muayyan talabani olish (kesh bilan)
 export const getStudentById = unstable_cache(
   async (studentId: string) => {
     try {
       if (!mongoose.Types.ObjectId.isValid(studentId)) {
-        throw new Error("Noto‘g‘ri ID!")
+        throw new Error("Noto‘g‘ri ID!");
       }
-      await ConnectMonogDB()
+      await ConnectMonogDB();
       const student = await Student.findById(studentId)
         .populate({
           path: "course",
           model: Course,
           select: "courseTitle", // Faqat kerakli maydon
         })
-        .lean() // Performansi oshirish uchun
+        .lean(); // Performansi oshirish uchun
       if (!student) {
-        throw new Error("Talaba topilmadi!")
+        throw new Error("Talaba topilmadi!");
       }
-      return JSON.parse(JSON.stringify(student))
+      return JSON.parse(JSON.stringify(student));
     } catch (error) {
-      console.error(`Error fetching student ${studentId}:`, error)
-      throw new Error("Talabani olishda xatolik yuz berdi")
+      console.error(`Error fetching student ${studentId}:`, error);
+      throw new Error("Talabani olishda xatolik yuz berdi");
     }
   },
   ["student"], // Statik kesh kaliti
   { revalidate: 300, tags: ["student"] } // Umumiy "student" tegi
-)
+);
 
 // Yangi talaba qo‘shish
-export const postAddStudent = async ( courseId: string, name: string, surname: string, phone: string, studentID: string, path: string) => {
+export const postAddStudent = async (
+  courseId: string,
+  name: string,
+  surname: string,
+  phone: string,
+  studentID: string,
+  path: string
+) => {
   if (!name || !surname || !phone || !courseId || !studentID) {
-    throw new Error("Barcha maydonlarni to‘ldirish shart!")
+    throw new Error("Barcha maydonlarni to‘ldirish shart!");
   }
 
   try {
-    await ConnectMonogDB()
-    const course = await Course.findById(courseId)
+    await ConnectMonogDB();
+    const course = await Course.findById(courseId);
     if (!course) {
-      throw new Error("Kurs topilmadi!")
+      throw new Error("Kurs topilmadi!");
     }
 
     const newStudent = new Student({
@@ -98,80 +106,95 @@ export const postAddStudent = async ( courseId: string, name: string, surname: s
       studentID,
       course: courseId,
       publishStudent: false,
-    })
-    await newStudent.save()
+    });
+    await newStudent.save();
 
-    course.students.unshift(newStudent._id)
-    await course.save()
-
+    course.students.unshift(newStudent._id);
+    await course.save();
+    if (course.educationCenter) {
+      await Education.findByIdAndUpdate(course.educationCenter, {
+        $push: { students: newStudent._id },
+      });
+    }
     // Keshni yangilash
-    revalidateTag("students")
-    revalidateTag("student")
-    revalidatePath(path)
-    return { success: true, message: "Talaba muvaffaqiyatli qo‘shildi!" }
+    revalidateTag("students");
+    revalidateTag("student");
+    revalidatePath(path);
+    return { success: true, message: "Talaba muvaffaqiyatli qo‘shildi!" };
   } catch (error) {
-    console.error("Error adding student:", error)
-    throw new Error("Talaba qo‘shishda xatolik yuz berdi")
+    console.error("Error adding student:", error);
+    throw new Error("Talaba qo‘shishda xatolik yuz berdi");
   }
-}
+};
 
 // Talabani o‘chirish
-export const deleteStudent = async (studentId: string, courseId: string, path: string) => {
+export const deleteStudent = async (
+  studentId: string,
+  courseId: string,
+  path: string
+) => {
   try {
-    if (!mongoose.Types.ObjectId.isValid(studentId) || !mongoose.Types.ObjectId.isValid(courseId)) {
-      throw new Error("Noto‘g‘ri ID!")
+    if (
+      !mongoose.Types.ObjectId.isValid(studentId) ||
+      !mongoose.Types.ObjectId.isValid(courseId)
+    ) {
+      throw new Error("Noto‘g‘ri ID!");
     }
-    await ConnectMonogDB()
+    await ConnectMonogDB();
     const updatedCourse = await Course.findByIdAndUpdate(
       courseId,
       { $pull: { students: new mongoose.Types.ObjectId(studentId) } },
       { new: true }
-    )
+    );
     if (!updatedCourse) {
-      throw new Error("Kurs topilmadi yoki talaba o‘chirilmadi!")
+      throw new Error("Kurs topilmadi yoki talaba o‘chirilmadi!");
     }
-    const deletedStudent = await Student.findByIdAndDelete(studentId)
+    const deletedStudent = await Student.findByIdAndDelete(studentId);
     if (!deletedStudent) {
-      throw new Error("Talaba topilmadi yoki o‘chirilmadi!")
+      throw new Error("Talaba topilmadi yoki o‘chirilmadi!");
     }
 
     // Keshni yangilash
-    revalidateTag("students")
-    revalidateTag("student")
-    revalidatePath(path)
-    return { success: true, message: "Talaba muvaffaqiyatli o‘chirildi!" }
+    revalidateTag("students");
+    revalidateTag("student");
+    revalidatePath(path);
+    return { success: true, message: "Talaba muvaffaqiyatli o‘chirildi!" };
   } catch (error) {
     console.error(`Talabani o‘chirishda xatolik:`, error);
-    throw new Error("Talabani o‘chirishda xatolik yuz berdi")
+    throw new Error("Talabani o‘chirishda xatolik yuz berdi");
   }
-}
+};
 
 // Talaba statusini yangilash
-export const ActiveStudent = async (id: string, status: boolean, path: string) => {
+export const ActiveStudent = async (
+  id: string,
+  status: boolean,
+  path: string
+) => {
   try {
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      throw new Error("Noto‘g‘ri ID!")
+      throw new Error("Noto‘g‘ri ID!");
     }
-    await ConnectMonogDB()
+    await ConnectMonogDB();
     const updatedStudent = await Student.findByIdAndUpdate(
       id,
       { publishStudent: status },
       { new: true }
-    )
+    );
     if (!updatedStudent) {
-      throw new Error("Talaba topilmadi!")
+      throw new Error("Talaba topilmadi!");
     }
 
     // Keshni yangilash
-    revalidateTag("students")
-    revalidateTag("student")
-    revalidatePath(path)
-    return { success: true, message: "Talaba statusi yangilandi!" }
+    revalidateTag("students");
+    revalidateTag("student");
+    revalidatePath(path);
+    return { success: true, message: "Talaba statusi yangilandi!" };
   } catch (error) {
-    console.error(`Error updating student status ${id}:`, error)
-    throw new Error("Talaba statusini yangilashda xatolik yuz berdi")
+    console.error(`Error updating student status ${id}:`, error);
+    throw new Error("Talaba statusini yangilashda xatolik yuz berdi");
   }
-}
+};
 
 // Talaba ma‘lumotlarini yangilash
 export const updateStudent = async (
@@ -181,12 +204,12 @@ export const updateStudent = async (
 ) => {
   try {
     if (!mongoose.Types.ObjectId.isValid(studentId)) {
-      throw new Error("Noto‘g‘ri ID!")
+      throw new Error("Noto‘g‘ri ID!");
     }
     if (!data.name || !data.surname || !data.phone) {
-      throw new Error("Barcha maydonlarni to‘ldirish shart!")
+      throw new Error("Barcha maydonlarni to‘ldirish shart!");
     }
-    await ConnectMonogDB()
+    await ConnectMonogDB();
     const updatedStudent = await Student.findByIdAndUpdate(
       studentId,
       {
@@ -195,41 +218,46 @@ export const updateStudent = async (
         phone: data.phone,
       },
       { new: true }
-    )
+    );
     if (!updatedStudent) {
-      throw new Error("Talaba topilmadi!")
+      throw new Error("Talaba topilmadi!");
     }
 
     // Keshni yangilash
-    revalidateTag("students")
-    revalidateTag("student")
-    revalidatePath(path)
-    return JSON.parse(JSON.stringify(updatedStudent))
+    revalidateTag("students");
+    revalidateTag("student");
+    revalidatePath(path);
+    return JSON.parse(JSON.stringify(updatedStudent));
   } catch (error) {
-    console.error(`Error updating student ${studentId}:`, error)
-    throw new Error("Talaba ma'lumotlarini yangilashda xatolik yuz berdi")
+    console.error(`Error updating student ${studentId}:`, error);
+    throw new Error("Talaba ma'lumotlarini yangilashda xatolik yuz berdi");
   }
-}
+};
 
 // Talabaga coin qo‘shish
-export const addCoins = async (studentId: string, reasons: Records_Coins, path: string, date?: string) => {
+export const addCoins = async (
+  studentId: string,
+  reasons: Records_Coins,
+  path: string,
+  date?: string
+) => {
   try {
     if (!mongoose.Types.ObjectId.isValid(studentId)) {
-      throw new Error("Noto'g'ri ID!")
+      throw new Error("Noto'g'ri ID!");
     }
     const givenDate = date || moment().format("YYYY-MM-DD");
     let total = reasons.reduce((acc, item) => acc + item.value, 0);
     if (total <= 0) {
       throw new Error("Hech qanday sabab tanlanmadi, coin qo'shilmadi.");
     }
-    await ConnectMonogDB()
-    const student = await Student.findById(studentId)
+    await ConnectMonogDB();
+    const student = await Student.findById(studentId);
     if (!student) {
-      throw new Error("Talaba topilmadi!")
+      throw new Error("Talaba topilmadi!");
     }
     const responseReasons = reasons.map((item) => {
-      return { reason: item.reason, value: item.value } 
-    })
+      return { reason: item.reason, value: item.value };
+    });
     student.coins.push({
       value: total,
       date: givenDate,
@@ -239,65 +267,73 @@ export const addCoins = async (studentId: string, reasons: Records_Coins, path: 
     await student.save();
 
     // Keshni yangilash
-    revalidateTag("students")
-    revalidateTag("student")
-    revalidatePath(path)
-    return { success: true, message: "Coin muvaffaqiyatli qo'shildi!" }
+    revalidateTag("students");
+    revalidateTag("student");
+    revalidatePath(path);
+    return { success: true, message: "Coin muvaffaqiyatli qo'shildi!" };
   } catch (error) {
-    console.error(`Error adding coins to student ${studentId}:`, error)
-    throw new Error("Coin qo'shishda xatolik yuz berdi")
+    console.error(`Error adding coins to student ${studentId}:`, error);
+    throw new Error("Coin qo'shishda xatolik yuz berdi");
   }
-}
+};
 
 // Talabadan coin ayirish
-export const salesUpdateCoins = async (studentId: string, coinValue: number, path: string) => {
+export const salesUpdateCoins = async (
+  studentId: string,
+  coinValue: number,
+  path: string
+) => {
   try {
     if (!mongoose.Types.ObjectId.isValid(studentId)) {
-      throw new Error("Noto'g'ri ID!")
+      throw new Error("Noto'g'ri ID!");
     }
     if (coinValue <= 0) {
-      throw new Error("Coin qiymati musbat bo'lishi kerak!")
+      throw new Error("Coin qiymati musbat bo'lishi kerak!");
     }
-    await ConnectMonogDB()
-    const student = await Student.findById(studentId)
+    await ConnectMonogDB();
+    const student = await Student.findById(studentId);
     if (!student) {
-      throw new Error("Talaba topilmadi!")
+      throw new Error("Talaba topilmadi!");
     }
 
-    const today = moment().format("YYYY-MM-DD")
+    const today = moment().format("YYYY-MM-DD");
     student.coins.push({
       value: -coinValue,
       date: today,
-      reasons: [{ reason: "Coin almashtirildi !", value: -coinValue }]
-    })
-    await student.save()
+      reasons: [{ reason: "Coin almashtirildi !", value: -coinValue }],
+    });
+    await student.save();
 
     // Keshni yangilash
-    revalidateTag("students")
-    revalidateTag("student")
-    revalidatePath(path)
-    return { success: true, message: "Coin muvaffaqiyatli ayirildi!" }
+    revalidateTag("students");
+    revalidateTag("student");
+    revalidatePath(path);
+    return { success: true, message: "Coin muvaffaqiyatli ayirildi!" };
   } catch (error) {
-    console.error(`Error subtracting coins from student ${studentId}:`, error)
-    throw new Error("Coin ayirishda xatolik yuz berdi")
+    console.error(`Error subtracting coins from student ${studentId}:`, error);
+    throw new Error("Coin ayirishda xatolik yuz berdi");
   }
-}
+};
 
-
-export const addAdminCoins = async(studentID: string, reason: string, value: number, path: string) => {
-  try{
+export const addAdminCoins = async (
+  studentID: string,
+  reason: string,
+  value: number,
+  path: string
+) => {
+  try {
     if (!mongoose.Types.ObjectId.isValid(studentID)) {
-      throw new Error("Noto'g'ri ID!")
+      throw new Error("Noto'g'ri ID!");
     }
     const givenDate = moment().format("YYYY-MM-DD");
-    
+
     await ConnectMonogDB();
-    const student = await Student.findById(studentID)
+    const student = await Student.findById(studentID);
     if (!student) {
-      throw new Error("Talaba topilmadi!")
+      throw new Error("Talaba topilmadi!");
     }
 
-    const formattedValue = Number(value); 
+    const formattedValue = Number(value);
 
     if (formattedValue === 0) {
       throw new Error("Coin soni 0 bo‘lishi mumkin emas!");
@@ -314,7 +350,7 @@ export const addAdminCoins = async(studentID: string, reason: string, value: num
     revalidateTag("students");
     revalidateTag("student");
     revalidatePath(path);
-  }catch(error){
-    throw new Error("Coin Admin qo'shishda Xatolik")
+  } catch (error) {
+    throw new Error("Coin Admin qo'shishda Xatolik");
   }
-}
+};

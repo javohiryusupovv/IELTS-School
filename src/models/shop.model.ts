@@ -4,6 +4,7 @@ import { model, models, Schema } from "mongoose";
 
 const ShopSchema = new Schema(
     {
+        educationCenter: { type: Schema.Types.ObjectId, ref: "EducationCenter"},
         title: String,
         description: String,
         price: Number,

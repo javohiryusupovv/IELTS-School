@@ -4,6 +4,7 @@ import { getPayments } from "@/actions/crmaccount.action";
 import { IPaymentAdd } from "../../../../app.types";
 import ImageCoin from "../../../../public/icons/roleTeacher.png"
 import Image from "next/image";
+import { formatDateFromDMY } from "../../../../constants/page";
 
 
 export default async function TableTransactions() {
@@ -37,7 +38,7 @@ export default async function TableTransactions() {
               </td>
               <td>
                 <div className="flex flex-col text-gray-700">
-                  <span>{item.lastPayment}</span>
+                  <span>{formatDateFromDMY(item.lastPayment)}</span>
                 </div>
               </td>
               <td>

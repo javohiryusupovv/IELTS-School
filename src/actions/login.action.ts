@@ -1,7 +1,7 @@
 "use server";
 
 import ConnectMonogDB from "@/lib/mongodb";
-import CrmAccount from "@/models/crmadmin.model";
+import Education from "@/models/courseBox.model";
 import { cookies } from "next/headers";
 
 export const LoginAdmin = async (
@@ -10,15 +10,14 @@ export const LoginAdmin = async (
 ) => {
   try {
     await ConnectMonogDB();
-    const admin = await CrmAccount.findOne({ login, password });
+    const admin = await Education.findOne({ login, password });
 
     if (!admin) {
       throw new Error("Admin not found");
     }
 
     (await cookies()).set("admin-auth", JSON.stringify({
-      _id: admin._id.toString(),
-      role: admin.role
+      _id: admin._id.toString()
     }), {
       httpOnly: true,
       path: "/",
