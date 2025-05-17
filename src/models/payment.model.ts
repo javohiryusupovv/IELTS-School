@@ -2,6 +2,7 @@ import { Schema, model, models } from "mongoose";
 
 
 const PaymentQushish = new Schema({
+    educationCenter: { type: Schema.Types.ObjectId, ref: "EducationCenter", required: true },
     managerName: String, 
     markazTitle: String,
     lastPayment: String,

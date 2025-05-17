@@ -15,6 +15,7 @@ const CoinSchema = new Schema(
 );
 
 const StudentSchema = new Schema({
+  educationCenter: { type: Schema.Types.ObjectId, ref: "EducationCenter", required: true },
   name: String,
   surname: String,
   phone: String,

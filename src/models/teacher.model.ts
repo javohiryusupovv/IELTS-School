@@ -2,6 +2,7 @@ import { InferSchemaType, Schema, model, models } from "mongoose";
 
 
 const TeacherSchema = new Schema({
+  educationCenter: { type: Schema.Types.ObjectId, ref: "EducationCenter", required: true },
   teacherName: String,
   teacherSurname: String,
   teacherPhone: String,

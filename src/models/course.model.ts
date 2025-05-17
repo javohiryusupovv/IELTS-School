@@ -4,6 +4,7 @@ import { Schema, model, models } from "mongoose";
 
 const CourseSchema = new Schema(
   {
+    educationCenter: { type: Schema.Types.ObjectId, ref: "EducationCenter", required: true },
     courseTitle: String,
     teacher: { type: Schema.Types.ObjectId, ref: "Teacher", required: true },
     students: [{ type: Schema.Types.ObjectId, ref: "Student" }], // Har bir kurs ichida studentlar massiv shaklida saqlanadi

@@ -43,4 +43,10 @@ export const formatReasonText = (str: string) => {
 
 
 export const lastPaymentDate = new Date('2025-04-20'); // statik to‘lov sanasi
+export const formatDateFromDMY = (dateStr: string) => {
+  if (!dateStr) return "Sana yo'q";
+  const [day, month, year] = dateStr.split('.');
+  const date = new Date(+year, +month - 1, +day);
+  return date.toLocaleDateString(); // bu yerda brauzer tiliga mos formatda chiqaradi
+};
 
