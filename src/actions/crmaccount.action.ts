@@ -72,6 +72,17 @@ export const getEducationData = async () => {
   }
 };
 
+export const getEducationAlls = async() => {
+    try {
+      await ConnectMonogDB();
+      const education = await Education.find();
+      return JSON.parse(JSON.stringify(education))
+    } catch (error: any) {
+      throw new Error("Error getEducation data");
+    }
+  }
+
+
 export const createAccount = async (data: ICRMAccount, path: string) => {
   try {
     await ConnectMonogDB();
