@@ -58,6 +58,9 @@ module.exports = {
           5: "hsl(var(--chart-5))",
         },
       },
+      dropShadow: {
+        orange: "0 0 1px black",
+      },
       screens: {
         OurMentor: "1110px",
         OurMentor2: "860px",
@@ -67,8 +70,8 @@ module.exports = {
         strelka: "902px",
         btn: "1300px",
         studentCard: "1089px",
-        teacher:"530px",
-        course:"500px"
+        teacher: "530px",
+        course: "500px",
       },
     },
     container: {

@@ -64,13 +64,13 @@ export default function EducationAction() {
     <div>
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="outline">Open Education</Button>
+          <Button variant="outline" className="bg-orange-500 text-white border-orange-500">O'quv markaz qo'shish</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Edit profile</DialogTitle>
+            <DialogTitle>O'quv markaz qushish</DialogTitle>
             <DialogDescription>
-              Make changes to your profile here. Click save when you're done.
+                O'quv markaz ma'lumotlarini to'ldiring
             </DialogDescription>
           </DialogHeader>
           <form

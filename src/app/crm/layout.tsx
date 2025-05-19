@@ -7,7 +7,7 @@ export default async function Student({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex">
+    <div className="flex bg-[#f3f4f6]">
       <Sidebar />
       <div className="flex flex-col flex-1">
         <Navbar />

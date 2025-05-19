@@ -23,7 +23,7 @@ export default function Sidebar() {
               className={`flex items-center gap-2 py-4 px-5 rounded-lg transition-colors duration-200 ${
                 active
                   ? "bg-orange-500 text-white"
-                  : "bg-gray-100 hover:bg-gray-200"
+                  : "bg-white hover:bg-gray-200"
               }`}
             >
               {link.icons && link.icons}
