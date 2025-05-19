@@ -2,15 +2,14 @@
 import { SquareUser, UserRoundPlus } from 'lucide-react';
 import Link from "next/link";
 import TeacherCreated from "../_components/card/teacher-add";
-import { getTeachers } from "@/actions/teacher.action";
 import ActionsTeacher from './_components/action';
 import { getEducationData } from '@/actions/crmaccount.action';
 
 
 export default async function DashboardTeacher() {
-  const getTeacher = await getTeachers();
-  const getEducation = await getEducationData()  
-  console.log(getTeacher);
+  const getEducation = await getEducationData();
+  const getTeacher = getEducation.teachers
+  
 
   return (
     <div>
@@ -28,17 +27,17 @@ export default async function DashboardTeacher() {
             </article>
           </div>
           ) : (
-        <div className="w-full grid OurMentor:grid-cols-4 OurMentor2:grid-cols-3 sm:grid-cols-2 gap-3">
-          {getTeacher.map((teach: any, id: number)=> (
-            <div key={id} className='flex items-center py-2 justify-between px-3 border rounded-md'>
-              <Link href={`/dashboard/teacher/${teach._id}`} className='group flex items-center gap-2 transition-all duration-200 hover:text-orange-400 hover:underline'>
-                <SquareUser className=" stroke-gray-500"/>
-                <span className='line-clamp-1'>{teach?.teacherName} {teach.teacherSurname}</span>
-              </Link>
-              <ActionsTeacher teacher={teach}/>
-            </div>
-          ))}
-        </div>
+          <div className="w-full grid OurMentor:grid-cols-4 OurMentor2:grid-cols-3 sm:grid-cols-2 gap-3">
+            {getTeacher.map((teach: any, id: number)=> (
+              <div key={id} className='flex items-center py-2 justify-between px-3 border rounded-md'>
+                <Link href={`/dashboard/teacher/${teach._id}`} className='group flex items-center gap-2 transition-all duration-200 hover:text-orange-400 hover:underline'>
+                  <SquareUser className=" stroke-gray-500"/>
+                  <span className='line-clamp-1'>{teach?.teacherName} {teach.teacherSurname}</span>
+                </Link>
+                <ActionsTeacher teacher={teach}/>
+              </div>
+            ))}
+          </div>
           )}
     </div>
   )

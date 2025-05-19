@@ -3,12 +3,14 @@ import Frontend from "../../../../public/img/kursSchema.png";
 import CreateCourse from "./CreateCourse";
 import Link from "next/link";
 import { getStableColor } from "../../../../constants/page";
-import { getCourses } from "@/actions/course.action";
 import { FolderPlus } from 'lucide-react';
+import { getEducationData } from "@/actions/crmaccount.action";
 
 
 async function CourseAll() {
-  const courses = await getCourses();
+  const educationData = await getEducationData();
+  const courses = educationData.courses;
+  
   return (
     <div>
       <article className="flex justify-between items-center mb-3">
@@ -23,8 +25,8 @@ async function CourseAll() {
         </div>
       )}
         <div className="w-full grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 gap-4">
-          {courses?.map((item)=> {
-            let titleS = item.courseTitle.split(" ")[0]
+          {courses?.map((item: any)=> {
+            const titleS = item?.courseTitle?.split(" ")?.[0] || "NoTitle";
             return(
               <div key={item._id} className={`border drop-shadow-sm shadow-black rounded-lg overflow-hidden `}>
                 <Link href={`/dashboard/courses/${item._id}`} className={`mb-4 relative flex top-0 left-0 w-full h-[200px] sm:h-[150px] md:h-[200px]`} style={{backgroundColor: getStableColor(item._id.toString())}}>

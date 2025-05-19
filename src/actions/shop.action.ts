@@ -8,16 +8,6 @@ import Education from "@/models/courseBox.model";
 import {Course, Student, Teacher, Shop} from "@/models/index"
 
 
-export const getShop = async () => {
-    try {
-        await ConnectMonogDB()
-        const shops = await Shop.find()
-        return shops as IShops[]
-    } catch (error) {
-        throw new Error(`Xatolik yuz berid GET Shopda`)
-    }
-}
-
 export const postShop = async ( data: ICreateShop, path: string) => {
 
     if (!data.title || !data.description || !data.price || !data.image || !data.educationID) {

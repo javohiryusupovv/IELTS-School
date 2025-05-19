@@ -3,13 +3,12 @@ import { IoArrowBack } from "react-icons/io5";
 import Link from "next/link";
 import { BsCoin } from "react-icons/bs";
 import Navbar from "./Navbar";
-import { getShop } from "@/actions/shop.action";
 import { ICreateShop } from "@/types/type";
+import { getEducationData } from "@/actions/crmaccount.action";
 
 export default async function ShopList() {
-  const productsJSON = await getShop();
-  const productss = JSON.parse(JSON.stringify(productsJSON));
-  console.log(productss);
+  const educationData = await getEducationData();
+  const productss = educationData.shops
   
 
   return (

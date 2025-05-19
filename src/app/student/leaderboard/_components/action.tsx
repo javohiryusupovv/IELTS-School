@@ -46,12 +46,51 @@ const medalColors = [
 
 export default function LeaderBoardPages({ studentsSort }: SortProps) {
   const topThree = studentsSort.slice(0, 3);
+  const restStudents = studentsSort.slice(3);  
+
+  if (studentsSort.length < 4) {
+    // Agar talaba 3 ta yoki kam bo'lsa, hammasini <ul> ichida chiqaramiz
+    return (
+      <ul className="w-full grid grid-cols-1 gap-3">
+        {studentsSort.map((student, index) => (
+          <li
+            key={index}
+            className="bg-accent border-[0.7px] py-2 rounded-lg flex items-center justify-between px-5 cursor-pointer"
+          >
+            <article className="flex items-center gap-5 ">
+              <span className="text-[18px] font-bold text-orange-500">
+                {index + 1}
+              </span>
+              <article className="flex items-center gap-3">
+                <Image
+                  className="w-10 h-10 rounded-full"
+                  src={Erik}
+                  alt="AccountImg LeaderBoard"
+                />
+                <p className="text-[15px] font-semibold">
+                  {student.surname} {student.name}
+                </p>
+              </article>
+            </article>
+            <article className="flex items-center gap-1">
+              🟡
+              <span>{student.total}</span>
+            </article>
+          </li>
+        ))}
+      </ul>
+    );
+  }
+
+  // Agar 4 yoki undan ko'p bo'lsa, 1-3 o'rinlarni maxsus ko'rsatamiz
   return (
     <div className="m-auto">
       <div className="flex justify-between gap-2 w-full mb-4 h-[230px] container-leaderboard">
         {[1, 0, 2].map((pos, i) => {
           const student = topThree[pos];
           const styles = medalColors[pos];
+
+          if (!student) return null; // Xatolik oldini olish uchun
 
           return (
             <div
@@ -62,7 +101,11 @@ export default function LeaderBoardPages({ studentsSort }: SortProps) {
             >
               <article
                 className={`absolute z-[1] -top-10 ${
-                  pos === 2 ? "right-6" : pos === 0 ? "left-[21%] max-leaderContainer:left-[16%]" : "left-[24px]"
+                  pos === 2
+                    ? "right-6"
+                    : pos === 0
+                    ? "left-[21%] max-leaderContainer:left-[16%]"
+                    : "left-[24px]"
                 } w-20 h-20 border-2 rounded-full ${styles.border}`}
               >
                 {styles.icon}
@@ -91,7 +134,7 @@ export default function LeaderBoardPages({ studentsSort }: SortProps) {
       </div>
 
       <ul className="w-full grid grid-cols-1 gap-3">
-        {studentsSort.slice(3, 10).map((student, index: number) => (
+        {restStudents.slice(0, 7).map((student, index) => (
           <li
             key={index}
             className="bg-accent border-[0.7px] py-2 rounded-lg flex items-center justify-between px-5 cursor-pointer"
@@ -121,3 +164,4 @@ export default function LeaderBoardPages({ studentsSort }: SortProps) {
     </div>
   );
 }
+

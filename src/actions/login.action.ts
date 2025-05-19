@@ -10,12 +10,14 @@ export const LoginAdmin = async (
 ) => {
   try {
     await ConnectMonogDB();
-    const admin = await Education.findOne({ login, password });
+    
+    const admin = await Education.findOne({ login });
 
-    if (!admin) {
-      throw new Error("Admin not found");
+    if (!admin || admin.password !== password) {
+      throw new Error("Login yoki parol noto‘g‘ri");
     }
 
+    // Cookie saqlash
     (await cookies()).set("admin-auth", JSON.stringify({
       _id: admin._id.toString(),
       role: admin.role
@@ -25,11 +27,13 @@ export const LoginAdmin = async (
       maxAge: 60 * 90, // 1:30 soat
     });
 
-    return true
+    return true;
   } catch (error) {
-    console.error("Error during login:", error);
+    console.error("Login error:", error);
+    return false;
   }
 };
+
 
 
 export const LogOutAdmin = async () => {

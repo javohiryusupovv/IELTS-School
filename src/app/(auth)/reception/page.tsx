@@ -52,7 +52,6 @@ export default function ReceptionLogin() {
     } catch (error) {
       console.error("Login qilinmadi Frontenda", error);
       setError(true)
-    } finally {
       setLoading(false);
       topLoading.done()
     }

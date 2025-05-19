@@ -1,14 +1,14 @@
 import Image from "next/image";
 import SwitchSettings from "./_components/actions";
-import { getShop } from "@/actions/shop.action";
 import DeleteProduct from "./_components/deletefn";
 import { IShops } from "../../../../app.types";
 import Link from "next/link";
 import { Plus } from "lucide-react";
+import { getEducationData } from "@/actions/crmaccount.action";
 
 async function ShopAdmin() {
-  const productJSON = await getShop();
-  const product = await JSON.parse(JSON.stringify(productJSON));
+  const educationData = await getEducationData();
+  const product = educationData.shops
 
   return (
     <div>

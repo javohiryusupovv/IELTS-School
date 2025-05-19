@@ -14,42 +14,6 @@ type Records_Coins = {
   value: number;
 }[];
 
-// Barcha talabalarni olish (kesh bilan)
-export const getStudents = async () => {
-  try {
-    await ConnectMonogDB();
-    const courses = await Course.find()
-      .populate({
-        path: "students",
-        model: Student,
-        select: "name surname phone studentID publishStudent course coins", // Faqat kerakli maydonlar
-        populate: {
-          path: "course",
-          model: Course, // <<< Shu joy qo‘shiladi!
-          select: "_id courseTitle", // Kursdan kerakli maydonlarni tanlab olasan
-        },
-      })
-      .lean();
-    const plainCourses = courses.map((course) => ({
-      ...course,
-      _id: course._id?.toString(),
-      students: course.students.map((student: any) => ({
-        ...student,
-        _id: student._id.toString(),
-        course: {
-          _id: student.course._id.toString(),
-          courseTitle: student.course.courseTitle,
-        },
-      })),
-      teacher: course.teacher.toString(),
-    }));
-    const allStudents = plainCourses.flatMap((course) => course.students);
-    return allStudents;
-  } catch (error) {
-    console.error("Error fetching students:", error);
-    throw new Error("Talabalarni olishda xatolik yuz berdi");
-  }
-};
 
 // Muayyan talabani olish (kesh bilan)
 export const getStudentById = unstable_cache(

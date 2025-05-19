@@ -1,15 +1,14 @@
-import { getCourses } from "@/actions/course.action";
 import StudentForm from "../_components/card/student-form";
 import Action, { SearchFuture } from "./_components/action";
 import { UserX } from "lucide-react";
-import { getStudents } from "@/actions/student.action";
 import Link from "next/link";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { getEducationData } from "@/actions/crmaccount.action";
 
 export default async function StudentAll() {
-  const courses = await getCourses();
-  const propCourses = JSON.parse(JSON.stringify(courses));
-  const students = await getStudents();
+  const educationData = await getEducationData();
+  const propCourses = educationData.courses;
+  const students = educationData.students;
 
   const totalStudents = students.length;
   let studentCounter = 1;
@@ -91,7 +90,7 @@ export default async function StudentAll() {
                           </Link>
                         </td>
                         <td className="py-2 text-[14px] font-normal max-lg:text-[12px]">
-                          {student.course.courseTitle}
+                          {student.course?.courseTitle}
                         </td>
                         <td className="py-2 text-[14px] font-normal max-lg:text-[11px] max-md:text-[9px]">
                           <span className="py-1 px-2 text-center rounded-full border bg-[#04b94f] text-white inline-flex">
@@ -99,7 +98,7 @@ export default async function StudentAll() {
                           </span>
                         </td>
                         <td className="py-2 text-[14px] font-normal max-lg:text-[12px]">
-                          {student.phone}
+                          +998 {student.phone}
                         </td>
                         <td className="py-2">
                           <Action student={student} />

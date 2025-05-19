@@ -9,17 +9,6 @@ import {Course, Student, Teacher, Shop} from "@/models/index"
 import { IUpdateCourse } from "../../app.types";
 import Education from "@/models/courseBox.model";
 
-export const getCourses = async () => {
-  try {
-    await ConnectMonogDB();
-    const courses = await Course.find().lean();
-    return JSON.parse(JSON.stringify(courses)) as ICourse[];
-  } catch (error) {
-    console.error("Error fetching courses:", error);
-    throw new Error("Kurslarni olishda xatolik yuz berdi");
-  }
-};
-
 // Muayyan kursni olish (kesh bilan)
 export const getCourseById = async (kursId: string) => {
   try {

@@ -35,6 +35,7 @@ export default async function DashboardLayout({
           role: admin.role,
         };
       }
+      
     } catch (error) {
       console.error("Error fetching admin data", error);
     }

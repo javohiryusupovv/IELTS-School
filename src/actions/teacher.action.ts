@@ -54,21 +54,11 @@ export const createTeacher = async (
   }
 };
 
-export const getTeachers = async () => {
+export const getTeachers = async (educationCenter: string) => {
   try {
     await ConnectMonogDB();
-    const getTeach = await Teacher.find(
-      {},
-      "_id teacherName teacherSurname teacherPhone courses"
-    );
-    return JSON.parse(JSON.stringify(getTeach)).map((teacher: any) => ({
-      _id: teacher._id, // .populate() dan keyin _id string bo'lmasligi mumkin, lekin stringify qilganda string bo'ladi.
-      teacherName: teacher.teacherName,
-      teacherSurname: teacher.teacherSurname,
-      teacherPhone: teacher.teacherPhone,
-      teacherRole: teacher.role,
-      courses: teacher.courses || [], // Endi bu yerda to'liq kurs obyektlari massivi bo'ladi
-    }));
+    const teacher = await Education.findById(educationCenter)
+    return JSON.parse(JSON.stringify(teacher))
   } catch (error) {
     throw new Error(`XAtolik yuz berdi Teacher olishda , ${error}`);
   }

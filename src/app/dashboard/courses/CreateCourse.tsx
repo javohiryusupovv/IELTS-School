@@ -30,6 +30,7 @@ import OddEvenDayFilter from "../_components/selectDay/odd.even";
 import { CalendarDayGet } from "@/components/custom/CalendarDayGet";
 import { CourseSchemaZod } from "@/actions/zod";
 import { Plus } from "lucide-react";
+import { getEducationData } from "@/actions/crmaccount.action";
 
 function CreateCourse() {
   const [courseTitle, setCourseTitle] = useState("");
@@ -46,7 +47,8 @@ function CreateCourse() {
   useEffect(() => {
     const fetchTeacher = async () => {
       try {
-        const data = await getTeachers();
+        const educationData = await getEducationData();
+        const data = educationData.teachers
         setTeachers(data);
       } catch (error) {
         console.error("O'qituvchilarni olishda xatolik:", error);

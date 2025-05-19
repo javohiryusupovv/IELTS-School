@@ -1,12 +1,12 @@
 "use client";
 
-import { getStudents } from "@/actions/student.action";
 import "../tgbot.css";
 import LeaderBoardPages from "./_components/action";
 import GiftImg from "../../../../public/img/gift.png";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import ISLoading from "./_components/isLoading";
+import { getEducationData } from "@/actions/crmaccount.action";
 
 interface CoinType {
   value: number;
@@ -28,8 +28,10 @@ export default function Leaderboard() {
     const students = async () => {
       try {
         setLoading(true); // boshlanishida loading true
-        const student = await getStudents();
-        setLeaderUser(student);
+        const educationData = await getEducationData()
+        const student = educationData.students;
+        const studentPublish = educationData.students.filter((s: any) => s.publishStudent === true);
+        setLeaderUser(studentPublish)                
       } catch (err: any) {
         console.error("Xatolik yuz berdi:", err);
       } finally {

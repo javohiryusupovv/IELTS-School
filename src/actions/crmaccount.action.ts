@@ -6,8 +6,9 @@ import CrmAccount from "@/models/crmadmin.model";
 import { revalidatePath, revalidateTag } from "next/cache";
 import PaymentAdd from "@/models/payment.model";
 import Education from "@/models/courseBox.model";
+import { cookies } from "next/headers";
 
-import {Course, Student, Teacher, Shop} from "@/models/index"
+import { Course, Student, Teacher, Shop } from "@/models/index";
 
 export const educationCreate = async (
   education: IEducationCenter,
@@ -28,8 +29,14 @@ export const educationCreate = async (
 
 export const getEducationData = async () => {
   try {
+    const cookieStore = await cookies();
+    const cookie = cookieStore.get("admin-auth");
+    if (!cookie?.value) return null;
+
+    const { _id } = JSON.parse(cookie.value); // adminning educationCenter _id si
     await ConnectMonogDB();
-    const educationData = await Education.findOne().populate([
+
+    const educationData = await Education.findById(_id).populate([
       {
         path: "teachers",
         select: "teacherName teacherSurname teacherPhone",
@@ -37,12 +44,17 @@ export const getEducationData = async () => {
       },
       {
         path: "students",
-        select: "name surname phone",
+        select: "name surname phone studentID publishStudent course coins",
+        populate: {
+          path: "course",
+          model: Course,
+          select: "_id courseTitle",
+        },
         options: { strictPopulate: false },
       },
       {
         path: "courses",
-        select: "courseName price",
+        select: "courseTitle",
         options: { strictPopulate: false },
       },
       {
@@ -51,7 +63,8 @@ export const getEducationData = async () => {
         options: { strictPopulate: false },
       },
     ]);
-    return JSON.parse(JSON.stringify(educationData));
+
+    return JSON.parse(JSON.stringify(educationData)); // frontga mos format
   } catch (error) {
     throw new Error(
       "Education center ma'lumotlarini olishda xatolik: " + error
