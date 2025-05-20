@@ -47,6 +47,7 @@ export default function ReceptionLogin() {
         router.push("/reception");
         toast.error("Admin topilmadi ...");
         setError(true);
+        setLoading(false);
         topLoading.done()
       }
     } catch (error) {
