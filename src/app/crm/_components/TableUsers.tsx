@@ -1,3 +1,5 @@
+
+export const dynamic = "force-dynamic";
 import { getAccounts } from "@/actions/education.action";
 import { IAdministrator } from "../../../../app.types";
 
