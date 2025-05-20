@@ -1,3 +1,6 @@
+export const dynamic = "force-dynamic";
+
+
 import { getEducationAlls, getEducationData } from "@/actions/education.action";
 import EducationAction from "./_components/action";
 import { IEducationCenter } from "../../../../app.types";
