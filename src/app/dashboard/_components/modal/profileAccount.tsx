@@ -11,12 +11,12 @@ import { useState } from "react";
 import { BiSupport } from "react-icons/bi";
 import Link from "next/link";
 import EditProfile from "./editProfile";
-import { ICRMAccount } from "../../../../../app.types";
 import { RiRobot2Line } from "react-icons/ri";
 import { BsCashCoin } from "react-icons/bs";
+import { IAdministrator } from "../../../../../app.types";
 
 interface Props {
-  admin: ICRMAccount;
+  admin: IAdministrator;
 }
 
 export default function ProfileAccount({ admin }: Props) {
@@ -24,6 +24,7 @@ export default function ProfileAccount({ admin }: Props) {
   const handleClose = () => {
     setIsOpen(false);
   };
+  
   return (
     <div>
       <Popover open={isOpen} onOpenChange={setIsOpen}>
@@ -61,14 +62,14 @@ export default function ProfileAccount({ admin }: Props) {
                   <p>To'lov qilish</p>
                 </button>
               </Link>
-              {admin.role === "owner" && (
+              {(admin.role === "owner" || admin.role === "coinx") && (
                 <Link href={`/crm`}>
                   <button className="flex gap-2 mb-3 items-center transition-all duration-200 w-full sm:py-2 py-1.5 px-4 rounded border bg-orange-500 text-white hover:border-transparent">
                     <p>AdminPage</p>
                   </button>
                 </Link>
               )}
-              {admin.role === "adminstrator" && (
+              {admin.role === "administrator" && (
                 <Link href={"https://t.me/Javoxir_iq"} target="_blank">
                   <button className="group hover:bg-orange-500 transition-all duration-200 cursor-pointer flex text-white items-center gap-2 w-full sm:py-2 py-1.5 px-4 rounded bg-orange-400/60 mb-3">
                     <BiSupport className="w-5 h-5 text-white transition-all duration-200" />

@@ -2,34 +2,41 @@
 import { Plus } from "lucide-react";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { createAccount } from "@/actions/crmaccount.action";
+import { createAdministrator } from "@/actions/education.action";
 import { usePathname } from "next/navigation";
 import { toast } from "sonner";
 
-export default function DialogCloseButton() {
-  const pathname = usePathname();
 
+interface Props{
+  educationData: {
+    _id: string
+  }
+}
+
+export default function DialogCloseButton({educationData}: Props) {
+  const pathname = usePathname();
+  
+  
   const handleSubmitAccounts = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const data = new FormData(e.currentTarget);
       const fullData = {
-        _id: data.get("_id") as string,
         fullname: data.get("fullname") as string,
         login: data.get("login") as string,
         password: data.get("password") as string,
         phone: data.get("phone") as string,
         role: data.get("attendance") as string,
+        educationCenter: educationData._id 
       };
 
     
-      const accounts = toast.promise(createAccount(fullData, pathname), {
+      const accounts = toast.promise(createAdministrator(fullData, pathname), {
         loading: "Yuklanmoqda...",
         success: "Account yaratildi!",
         error: (err) => err.message,
@@ -141,23 +148,12 @@ export default function DialogCloseButton() {
                   type="radio"
                   name="attendance"
                   className="hidden peer"
-                  value="owner"
-                  required
-                />
-                <div className="w-[15px] h-[15px] rounded-full border-[1px] border-black peer-checked:bg-blue-500 peer-checked:border-blue-500"></div>
-                <span className="text-gray-500 text-[12px]">Owner</span>
-              </label>
-              <label className="relative flex items-center gap-2 cursor-pointer">
-                <input
-                  type="radio"
-                  name="attendance"
-                  className="hidden peer"
-                  value="adminstrator"
+                  value="administrator"
                   defaultChecked
                   required
                 />
                 <div className="w-[15px] h-[15px] rounded-full border-[1px] border-black peer-checked:bg-blue-500 peer-checked:border-blue-500"></div>
-                <span className="text-gray-500 text-[12px]">Adminstrator</span>
+                <span className="text-gray-500 text-[12px]">Administrator</span>
               </label>
             </div>
           </article>

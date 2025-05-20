@@ -1,6 +1,6 @@
 import React from "react";
 import { CheckCircle, Clock } from "lucide-react";
-import { getPayments } from "@/actions/crmaccount.action";
+import { getPayments } from "@/actions/education.action";
 import { IPaymentAdd } from "../../../../app.types";
 import ImageCoin from "../../../../public/icons/roleTeacher.png"
 import Image from "next/image";

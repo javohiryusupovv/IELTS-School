@@ -3,7 +3,7 @@ import { SquareUser, UserRoundPlus } from 'lucide-react';
 import Link from "next/link";
 import TeacherCreated from "../_components/card/teacher-add";
 import ActionsTeacher from './_components/action';
-import { getEducationData } from '@/actions/crmaccount.action';
+import { getEducationData } from '@/actions/education.action';
 
 
 export default async function DashboardTeacher() {

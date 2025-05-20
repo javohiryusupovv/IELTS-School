@@ -10,6 +10,7 @@ import ConnectMonogDB from "@/lib/mongodb";
 import NavbarMedia from "./_components/navbarMedia";
 import PaymentSend from "../crm/_components/PaymentDays";
 import Education from "@/models/courseBox.model";
+import AdministratorModel from "@/models/administrator.model";
 
 export default async function DashboardLayout({
   children,
@@ -21,21 +22,34 @@ export default async function DashboardLayout({
 
   if (cookie && cookie.value) {
     try {
-      const adminInfo = JSON.parse(cookie?.value);
-      // Fetch admin data from the database
+      const adminInfo = JSON.parse(cookie.value); // contains _id, role, isOwner
       await ConnectMonogDB();
-      const admin = await Education.findById(adminInfo._id);
-      if (admin) {
-        adminData = {
-          _id: admin._id.toString(),
-          login: admin.login,
-          password: admin.password,
-          fullname: admin.ownerName,
-          phone: admin.phoneNumber,
-          role: admin.role,
-        };
+
+      if (adminInfo.isOwner) {
+        const owner = await Education.findById(adminInfo._id);
+        if (owner) {
+          adminData = {
+            _id: owner._id.toString(),
+            login: owner.login,
+            password: owner.password,
+            fullname: owner.ownerName,
+            phone: owner.phoneNumber,
+            role: owner.role,
+          };
+        }
+      } else {
+        const admin = await AdministratorModel.findOne({ educationCenter: adminInfo._id });
+        if (admin) {
+          adminData = {
+            _id: admin._id.toString(),
+            login: admin.login,
+            password: admin.password,
+            fullname: admin.fullname,
+            phone: admin.phone,
+            role: admin.role,
+          };
+        }
       }
-      
     } catch (error) {
       console.error("Error fetching admin data", error);
     }
@@ -59,10 +73,13 @@ export default async function DashboardLayout({
             {adminData && <ProfileAccount admin={adminData} />}
           </div>
         </div>
-        {/* <div className="w-full mb-4 overflow-hidden">
+
+        <div className="w-full mb-4 overflow-hidden">
          <PaymentSend/>
-        </div> */}
+        </div>
+
         <div className="md:p-5 p-3 bg-white min-h-screen mb-4">{children}</div>
+
         <footer className="w-full py-5 px-4 border rounded-md bg-white">
           <a href="https://t.me/Javoxir_iq" target="_blank">
             <p className="flex gap-2 items-center justify-end text-end group cursor-pointer">

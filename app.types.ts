@@ -19,13 +19,14 @@ export interface IUpdateCourse{
     teacher: string | ITeacher;
 }
 
-export interface ICRMAccount {
-    _id: string;
+export interface IAdministrator {
+    _id?: string;
     fullname: string;
     login: string;
     password: string;
     phone: string;
     role: string;
+    educationCenter?: string;
 }
 
 
@@ -37,10 +38,11 @@ export interface IEditTeacher{
 }
 
 export interface IPaymentAdd{
+    educationCenterID: string,
     _id?: string,
     managerName: string,
     markazTitle: string,
-    lastPayment: string,
+    lastPayment: Date,
     cashStatus: string,
     cashType: string
 }

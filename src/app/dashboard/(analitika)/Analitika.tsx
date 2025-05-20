@@ -1,7 +1,7 @@
 import Talabalar from "./_components/_students";
 import Mentorlar from "./_components/_mentors";
 import Filiallar from "./_components/_filiallar";
-import { getEducationData } from "@/actions/crmaccount.action";
+import { getEducationData } from "@/actions/education.action";
 
 export default async function Analitika() {
   const educationData = await getEducationData();

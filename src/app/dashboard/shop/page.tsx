@@ -4,7 +4,7 @@ import DeleteProduct from "./_components/deletefn";
 import { IShops } from "../../../../app.types";
 import Link from "next/link";
 import { Plus } from "lucide-react";
-import { getEducationData } from "@/actions/crmaccount.action";
+import { getEducationData } from "@/actions/education.action";
 
 async function ShopAdmin() {
   const educationData = await getEducationData();

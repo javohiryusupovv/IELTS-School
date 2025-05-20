@@ -6,7 +6,7 @@ import GiftImg from "../../../../public/img/gift.png";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import ISLoading from "./_components/isLoading";
-import { getEducationData } from "@/actions/crmaccount.action";
+import { getEducationData } from "@/actions/education.action";
 
 interface CoinType {
   value: number;

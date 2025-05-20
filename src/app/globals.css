@@ -27,6 +27,13 @@
   border-radius: 4px; 
 }
 
+.shadowPayment{
+  transition: all 0.4s linear;
+  &:hover{
+    box-shadow: 0 0 4px rgb(13, 196, 13);
+  }
+}
+
 
 @layer base {
   :root {

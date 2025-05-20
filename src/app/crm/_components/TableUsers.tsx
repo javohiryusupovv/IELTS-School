@@ -1,9 +1,9 @@
-import { getAccounts } from "@/actions/crmaccount.action";
-import { ICRMAccount } from "../../../../app.types";
+import { getAccounts } from "@/actions/education.action";
+import { IAdministrator } from "../../../../app.types";
 
 export default async function TableUsers() {
-
   const accounst = await getAccounts();
+  
   let countNumber = 1
   return (
     <div>
@@ -16,10 +16,11 @@ export default async function TableUsers() {
             <th className="border border-gray-300 px-4 py-2">Password</th>
             <th className="border border-gray-300 px-4 py-2">Role</th>
             <th className="border border-gray-300 px-4 py-2">Phone</th>
+            <th className="border border-gray-300 px-4 py-2">Options</th>
           </tr>
         </thead>
         <tbody>
-          {accounst.map((account: ICRMAccount) => (
+          {accounst.map((account: IAdministrator) => (
             <tr key={account._id} className="hover:bg-gray-50">
               <td className="border border-gray-300 px-4 py-2">{countNumber++}</td>
               <td className="border border-gray-300 px-4 py-2">{account.fullname}</td>
@@ -27,6 +28,7 @@ export default async function TableUsers() {
               <td className="border border-gray-300 px-4 py-2">{account.password}</td>
               <td className="border border-gray-300 px-4 py-2">{account.role}</td>
               <td className="border border-gray-300 px-4 py-2">+998 {account.phone}</td>
+              <td className="flex justify-center items-center"><button className="border px-2 text-[12px] bg-red-500 text-white py-1 rounded-md cursor-pointer">Delete</button></td>
             </tr>
           ))}
         </tbody>

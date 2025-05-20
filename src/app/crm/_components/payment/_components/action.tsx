@@ -20,10 +20,16 @@ import { useState } from "react";
 import { CalendarPayment } from "./calendar";
 import { IPaymentAdd } from "../../../../../../app.types";
 import { usePathname } from "next/navigation";
-import { paymentDaysAdd } from "@/actions/crmaccount.action";
+import { paymentDaysAdd } from "@/actions/education.action";
 import { CiCirclePlus } from "react-icons/ci";
 
-export default function PaymentModal() {
+interface Props{
+  getEducation: {
+    _id: string
+  }
+}
+
+export default function PaymentModal({getEducation}: Props) {
   const [cashStatus, setCashStatus] = useState<string>("");
   const [isOpen, setIsOpen] = useState(false);
   const [paymentDate, setPaymentDate] = useState<Date | null>(null);
@@ -34,9 +40,10 @@ export default function PaymentModal() {
     const data = new FormData(e.currentTarget);
 
     const payment: IPaymentAdd = {
+      educationCenterID: getEducation._id,
       managerName: data.get("managerName") as string,
       markazTitle: data.get("nameMarkaz") as string,
-      lastPayment: paymentDate ? paymentDate.toLocaleDateString("ru-RU") : "",
+      lastPayment: paymentDate ?? new Date(),
       cashStatus: cashStatus,
       cashType: data.get("cashtype") as string,
     };
@@ -53,10 +60,10 @@ export default function PaymentModal() {
     <div>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger className=" w-full ">
-          <div className=" border-[2px] h-[200px] rounded-xl border-dashed flex items-center justify-center">
+          <div className=" border-[2px] h-[200px] rounded-xl border-dashed flex items-center justify-center shadowPayment">
             <article className=" flex flex-col items-center">
               <CiCirclePlus size={30} />
-              <p className="text-xl">Add new Card</p>
+              <p className="text-xl">Add new Payment</p>
             </article>
           </div>
         </DialogTrigger>

@@ -10,7 +10,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { IEducationCenter } from "../../../../../app.types";
-import { educationCreate } from "@/actions/crmaccount.action";
+import { educationCreate } from "@/actions/education.action";
 import { usePathname } from "next/navigation";
 import { toast } from "sonner";
 

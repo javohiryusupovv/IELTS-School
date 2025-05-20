@@ -1,14 +1,14 @@
 "use server";
 
 import ConnectMonogDB from "@/lib/mongodb";
-import { ICRMAccount, IEducationCenter, IPaymentAdd } from "../../app.types";
-import CrmAccount from "@/models/crmadmin.model";
+import { IAdministrator, IEducationCenter, IPaymentAdd } from "../../app.types";
+import CrmAccount from "@/models/administrator.model";
 import { revalidatePath, revalidateTag } from "next/cache";
 import PaymentAdd from "@/models/payment.model";
 import Education from "@/models/courseBox.model";
 import { cookies } from "next/headers";
 import { Course, Student, Teacher, Shop } from "@/models/index";
-
+import AdministratorModel from "@/models/administrator.model";
 
 export const educationCreate = async (
   education: IEducationCenter,
@@ -62,6 +62,11 @@ export const getEducationData = async () => {
         select: "title description price image activeProduct educationID",
         options: { strictPopulate: false },
       },
+      {
+        path: "lastPayment",
+        select: "managerName markazTitle lastPayment cashStatus cashType",
+        options: { strictPopulate: false }
+      }
     ]);
 
     return JSON.parse(JSON.stringify(educationData)); // frontga mos format
@@ -72,29 +77,40 @@ export const getEducationData = async () => {
   }
 };
 
-export const getEducationAlls = async() => {
-    try {
-      await ConnectMonogDB();
-      const education = await Education.find();
-      return JSON.parse(JSON.stringify(education))
-    } catch (error: any) {
-      throw new Error("Error getEducation data");
-    }
-  }
-
-
-export const createAccount = async (data: ICRMAccount, path: string) => {
+export const getEducationAlls = async () => {
   try {
     await ConnectMonogDB();
-    const account = await CrmAccount.create(data);
+    const education = await Education.find();
+    return JSON.parse(JSON.stringify(education));
+  } catch (error: any) {
+    throw new Error("Error getEducation data");
+  }
+};
+
+export const createAdministrator = async (
+  data: IAdministrator,
+  path: string
+) => {
+  try {
+    await ConnectMonogDB();
+
+    // 1. Foydalanuvchini yaratish
+    const account = await AdministratorModel.create(data);
+
+    // 2. EducationCenterga push qilish
+    await Education.findByIdAndUpdate(data.educationCenter, {
+      $push: { admins: account._id },
+    });
+
+    // 3. Revalidate qilish
     revalidatePath(path);
-    revalidateTag("crmaccounts");
+
     return JSON.parse(JSON.stringify(account));
   } catch (error: any) {
     if (error.code === 11000) {
       throw new Error("Login allaqachon mavjud!");
     }
-    throw new Error("Error creating account");
+    throw new Error("Account yaratishda xatolik");
   }
 };
 
@@ -102,6 +118,13 @@ export const paymentDaysAdd = async (payment: IPaymentAdd, path: string) => {
   try {
     await ConnectMonogDB();
     const paySucces = await PaymentAdd.create(payment);
+    if (payment.educationCenterID) {
+      await Education.findByIdAndUpdate(
+        payment.educationCenterID,
+        { $push: { lastPayment: paySucces._id } },
+        { new: true }
+      );
+    }
     revalidatePath(path);
     return JSON.parse(JSON.stringify(paySucces));
   } catch (error) {
@@ -119,6 +142,16 @@ export const getPayments = async () => {
   }
 };
 
+export const getPaymentsLast = async () => {
+  try {
+    await ConnectMonogDB();
+    const lastPayment = await PaymentAdd.findOne().sort({ createdAt: -1 }); // eng oxirgi to'lovlar birinchi chiqadi
+    return lastPayment ? JSON.parse(JSON.stringify(lastPayment)) : null;
+  } catch (error) {
+    throw new Error("To'lovlarni olishda xatolik");
+  }
+};
+
 export const getAccounts = async () => {
   try {
     await ConnectMonogDB();
@@ -128,3 +161,24 @@ export const getAccounts = async () => {
     throw new Error("Error fetching accounts");
   }
 };
+
+
+// export const accountsDelete = async(userID: string, path: string) => {
+//   try{
+//     await ConnectMonogDB();
+//     await 
+//   }catch(error){
+//     throw new Error(`Xatolik yuz berid DELETE Userda, ${error}`)
+//   }
+// }
+
+
+export const deleteShop = async (id: string, path: string) => {
+    try {
+        await ConnectMonogDB()
+        await Shop.findByIdAndDelete(id)
+        revalidatePath(path)
+    } catch (error) {
+        throw new Error(`Xatolik yuz berid DELETE Shopda, ${error}`)
+    }
+}

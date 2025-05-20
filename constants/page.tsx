@@ -2,6 +2,7 @@
 
 //rang generator hash code bilan random bulib beriladi render bulganda uzgarmayudi
 
+import { format } from "date-fns";
 
 
 export const getStableColor = (_id: string) => {
@@ -42,11 +43,11 @@ export const formatReasonText = (str: string) => {
 
 
 
-export const lastPaymentDate = new Date('2025-04-20'); // statik to‘lov sanasi
-export const formatDateFromDMY = (dateStr: string) => {
-  if (!dateStr) return "Sana yo'q";
-  const [day, month, year] = dateStr.split('.');
-  const date = new Date(+year, +month - 1, +day);
-  return date.toLocaleDateString(); // bu yerda brauzer tiliga mos formatda chiqaradi
-};
+export const lastPaymentDate = new Date('2025-04-25'); // statik to‘lov sanasi
 
+export const formatDateFromDMY = (date: string | Date | null | undefined): string => {
+  if (!date) return "Noma'lum sana";
+  const parsedDate = new Date(date);
+  if (isNaN(parsedDate.getTime())) return "Noto'g'ri sana";
+  return format(parsedDate, "yyyy-MM-dd");
+};

@@ -30,7 +30,7 @@ import OddEvenDayFilter from "../_components/selectDay/odd.even";
 import { CalendarDayGet } from "@/components/custom/CalendarDayGet";
 import { CourseSchemaZod } from "@/actions/zod";
 import { Plus } from "lucide-react";
-import { getEducationData } from "@/actions/crmaccount.action";
+import { getEducationData } from "@/actions/education.action";
 
 function CreateCourse() {
   const [courseTitle, setCourseTitle] = useState("");

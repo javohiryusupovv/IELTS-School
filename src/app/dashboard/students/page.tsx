@@ -3,7 +3,7 @@ import Action, { SearchFuture } from "./_components/action";
 import { UserX } from "lucide-react";
 import Link from "next/link";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import { getEducationData } from "@/actions/crmaccount.action";
+import { getEducationData } from "@/actions/education.action";
 
 export default async function StudentAll() {
   const educationData = await getEducationData();
@@ -126,7 +126,7 @@ export default async function StudentAll() {
                           </span>
                         </td>
                         <td className="py-2 text-[14px] font-normal text-gray-400">
-                          {student.phone}
+                          +998 {student.phone}
                         </td>
                         <td className="py-2">
                           <Action student={student} />

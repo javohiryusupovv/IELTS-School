@@ -29,7 +29,7 @@ export async function middleware(request: NextRequest) {
       const parsed = JSON.parse(decoded);
       const role = parsed?.role;
 
-      if (role !== "owner") {
+      if (role !== "owner" && role !== "coinx") {
         return NextResponse.redirect(new URL("/reception", request.url));
       }
     } catch (error) {

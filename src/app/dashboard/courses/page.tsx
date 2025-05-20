@@ -4,7 +4,7 @@ import CreateCourse from "./CreateCourse";
 import Link from "next/link";
 import { getStableColor } from "../../../../constants/page";
 import { FolderPlus } from 'lucide-react';
-import { getEducationData } from "@/actions/crmaccount.action";
+import { getEducationData } from "@/actions/education.action";
 
 
 async function CourseAll() {

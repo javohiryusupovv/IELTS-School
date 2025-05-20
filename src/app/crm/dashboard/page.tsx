@@ -1,10 +1,9 @@
-import { getEducationAlls } from "@/actions/crmaccount.action";
+import { getEducationAlls, getEducationData } from "@/actions/education.action";
 import EducationAction from "./_components/action";
 import { IEducationCenter } from "../../../../app.types";
 
 export default async function page() {
   const getEducation = await getEducationAlls();
-  console.log(getEducation);
 
   return (
     <div className="mr-10">

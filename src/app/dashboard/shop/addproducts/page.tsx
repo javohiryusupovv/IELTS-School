@@ -1,4 +1,4 @@
-import { getEducationData } from "@/actions/crmaccount.action";
+import { getEducationData } from "@/actions/education.action";
 import CardAddProduct from "./_components/card-addProduct";
 
 export default async function CreateProducts() {
