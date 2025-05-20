@@ -1,3 +1,6 @@
+export const dynamic = "force-dynamic";
+
+
 import { getEducationData } from "@/actions/education.action";
 import DialogsModal from "../_components/Modal";
 import TableUsers from "../_components/TableUsers";
