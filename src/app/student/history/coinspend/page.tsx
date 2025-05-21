@@ -1,7 +1,9 @@
 import { getStudentFromCookie } from "@/actions/student.check";
 import { formatDate, formatReasonText } from "../../../../../constants/page";
-import { ChevronLeft, Cog } from "lucide-react";
-import Link from "next/link";
+import { Cog } from "lucide-react";
+
+export const dynamic = "force-dynamic";
+
 
 export default async function CoinSpend() {
   const students = await getStudentFromCookie();
