@@ -19,6 +19,7 @@ interface StudentType {
   total: number;
   coins?: CoinType[];
 }
+export const dynamic = "force-dynamic";
 
 export default function Leaderboard() {
   const [leaderUser, setLeaderUser] = useState<StudentType[]>([]);
