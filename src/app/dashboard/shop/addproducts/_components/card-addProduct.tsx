@@ -7,19 +7,19 @@ import { redirect, usePathname } from "next/navigation";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 
-interface Props{
+interface Props {
   educationData: {
     _id: string;
   }
 }
 
 
-export default function CardAddProduct({educationData}: Props) {
+export default function CardAddProduct({ educationData }: Props) {
   const pathname = usePathname();
   const inputRef = useRef<HTMLInputElement>(null);
   const [prevImg, setPrevImg] = useState<string>();
   const [imageFile, setImageFile] = useState<File | null>(null); // 🆕 Faylni saqlaymiz
-  
+
   const handleClick = () => {
     inputRef.current?.click();
   };
@@ -65,6 +65,8 @@ export default function CardAddProduct({educationData}: Props) {
       price: Number(data.get("price")),
       image: imageUrl || "",
       activeProduct: false,
+      totalQuantity: Number(data.get("quantity")),         // 🆕
+      remainingQuantity: Number(data.get("quantity")), 
       educationID: educationData._id
     };
     const promise = postShop({ ...product }, pathname);
@@ -130,47 +132,57 @@ export default function CardAddProduct({educationData}: Props) {
                 className="px-3 py-2 outline-none rounded-md border focus:border-orange-600"
                 placeholder="namuna: 200 (coin)"
               />
+            </label><label className="flex flex-col gap-3 lg:mb-6">
+              <p>
+                Mahsulot soni (nechta bor) <span className="text-red-600">*</span>
+              </p>
+              <input
+                name="quantity"
+                type="number"
+                min="1"
+                className="px-3 py-2 outline-none rounded-md border focus:border-orange-600"
+                placeholder="namuna: 10"
+              />
             </label>
           </article>
 
           {/* Image preview */}
           <div>
             <div
-            onClick={handleClick}
-            className={`group sm:w-[250px] h-[240px] sm:h-[250px] border flex justify-center items-center flex-col rounded-md overflow-hidden cursor-pointer mb-5 ${
-              prevImg
-                ? ""
-                : "hover:border-[#00b7ff49] hover:shadow-blue-300 hover:shadow-sm"
-            }`}
-          >
-            {prevImg ? (
-              <img
-                src={prevImg}
-                alt="Mahsulot rasmi"
-                className="w-full h-full object-cover cursor-not-allowed"
-              />
-            ) : (
-              <>
-                <ImagePlus className="w-10 h-10 stroke-1 stroke-gray-600 mb-3 group-hover:stroke-blue-300" />
-                <p className="text-[12px] font-normal group-hover:text-blue-300">
-                  Mahsulot rasmini yuklang
-                </p>
-              </>
-            )}
-          </div>
+              onClick={handleClick}
+              className={`group sm:w-[250px] h-[240px] sm:h-[250px] border flex justify-center items-center flex-col rounded-md overflow-hidden cursor-pointer mb-5 ${prevImg
+                  ? ""
+                  : "hover:border-[#00b7ff49] hover:shadow-blue-300 hover:shadow-sm"
+                }`}
+            >
+              {prevImg ? (
+                <img
+                  src={prevImg}
+                  alt="Mahsulot rasmi"
+                  className="w-full h-full object-cover cursor-not-allowed"
+                />
+              ) : (
+                <>
+                  <ImagePlus className="w-10 h-10 stroke-1 stroke-gray-600 mb-3 group-hover:stroke-blue-300" />
+                  <p className="text-[12px] font-normal group-hover:text-blue-300">
+                    Mahsulot rasmini yuklang
+                  </p>
+                </>
+              )}
+            </div>
 
-          <input
-            type="file"
-            name="image"
-            accept="image/*"
-            ref={inputRef}
-            onChange={handleFileChange}
-            style={{ display: "none" }}
-          />
+            <input
+              type="file"
+              name="image"
+              accept="image/*"
+              ref={inputRef}
+              onChange={handleFileChange}
+              style={{ display: "none" }}
+            />
           </div>
         </div>
         <button className="order-5 px-6 py-2 border rounded-md bg-orange-500 text-white font-medium hover:bg-orange-500/80 hover:border-transparent transition-all duration-200">
-              Submit
+          Submit
         </button>
       </form>
     </div>

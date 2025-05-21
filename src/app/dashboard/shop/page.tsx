@@ -9,7 +9,8 @@ import { getEducationData } from "@/actions/education.action";
 async function ShopAdmin() {
   const educationData = await getEducationData();
   const product = educationData.shops
-
+  console.log(product);
+  
   return (
     <div>
       <article className="flex justify-between items-center mb-10">
@@ -38,7 +39,9 @@ async function ShopAdmin() {
             </article>
             <SwitchSettings status={item.activeProduct} productID={item._id} />
             <DeleteProduct products={item} />
-            <p className="line-clamp-2">{item.title}</p>
+            <p className="line-clamp-2 mb-2">{item.title}</p>
+            <p>Mavjud: {item.totalQuantity}</p>
+            <p>Qolgan: {item.remainingQuantity}</p>
           </div>
         ))}
       </div>

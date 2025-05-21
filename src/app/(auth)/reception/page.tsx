@@ -27,9 +27,9 @@ export default function ReceptionLogin() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
+    topLoading.start()
     try {
       const admin = await LoginAdmin(username, password);
-      topLoading.start()
       if (admin) {
         // Teacher topilsa
         toast.success("Admin topildi", {

@@ -59,7 +59,7 @@ export const getEducationData = async () => {
       },
       {
         path: "shops",
-        select: "title description price image activeProduct educationID",
+        select: "title description price image activeProduct totalQuantity remainingQuantity educationID",
         options: { strictPopulate: false },
       },
       {
