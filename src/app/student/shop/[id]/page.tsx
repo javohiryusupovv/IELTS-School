@@ -37,7 +37,7 @@ export default async function ShopId({params,}:{params: Promise<{ id: string }>}
         <div className="w-full flex flex-col items-start gap-2">
           <article className="w-full">
             <h6 className="text-[20px] mb-1">Tavsifi:</h6>
-            <p className="text-[14px] text-gray-600 mb-4 max-sm:mb-1">
+            <p className="text-[14px] text-gray-600 mb-1 max-sm:mb-1">
               {product.description}
             </p>
             <article className="w-full">

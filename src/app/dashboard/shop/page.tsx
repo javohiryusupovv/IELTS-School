@@ -1,10 +1,10 @@
 import Image from "next/image";
-import SwitchSettings from "./_components/actions";
 import DeleteProduct from "./_components/deletefn";
 import { IShops } from "../../../../app.types";
 import Link from "next/link";
 import { Plus } from "lucide-react";
 import { getEducationData } from "@/actions/education.action";
+import EditShop from "./_components/editShop";
 
 async function ShopAdmin() {
   const educationData = await getEducationData();
@@ -26,9 +26,13 @@ async function ShopAdmin() {
         {product.map((item: IShops) => (
           <div
             key={item._id}
-            className="relative top-0 left-0 px-2 py-5 w-full flex flex-col justify-center items-center border rounded-md"
+            className="relative top-0 left-0 px-3 py-5 w-full flex flex-col justify-center items-center border rounded-md"
           >
-            <article className="w-full h-[180px] overflow-hidden my-10">
+             <article className="flex justify-between w-full">
+              <DeleteProduct products={item} />
+              <EditShop products={item}/>
+            </article>
+            <article className="w-full h-[200px] overflow-hidden mb-10 mt-5">
               <Image
                 width={200}
                 height={200}
@@ -37,8 +41,8 @@ async function ShopAdmin() {
                 alt="Iphone Teleofon"
               />
             </article>
-            <SwitchSettings status={item.activeProduct} productID={item._id} />
-            <DeleteProduct products={item} />
+           
+
             <p className="line-clamp-2 mb-2">{item.title}</p>
             <p>Mavjud: {item.totalQuantity}</p>
             <p>Qolgan: {item.remainingQuantity}</p>

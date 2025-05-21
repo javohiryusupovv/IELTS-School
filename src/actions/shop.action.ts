@@ -2,8 +2,7 @@
 
 import ConnectMonogDB from "@/lib/mongodb";
 import { ICreateShop } from "@/types/type";
-import { revalidatePath, revalidateTag } from "next/cache";
-import { IShops } from "../../app.types";
+import { revalidatePath } from "next/cache";
 import Education from "@/models/courseBox.model";
 import {Course, Student, Teacher, Shop} from "@/models/index"
 
@@ -29,22 +28,30 @@ export const postShop = async ( data: ICreateShop, path: string) => {
 
 
 
-export const ShopActive = async (id: string, status: boolean, path: string) => {
-    try {
-        await ConnectMonogDB()
-        await Shop.findByIdAndUpdate(id, { activeProduct: status }, { new: true } );
-        revalidatePath(path)
-        return { success: true, status };
-    } catch (error) {
-        throw new Error(`Xatolik yuz berid Shopda, ${error}`)
-    }
-}
+export const newAmounProduct = async (productId: string, addAmount: number, path: string) => {
+  if (!productId || !addAmount || addAmount <= 0) {
+    throw new Error("Noto'g'ri ma'lumot kiritildi");
+  }
 
-export const updateShop = async () => {
-    await ConnectMonogDB()
-    const products = await Shop.find({ activeProduct: true }).lean()
-    return products
-}
+  try {
+    await ConnectMonogDB();
+    const product = await Shop.findById(productId);
+
+    if (!product) {
+      throw new Error("Mahsulot topilmadi");
+    }
+
+    product.remainingQuantity += addAmount;
+    product.totalQuantity += addAmount;
+
+    await product.save();
+
+    revalidatePath(path);
+  } catch (error) {
+    throw new Error(`Xatolik yuz berdi SHOP quantity update-da, ${error}`);
+  }
+};
+
 
 
 

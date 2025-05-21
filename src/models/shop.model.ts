@@ -8,7 +8,6 @@ const ShopSchema = new Schema(
         description: String,
         price: Number,
         image: String,
-        activeProduct: {type: Boolean, default: false},
         totalQuantity: { type: Number, default: 0 },
         remainingQuantity: { type: Number, default: 0 },
         educationCenter: { type: Schema.Types.ObjectId, ref: "EducationCenter"},

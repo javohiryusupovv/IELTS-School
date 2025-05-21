@@ -6,7 +6,6 @@ export interface IShops{
     description: string;
     price: number;
     image: string;
-    activeProduct: boolean;
     totalQuantity: number, 
     remainingQuantity: number,
     educationID: string;

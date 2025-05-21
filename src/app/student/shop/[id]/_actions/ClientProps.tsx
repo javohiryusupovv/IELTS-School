@@ -5,7 +5,6 @@ import {
   DialogTrigger,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import { DialogDescription } from "@radix-ui/react-dialog";
 import Image from "next/image";
 import { BsCoin } from "react-icons/bs";
@@ -13,7 +12,7 @@ import { ICreateShop, IStudent } from "@/types/type";
 import { toast } from "sonner";
 import { useState } from "react";
 import { salesUpdateCoins } from "@/actions/student.action";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {  handleClickConfetti } from "./confetti";
 
 interface Props {
@@ -26,6 +25,7 @@ export default function ClientComponent({ product, coins, student }: Props) {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const pathname = usePathname();
+  const router = useRouter()
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -34,6 +34,7 @@ export default function ClientComponent({ product, coins, student }: Props) {
         const result = await salesUpdateCoins(
           student._id,
           product.price,
+          product._id ?? "",
           pathname
         );
         if (result.success) {
@@ -72,22 +73,24 @@ export default function ClientComponent({ product, coins, student }: Props) {
 📆 Date: ${new Date().toLocaleDateString()}
 `.trim();
     const promise = fetch(
-      `https://api.telegram.org/bot${telegramBotId}/sendMessage`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "cache-control": "no-cache",
-        },
-        body: JSON.stringify({
-          chat_id: telegramChatId,
-          text: message,
-          parse_mode: "HTML",
-        }),
-      }
-    ).finally(() => {
-      setIsLoading(false);
-    });
+    `https://api.telegram.org/bot${telegramBotId}/sendMessage`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "cache-control": "no-cache",
+      },
+      body: JSON.stringify({
+        chat_id: telegramChatId,
+        text: message,
+        parse_mode: "HTML",
+      }),
+    }
+  ).then(() => {
+    router.push("/student/shop");
+  }).finally(() => {
+    setIsLoading(false);
+  });
 
     toast.promise(promise, {
       loading: "Loading...",
@@ -139,8 +142,7 @@ export default function ClientComponent({ product, coins, student }: Props) {
         <button
           onClick={handleSubmit}
           disabled={isLoading}
-          className="py-2 px-4 rounded-md text-white bg-orange-500 hover:bg-orange-400/90 hover:text-white transition-all duration-300"
-        >
+          className={` py-2 px-4 rounded-md text-white bg-orange-500 hover:bg-orange-400/90 hover:text-white transition-all duration-300`}>
           Buyurtma berish
         </button>
       </DialogContent>

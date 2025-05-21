@@ -245,6 +245,7 @@ export const addCoins = async (
 export const salesUpdateCoins = async (
   studentId: string,
   coinValue: number,
+  productid: string,
   path: string
 ) => {
   try {
@@ -256,8 +257,13 @@ export const salesUpdateCoins = async (
     }
     await ConnectMonogDB();
     const student = await Student.findById(studentId);
-    if (!student) {
-      throw new Error("Talaba topilmadi!");
+    const product = await Shop.findById(productid) 
+
+    if (!student) throw new Error("Talaba topilmadi!");
+    if (!product) throw new Error("Mahsulot topilmadi!");
+
+    if (product.remainingQuantity <= 0) {
+      throw new Error("Mahsulot qolmagan!");
     }
 
     const today = moment().format("YYYY-MM-DD");
@@ -268,9 +274,14 @@ export const salesUpdateCoins = async (
     });
     await student.save();
 
+    product.remainingQuantity -= 1
+
+    await product.save()
+
     // Keshni yangilash
     revalidateTag("students");
     revalidateTag("student");
+    revalidateTag("products");
     revalidatePath(path);
     return { success: true, message: "Coin muvaffaqiyatli ayirildi!" };
   } catch (error) {
@@ -300,7 +311,7 @@ export const addAdminCoins = async (
     const formattedValue = Number(value);
 
     if (formattedValue === 0) {
-      throw new Error("Coin soni 0 bo‘lishi mumkin emas!");
+      throw new Error("Coin soni 0 bo'lishi mumkin emas!");
     }
 
     student.coins.push({

@@ -55,7 +55,7 @@ export default function DeleteProduct({ products }: Props) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <button className="absolute left-4 top-2 p-2 bg-red-500/70 hover:bg-red-600 transition-all duration-300 text-white rounded-md">
+        <button className=" p-2 bg-red-500/70 hover:bg-red-600 transition-all duration-300 text-white rounded-md">
           <Trash className="w-4 h-4 " />
         </button>
       </AlertDialogTrigger>

@@ -64,7 +64,6 @@ export default function CardAddProduct({ educationData }: Props) {
       description: data.get("description") as string,
       price: Number(data.get("price")),
       image: imageUrl || "",
-      activeProduct: false,
       totalQuantity: Number(data.get("quantity")),         // 🆕
       remainingQuantity: Number(data.get("quantity")), 
       educationID: educationData._id
