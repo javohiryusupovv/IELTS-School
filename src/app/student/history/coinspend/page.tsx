@@ -2,8 +2,6 @@ import { getStudentFromCookie } from "@/actions/student.check";
 import { formatDate, formatReasonText } from "../../../../../constants/page";
 import { Cog } from "lucide-react";
 
-export const dynamic = "force-dynamic";
-
 
 export default async function CoinSpend() {
   const students = await getStudentFromCookie();

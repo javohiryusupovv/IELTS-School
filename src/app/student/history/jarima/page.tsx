@@ -2,9 +2,6 @@ import { getStudentFromCookie } from "@/actions/student.check";
 import { formatDate, formatReasonText } from "../../../../../constants/page";
 import { Cog } from "lucide-react";
 
-export const dynamic = "force-dynamic";
-
-
 export default async function CoinJarima() {
   const students = await getStudentFromCookie();
   const historyCoins = students?.coins?.map((coin: any) => {

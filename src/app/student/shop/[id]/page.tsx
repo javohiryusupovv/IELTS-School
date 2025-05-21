@@ -9,7 +9,7 @@ export default async function ShopId({params,}:{params: Promise<{ id: string }>}
   const products = await getShopId(id);
   const product = JSON.parse(JSON.stringify(products));
   const student = await getStudentFromCookie();
-
+  
   const coins = student?.coins?.reduce((sum: number, coin: any) => sum + coin.value, 0) ?? 0;
 
   
