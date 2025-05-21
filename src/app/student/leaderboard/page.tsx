@@ -29,8 +29,7 @@ export default function Leaderboard() {
       try {
         setLoading(true); // boshlanishida loading true
         const educationData = await getEducationData()
-        const student = educationData.students;
-        const studentPublish = educationData.students.filter((s: any) => s.publishStudent === true);
+        const studentPublish = educationData?.students?.filter((s: any) => s.publishStudent === true);
         setLeaderUser(studentPublish)                
       } catch (err: any) {
         console.error("Xatolik yuz berdi:", err);

@@ -10,7 +10,7 @@ export const dynamic = "force-dynamic";
 
 export default async function ShopList() {
   const getEducationShop = await getEducationData();
-  const products = getEducationShop.shops;
+  const products = getEducationShop?.shops;
   
   return (
     <div className="container w-full pt-[75px]">
@@ -19,7 +19,7 @@ export default async function ShopList() {
       </article>
       <div>
         <div className="grid grid-cols-2 gap-2 pb-20 px-3">
-          {products.length < 1 ? (
+          {products?.length < 1 ? (
             <div className="w-full h-full">
               <article className="flex flex-col items-center gap-2 absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
                 <FiBox className="w-[30px] h-[30px] stroke-1 drop-shadow-xl stroke-orange-500 animate-bounce" />
@@ -35,17 +35,12 @@ export default async function ShopList() {
                   <div className="border w-full flex flex-col justify-between rounded-lg bg-white overflow-hidden">
                     <article className="w-full h-[170px] overflow-hidden flex justify-center mb-5 relative">
                       <Image
-                        className="w-full h-full object-cover filter blur-[2px] brightness-75"
+                        className="w-full h-full object-cover filter blur-[2px] brightness-65"
                         src={product.image}
                         alt={product.title}
                         width={200}
                         height={200}
                       />
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <p className="text-white text-sm font-semibold bg-black/60 px-3 py-1 rounded">
-                          Mahsulot qolmadi!
-                        </p>
-                      </div>
                     </article>
                     <div className="px-2 pb-3">
                       <article className="mb-3">
@@ -58,6 +53,7 @@ export default async function ShopList() {
                             {product.price}
                           </span>
                         </span>
+                        <p className="text-red-500 text-[12px]">Mahsulot qolmadi !</p>
                       </article>
                       <button
                         disabled
