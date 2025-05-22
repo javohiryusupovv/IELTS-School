@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 import NextTopLoader from 'nextjs-toploader'
+import Head from "next/head";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,6 +27,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <Head>
+        {/* Zoomni o‘chiruvchi meta tag */}
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        />
+      </Head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased !pointer-events-auto`} suppressHydrationWarning
       >
