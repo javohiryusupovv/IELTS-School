@@ -58,7 +58,6 @@ export default function ClientComponent({ product, coins, student }: Props) {
           color: "orange",            // qora sariq matn rangi
           border: "1px solid orange",
           height: "50px",
-          marginTop: "50px"
         },
       });
     }
