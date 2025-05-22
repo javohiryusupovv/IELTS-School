@@ -27,6 +27,7 @@ export interface IAdministrator {
     password: string;
     phone: string;
     role: string;
+    isBlocked: boolean,
     educationCenter?: string;
 }
 

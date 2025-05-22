@@ -9,8 +9,8 @@ import { cookies } from "next/headers";
 import ConnectMonogDB from "@/lib/mongodb";
 import NavbarMedia from "./_components/navbarMedia";
 import PaymentSend from "../crm/_components/PaymentDays";
-import Education from "@/models/courseBox.model";
 import AdministratorModel from "@/models/administrator.model";
+import { redirect } from "next/navigation";
 
 export default async function DashboardLayout({
   children,
@@ -19,7 +19,7 @@ export default async function DashboardLayout({
 }) {
   const cookie = (await cookies()).get("admin-auth");
   let adminData = null;
-
+  
   if (cookie && cookie.value) {
     try {
       const adminInfo = JSON.parse(cookie.value); // contains _id, role, isOwner
@@ -32,8 +32,9 @@ export default async function DashboardLayout({
           password: admin.password,
           fullname: admin.fullname,
           phone: admin.phone,
-          role: admin.role,
-        };
+          isBlocked: admin.isBlocked,
+          role: admin.role
+        }
       }
     } catch (error) {
       console.error("Error fetching admin data", error);
@@ -59,9 +60,9 @@ export default async function DashboardLayout({
           </div>
         </div>
 
-        <div className="w-full mb-4 overflow-hidden">
+        {/* <div className="w-full mb-4 overflow-hidden">
           <PaymentSend />
-        </div>
+        </div> */}
 
         <div className="md:p-5 p-3 bg-white min-h-screen mb-4">{children}</div>
 

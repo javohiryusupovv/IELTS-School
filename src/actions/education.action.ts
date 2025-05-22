@@ -8,6 +8,7 @@ import PaymentAdd from "@/models/payment.model";
 import Education from "@/models/courseBox.model";
 import { Course, Student, Teacher, Shop } from "@/models/index";
 import AdministratorModel from "@/models/administrator.model";
+import { formatDateFromDMY } from "../../constants/page";
 
 export const educationCreate = async (
   education: IEducationCenter,
@@ -61,7 +62,6 @@ export const getEducationData = async () => {
         options: { strictPopulate: false }
       }
     ]);
-
     return JSON.parse(JSON.stringify(educationData)); // frontga mos format
   } catch (error) {
     throw new Error(
@@ -139,6 +139,7 @@ export const getPaymentsLast = async () => {
   try {
     await ConnectMonogDB();
     const lastPayment = await PaymentAdd.findOne().sort({ createdAt: -1 }); // eng oxirgi to'lovlar birinchi chiqadi
+
     return lastPayment ? JSON.parse(JSON.stringify(lastPayment)) : null;
   } catch (error) {
     throw new Error("To'lovlarni olishda xatolik");

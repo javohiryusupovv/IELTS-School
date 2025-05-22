@@ -1,6 +1,6 @@
 import Marquee from "react-fast-marquee";
 import { Banknote, CalendarClock } from "lucide-react";
-import { formatDateFromDMY, lastPaymentDate } from "../../../../constants/page";
+import { formatDateFromDMY } from "../../../../constants/page";
 import { getPaymentsLast } from "@/actions/education.action";
 import Link from "next/link";
 import { ArrowRight } from 'lucide-react';

@@ -51,7 +51,16 @@ export default function ClientComponent({ product, coins, student }: Props) {
         setOpen(false);
       }
     } else {
-      toast.error(`Sizda yetarli coin mavjud emas!`);
+      toast.warning("Sizda yetarli coin mavjud emas!", {
+        duration: 3000, // 3 soniya davomida ko‘rsatiladi
+        style: {
+          backgroundColor: "white",  // sariq fon (Bootstrap warning rangi)
+          color: "orange",            // qora sariq matn rangi
+          border: "1px solid orange",
+          height: "50px",
+          marginTop: "50px"
+        },
+      });
     }
   };
 

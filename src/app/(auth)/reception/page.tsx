@@ -15,6 +15,7 @@ export default function ReceptionLogin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
+  const [isBlocked, setIsBlocked] = useState(false);
   const router = useRouter();
   const [isloading, setLoading] = useState(false);
   const topLoading = useTopLoader();
@@ -27,40 +28,78 @@ export default function ReceptionLogin() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    topLoading.start()
+    setIsBlocked(false);
+    setError(false);
+    topLoading.start();
+  
     try {
       const admin = await LoginAdmin(username, password);
-      if (admin) {
-        // Teacher topilsa
-        toast.success("Tizimda mavjud user", {
+  
+      if (!admin) {
+        // ❌ Admin topilmadi
+        setError(true);
+        toast.warning("Afsuski tizimda mavjud emassiz !", {
           duration: 2000,
           style: {
             height: "50px",
-            color: "green",
-            border: "1px solid #17be5a",
+            color: "orange",
+            border: "1px solid orange",
             backgroundColor: "white",
           },
-        })
-        router.push("/dashboard");
-      } else {
-        // Teacher topilmasa
-        router.push("/reception");
-        toast.error("Afsuski tizimda mavjud emassiz !");
-        setError(true);
+        });
         setLoading(false);
-        topLoading.done()
+        topLoading.done();
+        return;
       }
+  
+      if (admin.isBlocked) {
+        // 🚫 Admin topildi, lekin bloklangan
+        setIsBlocked(true);
+        toast.error("Hisobingiz bloklangan!", {
+          duration: 2000,
+          style: {
+            height: "50px",
+            color: "red",
+            border: "1px solid red",
+            backgroundColor: "white",
+          },
+        });
+        setLoading(false);
+        topLoading.done();
+        return;
+      }
+  
+      // ✅ Admin mavjud va bloklanmagan
+      toast.success("Tizimga muvaffaqiyatli kirdingiz!", {
+        duration: 2000,
+        style: {
+          height: "50px",
+          color: "green",
+          border: "1px solid #17be5a",
+          backgroundColor: "white",
+        },
+      });
+      
+      router.push("/dashboard");
+  
     } catch (error) {
-      console.error("Login qilinmadi Frontenda", error);
-      setError(true)
-      setLoading(false);
+      console.error("Login xatosi:", error);
+      toast.error("Kutilmagan xatolik yuz berdi");
+      setError(true);
       topLoading.done()
+      setLoading(false)
     }
   };
+  
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <Image width={200} className="mb-8" src={LoginLogo} alt="Logo" />
+      {isBlocked && (
+        <p className="mb-4 text-red-600 font-semibold text-center">
+          To'lov qilmaganingiz uchun hisobingiz bloklangan. Iltimos, to'lov qiling.
+        </p>
+      )}
       <form
         onSubmit={handleSubmit}
         className="bg-white p-6 rounded-xl shadow-md w-full max-w-sm"
