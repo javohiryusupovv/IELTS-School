@@ -59,7 +59,7 @@ export default async function ShopList() {
                         disabled
                         className="w-full px-8 py-2 rounded-sm cursor-not-allowed bg-gray-300 text-white text-[14px]"
                       >
-                        Mahsulot tugagan
+                        Tugadi
                       </button>
                     </div>
                   </div>
