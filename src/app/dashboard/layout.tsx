@@ -10,7 +10,6 @@ import ConnectMonogDB from "@/lib/mongodb";
 import NavbarMedia from "./_components/navbarMedia";
 import PaymentSend from "../crm/_components/PaymentDays";
 import AdministratorModel from "@/models/administrator.model";
-import { redirect } from "next/navigation";
 
 export default async function DashboardLayout({
   children,

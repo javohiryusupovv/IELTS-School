@@ -9,6 +9,8 @@ import CreditCard from "../../../public/students/card4.png";
 import CreditCardChip from "../../../public/students/cardChip.png";
 import CreditCardWife from "../../../public/students/wife.png";
 import IQLogo from "../../../public/students/logoCard.png";
+import { Metadata } from "next";
+import Head from "../head";
 
 
 export default async function StudentDashboard() {
@@ -17,7 +19,9 @@ export default async function StudentDashboard() {
     student?.coins?.reduce((sum: number, coin: any) => sum + coin.value, 0) ??
     0;
   return (
-    <div className="pt-[100px] pb-[60px] container-cus">
+    <div>
+      <Head/>
+      <div className="pt-[100px] pb-[60px] container-cus">
       <article className="w-11/12 rounded-md m-auto mb-10">
         <div className=" relative top-0 left-0 rounded-[20px] overflow-hidden">
           <Image
@@ -71,5 +75,7 @@ export default async function StudentDashboard() {
         <HistoryCoins />
       </div>
     </div>
+    </div>
+    
   );
 }

@@ -11,16 +11,6 @@ import {
 
   export async function initSDK(): Promise<string> {
     init();
-    if (typeof window !== "undefined") {
-      document.addEventListener(
-        "gesturestart",
-        function (e) {
-          e.preventDefault();
-        },
-        { passive: false }
-      );
-    }
-  
     if (!backButton.isSupported() || !miniApp.isSupported()) {
       return Promise.reject("Telegram Web App komponentlari qo‘llab-quvvatlanmayapti.");
     }
