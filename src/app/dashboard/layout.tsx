@@ -24,31 +24,16 @@ export default async function DashboardLayout({
     try {
       const adminInfo = JSON.parse(cookie.value); // contains _id, role, isOwner
       await ConnectMonogDB();
-
-      if (adminInfo.isOwner) {
-        const owner = await Education.findById(adminInfo._id);
-        if (owner) {
-          adminData = {
-            _id: owner._id.toString(),
-            login: owner.login,
-            password: owner.password,
-            fullname: owner.ownerName,
-            phone: owner.phoneNumber,
-            role: owner.role,
-          };
-        }
-      } else {
-        const admin = await AdministratorModel.findOne({ educationCenter: adminInfo._id });
-        if (admin) {
-          adminData = {
-            _id: admin._id.toString(),
-            login: admin.login,
-            password: admin.password,
-            fullname: admin.fullname,
-            phone: admin.phone,
-            role: admin.role,
-          };
-        }
+      const admin = await AdministratorModel.findById(adminInfo._id);
+      if (admin) {
+        adminData = {
+          _id: admin._id.toString(),
+          login: admin.login,
+          password: admin.password,
+          fullname: admin.fullname,
+          phone: admin.phone,
+          role: admin.role,
+        };
       }
     } catch (error) {
       console.error("Error fetching admin data", error);
@@ -75,7 +60,7 @@ export default async function DashboardLayout({
         </div>
 
         <div className="w-full mb-4 overflow-hidden">
-         <PaymentSend/>
+          <PaymentSend />
         </div>
 
         <div className="md:p-5 p-3 bg-white min-h-screen mb-4">{children}</div>

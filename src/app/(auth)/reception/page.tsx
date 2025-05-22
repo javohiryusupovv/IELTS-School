@@ -32,7 +32,7 @@ export default function ReceptionLogin() {
       const admin = await LoginAdmin(username, password);
       if (admin) {
         // Teacher topilsa
-        toast.success("Admin topildi", {
+        toast.success("Tizimda mavjud user", {
           duration: 2000,
           style: {
             height: "50px",
@@ -45,7 +45,7 @@ export default function ReceptionLogin() {
       } else {
         // Teacher topilmasa
         router.push("/reception");
-        toast.error("Admin topilmadi ...");
+        toast.error("Afsuski tizimda mavjud emassiz !");
         setError(true);
         setLoading(false);
         topLoading.done()

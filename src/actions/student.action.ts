@@ -137,7 +137,7 @@ export const ActiveStudent = async (
 ) => {
   try {
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      throw new Error("Noto‘g‘ri ID!");
+      throw new Error("Noto'g'ri ID!");
     }
     await ConnectMonogDB();
     const updatedStudent = await Student.findByIdAndUpdate(

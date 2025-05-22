@@ -29,7 +29,7 @@ export async function middleware(request: NextRequest) {
       const parsed = JSON.parse(decoded);
       const role = parsed?.role;
 
-      if (role !== "owner" && role !== "coinx") {
+      if (role !== "owner") {
         return NextResponse.redirect(new URL("/reception", request.url));
       }
     } catch (error) {
@@ -37,8 +37,6 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL("/reception", request.url));
     }
   }
-
-  // 4. CRM sahifasiga faqat owner kirishi kerak
 
   return NextResponse.next();
 }

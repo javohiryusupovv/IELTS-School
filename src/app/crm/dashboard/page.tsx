@@ -20,8 +20,6 @@ export default async function page() {
               <th className="py-3">Learning center</th>
               <th className="py-3">Owner</th>
               <th className="py-3">Number</th>
-              <th className="py-3">Login</th>
-              <th className="py-3">Password</th>
               <th className="py-3">Last payment</th>
             </tr>
           </thead>
@@ -41,16 +39,6 @@ export default async function page() {
                 <td className="py-4">
                   <span className="font-medium text-gray-900">
                     {item.phoneNumber}
-                  </span>
-                </td>
-                <td className="py-4">
-                  <span className="font-medium text-gray-900">
-                    {item.login}
-                  </span>
-                </td>
-                <td className="py-4">
-                  <span className="font-medium text-gray-900">
-                    {item.password}
                   </span>
                 </td>
                 <td className="py-4">

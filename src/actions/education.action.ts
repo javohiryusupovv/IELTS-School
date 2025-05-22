@@ -6,7 +6,6 @@ import CrmAccount from "@/models/administrator.model";
 import { revalidatePath, revalidateTag } from "next/cache";
 import PaymentAdd from "@/models/payment.model";
 import Education from "@/models/courseBox.model";
-import { cookies } from "next/headers";
 import { Course, Student, Teacher, Shop } from "@/models/index";
 import AdministratorModel from "@/models/administrator.model";
 
@@ -29,14 +28,8 @@ export const educationCreate = async (
 
 export const getEducationData = async () => {
   try {
-    const cookieStore = await cookies();
-    const cookie = cookieStore.get("admin-auth");
-    if (!cookie?.value) return null;
-
-    const { _id } = JSON.parse(cookie.value); // adminning educationCenter _id si
     await ConnectMonogDB();
-
-    const educationData = await Education.findById(_id).populate([
+    const educationData = await Education.findOne({}).populate([
       {
         path: "teachers",
         select: "teacherName teacherSurname teacherPhone",

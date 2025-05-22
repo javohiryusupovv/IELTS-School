@@ -25,8 +25,6 @@ export default function EducationAction() {
             educationTitle: data.get("educationTitle") as string,
             ownerName: data.get("ownerName") as string,
             phoneNumber: data.get("phoneNumber") as string,
-            login: data.get("login") as string,
-            password: data.get("ispassword") as string,
             role: "owner"
         };
 
@@ -43,7 +41,7 @@ export default function EducationAction() {
                         backgroundColor: "white",
                     },
                 },
-                error: "O'quvchini qo'shishda xatolik!",
+                error: "O'quv markaz faqat 1 marta qo'shiladi",
             });
         await edu
         console.log(info);
@@ -117,30 +115,6 @@ export default function EducationAction() {
                 />
               </article>
             </article>
-            <article className="flex flex-col justify-start">
-              <label htmlFor="" className="mb-2">
-                Login
-              </label>
-              <input
-                name="login"
-                onInput={handlePhoneNumberInput}
-                type="text"
-                className="w-full py-2 px-4 border outline-none rounded-md"
-                placeholder="Login kiriting ..."
-              />
-            </article>
-            <article className="flex flex-col justify-start">
-              <label htmlFor="" className="mb-2">
-                Password
-              </label>
-              <input
-                name="ispassword"
-                type="text"
-                className="w-full py-2 px-4 border outline-none rounded-md"
-                placeholder="Password kiriting ..."
-              />
-            </article>
-
             <button
               type="submit"
               className="px-2 py-2 border rounded-md cursor-pointer bg-green-500 text-white"
