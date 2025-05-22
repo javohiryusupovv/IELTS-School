@@ -3,10 +3,12 @@
 @tailwind utilities;
 
 html, body {
-  touch-action: manipulation;
-  overscroll-behavior: contain;
+  touch-action: manipulation; /* Zoom va scrollni cheklaydi */
+  overscroll-behavior: contain; /* iOS va Android scroll effektlaridan himoya */
+  -webkit-user-drag: none;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
 }
-
 
 .scrolbars::-webkit-scrollbar{ 
   display: none; 
