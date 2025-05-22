@@ -24,6 +24,7 @@ export default function DialogCloseButton({educationData}: Props) {
   
   const handleSubmitAccounts = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const isBlock = false
     try {
       const data = new FormData(e.currentTarget);
       const fullData = {
@@ -32,6 +33,7 @@ export default function DialogCloseButton({educationData}: Props) {
         password: data.get("password") as string,
         phone: data.get("phone") as string,
         role: data.get("attendance") as string,
+        isBlocked: isBlock as boolean, 
         educationCenter: educationData._id 
       };
 
