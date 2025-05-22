@@ -137,14 +137,14 @@ export default async function StudentAll() {
                 ))}
               </tbody>
             </table>
-            <div className="strelka:hidden">
+            {/* <div className="strelka:hidden">
               <div className=" flex items-center justify-between absolute left-[250px]">
                 <FaArrowLeft size={12} color="orange" />
               </div>
               <div className=" flex items-center justify-between absolute right-[28px]">
                 <FaArrowRight size={12} color="orange" />
               </div>
-            </div>
+            </div> */}
           </div>
         )}
       </div>
