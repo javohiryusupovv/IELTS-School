@@ -20,7 +20,6 @@ export default async function StudentDashboard() {
     0;
   return (
     <div>
-      <Head/>
       <div className="pt-[100px] pb-[60px] container-cus">
       <article className="w-11/12 rounded-md m-auto mb-10">
         <div className=" relative top-0 left-0 rounded-[20px] overflow-hidden">
