@@ -9,8 +9,6 @@ import CreditCard from "../../../public/students/card4.png";
 import CreditCardChip from "../../../public/students/cardChip.png";
 import CreditCardWife from "../../../public/students/wife.png";
 import IQLogo from "../../../public/students/logoCard.png";
-import { Metadata } from "next";
-import Head from "../head";
 
 
 export default async function StudentDashboard() {
