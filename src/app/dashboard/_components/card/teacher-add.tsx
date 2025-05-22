@@ -49,7 +49,7 @@ function TeacherCreated({educationProp}: Props) {
       return;
     }
     const { name, surname, password, phoneNumber } = validateTeacher.data;
-    const role = "adminstrator"; // Define the role variable
+    const role = "o'qituvchi"; // Define the role variable
     try {
       if (!educationProp._id) {
         setError(["Ta'lim markazi aniqlanmadi"]);

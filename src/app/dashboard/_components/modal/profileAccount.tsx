@@ -53,7 +53,8 @@ export default function ProfileAccount({ admin }: Props) {
                   </span>
                 </article>
               </article>
-              <EditProfile />
+              {/* admin profiline edi qilish */}
+              {/* <EditProfile /> */}
             </article>
             <hr className="mb-3" />
             <div className="flex flex-col gap-3">
