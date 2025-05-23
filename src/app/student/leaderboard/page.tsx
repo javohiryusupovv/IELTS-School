@@ -52,7 +52,7 @@ export default function Leaderboard() {
 
   const sorted = totalCoins?.sort((a, b) => b.total - a.total);
   return (
-    <div className="pb-20  relative top-0 left-0 overflow-hidden">
+    <div className="pb-20 relative top-0 left-0 overflow-hidden">
       <Image
         className=" fixed -left-10 top-20 w-[120px] rotate-[30deg] blur-[2px] -z-[1]"
         src={GiftImg}
