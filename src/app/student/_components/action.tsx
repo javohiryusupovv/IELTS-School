@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function MenyuCoin() {
   return (
     <div className="flex flex-col gap-3">
-      <Link href={`/student/history/coinsucces`} className="group w-full flex justify-between items-center px-4 py-2 border rounded-md cursor-pointer bg-accent active:bg-green-500/50 active:text-white">
+      <Link href={`/student/history/coinsucces`} className="group w-full flex justify-between items-center px-4 py-2 border rounded-md cursor-pointer bg-accent active:bg-green-500/0 active:text-white">
         <article className="flex items-center gap-2 text-[13px]">
           <LaptopMinimalCheck className="stroke-green-500 group-active:stroke-white" /> Qabul qilingan
           Coinlar

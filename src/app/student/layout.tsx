@@ -2,6 +2,7 @@ import { ShoppingBag } from "lucide-react";
 import Link from "next/link";
 import { BiHome } from "react-icons/bi";
 import { GiTrophyCup } from "react-icons/gi";
+import "./tgbot.css"
 
 export default async function Student({
   children,
@@ -9,9 +10,9 @@ export default async function Student({
   children: React.ReactNode;
 }) {
   return (
-    <div className="w-full flex justify-center">
-      <div className="max-w-[480px] flex-grow w-full">
-        <main className="bg-gray-300/30" style={{ height: "calc(100dvh)", overflowY: "auto" }}>{children}</main>
+    <div className="w-full flex justify-center h-dvh">
+      <div className="max-w-[480px] flex-grow w-full mb-10">
+        <main className="bg-gray-300/30 overflow-y-auto pb-[64px]">{children}</main>
         <footer className="fixed bottom-0 max-w-[480px] w-full">
             <article className="flex justify-between items-end w-full px-4 py-2 bg-gray-300">
                 <Link href={`/student`} className="flex flex-col items-center cursor-pointer group">
