@@ -10,7 +10,7 @@ export default async function Student({
   children: React.ReactNode;
 }) {
   return (
-    <div className="fixed w-full flex justify-center h-dvh">
+    <div className="w-full flex justify-center h-dvh">
       <div className="max-w-[480px] flex-grow w-full mb-10">
         <main className="bg-gray-300/30 overflow-y-auto pb-[64px]">{children}</main>
         <footer className="fixed bottom-0 max-w-[480px] w-full">
