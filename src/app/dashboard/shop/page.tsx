@@ -44,8 +44,8 @@ async function ShopAdmin() {
            
 
             <p className="line-clamp-2 mb-2">{item.title}</p>
-            <p>Mavjud: {item.totalQuantity}</p>
-            <p>Qolgan: {item.remainingQuantity}</p>
+            <p>Mavjud: <span className="text-green-500">{item.totalQuantity} dona</span></p>
+            <p>Qolgan: <span className={` ${item.remainingQuantity < 1 ? "text-red-500" : "text-green-500"}`}>{item.remainingQuantity} dona</span></p>
           </div>
         ))}
       </div>

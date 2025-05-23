@@ -14,7 +14,7 @@ export default async function DashboardTeacher() {
   return (
     <div>
         <article className="flex justify-between items-center mb-3">
-            <h6 className="font-semibold md:text-[26px] text-lg">Bizning Mentorlar</h6>
+            <h6 className="font-semibold md:text-[26px] text-lg">Bizning O'qituvchilar</h6>
             <TeacherCreated educationProp={getEducation}/>
         </article>
         <hr className="mb-7" />
@@ -23,7 +23,7 @@ export default async function DashboardTeacher() {
           <div className='flex  items-center justify-center w-full h-[80vh]'>
             <article className='flex flex-col gap-2 items-center justify-center'>
               <UserRoundPlus className='w-[50px] h-10 stroke-gray-500 stroke-[1.4]'/>
-              <p className='text-gray-500 text-lg'>Teacher qo'shing</p>
+              <p className='text-gray-500 text-lg'>O'qituvchi qo'shing</p>
             </article>
           </div>
           ) : (

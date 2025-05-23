@@ -5,7 +5,7 @@ import { getStudentFromCookie } from "@/actions/student.check";
 import HistoryCoins from "./_components/page";
 import Persons from "../../../public/img/twoPerson.png";
 
-import CreditCard from "../../../public/students/card4.png";
+import CreditCard from "../../../public/students/card66.png";
 import CreditCardChip from "../../../public/students/cardChip.png";
 import CreditCardWife from "../../../public/students/wife.png";
 import IQLogo from "../../../public/students/logoCard.png";
@@ -20,21 +20,17 @@ export default async function StudentDashboard() {
     <div>
       <div className="pt-[100px] pb-[60px] container-cus">
       <article className="w-11/12 rounded-md m-auto mb-10">
-        <div className=" relative top-0 left-0 rounded-[20px] overflow-hidden">
-          <Image
-            className="absolute left-10 top-5 w-[150px] container-img"
-            src={IQLogo}
-            alt="ChipCard"
-          />
-          <article className="custom-cardBG absolute top-16 w-full flex justify-between items-center px-10">
-            <Image className="chip" src={CreditCardChip} alt="ChipCard" />
+        <div className=" relative top-0 left-0 rounded-[20px] overflow-hidden bg-red-300">
+          <Image className="absolute left-10 top-5 w-[150px] container-img" src={IQLogo} alt="ChipCard"/>
+          <article className="custom-cardBG absolute top-20 w-full flex justify-between items-center px-10">
+            <Image className="chip w-11" src={CreditCardChip} alt="ChipCard" />
             <Image
-              className="wife"
+              className="wife w-6"
               src={CreditCardWife}
               alt="CreditCard Wife"
             />
           </article>
-          <Image src={CreditCard} alt="CardCredit" />
+          <Image className="w-full" src={CreditCard} alt="CardCredit" />
           <div className="custom-hold flex justify-between w-full absolute bottom-0 h-[70px] px-10 backdrop-blur-sm bg-white/30">
             <article className="mt-3">
               <p className="text-[13px] text-white holder-title">Karta egasi</p>

@@ -41,7 +41,7 @@ export default async function StudentAll() {
           <div className="w-full h-[80vh] flex gap-2 flex-col justify-center items-center">
             <UserX className="w-[50px] h-10 stroke-gray-500 stroke-[0.9px]" />
             <p className="text-center text-gray-500 text-lg">
-              Studentlar topilmadi
+              Talabalar topilmadi
             </p>
           </div>
         ) : (
@@ -56,13 +56,13 @@ export default async function StudentAll() {
                     Ism - Familiya
                   </th>
                   <th className="py-3 max-md:text-[12px] max-lg:text-[14px]">
-                    Course
+                    Kurs
                   </th>
                   <th className="py-3 max-md:text-[12px] max-lg:text-[14px]">
-                    StudentID
+                    TalabaID
                   </th>
                   <th className="py-3 max-md:text-[12px] max-lg:text-[14px]">
-                    Phone
+                    Telefon
                   </th>
                 </tr>
               </thead>
