@@ -18,8 +18,8 @@ export default async function StudentDashboard() {
     0;
   return (
     <div>
-      <div className="pt-[100px] pb-[60px] container-cus">
-      <article className="w-11/12 rounded-md m-auto mb-10">
+      <div className="pt-[100px] container-cus">
+      <article className="w-11/12 rounded-md m-auto">
         <div className=" relative top-0 left-0 rounded-[20px] overflow-hidden bg-red-300">
           <Image className="absolute left-10 top-5 w-[150px] container-img" src={IQLogo} alt="ChipCard"/>
           <article className="custom-cardBG absolute top-20 w-full flex justify-between items-center px-10">

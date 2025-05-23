@@ -14,7 +14,7 @@ export default async function ShopList() {
   
   return (
     <div className="container w-full pt-[75px]">
-      <article className="w-full text-center py-2 mb-8">
+      <article className="w-full text-center py-2">
         <p className="text-[20px] font-medium text-orange-500">Shop Bo'limi</p>
       </article>
       <div>
