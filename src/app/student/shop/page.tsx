@@ -13,7 +13,7 @@ export default async function ShopList() {
   const products = getEducationShop?.shops;
   
   return (
-    <div className="container w-full pt-[75px]">
+    <div className="container w-full pt-[75px] h-dvh">
       <article className="w-full text-center py-2 mb-8">
         <p className="text-[20px] font-medium text-orange-500">Shop Bo'limi</p>
       </article>

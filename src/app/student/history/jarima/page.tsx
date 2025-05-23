@@ -21,7 +21,7 @@ export default async function CoinJarima() {
   );
 
   return (
-    <div className="w-11/12 m-auto pt-[100px]">
+    <div className="w-11/12 m-auto pt-[100px] h-dvh">
       <article className="w-full">
       {/* <Link href={`/student`} className="inline-flex items-center gap-1 bg-accent border-[0.8px] mb-10 px-3 py-2 text-[12px] rounded-full cursor-pointer">
           <ChevronLeft className="w-5 h-5"/>

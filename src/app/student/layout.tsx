@@ -11,9 +11,9 @@ export default async function Student({
 }) {
   return (
     <div className="w-full flex justify-center h-dvh">
-      <div className="max-w-[480px] flex-grow w-full mb-10">
-        <main className="bg-gray-300/30 overflow-y-auto pb-16">{children}</main>
-        <footer className="fixed bottom-0 max-w-[480px] w-full h-16">
+      <div className="max-w-[480px] w-full">
+        <main className="bg-gray-300/30 overflow-y-auto">{children}</main>
+        <footer className="fixed bottom-0 max-w-[480px] w-full">
             <article className="flex justify-between items-end w-full px-4 py-2 bg-gray-300">
                 <Link href={`/student`} className="flex flex-col items-center cursor-pointer group">
                     <BiHome className="text-3xl group-hover:fill-white transition-all duration-150" />
