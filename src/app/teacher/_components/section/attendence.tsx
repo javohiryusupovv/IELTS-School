@@ -11,7 +11,7 @@ import {
   LockKeyhole,
   CheckCheck,
   Info,
-  User
+  User,
 } from "lucide-react";
 import {
   Tooltip,
@@ -29,15 +29,15 @@ import { PopoverClose } from "@radix-ui/react-popover";
 import { usePathname } from "next/navigation";
 import { formatDate, reasonsWithValues } from "../../../../../constants/page";
 import { ICourse } from "@/types/type";
-
+import EctraCoin from "../extra/extracoin";
 
 interface Props {
   students: any;
   days: string[];
   titleCourse: string;
   teacherName: string;
-  course: ICourse,
-  roleTeacher: string
+  course: ICourse;
+  roleTeacher: string;
 }
 
 export default function Attendence({
@@ -46,7 +46,7 @@ export default function Attendence({
   days,
   titleCourse,
   teacherName,
-  roleTeacher
+  roleTeacher,
 }: Props) {
   const [selectedCell, setSelectedCell] = useState<{
     studentID: string;
@@ -59,8 +59,6 @@ export default function Attendence({
     leader: false,
   });
   const pathname = usePathname();
-
-
 
   const handleOnChangeChecked = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, checked } = e.target;
@@ -139,7 +137,6 @@ export default function Attendence({
         value: reasonsWithValues[key as keyof typeof reasonsWithValues],
       }));
 
-
     try {
       toast.promise(
         addCoins(studentId, filteredReasonsArray, pathname, selectedCell?.day),
@@ -170,8 +167,6 @@ export default function Attendence({
     }
   };
 
-
-
   return (
     <div className="p-4">
       <div className="flex w-full flex-col relative">
@@ -183,7 +178,7 @@ export default function Attendence({
             {teacherName}
           </h6>
         </article>
-        <div className="flex items-center justify-end mr-10 gap-4 mb-5 max-btn:absolute -bottom-[270px] -right-10">
+        <div className="flex items-center justify-end mr-10 gap-4 mb-5 max-btn:absolute -bottom-[385px] -right-10">
           <button
             onClick={prevMonth}
             className="flex items-center py-[2px] px-2 border rounded-sm  focus:bg-orange-500 bg-[#ffa600b8]"
@@ -206,23 +201,46 @@ export default function Attendence({
           </button>
         </div>
       </div>
-      <div className="grid btn:grid-cols-4 grid-cols-3 justify-between gap-10">
+      <div className="grid btn:grid-cols-4 grid-cols-3 justify-between items-start gap-10">
         <div className="max-btn:w-[400px] max-sm:w-[300px] max-teacher:w-[250px] border px-5 pt-5 pb-16 col-span-1 rounded shadow-md shadow-gray-500/10">
           <article>
-            <p className="flex gap-3 items-center text-[14px]"><strong className="font-medium text-[13px]">Kurs: </strong> {course.courseTitle}</p>
+            <p className="flex gap-3 items-center text-[14px]">
+              <strong className="font-medium text-[13px]">Kurs: </strong>{" "}
+              {course.courseTitle}
+            </p>
           </article>
           <article className="flex gap-3 items-center text-[14px]">
-            <p><strong className="font-medium text-[13px]">O'qituvchi: </strong> {teacherName}</p>
+            <p>
+              <strong className="font-medium text-[13px]">O'qituvchi: </strong>{" "}
+              {teacherName}
+            </p>
           </article>
           <article>
-             <p><strong className="font-medium text-[13px]">Role: </strong> {roleTeacher}</p>
+            <p>
+              <strong className="font-medium text-[13px]">Role: </strong>{" "}
+              {roleTeacher}
+            </p>
           </article>
           <article className="flex gap-3 items-center text-[14px]">
-            <p><strong className="font-medium text-[13px]">O'quvchilar soni: </strong> {students.length} ta</p>
+            <p>
+              <strong className="font-medium text-[13px]">
+                O'quvchilar soni:{" "}
+              </strong>{" "}
+              {students.length} ta
+            </p>
           </article>
           <article className="text-[14px]">
-            <p><strong className="font-medium text-[13px]">Dars muddati: </strong></p>
-            <p>{formatDate(course.startDate)} — {formatDate(course.endDate)}</p>
+            <p>
+              <strong className="font-medium text-[13px]">
+                Dars muddati:{" "}
+              </strong>
+            </p>
+            <p>
+              {formatDate(course.startDate)} — {formatDate(course.endDate)}
+            </p>
+          </article>
+          <article className="mt-14">
+            <EctraCoin students={students} />
           </article>
         </div>
         <div className="col-span-3  xl:w-full overflow-hidden">
@@ -259,8 +277,8 @@ export default function Attendence({
                       );
                       const isToday = moment(day).isSame(today, "day");
                       const isCoinGiven = student.coins?.some((coin: any) =>
-                      moment(coin.date).isSame(day, "day")
-                    );
+                        moment(coin.date).isSame(day, "day")
+                      );
 
                       return (
                         <td key={i} className="text-[12px] p-3">
@@ -278,7 +296,9 @@ export default function Attendence({
                                         <CheckCheck className="stroke-green-500 stroke-[1.4] w-4 h-5" />
                                       </TooltipTrigger>
                                       <TooltipContent>
-                                        <p className="text-green-500">Coin berilgan</p>
+                                        <p className="text-green-500">
+                                          Coin berilgan
+                                        </p>
                                       </TooltipContent>
                                     </Tooltip>
                                   </TooltipProvider>
@@ -287,7 +307,9 @@ export default function Attendence({
                                   <Popover>
                                     <PopoverTrigger
                                       asChild
-                                      onClick={() => handleSelect(student._id, day)}
+                                      onClick={() =>
+                                        handleSelect(student._id, day)
+                                      }
                                     >
                                       <button className="w-9 h-7 cursor-pointer border rounded-md hover:border-green-500 transition-all duration-300"></button>
                                     </PopoverTrigger>
@@ -306,7 +328,10 @@ export default function Attendence({
                                             name="attendance"
                                           />
                                           -
-                                          <label htmlFor="homework" className="text-[13px]">
+                                          <label
+                                            htmlFor="homework"
+                                            className="text-[13px]"
+                                          >
                                             Uyga vazifa
                                           </label>
                                         </article>
@@ -319,7 +344,10 @@ export default function Attendence({
                                             name="attendance"
                                           />
                                           -
-                                          <label htmlFor="keldi" className="text-[13px]">
+                                          <label
+                                            htmlFor="keldi"
+                                            className="text-[13px]"
+                                          >
                                             Vaqtida keldi
                                           </label>
                                         </article>
@@ -339,7 +367,11 @@ export default function Attendence({
                                   <Tooltip>
                                     <TooltipTrigger
                                       disabled
-                                      className={`cursor-pointer flex justify-center items-center py-1 px-2 rounded ${isCoinGiven ? "bg-[#f0f9f3]" : "bg-[#ff000013]"}`}
+                                      className={`cursor-pointer flex justify-center items-center py-1 px-2 rounded ${
+                                        isCoinGiven
+                                          ? "bg-[#f0f9f3]"
+                                          : "bg-[#ff000013]"
+                                      }`}
                                     >
                                       {isCoinGiven ? (
                                         <CheckCheck className="stroke-green-500 stroke-[1.4] w-5 h-5" />
@@ -348,8 +380,16 @@ export default function Attendence({
                                       )}
                                     </TooltipTrigger>
                                     <TooltipContent>
-                                      <p className={isCoinGiven ? "text-green-500" : "text-red-500"}>
-                                        {isCoinGiven ? "Coin berilgan" : "Coin berilmagan"}
+                                      <p
+                                        className={
+                                          isCoinGiven
+                                            ? "text-green-500"
+                                            : "text-red-500"
+                                        }
+                                      >
+                                        {isCoinGiven
+                                          ? "Coin berilgan"
+                                          : "Coin berilmagan"}
                                       </p>
                                     </TooltipContent>
                                   </Tooltip>
@@ -373,7 +413,6 @@ export default function Attendence({
                             )}
                           </span>
                         </td>
-
                       );
                     })}
                   </tr>
