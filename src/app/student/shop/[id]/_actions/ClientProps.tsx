@@ -13,7 +13,7 @@ import { toast } from "sonner";
 import { useState } from "react";
 import { salesUpdateCoins } from "@/actions/student.action";
 import { usePathname, useRouter } from "next/navigation";
-import {  handleClickConfetti } from "./confetti";
+import { handleClickConfetti } from "./confetti";
 
 interface Props {
   product: ICreateShop;
@@ -25,7 +25,7 @@ export default function ClientComponent({ product, coins, student }: Props) {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const pathname = usePathname();
-  const router = useRouter()
+  const router = useRouter();
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -40,7 +40,6 @@ export default function ClientComponent({ product, coins, student }: Props) {
         if (result.success) {
           handlePurchaseBot();
           handleClickConfetti();
-
         } else {
           toast.error("Coin ayirishda xatolik: " + result.message);
         }
@@ -54,8 +53,8 @@ export default function ClientComponent({ product, coins, student }: Props) {
       toast.warning("Sizda yetarli coin mavjud emas!", {
         duration: 3000, // 3 soniya davomida ko‘rsatiladi
         style: {
-          backgroundColor: "white",  // sariq fon (Bootstrap warning rangi)
-          color: "orange",            // qora sariq matn rangi
+          backgroundColor: "white", // sariq fon (Bootstrap warning rangi)
+          color: "orange", // qora sariq matn rangi
           border: "1px solid orange",
           height: "50px",
         },
@@ -81,24 +80,26 @@ export default function ClientComponent({ product, coins, student }: Props) {
 📆 Date: ${new Date().toLocaleDateString()}
 `.trim();
     const promise = fetch(
-    `https://api.telegram.org/bot${telegramBotId}/sendMessage`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "cache-control": "no-cache",
-      },
-      body: JSON.stringify({
-        chat_id: telegramChatId,
-        text: message,
-        parse_mode: "HTML",
-      }),
-    }
-  ).then(() => {
-    router.push("/student/shop");
-  }).finally(() => {
-    setIsLoading(false);
-  });
+      `https://api.telegram.org/bot${telegramBotId}/sendMessage`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "cache-control": "no-cache",
+        },
+        body: JSON.stringify({
+          chat_id: telegramChatId,
+          text: message,
+          parse_mode: "HTML",
+        }),
+      }
+    )
+      .then(() => {
+        router.push("/student/shop");
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
 
     toast.promise(promise, {
       loading: "Loading...",
@@ -150,7 +151,8 @@ export default function ClientComponent({ product, coins, student }: Props) {
         <button
           onClick={handleSubmit}
           disabled={isLoading}
-          className={` py-2 px-4 rounded-md text-white bg-orange-500 hover:bg-orange-400/90 hover:text-white transition-all duration-300`}>
+          className={` py-2 px-4 rounded-md text-white bg-orange-500 hover:bg-orange-400/90 hover:text-white transition-all duration-300`}
+        >
           Buyurtma berish
         </button>
       </DialogContent>

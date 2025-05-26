@@ -5,7 +5,7 @@ import confetti from "canvas-confetti";
 
 
 export const handleClickConfetti = () => {
-    const end = Date.now() + 3 * 1000; // 3 seconds
+    const end = Date.now() + 1 * 1000; // 3 seconds
     const colors = ["#a786ff", "#fd8bbc", "#eca184", "#f8deb1"];
 
     const frame = () => {
