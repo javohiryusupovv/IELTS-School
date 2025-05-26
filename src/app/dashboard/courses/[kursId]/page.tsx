@@ -53,7 +53,7 @@ async function CourseDetail({ params, }: { params: Promise<{ kursId: string }> }
                         {student.surname} {student.name}
                       </Link>
                     </td>
-                    <td className="group-hover:text-orange-500 transition-all duration-200 text-left font-light text-[13px]">{student.phone}</td>
+                    <td className="group-hover:text-orange-500 transition-all duration-200 text-left font-light text-[13px]">+998 {student.phone}</td>
                   </tr>
                 </tbody>
               ))}

@@ -30,6 +30,7 @@ import {
     }
   
     await backButton.mount();
+    backButton.hide();
     await miniApp.mount();
     initData.restore();
   
