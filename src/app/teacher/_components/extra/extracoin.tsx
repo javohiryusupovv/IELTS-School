@@ -19,11 +19,9 @@ export default function EctraCoin({ students }: Props) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="bg-orange-500 text-white">
-          O'quvchilar ro'yxati
-        </Button>
+        <Button className="bg-orange-500 text-white">Qo'shimcha coin</Button>
       </DialogTrigger>
-      <DialogContent className="max-w-md">
+      <DialogContent className="max-w-[700px]">
         <DialogHeader>
           <DialogTitle>Odob axloq uchun coin</DialogTitle>
         </DialogHeader>
@@ -39,14 +37,19 @@ export default function EctraCoin({ students }: Props) {
                     {student.surname} {student.name}
                   </p>
                 </div>
-                <input type="checkbox" className="mr-4" />
+                <div className="flex items-center max-w-min ">
+                  <input
+                    type="number"
+                    className="w-[36px] px-1 peer border rounded outline-none focus:border-orange-500 transition-all duration-200 mr-4"
+                  />
+                  <span className="mr-4">coin</span>
+                </div>
               </div>
             ))
           )}
-          
         </div>
         <DialogFooter>
-          <Button variant="outline">Yopish</Button>
+          <button className="bg-green-700 px-6 py-2 rounded-lg text-white">Saqlash</button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
