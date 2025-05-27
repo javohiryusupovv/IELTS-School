@@ -157,14 +157,19 @@ export const getAccounts = async () => {
 };
 
 
-// export const accountsDelete = async(userID: string, path: string) => {
-//   try{
-//     await ConnectMonogDB();
-//     await 
-//   }catch(error){
-//     throw new Error(`Xatolik yuz berid DELETE Userda, ${error}`)
-//   }
-// }
+export const accountsDelete = async(userID: string, path: string) => {
+  try{
+    await ConnectMonogDB();
+    const user = await CrmAccount.findById(userID);
+    if (!user) {
+      throw new Error("Foydalanuvchi topilmadi");
+    }
+    await CrmAccount.findByIdAndDelete(userID);
+    revalidatePath(path);
+  }catch(error){
+    throw new Error(`Xatolik yuz berid DELETE Userda, ${error}`)
+  }
+}
 
 
 export const deleteShop = async (id: string, path: string) => {

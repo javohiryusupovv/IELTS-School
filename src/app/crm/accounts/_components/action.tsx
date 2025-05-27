@@ -1,6 +1,7 @@
 
 import { getAccounts } from "@/actions/education.action";
-import { IAdministrator } from "../../../../app.types";
+import { IAdministrator } from "../../../../../app.types";
+import DeleteReception from "./deleteReception";
 
 export default async function TableUsers() {
   const accounst = await getAccounts();
@@ -29,7 +30,7 @@ export default async function TableUsers() {
               <td className="border border-gray-300 px-4 py-2">{account.password}</td>
               <td className="border border-gray-300 px-4 py-2">{account.role}</td>
               <td className="border border-gray-300 px-4 py-2">+998 {account.phone}</td>
-              <td className="flex justify-center items-center"><button className="border px-2 text-[12px] bg-red-500 text-white py-1 rounded-md cursor-pointer">Delete</button></td>
+              <td><DeleteReception accounst={account}/></td>
             </tr>
           ))}
         </tbody>

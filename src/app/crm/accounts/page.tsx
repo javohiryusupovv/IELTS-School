@@ -3,7 +3,7 @@ export const dynamic = "force-dynamic";
 
 import { getEducationData } from "@/actions/education.action";
 import DialogsModal from "../_components/Modal";
-import TableUsers from "../_components/TableUsers";
+import TableUsers from "./_components/action";
 
 export default async function page() {
   const educationData = await getEducationData();

@@ -94,18 +94,6 @@ function NavbarLayout() {
                   </Link>
                 </article>
               </li>
-              <li>
-                <Link
-                  href={"/dashboard/orders"}
-                  className={`group flex sm:justify-start justify-center items-center gap-2 py-5 px-2 border-b hover:bg-orange-300 hover:text-white cursor-pointer transition-all duration-200 ${pathnames === "/dashboard/orders"
-                    ? "bg-orange-400 text-white"
-                    : ""
-                    }`}
-                >
-                  <ShoppingBag className="flex justify-center items-center group-hover:stroke-white duration-0" />{" "}
-                  <span className="sm:inline-flex hidden">Mahsulot Tarixi</span>
-                </Link>
-              </li>
             </ul>
             <div className="bg-yellow-500 sm:flex hidden flex-col items-center rounded-xl pb-3 mx-2 px-5">
               <Image
