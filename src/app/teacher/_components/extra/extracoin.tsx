@@ -71,7 +71,7 @@ export default function EctraCoin({ students }: Props) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-orange-500 text-white]">Imtihon uchun coin</Button>
+        <Button className="bg-orange-500 text-white hover:bg-orange-500/70">Imtihon uchun coin</Button>
       </DialogTrigger>
       <DialogContent className="max-w-[700px] rounded-md sm:w-full">
         <DialogHeader>

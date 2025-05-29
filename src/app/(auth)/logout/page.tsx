@@ -24,7 +24,7 @@ export default function Logout() {
     }, 1500);
   };
   return (
-    <Button onClick={handleLogout} disabled={isloading}>
+    <Button onClick={handleLogout} disabled={isloading} className="bg-red-600 text-white hover:bg-red-600/70">
       {isloading ? "Chiqmoqda..." : "Chiqish"}
     </Button>
   );
