@@ -341,13 +341,15 @@ export const addTeacherBonusCoin = async (studentID: string, coin: number, path:
     }
 
     student.coins.push({
+      value: coin,
       date: nowDate,
       reasons: [{ reason: "Imtihon uchun coin", value: coin }],
     })
 
     await student.save()
     revalidatePath(path);
-    return {success: true}
+    revalidateTag("students");
+    revalidateTag("student");
   } catch (error) {
     throw new Error("Xatolik yuz berdi Coin qo'shishda: " + error);
   }

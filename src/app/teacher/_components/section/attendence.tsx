@@ -178,7 +178,7 @@ export default function Attendence({
             {teacherName}
           </h6>
         </article>
-        <div className="flex items-center justify-end mr-10 gap-4 mb-5 max-btn:absolute -bottom-[385px] -right-10">
+        <div className="flex items-center justify-end mr-10 gap-4 mb-5 max-btn:absolute -bottom-[365px] -right-10">
           <button
             onClick={prevMonth}
             className="flex items-center py-[2px] px-2 border rounded-sm  focus:bg-orange-500 bg-[#ffa600b8]"

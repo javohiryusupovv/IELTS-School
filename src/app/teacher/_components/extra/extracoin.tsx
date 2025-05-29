@@ -22,6 +22,7 @@ import { Button } from "@/components/ui/button";
 import { useState, useTransition } from "react";
 import { usePathname } from "next/navigation";
 import { addTeacherBonusCoin } from "@/actions/student.action";
+import { toast } from "sonner";
 
 interface Student {
   _id: string;
@@ -36,40 +37,52 @@ interface Props {
 export default function EctraCoin({ students }: Props) {
   const [selectedStudentId, setSelectedStudentId] = useState<string | null>(null);
   const [coin, setCoin] = useState<number>(0);
-  const pathname = usePathname()
-  const [isPending, startTransition] = useTransition();
+  const pathname = usePathname();
+  const [isOpen, setIsOpen] = useState(false);
 
-  const handleSave = () => {
-    if (!selectedStudentId || coin <= 0) return;
+  const handleSave = async() => {
+    setIsOpen(true);
+    if (!selectedStudentId) {
+      toast.warning("Iltimos, o'quvchini tanlang");
+      return;
+    }
+    if (coin <= 0) {
+      toast.warning("Coin miqdori 0 dan katta bo'lishi kerak");
+      return;
+    }
+    try{
 
-    startTransition(() => {
-      addTeacherBonusCoin(selectedStudentId, coin, pathname)
-        .then(() => {
-          // optional: ko'rsatma, tozalash, notifikatsiya
-          setCoin(0);
-          setSelectedStudentId(null);
-        })
-        .catch((error) => {
-          console.error("Xatolik:", error.message);
-        });
-    });
+      const promise = addTeacherBonusCoin(selectedStudentId, coin, pathname);
+      toast.promise(promise, {
+        loading: "Coin qo'shilmoqda...",
+        success: "Coin muvaffaqiyatli qo'shildi!",
+        error: (error) => `Xatolik: ${error.message}`,
+      });
+      await promise;
+      setIsOpen(false);
+      setSelectedStudentId(null);
+      setCoin(0);
+    }catch(error){
+      setIsOpen(false);
+      throw new Error("Xatolik Coin qo'shishda:" + error);
+    }
   };
 
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-orange-500 text-white">Imtihon uchun coin</Button>
+        <Button className="bg-orange-500 text-white]">Imtihon uchun coin</Button>
       </DialogTrigger>
-      <DialogContent className="max-w-[700px]">
+      <DialogContent className="max-w-[700px] rounded-md sm:w-full">
         <DialogHeader>
-          <DialogTitle>Imtihondan yuqori ball olgan o'quvchiga coin qo'shish</DialogTitle>
+          <DialogTitle className="sm:text-[17px] text-[14px] mt-4">Imtihondan yuqori ball olgan o'quvchiga coin qo'shish</DialogTitle>
         </DialogHeader>
         <div className="max-h-[400px] overflow-y-auto space-y-2 mt-2">
           {students.length === 0 ? (
             <p>Hozircha talabalar yo'q</p>
           ) : (
             <Select onValueChange={(val) => setSelectedStudentId(val)}>
-              <SelectTrigger className="w-[380px]">
+              <SelectTrigger className="sm:w-[380px] w-full">
                 <SelectValue placeholder="O'quvchini tanlang !" />
               </SelectTrigger>
               <SelectContent>
@@ -90,17 +103,17 @@ export default function EctraCoin({ students }: Props) {
               <div className="flex items-center gap-4">
                 <input
                   type="number"
-                  value={coin}
+                  value={coin || ""}
                   placeholder="Coin miqdori ?"
-                  onChange={(e) => setCoin(parseInt(e.target.value) || 0)}
-                  className="border px-2 py-1 rounded w-[200px] outline-none focus:border-orange-500"
+                  onChange={(e) => setCoin(parseInt(e.target.value))}
+                  className="border px-2 py-1 rounded sidebar:w-[200px] w-full outline-none focus:border-orange-500"
                 />
               </div>
             </div>
           )}
         </div>
         <DialogFooter>
-          <button onClick={handleSave} disabled={isPending} className="bg-green-700 px-6 py-2 rounded-lg text-white">Saqlash</button>
+          <button onClick={handleSave} className="bg-green-700 px-6 py-2 rounded-lg text-white">Saqlash</button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
