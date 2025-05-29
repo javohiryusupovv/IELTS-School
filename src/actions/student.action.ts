@@ -8,6 +8,7 @@ import moment from "moment";
 
 import {Course, Student, Teacher, Shop} from "@/models/index"
 import Education from "@/models/courseBox.model";
+import { CoinInput } from "../../app.types";
 
 type Records_Coins = {
   reason: string;
@@ -327,5 +328,27 @@ export const addAdminCoins = async (
     revalidatePath(path);
   } catch (error) {
     throw new Error("Coin Admin qo'shishda Xatolik");
+  }
+};
+
+export const addTeacherBonusCoin = async (studentID: string, coin: number, path: string) => {
+  try {
+    await ConnectMonogDB();
+    const nowDate = moment().format("YYYY-MM-DD");
+    const student = await Student.findById(studentID);
+    if (!student) {
+      throw new Error("Talaba topilmadi!");
+    }
+
+    student.coins.push({
+      date: nowDate,
+      reasons: [{ reason: "Imtihon uchun coin", value: coin }],
+    })
+
+    await student.save()
+    revalidatePath(path);
+    return {success: true}
+  } catch (error) {
+    throw new Error("Xatolik yuz berdi Coin qo'shishda: " + error);
   }
 };

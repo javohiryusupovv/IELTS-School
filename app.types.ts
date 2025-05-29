@@ -58,3 +58,11 @@ export interface IEducationCenter{
     phoneNumber: string,
     role: string
 }
+
+
+export interface CoinInput {
+    _id?: string;          // student ID
+    coin: number;
+    date: string;
+  }
+  
