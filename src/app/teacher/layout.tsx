@@ -1,6 +1,5 @@
 import Head from "next/head";
 import NavbarTeacher from "./_components/navbar";
-import TopNavbar from "./_components/topNavbar";
 
 export default async function Teacher({
   children,
