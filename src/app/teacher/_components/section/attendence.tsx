@@ -168,9 +168,9 @@ export default function Attendence({
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 ">
       <div className="flex w-full flex-col relative">
-        <article className="flex items-center gap-3 mb-7">
+        <article className="flex items-center gap-3 mb-7 max-sm:mt-[50px]">
           <p className="w-[6] h-[6] rounded-full bg-orange-400"></p>
           <h6 className="flex gap-3 items-center md:text-[25px] text-lg">
             {titleCourse}
