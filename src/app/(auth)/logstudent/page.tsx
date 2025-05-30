@@ -70,13 +70,14 @@ export default function StudentLogin() {
   };
 
   return (
-    <div className="w-[250px] absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] flex flex-col items-center m-auto">
+    <div className="w-[400px] absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] flex flex-col items-center m-auto">
       <article className="w-[150px] mb-10">
         <Image src={LogoStudent} alt="Logo Student" />
       </article>
-      <form onSubmit={handleSubmit} className="text-center">
-        <p className="mb-5">Student ID*</p>
-        <Label className="flex p-2 w-full border rounded-md items-center text-[15px] font-medium focus-within:border-orange-500 focus-within:border-1 mb-5">
+      <form onSubmit={handleSubmit} className="text-center w-full">
+        <article className="flex flex-col items-start mb-4">
+          <label htmlFor="" className="mb-2">Login <span className="text-red-600">*</span></label>
+          <Label className="flex p-2 w-full border rounded-md items-center text-[15px] font-medium focus-within:border-orange-500 focus-within:border-1 mb-5">
           <span className="text-gray-400 font-normal text-[17px]">iq-</span>
           <input
             className="w-full outline-none h-full bg-transparent"
@@ -88,9 +89,14 @@ export default function StudentLogin() {
             placeholder="ID kiriting ..."
           />
         </Label>
-        <Button disabled={isLoading} type="submit">
+        </article>
+        <article className="flex flex-col items-start mb-10">
+          <label htmlFor="" className="mb-2">password <span className="text-red-600">*</span></label>
+          <input className="w-full p-2 rounded border outline-none focus-within:border-orange-500 focus-within:border-1" type="text" placeholder="Parol kiriting ..." />
+        </article>
+        <button className="w-[150px] px-3 py-2 rounded cursor-pointer text-white bg-green-500 hover:bg-green-500/80" disabled={isLoading} type="submit">
           {isLoading ? "Kirilmoqda..." : "Kirish"}
-        </Button>
+        </button>
       </form>
     </div>
   );
