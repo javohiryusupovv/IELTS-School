@@ -354,3 +354,27 @@ export const addTeacherBonusCoin = async (studentID: string, coin: number, path:
     throw new Error("Xatolik yuz berdi Coin qo'shishda: " + error);
   }
 };
+
+
+
+
+
+export async function deleteCoinHistoryEntry(
+  studentId: string,
+  coinId: string,
+  pathname: string
+) {
+  try {
+    await Student.findByIdAndUpdate(studentId, {
+      $pull: {
+        coins: { _id: coinId },
+      },
+    });
+
+    revalidatePath(pathname);
+    return { success: true };
+  } catch (error) {
+    console.error("Coin history entry delete error:", error);
+    throw new Error("Coin tarixini o‘chirishda xatolik yuz berdi");
+  }
+}

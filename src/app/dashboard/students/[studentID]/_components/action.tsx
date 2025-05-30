@@ -8,14 +8,13 @@ import studentImage from "../../../../../../public/img/student.png";
 import Image from "next/image";
 import { BsCoin } from "react-icons/bs";
 import EditStudent from "./editStudent";
-import { CircleCheckBig, TriangleAlert } from "lucide-react";
+import { CircleCheckBig } from "lucide-react";
 
 import Archive from "./Archive";
 import ActiveStudentFunc from "./ActiveStudent";
 import { formatDate, formatReasonText } from "../../../../../../constants/page";
 import { useState } from "react";
 import SelecStatus from "./selecStatus";
-import { MdOutlineDeleteOutline } from "react-icons/md";
 import Delete from "./delete";
 
 interface Props {
@@ -117,6 +116,7 @@ export default function Actions({ student }: Props) {
       value: coin.value,
       reason: coin.reasons.map((reason: any) => reason.reason),
       date: coin.date,
+      _id: coin._id
     };
   });
 
@@ -261,23 +261,21 @@ export default function Actions({ student }: Props) {
                 {filteredCoins?.map((coin, index) => (
                   <div
                     key={index}
-                    className={`flex w-full py-2 px-4 items-center rounded-md mb-3 ${
-                      coin.reason.includes("Coin almashtirildi !")
+                    className={`flex w-full py-2 px-4 items-center rounded-md mb-3 ${coin.reason.includes("Coin almashtirildi !")
                         ? "bg-orange-400/30"
                         : coin.value < 0
-                        ? "bg-red-500/30"
-                        : "bg-green-300/30"
-                    }`}
+                          ? "bg-red-500/30"
+                          : "bg-green-300/30"
+                      }`}
                   >
                     <article className="flex-[0.4]">
                       <CircleCheckBig
-                        className={`stroke-[1.5] w-5 h-5 max-md:w-[16px] ${
-                          coin.reason.includes("Coin almashtirildi !")
+                        className={`stroke-[1.5] w-5 h-5 max-md:w-[16px] ${coin.reason.includes("Coin almashtirildi !")
                             ? "stroke-orange-500"
                             : coin.value > 0
-                            ? "stroke-green-500"
-                            : "stroke-red-500"
-                        }`}
+                              ? "stroke-green-500"
+                              : "stroke-red-500"
+                          }`}
                       />
                     </article>
                     <article className="flex-1 text-start">
@@ -299,20 +297,19 @@ export default function Actions({ student }: Props) {
                     </article>
                     <article className="flex-1 justify-items-end text-right">
                       <p
-                        className={`flex justify-center items-center w-14 h-6 rounded-3xl text-[14px] text-white bg-green-500 max-md:text-[10px] ${
-                          coin.reason.includes("Coin almashtirildi !")
+                        className={`flex justify-center items-center w-14 h-6 rounded-3xl text-[14px] text-white bg-green-500 max-md:text-[10px] ${coin.reason.includes("Coin almashtirildi !")
                             ? "bg-orange-500"
                             : coin.value > 0
-                            ? "bg-green-500"
-                            : "bg-red-500"
-                        }`}
+                              ? "bg-green-500"
+                              : "bg-red-500"
+                          }`}
                       >
                         {coin.value > 0 ? "+" : ""}
                         {coin.value}
                       </p>
                     </article>
                     <article className="flex-1 justify-items-end">
-                      <Delete />
+                      <Delete studentId={student._id} coinId={coin._id} pathname={pathname} />
                     </article>
                   </div>
                 ))}

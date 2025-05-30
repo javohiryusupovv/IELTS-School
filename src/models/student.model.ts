@@ -10,8 +10,7 @@ const CoinSchema = new Schema(
         value: { type: Number, required: true }
       }
     ] // ["Uyga vazifa", "Yuqori ball"]
-  },
-  { _id: false }
+  }
 );
 
 const StudentSchema = new Schema({
