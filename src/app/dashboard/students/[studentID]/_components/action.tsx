@@ -15,6 +15,8 @@ import ActiveStudentFunc from "./ActiveStudent";
 import { formatDate, formatReasonText } from "../../../../../../constants/page";
 import { useState } from "react";
 import SelecStatus from "./selecStatus";
+import { MdOutlineDeleteOutline } from "react-icons/md";
+import Delete from "./delete";
 
 interface Props {
   student: IStudent;
@@ -252,6 +254,9 @@ export default function Actions({ student }: Props) {
                   <article className="flex-1 text-right mr-4">
                     <p className="max-sm:text-[13px] text-[14px]">Coin</p>
                   </article>
+                  <article className="flex-1 text-right mr-4">
+                    <p className="max-sm:text-[13px] text-[14px]">Option</p>
+                  </article>
                 </div>
                 {filteredCoins?.map((coin, index) => (
                   <div
@@ -305,6 +310,9 @@ export default function Actions({ student }: Props) {
                         {coin.value > 0 ? "+" : ""}
                         {coin.value}
                       </p>
+                    </article>
+                    <article className="flex-1 justify-items-end">
+                      <Delete />
                     </article>
                   </div>
                 ))}

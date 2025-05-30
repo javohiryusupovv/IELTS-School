@@ -166,11 +166,11 @@ const EditTeacher = ({ teachers }: EditTeacherProps) => {
             />
             <p
               className="absolute left-2 bg-white px-2 text-gray-500 text-[12px] transition-all duration-200
-              peer-placeholder-shown:top-[10px] 
+              peer-placeholder-shown:top-[10px]
               peer-placeholder-shown:text-gray-400
-              peer-focus:-top-3 
+              peer-focus:-top-3
               peer-focus:text-orange-500
-              peer-valid:-top-3 
+              peer-valid:-top-3
               peer-valid:text-[14px]"
             >
               Ism
@@ -187,11 +187,11 @@ const EditTeacher = ({ teachers }: EditTeacherProps) => {
             />
             <p
               className="absolute left-2 bg-white px-2 text-gray-500 text-[12px] transition-all duration-200
-              peer-placeholder-shown:top-[10px] 
+              peer-placeholder-shown:top-[10px]
               peer-placeholder-shown:text-gray-400
-              peer-focus:-top-3 
+              peer-focus:-top-3
               peer-focus:text-orange-500
-              peer-valid:-top-3 
+              peer-valid:-top-3
               peer-valid:text-[14px]"
             >
               Familiya
@@ -208,11 +208,11 @@ const EditTeacher = ({ teachers }: EditTeacherProps) => {
             />
             <p
               className="absolute left-2 bg-white px-2 text-gray-500 text-[12px] transition-all duration-200
-              peer-placeholder-shown:top-[10px] 
+              peer-placeholder-shown:top-[10px]
               peer-placeholder-shown:text-gray-400
-              peer-focus:-top-3 
+              peer-focus:-top-3
               peer-focus:text-orange-500
-              peer-valid:-top-3 
+              peer-valid:-top-3
               peer-valid:text-[14px]"
             >
               Phone number
@@ -228,11 +228,11 @@ const EditTeacher = ({ teachers }: EditTeacherProps) => {
             />
             <p
               className="absolute left-2 bg-white px-2 text-gray-500 text-[12px] transition-all duration-200
-              peer-placeholder-shown:top-[10px] 
+              peer-placeholder-shown:top-[10px]
               peer-placeholder-shown:text-gray-400
-              peer-focus:-top-3 
+              peer-focus:-top-3
               peer-focus:text-orange-500
-              peer-valid:-top-3 
+              peer-valid:-top-3
               peer-valid:text-[14px]"
             >
               Password

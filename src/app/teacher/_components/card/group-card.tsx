@@ -14,14 +14,14 @@ function GroupCard({ teacher }: Props) {
 
   return (
     <div>
-      <ul className="flex flex-col mt-[80px] pb-[250px]">
+      <ul className="flex flex-col sm:mt-[80px] sm:pb-[250px]">
         {coursesList.map((routeCourse, id: number) => {
           const TitleSlice = routeCourse.courseTitle.split(" ").slice(0, 1)
           const title = TitleSlice.map((item: string)=> (
             item.length > 16 ? item.slice(0, 16) + "..." : item
           ))
-          
-          
+
+
           return (
             <li key={id}>
               <Link
