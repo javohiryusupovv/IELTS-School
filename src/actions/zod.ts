@@ -51,5 +51,10 @@ export const StudentSchemaZod = z.object({
     courseSelect: z
         .string()    
         .min(1, "Kursni tanlang !")
+        .trim(),
+
+    password: z
+        .string() 
         .trim()
+        .min(3, "Password kam kiritildi !")
 })

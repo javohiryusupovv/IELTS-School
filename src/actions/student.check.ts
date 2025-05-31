@@ -5,29 +5,42 @@ import { revalidatePath } from "next/cache";
 
 import {Course, Student, Teacher, Shop} from "@/models/index"
 import { cookies } from "next/headers";
+import bcrypt from "bcryptjs";
 
-export const StudentCheck = async (id: string, path: string) => {
+export const StudentCheck = async (id: string, password: string, path: string) => {
   try {
     await ConnectMonogDB();
+
     const cleanedId = id.trim();
-    const replaceID = "iq-"+cleanedId
+    const replaceID = "iq-" + cleanedId;
+
     const student = await Student.findOne({ studentID: replaceID }).populate("course");
-    
+
     if (!student) {
-      console.log("O'quvchi topilmadi");
-      return null;
+      return { success: false, message: "Talaba ID noto'g'ri kiritilgan!" };
     }
 
-    (await cookies()).set("student-auth", student._id.toString(),  {
+    const isMatch = await bcrypt.compare(password, student.password);
+    if (!isMatch) {
+      return { success: false, message: "Parol noto'g'ri kiritilgan!" };
+    }
+
+    (await cookies()).set("student-auth", student._id.toString(), {
       httpOnly: true,
       path: "/",
-      maxAge: 60 * 60, // 1 hafta
-    })
+      maxAge: 60 * 60, // 1 soat
+    });
 
-    revalidatePath(path)
-    return JSON.parse(JSON.stringify(student));
+    revalidatePath(path);
+
+    return {
+      success: true,
+      message: "Kirish muvaffaqiyatli amalga oshirildi!",
+      student: JSON.parse(JSON.stringify(student)),
+    };
   } catch (error) {
-    throw new Error(`Sizda Xatolik yuz berdi, ${error}`);
+    console.error("StudentCheck xatoligi:", error);
+    throw new Error(`Xatolik yuz berdi: ${error}`);
   }
 };
 

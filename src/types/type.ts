@@ -7,6 +7,7 @@ export interface IStudent {
   studentID: string;
   name: string;
   surname: string;
+  password: string,
   phone: string;
   coins: number[];
   course: ICourse; // MongoDB ObjectId string sifatida bo'ladi

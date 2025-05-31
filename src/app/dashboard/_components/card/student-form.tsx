@@ -31,9 +31,9 @@ export default function StudentForm({ propCourses }: { propCourses: ICourse[] })
     const [courses, setCourses] = useState<ICourse[]>([]);
     const [studentName, setStudentName] = useState("");
     const [studentSurname, setStudentSurname] = useState("");
-    const [studentID, setStudentID] = useState("");
     const [studentCourseId, setStudentCourseId] = useState("");
     const [phone, setPhone] = useState("");
+    const [ispassword, setPassword] = useState("")
     const [open, setOpen] = useState(false);
     const [iserror, setError] = useState<string[]>([]);
     const pathname = usePathname()
@@ -49,7 +49,8 @@ export default function StudentForm({ propCourses }: { propCourses: ICourse[] })
         const validateStudent = StudentSchemaZod.safeParse({
             courseSelect: studentCourseId,
             name: studentName,
-            surname: studentSurname
+            surname: studentSurname,
+            password: ispassword
         })
 
         if (!validateStudent.success) {
@@ -58,12 +59,12 @@ export default function StudentForm({ propCourses }: { propCourses: ICourse[] })
             return
         }
 
-        const { courseSelect, name, surname } = validateStudent.data;
+        const { courseSelect, name, surname, password } = validateStudent.data;
 
         try {
 
             const studentGen = generateRandomID();
-            const promise = postAddStudent(courseSelect, name, surname, phone, studentGen, pathname);
+            const promise = postAddStudent(courseSelect, name, surname, password, phone, studentGen, pathname);
             toast.promise(promise, {
                 loading: "O'quvchi qo'shilmoqda...",
                 success: {
@@ -88,7 +89,6 @@ export default function StudentForm({ propCourses }: { propCourses: ICourse[] })
         setStudentSurname("");
         setStudentCourseId("");
         setPhone("+998 ");
-        setStudentID("");
         setError([])
     };
     const handlePhoneNumberInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -179,6 +179,16 @@ export default function StudentForm({ propCourses }: { propCourses: ICourse[] })
                                     required
                                 />
                             </article>
+                        </label>
+                        <label className="flex gap-2 max-sm:text-[14px] text-[#d47323cd] flex-col sm:mb-5 mb-3">
+                            Password *
+                            <input
+                                onChange={(e)=> setPassword(e.target.value)}
+                                value={ispassword}
+                                className="py-2 border rounded-md px-2 text-gray-700"
+                                type="text"
+                                placeholder="O'quvchi uchun parol kiriting!"
+                            />
                         </label>
                     </div>
                     <SheetFooter>

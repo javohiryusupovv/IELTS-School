@@ -8,7 +8,8 @@ import moment from "moment";
 
 import {Course, Student, Teacher, Shop} from "@/models/index"
 import Education from "@/models/courseBox.model";
-import { CoinInput } from "../../app.types";
+import bcrypt from "bcryptjs";
+
 
 type Records_Coins = {
   reason: string;
@@ -49,11 +50,12 @@ export const postAddStudent = async (
   courseId: string,
   name: string,
   surname: string,
+  password: string,
   phone: string,
   studentID: string,
   path: string
 ) => {
-  if (!name || !surname || !phone || !courseId || !studentID) {
+  if (!name || !surname || !password || !phone || !courseId || !studentID) {
     throw new Error("Barcha maydonlarni to‘ldirish shart!");
   }
 
@@ -64,10 +66,14 @@ export const postAddStudent = async (
       throw new Error("Kurs topilmadi!");
     }
 
+    // Parolni hash qilish
+    const hashedPassword = await bcrypt.hash(password, 10); // 10 — bu saltRounds
+
     const newStudent = new Student({
       name,
       surname,
       phone,
+      password: hashedPassword,
       studentID,
       course: courseId,
       publishStudent: false,
