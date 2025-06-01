@@ -60,9 +60,16 @@ function CreateCourse() {
 
   let courseDays = CalendarDayGet(startDate, endDate);
   let filteredDay = courseDays.filter((day) => {
-    let dayNumber = new Date(day).getDate();
-    return selectDay === "juft" ? dayNumber % 2 === 0 : dayNumber % 2 !== 0;
+    let weekday = new Date(day).getDay();
+  if (weekday === 0) return false;
+  if (selectDay === "juft") {
+    return [1, 3, 5].includes(weekday);
+  } else {
+    return [2, 4, 6].includes(weekday);
+  }
   });
+
+  
   const handleSelectDay = (dayType: string) => {
     setSelectDay(dayType);
   };
