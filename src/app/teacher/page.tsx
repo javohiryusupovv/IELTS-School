@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { formatDate, getStableColor } from "../../../constants/page";
 import { CalendarDays } from 'lucide-react';
+import Loading from "./_components/loading";
 
 
 export default function Page() {
@@ -24,7 +25,7 @@ export default function Page() {
 
 
 
-    if (!teacher) return <p>Loading...</p>;
+    if (!teacher) return <Loading/>;
 
     return (
         <div className="pt-10 max-sm:mt-[40px] ">

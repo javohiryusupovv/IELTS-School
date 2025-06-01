@@ -4,10 +4,7 @@ import { Button } from "@/components/ui/button";
 import { FaGripLines } from "react-icons/fa6";
 import {
   Sheet,
-  SheetClose,
   SheetContent,
-  SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
