@@ -70,7 +70,6 @@ function NavbarTeacher() {
             </li>
             <li className="flex gap-3 items-center justify-between">
               <SheetDemo />
-              <Logout />
             </li>
           </ul>
         </div>

@@ -178,7 +178,7 @@ export default function Attendence({
             {teacherName}
           </h6>
         </article>
-        <div className="flex items-center justify-end mr-10 gap-4 mb-5 max-btn:absolute -bottom-[365px] -right-10">
+        <div className="flex items-center justify-end mr-10 gap-4 mb-5 max-btn:absolute sm:-bottom-[365px] -bottom-[380px] -right-10">
           <button
             onClick={prevMonth}
             className="flex items-center py-[2px] px-2 border rounded-sm  focus:bg-orange-500 bg-[#ffa600b8]"
@@ -201,8 +201,8 @@ export default function Attendence({
           </button>
         </div>
       </div>
-      <div className="grid btn:grid-cols-4 grid-cols-3 justify-between items-start gap-10 mb-5">
-        <div className="max-btn:w-[400px] max-sm:w-[300px] max-teacher:w-[250px] border px-5 pt-5 pb-16 col-span-1 rounded shadow-md shadow-gray-500/10">
+      <div className="grid btn:grid-cols-4 sm:grid-cols-3 grid-cols-1 justify-between items-start sm:gap-10 mb-5">
+        <div className="max-btn:w-[400px] max-sm:w-full border px-5 pt-5 pb-16 col-span-1 rounded shadow-md shadow-gray-500/10 mb-16">
           <article>
             <p className="flex gap-3 items-center text-[14px]">
               <strong className="font-medium text-[13px]">Kurs: </strong>{" "}
