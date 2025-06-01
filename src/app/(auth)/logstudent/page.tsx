@@ -71,7 +71,7 @@ export default function StudentLogin() {
   };
 
   return (
-    <div className="sm:w-[500px] max-sm:w-[230px] absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] flex flex-col items-center m-auto">
+    <div className="max-sm:w-[230px] md:w-[300px] lg:w-[360px] xl:w-[500px] absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] flex flex-col items-center m-auto">
       <article className="w-[150px] mb-10">
         <Image src={LogoStudent} alt="Logo Student" />
       </article>
