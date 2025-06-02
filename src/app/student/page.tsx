@@ -53,7 +53,7 @@ export default async function StudentDashboard() {
       <article className="relative top-0 right-0 w-11/12 py-10 bg-white m-auto rounded-md mb-8 personShadow">
         <article className="pl-6 w-[70%]">
           <p className="text-[14px] leading-5">
-            "Har bir coin — <span className="underline text-green-500">bu sening g'alabang!</span>" 
+            "Har bir coin — <span className="underline text-green-500">bu sening g'alabang!</span>"
             "Harakat qil, o'z orzularingni ro'yobga chiqar!"
           </p>
         </article>
@@ -69,6 +69,6 @@ export default async function StudentDashboard() {
       </div>
     </div>
     </div>
-    
+
   );
 }
