@@ -93,7 +93,7 @@ export default function StudentLogin() {
         </article>
         <article className="flex flex-col items-start mb-10">
           <label htmlFor="" className="mb-2">password <span className="text-red-600">*</span></label>
-          <input name="password" className="w-full p-2 rounded border outline-none focus-within:border-orange-500 focus-within:border-1" type="password" inputMode="numeric" placeholder="Parol kiriting ..." />
+          <input name="password" className="w-full p-2 rounded border outline-none focus-within:border-orange-500 focus-within:border-1" type="password" placeholder="Parol kiriting ..." />
         </article>
         <button className="w-[150px] px-3 py-2 rounded cursor-pointer text-white bg-green-500 hover:bg-green-500/80" disabled={isLoading} type="submit">
           {isLoading ? "Kirilmoqda..." : "Kirish"}
