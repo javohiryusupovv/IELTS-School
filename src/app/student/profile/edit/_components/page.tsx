@@ -34,9 +34,8 @@ export default function Edit({ studentInfo }: StudentProps) {
         style: {
             height: "50px",
             color: "white",
-            border: "1px solid white",
             backgroundColor: "orange",
-            marginTop: "40px"
+            marginTop: "55px"
         },
     });
       return;
@@ -56,7 +55,7 @@ export default function Edit({ studentInfo }: StudentProps) {
           color: "white",
           backgroundColor: "#22c55e",
           border: "1px solid white",
-          marginTop: "40px"
+          marginTop: "55px"
         },
       });
       router.push("/student/profile");
@@ -68,7 +67,7 @@ export default function Edit({ studentInfo }: StudentProps) {
           color: "white",
           backgroundColor: "#ef4444",
           border: "1px solid white",
-          marginTop: "40px"
+          marginTop: "55px"
         },
       });
     }
