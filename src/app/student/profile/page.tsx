@@ -8,7 +8,7 @@ export default async function ProfileView() {
   const studentInfo = await getStudentFromCookie();  
 
   return (
-    <div className="min-h-screen space-y-4 font-sans">
+    <div className="min-h-screen space-y-4 font-sans pt-[75px]">
       <div className=" rounded-b-2xl ">
         {/* Profile Info */}
         <div className="flex flex-col p-4  items-center relative">
