@@ -1,6 +1,9 @@
 import { getStudentFromCookie } from "@/actions/student.check";
 import { Instagram, Send, SquarePen } from "lucide-react";
 import Link from "next/link";
+
+export const dynamic = "force-dynamic";
+
 export default async function ProfileView() {
   const studentInfo = await getStudentFromCookie();  
 
