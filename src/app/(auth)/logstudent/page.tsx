@@ -71,9 +71,9 @@ export default function StudentLogin() {
   };
 
   return (
-    <div className="max-sm:w-[230px] md:w-[300px] lg:w-[360px] xl:w-[500px] absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] flex flex-col items-center m-auto">
-      <article className="w-[150px] mb-10">
-        <Image src={LogoStudent} alt="Logo Student" />
+    <div className="max-sm:w-[280px] w-[350px] md:w-[400px] lg:w-[460px] xl:w-[500px] absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] flex flex-col items-center m-auto">
+      <article className="mb-10">
+        <Image src={LogoStudent} className="w-[150px]" alt="Logo Student" />
       </article>
       <form onSubmit={handleSubmit} className="text-center w-full">
         <article className="flex flex-col items-start mb-4">

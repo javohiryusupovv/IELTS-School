@@ -88,7 +88,7 @@ export default function StudentForm({ propCourses }: { propCourses: ICourse[] })
         setStudentName("");
         setStudentSurname("");
         setStudentCourseId("");
-        setPhone("+998 ");
+        setPhone("");
         setError([])
     };
     const handlePhoneNumberInput = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -6,7 +6,7 @@ import { unstable_cache } from "next/cache";
 import { revalidatePath, revalidateTag } from "next/cache";
 import moment from "moment";
 
-import {Course, Student, Teacher, Shop} from "@/models/index"
+import { Course, Student, Teacher, Shop } from "@/models/index"
 import Education from "@/models/courseBox.model";
 import bcrypt from "bcryptjs";
 
@@ -61,6 +61,11 @@ export const postAddStudent = async (
 
   try {
     await ConnectMonogDB();
+    const existingStudent = await Student.findOne({ $or: [{ phone }, { studentID }] });
+    if (existingStudent) {
+      throw new Error("Bu telefon raqam yoki student ID allaqachon mavjud!");
+    }
+
     const course = await Course.findById(courseId);
     if (!course) {
       throw new Error("Kurs topilmadi!");
@@ -170,24 +175,32 @@ export const ActiveStudent = async (
 // Talaba ma‘lumotlarini yangilash
 export const updateStudent = async (
   studentId: string,
-  data: { name: string; surname: string; phone: string },
+  data: { name: string; surname: string; phone: string, password: string },
   path: string
 ) => {
   try {
     if (!mongoose.Types.ObjectId.isValid(studentId)) {
-      throw new Error("Noto‘g‘ri ID!");
+      throw new Error("Noto'g'ri ID!");
     }
     if (!data.name || !data.surname || !data.phone) {
       throw new Error("Barcha maydonlarni to‘ldirish shart!");
     }
     await ConnectMonogDB();
+
+    const updatedFieldStudent: any = {
+      name: data.name,
+      surname: data.surname,
+      phone: data.phone,
+    }
+
+    if (data.password) {
+      const hashPassword = await bcrypt.hash(data.password, 10);
+      updatedFieldStudent.password = hashPassword;
+    }
+
     const updatedStudent = await Student.findByIdAndUpdate(
       studentId,
-      {
-        name: data.name,
-        surname: data.surname,
-        phone: data.phone,
-      },
+      updatedFieldStudent,
       { new: true }
     );
     if (!updatedStudent) {
@@ -264,7 +277,7 @@ export const salesUpdateCoins = async (
     }
     await ConnectMonogDB();
     const student = await Student.findById(studentId);
-    const product = await Shop.findById(productid) 
+    const product = await Shop.findById(productid)
 
     if (!student) throw new Error("Talaba topilmadi!");
     if (!product) throw new Error("Mahsulot topilmadi!");

@@ -3,7 +3,7 @@
 import ConnectMonogDB from "@/lib/mongodb";
 import { revalidatePath } from "next/cache";
 
-import {Course, Student, Teacher, Shop} from "@/models/index"
+import { Course, Student, Teacher, Shop } from "@/models/index"
 import { cookies } from "next/headers";
 import bcrypt from "bcryptjs";
 
@@ -67,3 +67,35 @@ export const logOutStudent = async () => {
     throw new Error(`Sizda Xatolik yuz berdi, ${error}`);
   }
 }
+
+export const newUpdatedStudent = async (studentId: string, data: any, path: string) => {
+  try {
+    await ConnectMonogDB();
+
+    // Prepare update object
+    const updateData: any = {
+      name: data.name,
+      surname: data.surname,
+      phone: data.phone,
+    };
+
+    // If password is provided, hash it
+    if (data.password) {
+      const hashPassword = await bcrypt.hash(data.password, 10);
+      updateData.password = hashPassword;
+    }
+
+
+    const updatedStudent = await Student.findByIdAndUpdate(
+      studentId,
+      updateData,
+      { new: true }
+    );
+
+    revalidatePath(path);
+    return JSON.parse(JSON.stringify(updatedStudent));
+  } catch (err) {
+    console.error("Update Error:", err);
+    return { success: false, message: "Student yangilanmadi" };
+  }
+};

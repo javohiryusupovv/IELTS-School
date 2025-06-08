@@ -22,7 +22,7 @@ interface Props {
 }
 
 export default function EditStudent({ student }: Props) {
-    const [phone, setPhone] = useState(student.phone || "+998");
+    const [phone, setPhone] = useState(student.phone);
     const pathname = usePathname()
 
 
@@ -34,6 +34,7 @@ export default function EditStudent({ student }: Props) {
                 name: formData.get("name") as string,
                 surname: formData.get("surname") as string,
                 phone: formData.get("phone") as string,
+                password: formData.get("password") as string,
             }
             const updatedStudent = updateStudent(student._id, data, pathname);
 
@@ -44,12 +45,12 @@ export default function EditStudent({ student }: Props) {
                     message: "O'quvchi ma'lumotlari yangilandi!",
                     duration: 2500,
                     style: {
-                      height: "50px",
-                      color: "green",
-                      border: "1px solid #17be5a",
-                      backgroundColor: "white",
+                        height: "50px",
+                        color: "green",
+                        border: "1px solid #17be5a",
+                        backgroundColor: "white",
                     },
-                  },
+                },
                 error: "O'quvchini yangilashda xatolik!",
             });
             await updatedStudent;
@@ -61,7 +62,7 @@ export default function EditStudent({ student }: Props) {
         let value = e.target.value.replace(/\D/g, ""); // Faqat raqamlarni qoldiramiz
         value = value.replace(/^998/, ""); // Agar 998 ni kiritsa, olib tashlaymiz
         value = value.slice(0, 9); // Maksimal 9 ta raqam kiritish mumkin
-        setPhone("+998 " + value);
+        setPhone(value);
     };
 
 
@@ -113,13 +114,26 @@ export default function EditStudent({ student }: Props) {
                         </article>
                         <label className="flex gap-2 text-[#d47323cd] flex-col mb-5">
                             Phone *
+                            <article className={`group flex gap-2 items-center rounded border px-3 focus-within:border-orange-500 transition-all duration-200`}>
+                                <span className="text-[14px] text-gray-500">+998 </span>
+                                <input
+                                    name="phone"
+                                    value={phone}
+                                    onChange={handlePhoneChange}
+                                    className="py-2 w-full outline-none rounded-md px-2 text-gray-700"
+                                    type="text"
+                                    placeholder="Telefon raqami kiriting ..."
+                                />
+                            </article>
+
+                        </label>
+                        <label className="flex gap-2 max-sm:text-[14px] text-[#d47323cd] flex-col sm:mb-5 mb-3">
+                            Yangi Password *
                             <input
-                                name="phone"
-                                value={phone}
-                                onChange={handlePhoneChange}
+                                name="password"
                                 className="py-2 border rounded-md px-2 text-gray-700"
                                 type="text"
-                                placeholder="Ota-Ona Telefon raqami!"
+                                placeholder="O'quvchini parolini yangilang"
                             />
                         </label>
                     </form>
