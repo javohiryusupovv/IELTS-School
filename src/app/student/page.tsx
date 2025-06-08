@@ -10,6 +10,7 @@ import CreditCardChip from "../../../public/students/cardChip.png";
 import CreditCardWife from "../../../public/students/wife.png";
 import IQLogo from "../../../public/students/logoCard.png";
 
+export const dynamic = "force-dynamic";
 
 export default async function StudentDashboard() {
   const student = await getStudentFromCookie();

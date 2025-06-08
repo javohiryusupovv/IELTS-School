@@ -1,9 +1,8 @@
 import { ShoppingBag, UserRound } from "lucide-react";
 import Link from "next/link";
 import { BiHome } from "react-icons/bi";
-import { GiRamProfile, GiTrophyCup } from "react-icons/gi";
+import { GiTrophyCup } from "react-icons/gi";
 import "./tgbot.css";
-import { RiProfileFill } from "react-icons/ri";
 
 export default async function Student({
   children,
