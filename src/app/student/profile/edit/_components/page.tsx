@@ -15,36 +15,38 @@ export default function Edit({ studentInfo }: StudentProps) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const data = {
-      name: formData.get("names") as string,
-      surname: formData.get("surname") as string,
-      phone: formData.get("phonenumber") as string,
       password: formData.get("password") as string,
     };
-  
+
     // Trim and normalize inputs
     const isSame =
-      data.name.trim() === studentInfo.name &&
-      data.surname.trim() === studentInfo.surname &&
-      data.phone.trim() === studentInfo.phone &&
       data.password.trim() === "";
-  
+
     if (isSame) {
       toast.info("Ma'lumotlar o'zgartirilmagan!", {
         duration: 2000,
         style: {
-            height: "50px",
-            color: "white",
-            backgroundColor: "orange",
-            marginTop: "70px"
+          height: "50px",
+          color: "white",
+          backgroundColor: "orange",
+          marginTop: "70px"
         },
-    });
+      });
       return;
     }
-  
+
     const resultupdated = newUpdatedStudent(studentInfo._id, data, pathname);
-  
-    
-    const toastId = toast.loading("Yuklanmoqda...");
+
+
+    const toastId = toast.loading("Yuklanmoqda...", {
+      duration: 2000,
+      style: {
+        height: "50px",
+        color: "gray",
+        backgroundColor: "white",
+        marginTop: "70px"
+      },
+    });
     try {
       await resultupdated;
       toast.dismiss(toastId);
@@ -71,11 +73,11 @@ export default function Edit({ studentInfo }: StudentProps) {
         },
       });
     }
-    
-    
+
+
     await resultupdated;
   };
-  
+
 
   return (
     <div className="min-h-scree px-5 space-y-4 font-sans pt-[75px]">
@@ -90,8 +92,8 @@ export default function Edit({ studentInfo }: StudentProps) {
           <input
             type="text"
             defaultValue={studentInfo?.name}
-            name="names"
-            className="w-full rounded-lg p-2 mt-1 outline-none focus:border-[#3978ff] focus:shadow-sm focus:shadow-[#0000ff22] transition-all duration-200"
+            disabled
+            className="w-full rounded-lg p-2 mt-1 bg-gray-100 border border-gray-300 text-gray-600 cursor-not-allowed outline-none focus:border-[#3978ff] focus:shadow-sm focus:shadow-[#0000ff22] transition-all duration-200"
             placeholder="Ismingizni kiriting"
           />
         </div>
@@ -100,8 +102,8 @@ export default function Edit({ studentInfo }: StudentProps) {
           <input
             type="text"
             defaultValue={studentInfo?.surname}
-            name="surname"
-            className="w-full rounded-lg p-2 mt-1 outline-none focus:border-[#3978ff] focus:shadow-sm focus:shadow-[#0000ff22] transition-all duration-200"
+            disabled
+            className="w-full rounded-lg p-2 mt-1 bg-gray-100 border border-gray-300 text-gray-600 cursor-not-allowed outline-none focus:border-[#3978ff] focus:shadow-sm focus:shadow-[#0000ff22] transition-all duration-200"
             placeholder="Ismingizni kiriting"
           />
         </div>
@@ -110,8 +112,8 @@ export default function Edit({ studentInfo }: StudentProps) {
           <input
             type="number"
             defaultValue={studentInfo?.phone}
-            name="phonenumber"
-            className="w-full rounded-lg p-2 mt-1 outline-none focus:border-[#3978ff] focus:shadow-sm focus:shadow-[#0000ff22] transition-all duration-200"
+            disabled
+            className="w-full rounded-lg p-2 mt-1 bg-gray-100 border border-gray-300 text-gray-600 cursor-not-allowed outline-none focus:border-[#3978ff] focus:shadow-sm focus:shadow-[#0000ff22] transition-all duration-200"
             placeholder="Telfon raqamingizni kiriting"
           />
         </div>

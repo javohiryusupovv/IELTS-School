@@ -73,11 +73,7 @@ export const newUpdatedStudent = async (studentId: string, data: any, path: stri
     await ConnectMonogDB();
 
     // Prepare update object
-    const updateData: any = {
-      name: data.name,
-      surname: data.surname,
-      phone: data.phone,
-    };
+    const updateData: any = {};
 
     // If password is provided, hash it
     if (data.password) {
