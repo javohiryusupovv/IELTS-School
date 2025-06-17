@@ -52,8 +52,7 @@ export default async function ProfileView() {
             <span>Loyiha haqida</span>
             <span className="text-gray-400">v 1</span>
           </div>
-
-          <div className="border bg-white shadow-md rounded-lg p-4">Ommaviy oferta</div>
+          <Link href={"https://drive.google.com/file/d/1BPPPnIsGRORVnnHQTUe9_K5rAAbv66Ba/view?usp=sharing"} target="_blank" className=" inline-flex w-full border bg-white shadow-md rounded-lg p-4">Ommaviy oferta</Link>
         </div>
       </div>
     </div>
