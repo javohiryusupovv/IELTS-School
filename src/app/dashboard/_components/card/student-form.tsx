@@ -88,6 +88,7 @@ export default function StudentForm({ propCourses }: { propCourses: ICourse[] })
         setStudentName("");
         setStudentSurname("");
         setStudentCourseId("");
+        setPassword("")
         setPhone("");
         setError([])
     };

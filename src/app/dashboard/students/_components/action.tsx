@@ -127,7 +127,7 @@ export function SearchFuture({ studentList }: StudentListProps) {
           )}
         </label>
       </div>
-      <div className="absolute rounded shadow-2xl overflow-hidden bg-white pb-5 mt-2">
+      <div className="absolute z-[5] rounded shadow-2xl overflow-hidden bg-white pb-5 mt-2">
         <div>
           {searchStudent.length >= 2 &&
             filterStudent.map((student: any, id: number) => (
