@@ -99,7 +99,7 @@ export default function EditCourse({ course }: Props) {
     <div>
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>
-          <button className=" absolute top-0 right-0 z-[888] px-5 py-3 rounded-full bg-[#f18024] hover:bg-[#f18024ca] transition-all duration-200 max-lg:px-3">
+          <button className=" absolute top-0 right-0 z-[40] px-5 py-3 rounded-full bg-[#f18024] hover:bg-[#f18024ca] transition-all duration-200 max-lg:px-3">
             <p className="text-[12px] font-medium text-white max-lg:hidden">
               Kursni tahrirlash
             </p>
