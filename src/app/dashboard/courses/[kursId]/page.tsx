@@ -24,7 +24,7 @@ async function CourseDetail({ params, }: { params: Promise<{ kursId: string }> }
 
   return (
     <div className={`w-full`}>
-      <article className="flex justify-between">
+      <article className="flex justify-between relative top-0 left-0">
         <h5 className="mb-5 text-[25px] max-md:text-[20px] max-sm:text-[17px]">{course.courseTitle}</h5>
         <EditCourse course={course} />
       </article>
