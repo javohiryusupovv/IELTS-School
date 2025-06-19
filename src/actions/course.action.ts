@@ -131,9 +131,12 @@ export const DeleteCourse = async (id: string, path: string) => {
       throw new Error("Kurs topilmadi");
     }
 
+    await Student.deleteMany({ course: course._id });
+
     // Keshni yangilash
     revalidateTag("courses");
     revalidateTag("course");
+    revalidateTag("students");
     revalidatePath(path);
   } catch (error) {
     console.error(`Error deleting course ${id}:`, error);
