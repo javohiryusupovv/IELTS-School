@@ -16,14 +16,19 @@ import { FormEvent, useState } from "react";
 import { updateStudent } from "@/actions/student.action";
 import { usePathname } from "next/navigation";
 import { toast } from "sonner";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { iPropCourse } from "../../../../../../app.types";
 
 interface Props {
     student: IStudent;
+    courses: iPropCourse[];
 }
 
-export default function EditStudent({ student }: Props) {
+export default function EditStudent({ student, courses }: Props) {
     const [phone, setPhone] = useState(student.phone);
-    const pathname = usePathname()
+    const [studentCourseId, setStudentCourseId] = useState(student.course._id); 
+    const pathname = usePathname();
+    
 
 
     async function onUpdateStudent(e: FormEvent<HTMLFormElement>) {
@@ -35,6 +40,7 @@ export default function EditStudent({ student }: Props) {
                 surname: formData.get("surname") as string,
                 phone: formData.get("phone") as string,
                 password: formData.get("password") as string,
+                course: studentCourseId
             }
             const updatedStudent = updateStudent(student._id, data, pathname);
 
@@ -107,10 +113,22 @@ export default function EditStudent({ student }: Props) {
                         </label>
                         <article className="mb-5">
                             <p className="mb-3 text-[#d47323cd]">Kursni tanlang *</p>
-                            <select disabled={true} defaultValue={student.course.courseTitle}
-                                className="w-full py-2 rounded-md border">
-                                <option value="">{student.course.courseTitle}</option>
-                            </select>
+                            <Select value={studentCourseId} onValueChange={setStudentCourseId}>
+                                <SelectTrigger className="w-full py-2 rounded-md border">
+                                    <SelectValue placeholder="Kursni Tanlang ..." />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {courses.map((course) => (
+                                        <SelectItem
+                                            key={course._id}
+                                            value={course._id}
+                                            className="max-sm:text-[14px] hover:bg-orange-400/70 hover:text-white transition-all duration-200"
+                                        >
+                                            {course.courseTitle}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
                         </article>
                         <label className="flex gap-2 text-[#d47323cd] flex-col mb-5">
                             Phone *

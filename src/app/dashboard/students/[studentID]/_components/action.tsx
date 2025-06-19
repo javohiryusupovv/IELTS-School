@@ -1,7 +1,7 @@
 "use client";
 
 import { ActiveStudent, addAdminCoins } from "@/actions/student.action";
-import { IStudent } from "@/types/type";
+import { ICourse, IStudent } from "@/types/type";
 import { usePathname } from "next/navigation";
 import { toast } from "sonner";
 import studentImage from "../../../../../../public/img/student.png";
@@ -16,12 +16,14 @@ import { formatDate, formatReasonText } from "../../../../../../constants/page";
 import { useState } from "react";
 import SelecStatus from "./selecStatus";
 import Delete from "./delete";
+import { iPropCourse } from "../../../../../../app.types";
 
 interface Props {
   student: IStudent;
+  courses: iPropCourse[]
 }
 
-export default function Actions({ student }: Props) {
+export default function Actions({ student, courses }: Props) {
   const pathname = usePathname();
   const [coins, setCoins] = useState("");
   const [coinreason, setCoinreason] = useState("");
@@ -138,7 +140,7 @@ export default function Actions({ student }: Props) {
       <div className="grid grid-cols-3 items-start gap-5 mb-4 max-studentCard:grid-cols-1">
         <div className=" relative top-0 right-0 col-span-1 max-studentCard:col-span-2 px-4 py-5 rounded-md shadowCustom">
           <div className="absolute top-5 right-6 flex flex-col items-center gap-2">
-            <EditStudent student={student} />
+            <EditStudent student={student} courses={courses}/>
             <ActiveStudentFunc ActiveStudentHande={ActiveStudentHande} />
             <Archive ArxiveStudentHande={ArxiveStudentHande} />
           </div>

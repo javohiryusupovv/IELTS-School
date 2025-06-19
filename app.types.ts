@@ -65,4 +65,10 @@ export interface CoinInput {
     coin: number;
     date: string;
   }
+
+
+  export interface iPropCourse{
+    courseTitle: string;
+    _id: string
+  }
   

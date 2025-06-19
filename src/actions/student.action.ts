@@ -175,7 +175,7 @@ export const ActiveStudent = async (
 // Talaba ma‘lumotlarini yangilash
 export const updateStudent = async (
   studentId: string,
-  data: { name: string; surname: string; phone: string, password: string },
+  data: { name: string; surname: string; phone: string, password: string, course: string },
   path: string
 ) => {
   try {
@@ -187,10 +187,30 @@ export const updateStudent = async (
     }
     await ConnectMonogDB();
 
+    const student = await Student.findById(studentId).populate("course");
+    if (!student) {
+      throw new Error("Talaba topilmadi!");
+    }
+    const oldCourseId = student.course?._id;
+
+    if (oldCourseId && oldCourseId.toString() !== data.course) {
+      await Course.findByIdAndUpdate(oldCourseId, {
+        $pull: { students: student._id },
+      });
+    }
+
+    // 3. Yangi kursga talabaning ID sini qo‘shamiz
+    if (data.course && oldCourseId?.toString() !== data.course) {
+      await Course.findByIdAndUpdate(data.course, {
+        $addToSet: { students: student._id },
+      });
+    }
+
     const updatedFieldStudent: any = {
       name: data.name,
       surname: data.surname,
       phone: data.phone,
+      course: data.course
     }
 
     if (data.password) {
