@@ -24,8 +24,8 @@ export const getStableColor = (_id: string) => {
 
 
 export const reasonsWithValues = {
-  UygaVazifa: 10,
-  VaqtidaKeldi: 15,
+  UygaVazifa: 15,
+  VaqtidaKeldi: 20,
   ImtihondanYaxshiBall: 0
 };
 
