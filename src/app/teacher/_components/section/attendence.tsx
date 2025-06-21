@@ -251,9 +251,9 @@ export default function Attendence({
                   <th className="w-[150px] bg-white sticky left-0 z-[10]">
                     <p className="text-[15px] font-medium py-2">Ism</p>
                   </th>
-                  {filterDays.map((month, i) => (
+                  {filterDays.map((day, i) => (
                     <th key={i} className="text-center text-[12px] p-3">
-                      {moment(month).format("D-MMM")}
+                      {moment(day).format("D-MMM")}
                     </th>
                   ))}
                 </tr>

@@ -1,7 +1,6 @@
 "use client";
 
 import { postCourse } from "@/actions/course.action";
-import { getTeachers } from "@/actions/teacher.action";
 import {
   Sheet,
   SheetClose,
@@ -58,17 +57,6 @@ function CreateCourse() {
     fetchTeacher();
   }, []);
 
-  let courseDays = CalendarDayGet(startDate, endDate);
-  let filteredDay = courseDays.filter((day) => {
-    let weekday = new Date(day).getDay();
-  if (weekday === 0) return false;
-  if (selectDay === "juft") {
-    return [1, 3, 5].includes(weekday);
-  } else {
-    return [2, 4, 6].includes(weekday);
-  }
-  });
-
   
   const handleSelectDay = (dayType: string) => {
     setSelectDay(dayType);
@@ -87,6 +75,20 @@ function CreateCourse() {
       setError(errorMessage);
       return;
     }
+
+    const courseDays = CalendarDayGet(startDate, endDate);
+
+    let filteredDay = courseDays.filter((day) => {
+      let weekday = new Date(day).getDay();
+      if (weekday === 0) return false; // Yakshanba o‘chiriladi
+    
+      return selectDay === "juft"
+      ? [2, 4, 6].includes(weekday)
+      : [1, 3, 5].includes(weekday);
+    });
+    
+    
+
     const { title } = CourseValidation.data;
     try {
       const course = postCourse(

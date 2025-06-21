@@ -17,7 +17,7 @@ export function DatapickerEnd({ endDate, setEndDate }: Props) {
     <Popover>
       <PopoverTrigger type="button" className={cn("sm:w-[155px] [&_svg]:size-4 [&_svg]:shrink-0 w-full flex border whitespace-nowrap items-center gap-2 p-2 rounded-md text-left font-normal focus-within:border-orange-500 overflow-hidden",!endDate && "text-muted-foreground" )}>
           <CalendarIcon className="w-[8px] h-[8px]" />
-          {endDate ? format(selectedDate, "dd.MM.yyyy") : <span>Boshlanish kuni</span>}
+          {endDate ? format(selectedDate, "dd.MM.yyyy") : <span>Tugash kuni</span>}
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
         <Calendar

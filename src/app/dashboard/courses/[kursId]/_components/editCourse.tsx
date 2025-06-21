@@ -30,19 +30,22 @@ export default function EditCourse({ course }: Props) {
   const [startDate, setStartDate] = useState<Date | null>(
     course.startDate ? new Date(course.startDate) : null
   );
+
   const [endDate, setEndDate] = useState<Date | null>(
     course.endDate ? new Date(course.endDate) : null
   );
-  const [selectDay, setSelectDay] = useState("toq");
+  const [selectDay, setSelectDay] = useState("juft");
   const pathname = usePathname();
 
   useEffect(() => {
     if (course.days && course.days.length > 0) {
-      const firstDay = new Date(course.days[0]).getDate();
-      const detectedDayType = firstDay % 2 === 0 ? "juft" : "toq";
+      const firstDay = new Date(course.days[0]).getDay();
+      const detectedDayType = [2, 4, 6].includes(firstDay) ? "juft" : "toq";
       setSelectDay(detectedDayType);
     }
   }, [course.days]);
+  console.log(selectDay);
+
 
   const totalValue = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -87,10 +90,14 @@ export default function EditCourse({ course }: Props) {
   const filteredDay = useMemo(() => {
     let courseDays = CalendarDayGet(startDate, endDate);
     return courseDays.filter((day) => {
-      let dayNumber = new Date(day).getDate();
-      return selectDay === "juft" ? dayNumber % 2 === 0 : dayNumber % 2 !== 0;
+      let weekday = new Date(day).getDay();
+      if (weekday === 0) return false;
+      return selectDay === "juft"
+        ? [2, 4, 6].includes(weekday)
+        : [1, 3, 5].includes(weekday);
     });
   }, [startDate, endDate, selectDay]);
+
   const handleSelectDay = (dayType: string) => {
     setSelectDay(dayType);
   };
@@ -103,7 +110,7 @@ export default function EditCourse({ course }: Props) {
             <p className="text-[12px] font-medium text-white max-lg:hidden">
               Kursni tahrirlash
             </p>
-            <FaEdit className="text-white lg:hidden max-sm:text-[12px]"/>
+            <FaEdit className="text-white lg:hidden max-sm:text-[12px]" />
           </button>
         </SheetTrigger>
         <SheetContent>
