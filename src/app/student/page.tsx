@@ -22,7 +22,7 @@ export default async function StudentDashboard() {
       <div className="pt-[100px] container-cus h-dvh">
       <article className="w-11/12 rounded-md m-auto mb-10">
         <div className=" relative top-0 left-0 rounded-[20px] overflow-hidden">
-          <Image className="absolute left-10 top-5 w-[150px] container-img" src={IQLogo} alt="ChipCard"/>
+          {/* <Image className="absolute left-10 top-5 w-[150px] container-img" src={IQLogo} alt="ChipCard"/> */}
           <article className="custom-cardBG absolute top-20 w-full flex justify-between items-center px-10">
             <Image className="chip w-11" src={CreditCardChip} alt="ChipCard" />
             <Image

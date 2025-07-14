@@ -58,12 +58,12 @@ export default function ProfileAccount({ admin }: Props) {
             </article>
             <hr className="mb-3" />
             <div className="flex flex-col gap-3">
-              <Link href={"/dashboard/price"} onClick={() => handleClose()}>
+              {/* <Link href={"/dashboard/price"} onClick={() => handleClose()}>
                 <button className="flex gap-2 items-center transition-all duration-200 text-[#72e128] w-full sm:py-2 py-1.5 px-4 rounded border hover:bg-[#72e128c2]/20 hover:border-transparent">
                   <BsCashCoin />
                   <p>To'lov qilish</p>
                 </button>
-              </Link>
+              </Link> */}
               {(admin.role === "owner" || admin.role === "coinx") && (
                 <Link href={`/crm`}>
                   <button className="flex gap-2 mb-3 items-center transition-all duration-200 w-full sm:py-2 py-1.5 px-4 rounded border bg-orange-500 text-white hover:border-transparent">

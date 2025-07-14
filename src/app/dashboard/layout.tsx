@@ -1,5 +1,6 @@
 import NavbarLayout from "./_components/navbarLayout";
 import LMSLogo from "../../../public/logo/logo.png";
+import IqroLogo from "../../../public/logo/iqroFix.png"
 import "./custom.css";
 
 import Image from "next/image";
@@ -8,7 +9,6 @@ import ProfileAccount from "./_components/modal/profileAccount";
 import { cookies } from "next/headers";
 import ConnectMonogDB from "@/lib/mongodb";
 import NavbarMedia from "./_components/navbarMedia";
-import PaymentSend from "../crm/_components/PaymentDays";
 import AdministratorModel from "@/models/administrator.model";
 
 export default async function DashboardLayout({
@@ -49,9 +49,9 @@ export default async function DashboardLayout({
         <NavbarLayout />
       </div>
       <main className="lg:w-[calc(100%-250px)] sm:w-[calc(100%-230px)] w-full md:mr-[20px] sm:mx-[10px] mx-1 mb-5 overflow-y-auto scrolbars sm:mt-3 mt-8 rounded-md">
-        <div className="w-full flex justify-between items-center h-[60px] rounded-md bg-white mb-4 px-2">
-          <article className="w-[120px] h-full flex items-center">
-            <Image src={LMSLogo} alt="Logo Learning Center" />
+        <div className="w-full flex justify-between items-center rounded-md bg-white mb-4 px-2">
+          <article className="w-[80px] h-full flex items-center">
+            <Image src={IqroLogo} alt="Logo Learning Center" />
           </article>
           <div className="flex gap-4 items-center">
             <NotificationModal />

@@ -43,7 +43,8 @@ async function ShopAdmin() {
             </article>
            
 
-            <p className="line-clamp-2 mb-2">{item.title}</p>
+            <p className="line-clamp-2">{item.title}</p>
+            <p className="mb-4 text-[15px] font-medium">Narxi: <span className="text-orange-600">{item.price} coin</span></p>
             <p>Mavjud: <span className="text-green-500">{item.totalQuantity} dona</span></p>
             <p>Qolgan: <span className={` ${item.remainingQuantity < 1 ? "text-red-500" : "text-green-500"}`}>{item.remainingQuantity} dona</span></p>
           </div>

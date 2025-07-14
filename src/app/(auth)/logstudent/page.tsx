@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import LogoStudent from "../../../../public/logo/logo.png"
 import Image from "next/image";
 import { Eye, EyeOff } from 'lucide-react';
+import IqroLogo from "../../../../public/logo/iqroFix.png"
 
 
 
@@ -77,8 +78,8 @@ export default function StudentLogin() {
 
   return (
     <div className="max-sm:w-[280px] w-[350px] md:w-[400px] lg:w-[460px] xl:w-[500px] absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] flex flex-col items-center m-auto">
-      <article className="mb-10">
-        <Image src={LogoStudent} className="w-[150px]" alt="Logo Student" />
+      <article className="mb-6">
+        <Image src={IqroLogo} className="w-[150px] max-sidebar:w-[120px]" alt="Logo Student" />
       </article>
       <form onSubmit={handleSubmit} className="text-center w-full">
         <article className="flex flex-col items-start mb-4">

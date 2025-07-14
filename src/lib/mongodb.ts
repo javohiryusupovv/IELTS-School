@@ -14,12 +14,18 @@ if (!cached) {
 
 async function ConnectMonogDB() {
     if (cached.conn) return cached.conn;
-    
+
     if (!cached.promise) {
         cached.promise = mongoose.connect(MONGODB_URI, {
-            dbName: "coinX",
+            dbName: "IqroCoinx",
             bufferCommands: false
-        }).then((mongoose) => mongoose);
+        }).then((mongoose) => {
+            console.log("✅ MongoDB Connected!");
+            return mongoose;
+        }).catch(err => {
+            console.error("❌ MongoDB Connection Error:", err);
+            throw err;
+        });
     }
 
     cached.conn = await cached.promise;
