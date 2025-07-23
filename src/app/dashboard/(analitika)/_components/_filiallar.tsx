@@ -28,7 +28,7 @@ export default function _filiallar() {
         </article>
         <Image
           width={200}
-          className="max-lg:w-[150px] max-md:w-[110px] max-sm:w-[90px]"
+          className="max-lg:w-[150px] max-md:w-[110px] max-sm:w-[180px]"
           src={Filiallar}
           alt="Mentors background img"
         />

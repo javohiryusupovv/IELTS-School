@@ -29,7 +29,7 @@ export async function getTodayCoins(): Promise<
       name: student.name,
       surname: student.surname,
       coins: coinsToday,
-      course: student.course?.courseTitle || "Nomaʼlum"
+      course: student.course?.courseTitle || "Nomaʼlum",
     };
   });
 
