@@ -7,8 +7,7 @@ import { toast } from "sonner";
 import { LoaderCircle, Eye, EyeOff } from 'lucide-react';
 import { useTopLoader } from "nextjs-toploader";
 import Image from "next/image";
-import LoginLogo from "../../../../public/logo/logo.png"
-import LogoIqro from '../../../../public/logo/iqroFix.png'
+import LogoIELTSSchool from '../../../../public/logo/logoSchools.png'
 
 
 
@@ -95,7 +94,7 @@ export default function ReceptionLogin() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <Image width={200} className="mb-8 max-sidebar:w-[150px]" src={LogoIqro} alt="Logo" />
+      <Image width={200} className="mb-8 max-sidebar:w-[150px]" src={LogoIELTSSchool} alt="Logo" />
       {isBlocked && (
         <p className="mb-4 text-red-600 font-semibold text-center">
           To'lov qilmaganingiz uchun hisobingiz bloklangan. Iltimos, to'lov qiling.

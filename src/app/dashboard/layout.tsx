@@ -1,6 +1,6 @@
 import NavbarLayout from "./_components/navbarLayout";
 import LMSLogo from "../../../public/logo/logo.png";
-import IqroLogo from "../../../public/logo/iqroFix.png"
+import IELTSHOOL from "../../../public/logo/logoSchools.png"
 import "./custom.css";
 
 import Image from "next/image";
@@ -49,9 +49,9 @@ export default async function DashboardLayout({
         <NavbarLayout />
       </div>
       <main className="lg:w-[calc(100%-250px)] sm:w-[calc(100%-230px)] w-full md:mr-[20px] sm:mx-[10px] mx-1 mb-5 overflow-y-auto scrolbars sm:mt-3 mt-8 rounded-md">
-        <div className="w-full flex justify-between items-center rounded-md bg-white mb-4 px-2">
-          <article className="w-[80px] h-full flex items-center">
-            <Image src={IqroLogo} alt="Logo Learning Center" />
+        <div className="w-full flex justify-between items-center rounded-md bg-white mb-4 px-2 py-2">
+          <article className="w-[110px] h-full flex items-center">
+            <Image src={IELTSHOOL} alt="Logo Learning Center" />
           </article>
           <div className="flex gap-4 items-center">
             <NotificationModal />
