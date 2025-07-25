@@ -38,7 +38,7 @@ export default function _mentors({ getTeacher }: Props) {
           </h6>
         </article>
         <Image
-          className="max-lg:w-[150px] max-md:w-[110px] max-sm:w-[90px]"
+          className="max-lg:w-[150px] max-md:w-[110px] max-sm:w-[180px]"
           width={200}
           src={Mentors}
           alt="Mentors background img"

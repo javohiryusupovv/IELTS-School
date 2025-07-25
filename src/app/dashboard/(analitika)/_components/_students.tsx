@@ -38,7 +38,7 @@ export default function _students({ getStudentsValue }: Props) {
           </h6>
         </article>
         <Image
-          className="max-lg:w-[150px] max-md:w-[110px] max-sm:w-[90px]"
+          className="max-lg:w-[150px] max-md:w-[110px] max-sm:w-[180px]"
           width={200}
           src={bgImg}
           alt="Mentors background img"
