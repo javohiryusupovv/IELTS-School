@@ -65,7 +65,12 @@ export default function ClientComponent({ product, coins, student }: Props) {
   const handlePurchaseBot = () => {
     setIsLoading(true);
     const telegramBotId = process.env.NEXT_PUBLIC_TELEGRAM_BOT_API!;
-    const telegramChatId = process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID!;
+    const chatIds = [
+      process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID1!,
+      process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID2!,
+      process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID3!,
+    ];
+
     const message = `
 👨‍🎓 Name: ${student.name} ${student.surname}
 
@@ -79,20 +84,22 @@ export default function ClientComponent({ product, coins, student }: Props) {
 
 📆 Date: ${new Date().toLocaleDateString()}
 `.trim();
-    const promise = fetch(
-      `https://api.telegram.org/bot${telegramBotId}/sendMessage`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "cache-control": "no-cache",
-        },
-        body: JSON.stringify({
-          chat_id: telegramChatId,
-          text: message,
-          parse_mode: "HTML",
-        }),
-      }
+
+    const promise = Promise.all(
+      chatIds.map((chatId) =>
+        fetch(`https://api.telegram.org/bot${telegramBotId}/sendMessage`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "cache-control": "no-cache",
+          },
+          body: JSON.stringify({
+            chat_id: chatId,
+            text: message,
+            parse_mode: "HTML",
+          }),
+        })
+      )
     )
       .then(() => {
         router.push("/student/shop");
@@ -117,6 +124,7 @@ export default function ClientComponent({ product, coins, student }: Props) {
       error: "Something went wrong!",
     });
   };
+
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
