@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import LearningCenterLogo from "../../../../public/logo/logo.png";
+import LearningCenterLogo from "../../../../public/logo/logoSchools.png";
 import GroupCard from "./card/group-card";
 import { CircleUserRound } from "lucide-react";
 import Link from "next/link";

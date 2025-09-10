@@ -81,7 +81,7 @@ export const postAddStudent = async (
       password: hashedPassword,
       studentID,
       course: courseId,
-      publishStudent: false,
+      publishStudent: true,
     });
     await newStudent.save();
 
