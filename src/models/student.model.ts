@@ -7,25 +7,49 @@ const CoinSchema = new Schema(
     reasons: [
       {
         reason: { type: String, required: true },
-        value: { type: Number, required: true }
-      }
-    ] // ["Uyga vazifa", "Yuqori ball"]
+        value: { type: Number, required: true },
+      },
+    ],
   }
 );
 
-const StudentSchema = new Schema({
-  name: String,
-  surname: String,
-  phone: String,
-  password: { type: String, unique: true }, 
-  studentID: String,
-  course: { type: Schema.Types.ObjectId, ref: "Course" }, // Kursga referens
-  coins: [CoinSchema],
-  lastDateCoin: { type: Date, default: null },
-  educationCenter: { type: Schema.Types.ObjectId, ref: "EducationCenter" },
-  publishStudent: { type: Boolean, default: false }, // Talabani ko'rsatish
-  
-}, { timestamps: true });
+const PaymentSchema = new Schema(
+  {
+    amount: { type: Number, required: true }, // Summasi
+    type: {
+      type: String,
+      enum: ["Naqd", "Karta", "Click"],
+      required: true,
+    }, // To'lov turi
+    date: { type: Date, default: Date.now }, // To'langan sana
+    nextPayment: { type: Date, required: true }, // Keyingi to'lov sanasi
+    status: {
+      type: String,
+      enum: ["To‘landi", "To‘lanmadi"],
+      default: "To‘landi",
+    },
+  },
+  { timestamps: true }
+);
 
-  const Student = models.Student || model("Student", StudentSchema);
-  export default Student;
+const StudentSchema = new Schema(
+  {
+    name: String,
+    surname: String,
+    phone: String,
+    password: { type: String, unique: true },
+    studentID: String,
+    course: { type: Schema.Types.ObjectId, ref: "Course" }, // Kursga referens
+    coins: [CoinSchema],
+    lastDateCoin: { type: Date, default: null },
+    educationCenter: { type: Schema.Types.ObjectId, ref: "EducationCenter" },
+    publishStudent: { type: Boolean, default: false }, // Talabani ko'rsatish
+
+    // 🔹 To'lovlar
+    payments: [PaymentSchema],
+  },
+  { timestamps: true }
+);
+
+const Student = models.Student || model("Student", StudentSchema);
+export default Student;

@@ -38,7 +38,7 @@ export const getEducationData = async () => {
       },
       {
         path: "students",
-        select: "name surname phone studentID publishStudent course coins",
+        select: "name surname phone studentID publishStudent course coins payments",
         populate: {
           path: "course",
           model: Course,

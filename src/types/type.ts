@@ -1,5 +1,11 @@
 
-
+export interface IPayment {
+  amount: number;
+  type: "Naqd" | "Karta";
+  date: string;        // MongoDB ISO date bo‘ladi
+  nextPayment: string; // ISO date
+  status: string;
+}
 
 export interface IStudent {
   publishStudent: boolean;
@@ -10,6 +16,7 @@ export interface IStudent {
   password: string,
   phone: string;
   coins: number[];
+  payments: IPayment[];
   course: ICourse; // MongoDB ObjectId string sifatida bo'ladi
 }
 

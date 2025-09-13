@@ -417,3 +417,31 @@ export async function deleteCoinHistoryEntry(
     throw new Error("Coin tarixini o‘chirishda xatolik yuz berdi");
   }
 }
+
+
+interface PaymentInput {
+  amount: number;
+  type: "Naqd" | "Karta";
+}
+
+export async function addPayment(studentId: string, { amount, type }: PaymentInput, pathname: string) {
+  await ConnectMonogDB();
+  const today = new Date();
+  const nextPayment = new Date();
+  nextPayment.setMonth(today.getMonth() + 1);
+
+  const student = await Student.findById(studentId);
+  if (!student) throw new Error("Student not found");
+
+  student.payments.push({
+    amount,
+    type,
+    date: today,
+    nextPayment,
+    status: "To‘landi",
+  });
+
+  revalidatePath(pathname);
+  await student.save();
+  return JSON.parse(JSON.stringify(student));
+}

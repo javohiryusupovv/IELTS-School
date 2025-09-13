@@ -13,6 +13,7 @@ import {
 import Link from "next/link";
 import Action from "./action";
 import { CircleX } from "lucide-react";
+import PayModal from "./PayModal";
 
 interface PropsTableStudent {
   students: IStudent[];
@@ -26,10 +27,11 @@ export default function TableStudent({ students, courses }: PropsTableStudent) {
     selectedCourse === "all"
       ? students
       : students.filter(
-          (student) => student.course && student.course._id === selectedCourse
-        );
+        (student) => student.course && student.course._id === selectedCourse
+      );
 
   let studentCounter = 1;
+
 
   return (
     <div className="w-full overflow-x-auto max-w-full scrollbar-orange">
@@ -78,6 +80,9 @@ export default function TableStudent({ students, courses }: PropsTableStudent) {
               Telefon
             </th>
             <th className="py-3 max-md:text-[12px] max-lg:text-[14px]">
+              Tulov statusi
+            </th>
+            <th className="py-3 max-md:text-[12px] max-lg:text-[14px]">
               O'chirish
             </th>
           </tr>
@@ -86,11 +91,10 @@ export default function TableStudent({ students, courses }: PropsTableStudent) {
           {filteredStudents.map((student: any, id: number) => (
             <tr
               key={student._id || id}
-              className={`border hover:bg-gray-100 transition ${
-                student.publishStudent
+              className={`border hover:bg-gray-100 transition ${student.publishStudent
                   ? "bg-white"
                   : "bg-accent hover:bg-gray-400/20"
-              }`}
+                }`}
             >
               {student.publishStudent ? (
                 <>
@@ -115,6 +119,36 @@ export default function TableStudent({ students, courses }: PropsTableStudent) {
                   </td>
                   <td className="py-2 text-[14px] font-normal max-lg:text-[12px]">
                     +998 {student.phone}
+                  </td>
+                  <td className="py-2 text-[14px] font-normal max-lg:text-[12px]">
+                    {(() => {
+                      // So‘nggi paymentni olish
+                      const lastPayment = student.payments?.[student.payments.length - 1];
+
+                      if (lastPayment) {
+                        const nextPayDate = new Date(lastPayment.nextPayment);
+                        const today = new Date();
+
+                        // Agar keyingi to‘lov sanasi bugundan keyin bo‘lsa => To‘landi
+                        if (nextPayDate > today) {
+                          return (
+                            <p className="py-1 px-5 border rounded-full bg-green-500 text-white inline-flex">
+                              To‘landi
+                            </p>
+                          );
+                        }
+                      }
+
+                      // Aks holda => To‘lanmadi
+                      return (
+                        <article className="flex items-center gap-2">
+                          <span className="py-1 px-5 border rounded-full bg-red-500 text-white inline-flex">
+                            To‘lanmadi
+                          </span>
+                          <PayModal student={student} />
+                        </article>
+                      );
+                    })()}
                   </td>
                   <td className="py-2">
                     <Action student={student} />
