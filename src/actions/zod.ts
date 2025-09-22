@@ -33,7 +33,7 @@ export const CourseSchemaZod = z.object({
     .string()
     .trim()
     .min(2, "Kurs nomi kiritilmadi")
-    .transform(val => val.charAt(0).toUpperCase() + val.slice(1).toLowerCase())
+    // .transform(val => val.charAt(0).toUpperCase() + val.slice(1).toLowerCase())
 })
 
 export const StudentSchemaZod = z.object({
