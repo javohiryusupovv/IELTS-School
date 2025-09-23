@@ -27,6 +27,7 @@ export interface ICourse {
   startDate: string;
   endDate: string;
   days: string[];
+  price: number
 }
 
 export interface ITeacher {

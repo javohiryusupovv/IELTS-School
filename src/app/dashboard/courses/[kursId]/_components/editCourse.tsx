@@ -14,7 +14,14 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { ICourse } from "@/types/type";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { ICourse, ITeacher } from "@/types/type";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
@@ -23,9 +30,10 @@ import { FaEdit } from "react-icons/fa";
 
 interface Props {
   course: ICourse;
+  teachers: ITeacher[]; // ✅ Barcha teacherlar kelishi kerak
 }
 
-export default function EditCourse({ course }: Props) {
+export default function EditCourse({ course, teachers }: Props) {
   const [open, setOpen] = useState(false);
   const [startDate, setStartDate] = useState<Date | null>(
     course.startDate ? new Date(course.startDate) : null
@@ -35,6 +43,13 @@ export default function EditCourse({ course }: Props) {
     course.endDate ? new Date(course.endDate) : null
   );
   const [selectDay, setSelectDay] = useState("juft");
+  const [teacher, setTeacher] = useState(
+    typeof course.teacher === "object" ? course.teacher._id : course.teacher
+  );
+  
+
+  
+
   const pathname = usePathname();
 
   useEffect(() => {
@@ -44,8 +59,6 @@ export default function EditCourse({ course }: Props) {
       setSelectDay(detectedDayType);
     }
   }, [course.days]);
-  console.log(selectDay);
-
 
   const totalValue = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -57,7 +70,7 @@ export default function EditCourse({ course }: Props) {
         startDate: startDate ? startDate.toISOString() : course.startDate,
         endDate: endDate ? endDate.toISOString() : course.endDate,
         days: filteredDay,
-        teacher: typeof course.teacher === "object" ? course.teacher._id : "",
+        teacher: teacher, // ✅ Selectdan kelgan teacher
       };
 
       const updatePromise = updateCourseServer(
@@ -72,7 +85,7 @@ export default function EditCourse({ course }: Props) {
           message: "Kurs yangilandi!",
           duration: 2500,
           style: {
-            height: "50px", // fon yashil bo'ladi
+            height: "50px",
             color: "green",
             border: "1px solid #17be5a",
             backgroundColor: "white",
@@ -121,6 +134,7 @@ export default function EditCourse({ course }: Props) {
             </SheetDescription>
           </SheetHeader>
           <form onSubmit={totalValue} className="w-full mb-5">
+            {/* Kurs nomi */}
             <label
               className="flex gap-2 text-[#d47323cd] flex-col mb-5"
               htmlFor="kurs"
@@ -135,6 +149,8 @@ export default function EditCourse({ course }: Props) {
                 placeholder="Kurs nomini kiriting !"
               />
             </label>
+
+            {/* Sana */}
             <div className="flex justify-between w-full mb-5">
               <div>
                 <p className="text-[15px] mb-2 text-[#d47323cd]">
@@ -149,24 +165,29 @@ export default function EditCourse({ course }: Props) {
                 <DatapickerEnd endDate={endDate} setEndDate={setEndDate} />
               </div>
             </div>
+
             <OddEvenDayFilter
               selectDay={selectDay}
               filterDay={handleSelectDay}
             />
-            <label
-              className="flex gap-2 text-[#d47323cd] flex-col mb-10"
-              htmlFor="kurs"
-            >
+
+            {/* Teacher tanlash */}
+            <label className="flex gap-2 text-[#d47323cd] flex-col mb-10">
               Teacherni tanlang*
-              <p className="relative top-0 left-0 px-3 py-2 bg-gray-100 rounded-md cursor-not-allowed group">
-                {typeof course.teacher === "object"
-                  ? `${course.teacher.teacherName} ${course.teacher.teacherSurname}`
-                  : null}
-                <span className="opacity-0 group-hover:opacity-100 group-hover:translate-y-2 transition-all duration-300 absolute left-0 -bottom-5 px-2 bg-red-500 text-white rounded text-[12px]">
-                  O'qituvchini o'zgartirish mumkin emas !
-                </span>
-              </p>
+              <Select value={teacher} onValueChange={(val) => setTeacher(val)}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="O'qituvchi tanlang" />
+                </SelectTrigger>
+                <SelectContent>
+                  {teachers?.map((t) => (
+                    <SelectItem key={t._id} value={t._id}>
+                      {t.teacherName} {t.teacherSurname}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </label>
+
             <SheetClose asChild>
               <button
                 type="submit"

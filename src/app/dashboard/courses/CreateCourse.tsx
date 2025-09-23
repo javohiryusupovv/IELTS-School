@@ -30,6 +30,7 @@ import { CalendarDayGet } from "@/components/custom/CalendarDayGet";
 import { CourseSchemaZod } from "@/actions/zod";
 import { Plus } from "lucide-react";
 import { getEducationData } from "@/actions/education.action";
+import { NumericFormat } from "react-number-format";
 
 function CreateCourse() {
   const [courseTitle, setCourseTitle] = useState("");
@@ -39,6 +40,8 @@ function CreateCourse() {
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [selectDay, setSelectDay] = useState("toq");
   const [iserror, setError] = useState<string[]>([]);
+  const [price, setPrice] = useState<number>(0);
+
 
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
@@ -57,7 +60,7 @@ function CreateCourse() {
     fetchTeacher();
   }, []);
 
-  
+
   const handleSelectDay = (dayType: string) => {
     setSelectDay(dayType);
   };
@@ -81,13 +84,13 @@ function CreateCourse() {
     let filteredDay = courseDays.filter((day) => {
       let weekday = new Date(day).getDay();
       if (weekday === 0) return false; // Yakshanba o‘chiriladi
-    
+
       return selectDay === "juft"
-      ? [2, 4, 6].includes(weekday)
-      : [1, 3, 5].includes(weekday);
+        ? [2, 4, 6].includes(weekday)
+        : [1, 3, 5].includes(weekday);
     });
-    
-    
+
+
 
     const { title } = CourseValidation.data;
     try {
@@ -97,7 +100,8 @@ function CreateCourse() {
         startDate ? startDate.toISOString() : "",
         endDate ? endDate.toISOString() : "",
         filteredDay,
-        pathname
+        pathname,
+        price,
       );
       toast.promise(course, {
         loading: "Loading...",
@@ -162,8 +166,8 @@ function CreateCourse() {
                 }}
                 value={courseTitle}
                 className={`py-2 border rounded-md px-2 text-gray-700 transition-all duration-200 ${iserror[0]
-                    ? "border-red-600 border-[1.5px]"
-                    : "border-gray-300"
+                  ? "border-red-600 border-[1.5px]"
+                  : "border-gray-300"
                   }`}
                 id="kurs"
                 type="text"
@@ -196,22 +200,39 @@ function CreateCourse() {
               htmlFor="kurs">
               Teacherni tanlang*
             </label>
-              <Select value={teacherId} onValueChange={setTeacherId}>
-                <SelectTrigger className="w-full py-2 rounded-md border">
-                  <SelectValue placeholder="Tanlang ..." />
-                </SelectTrigger>
-                <SelectContent>
-                  {teachers.map((teach) => (
-                    <SelectItem
-                      key={teach._id}
-                      value={teach._id}
-                      className="max-sm:text-[14px] hover:bg-orange-400/70 hover:text-white transition-all duration-200"
-                    >
-                      {teach.teacherName} {teach.teacherSurname}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+            <Select value={teacherId} onValueChange={setTeacherId}>
+              <SelectTrigger className="w-full py-2 rounded-md border">
+                <SelectValue placeholder="Tanlang ..." />
+              </SelectTrigger>
+              <SelectContent>
+                {teachers.map((teach) => (
+                  <SelectItem
+                    key={teach._id}
+                    value={teach._id}
+                    className="max-sm:text-[14px] hover:bg-orange-400/70 hover:text-white transition-all duration-200"
+                  >
+                    {teach.teacherName} {teach.teacherSurname}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <label
+              className="flex gap-2 text-[#d47323cd] max-sm:text-[14px] flex-col sm:mb-5 mb-3"
+              htmlFor="price"
+            >
+              Kurs narxi*
+              <NumericFormat
+                value={price}
+                id="price"
+                thousandSeparator=","
+                allowNegative={false}
+                placeholder="Summani kiriting"
+                onValueChange={(values) => {
+                  setPrice(values.floatValue ?? 0); // floatValue raqamni beradi
+                }}
+                className="py-2 border rounded-md px-2 text-gray-700 transition-all duration-200"
+              />
+            </label>
           </div>
           <SheetFooter>
             <SheetClose asChild>

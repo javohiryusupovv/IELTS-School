@@ -42,13 +42,13 @@ export const getEducationData = async () => {
         populate: {
           path: "course",
           model: Course,
-          select: "_id courseTitle",
+          select: "_id courseTitle price",
         },
         options: { strictPopulate: false },
       },
       {
         path: "courses",
-        select: "courseTitle",
+        select: "courseTitle price",
         options: { strictPopulate: false },
       },
       {

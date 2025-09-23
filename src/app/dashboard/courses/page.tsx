@@ -10,6 +10,8 @@ import { getEducationData } from "@/actions/education.action";
 async function CourseAll() {
   const educationData = await getEducationData();
   const courses = educationData.courses;
+  console.log(courses);
+  
   
   return (
     <div>

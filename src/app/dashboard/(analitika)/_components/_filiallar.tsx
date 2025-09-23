@@ -5,7 +5,7 @@ import bino from "../../../../../public/icons/bino.png";
 
 export default function _filiallar() {
   return (
-    <div className="px-4 pt-3 bg-[#E6F7FF] rounded-[8px]">
+    <div className="px-4 pt-3 bg-[#E6F7FF] rounded-[8px] overflow-hidden">
       <article className="flex items-center gap-4 mb-4">
         <button className="bg-[#1890FF] p-2 rounded-md max-md:p-1 ">
           <Image

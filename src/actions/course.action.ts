@@ -5,7 +5,7 @@ import { ICourse } from "@/types/type";
 import mongoose from "mongoose";
 import { revalidatePath, revalidateTag } from "next/cache";
 
-import {Course, Student, Teacher, Shop} from "@/models/index"
+import { Course, Student, Teacher, Shop } from "@/models/index"
 import { IUpdateCourse } from "../../app.types";
 import Education from "@/models/courseBox.model";
 
@@ -45,7 +45,8 @@ export const postCourse = async (
   startDate: string,
   endDate: string,
   days: string[],
-  path: string
+  path: string,
+  price: number
 ) => {
   if (
     !courseTitle ||
@@ -73,6 +74,7 @@ export const postCourse = async (
       endDate: new Date(endDate),
       days,
       educationCenter: educationCenterId,
+      price
     });
     await newCourse.save();
 
@@ -102,17 +104,38 @@ export const updateCourseServer = async (
 ) => {
   try {
     await ConnectMonogDB();
-    const updateCourseData = await Course.findByIdAndUpdate(
+
+    // Eski kursni olish
+    const oldCourse = await Course.findById(courseId);
+    if (!oldCourse) throw new Error("Kurs topilmadi");
+
+    const updatedCourse = await Course.findByIdAndUpdate(
       courseId,
       { $set: courseData },
       { new: true }
     );
+
+    // Agar teacher o‘zgargan bo‘lsa:
+    if (courseData.teacher && oldCourse.teacher.toString() !== courseData.teacher.toString()) {
+      // Eski teacher'dan kursni olib tashlash
+      await Teacher.findByIdAndUpdate(oldCourse.teacher, {
+        $pull: { courses: courseId },
+      });
+
+      // Yangi teacher'ga kursni qo‘shish
+      await Teacher.findByIdAndUpdate(courseData.teacher, {
+        $addToSet: { courses: courseId },
+      });
+    }
+
     revalidatePath(path);
-    return JSON.parse(JSON.stringify(updateCourseData));
+    return JSON.parse(JSON.stringify(updatedCourse));
   } catch (error) {
-    throw new Error("Kurs Yangilanmadi");
+    console.error("Error updating course:", error);
+    throw new Error("Kurs yangilanmadi");
   }
 };
+
 
 // Kursni o‘chirish
 export const DeleteCourse = async (id: string, path: string) => {

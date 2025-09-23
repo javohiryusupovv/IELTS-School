@@ -8,6 +8,7 @@ import EditCourse from "./_components/editCourse";
 import { IStudent } from "@/types/type";
 import {  User } from 'lucide-react';
 import Link from "next/link";
+import { getEducationData } from "@/actions/education.action";
 
 
 
@@ -15,18 +16,20 @@ async function CourseDetail({ params, }: { params: Promise<{ kursId: string }> }
   const courseJSON = await getCourseById((await params).kursId)
   const course = JSON.parse(JSON.stringify(courseJSON));
   const students = course.students;
+  const educationData = await getEducationData();
+  const teacher = educationData.teachers
+    
   
 
   if (!course) {
     return <h1>Kurs topilmadi</h1>;
-  }
-
+  }  
 
   return (
     <div className={`w-full`}>
       <article className="flex justify-between relative top-0 left-0">
         <h5 className="mb-5 text-[25px] max-md:text-[20px] max-sm:text-[17px]">{course.courseTitle}</h5>
-        <EditCourse course={course} />
+        <EditCourse course={course} teachers={teacher}/>
       </article>
       <div className="flex w-full gap-10 max-xl:flex-wrap">
         <div>

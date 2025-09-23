@@ -35,7 +35,7 @@ export default function CoinChartToday() {
   }, []);
 
   return (
-    <div className="xl:w-[76%] w-full h-[400px]">
+    <div className="w-full h-[400px]">
       <h2 className="text-xl font-bold mb-4">Bugun Sarflangan Coinlar</h2>
 
       {data.length === 0 ? (
@@ -68,9 +68,9 @@ export default function CoinChartToday() {
         <p className="text-[18px] text-gray-600 flex items-center gap-2">
           Umumiy sarflangan coinlar:{" "}
           <span className="font-semibold text-orange-500 text-[18px]">
-            {totalCoins}
+            {totalCoins} 🪙
           </span>
-          <GiTwoCoins className="w-7 h-7 fill-gray-400" />
+          {/* <GiTwoCoins className="w-7 h-7 fill-gray-400" /> */}
         </p>
 
         <button

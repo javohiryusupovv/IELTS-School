@@ -10,7 +10,7 @@ interface Props {
 
 export default function _mentors({ getTeacher }: Props) {
   return (
-    <div className="px-4 pt-3 bg-[#FFFBE6] rounded-[8px]">
+    <div className="px-4 pt-3 bg-[#FFFBE6] rounded-[8px] overflow-hidden">
       <article className="flex items-center gap-4 mb-4">
         <button className="bg-[#FADB14] p-2 rounded-md max-md:p-1 ">
           <Image

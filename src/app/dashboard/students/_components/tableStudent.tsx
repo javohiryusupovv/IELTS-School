@@ -92,8 +92,8 @@ export default function TableStudent({ students, courses }: PropsTableStudent) {
             <tr
               key={student._id || id}
               className={`border hover:bg-gray-100 transition ${student.publishStudent
-                  ? "bg-white"
-                  : "bg-accent hover:bg-gray-400/20"
+                ? "bg-white"
+                : "bg-accent hover:bg-gray-400/20"
                 }`}
             >
               {student.publishStudent ? (
@@ -126,29 +126,37 @@ export default function TableStudent({ students, courses }: PropsTableStudent) {
                       const lastPayment = student.payments?.[student.payments.length - 1];
 
                       if (lastPayment) {
-                        const nextPayDate = new Date(lastPayment.nextPayment);
-                        const today = new Date();
-
-                        // Agar keyingi to‘lov sanasi bugundan keyin bo‘lsa => To‘landi
-                        if (nextPayDate > today) {
+                        if (lastPayment.status === "paid") {
+                          // To‘liq to‘langan bo‘lsa
                           return (
                             <p className="py-1 px-5 border rounded-full bg-green-500 text-white inline-flex">
-                              To‘landi
+                              Paid
                             </p>
+                          );
+                        } else if (lastPayment.status === "debt") {
+                          // Qarzdor bo‘lsa
+                          return (
+                            <article className="flex items-center gap-2">
+                              <span className="py-1 px-5 border rounded-full bg-red-500 text-white inline-flex">
+                                Debt
+                              </span>
+                              <PayModal student={student} />
+                            </article>
                           );
                         }
                       }
 
-                      // Aks holda => To‘lanmadi
+                      // Agar umuman payment bo‘lmasa ham qarzdor chiqsin
                       return (
                         <article className="flex items-center gap-2">
                           <span className="py-1 px-5 border rounded-full bg-red-500 text-white inline-flex">
-                            To‘lanmadi
+                            Debt
                           </span>
                           <PayModal student={student} />
                         </article>
                       );
                     })()}
+
                   </td>
                   <td className="py-2">
                     <Action student={student} />

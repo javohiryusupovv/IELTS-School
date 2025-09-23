@@ -10,7 +10,8 @@ const CourseSchema = new Schema(
     startDate: {type: Date, required: true},
     endDate: {type: Date, required: true},
     days: { type: [String], required: true },
-    educationCenter: { type: Schema.Types.ObjectId, ref: "EducationCenter" }
+    educationCenter: { type: Schema.Types.ObjectId, ref: "EducationCenter" },
+    price: { type: Number, required: true },
   },
   { timestamps: true }
 );

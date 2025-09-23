@@ -23,11 +23,7 @@ const PaymentSchema = new Schema(
     }, // To'lov turi
     date: { type: Date, default: Date.now }, // To'langan sana
     nextPayment: { type: Date, required: true }, // Keyingi to'lov sanasi
-    status: {
-      type: String,
-      enum: ["To‘landi", "To‘lanmadi"],
-      default: "To‘landi",
-    },
+    status: { type: String, enum: ["paid", "debt", "pending"],  default: "pending" },
   },
   { timestamps: true }
 );

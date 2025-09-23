@@ -9,6 +9,7 @@ import moment from "moment";
 import { Course, Student, Teacher, Shop } from "@/models/index"
 import Education from "@/models/courseBox.model";
 import bcrypt from "bcryptjs";
+import { IPayment } from "@/types/type";
 
 
 type Records_Coins = {
@@ -394,10 +395,6 @@ export const addTeacherBonusCoin = async (studentID: string, coin: number, path:
   }
 };
 
-
-
-
-
 export async function deleteCoinHistoryEntry(
   studentId: string,
   coinId: string,
@@ -424,24 +421,42 @@ interface PaymentInput {
   type: "Naqd" | "Karta";
 }
 
-export async function addPayment(studentId: string, { amount, type }: PaymentInput, pathname: string) {
-  await ConnectMonogDB();
-  const today = new Date();
-  const nextPayment = new Date();
-  nextPayment.setMonth(today.getMonth() + 1);
+export async function addPayment(
+  studentId: string,
+  paymentData: PaymentInput,
+  pathname: string
+) {
+  const student = await Student.findById(studentId).populate("course");
 
-  const student = await Student.findById(studentId);
-  if (!student) throw new Error("Student not found");
+  if (!student) throw new Error("Talaba topilmadi");
 
+  // 🆕 yangi to‘lov qo‘shamiz
   student.payments.push({
-    amount,
-    type,
-    date: today,
-    nextPayment,
-    status: "To‘landi",
+    ...paymentData,
+    date: new Date(),
+    nextPayment: new Date(new Date().setMonth(new Date().getMonth() + 1)),
+    status: "pending", // vaqtincha
   });
 
-  revalidatePath(pathname);
+  // 🧮 Jami to‘langan summa
+  const totalPaid = student.payments.reduce(
+    (sum: number, p: { amount: number }) => sum + p.amount,
+    0
+  );
+
+  const coursePrice = student.course?.price || 0;
+
+  // ✅ Statusni yangilash
+  if (totalPaid >= coursePrice && coursePrice > 0) {
+    // kurs to‘liq yopilgan
+    student.payments[student.payments.length - 1].status = "paid";
+  } else {
+    // hali qarz bor
+    student.payments[student.payments.length - 1].status = "debt";
+  }
+
   await student.save();
-  return JSON.parse(JSON.stringify(student));
+  revalidatePath(pathname);
+
+  return JSON.parse(JSON.stringify(student)); // clientga faqat plain object qaytadi
 }
