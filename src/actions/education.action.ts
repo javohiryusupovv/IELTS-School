@@ -43,12 +43,22 @@ export const getEducationData = async () => {
           path: "course",
           model: Course,
           select: "_id courseTitle price",
+          populate: {
+            path: "teacher",
+            model: Teacher, // Teacher model nomini yozing
+            select: "_id teacherName teacherSurname teacherPhone",
+          },
         },
         options: { strictPopulate: false },
       },
       {
         path: "courses",
         select: "courseTitle price",
+        populate: {
+          path: "teacher",
+          select: "teacherName teacherSurname teacherPhone", // faqat kerakli maydonlar
+          options: { strictPopulate: false },
+        },
         options: { strictPopulate: false },
       },
       {
@@ -157,8 +167,8 @@ export const getAccounts = async () => {
 };
 
 
-export const accountsDelete = async(userID: string, path: string) => {
-  try{
+export const accountsDelete = async (userID: string, path: string) => {
+  try {
     await ConnectMonogDB();
     const user = await CrmAccount.findById(userID);
     if (!user) {
@@ -166,18 +176,18 @@ export const accountsDelete = async(userID: string, path: string) => {
     }
     await CrmAccount.findByIdAndDelete(userID);
     revalidatePath(path);
-  }catch(error){
+  } catch (error) {
     throw new Error(`Xatolik yuz berid DELETE Userda, ${error}`)
   }
 }
 
 
 export const deleteShop = async (id: string, path: string) => {
-    try {
-        await ConnectMonogDB()
-        await Shop.findByIdAndDelete(id)
-        revalidatePath(path)
-    } catch (error) {
-        throw new Error(`Xatolik yuz berid DELETE Shopda, ${error}`)
-    }
+  try {
+    await ConnectMonogDB()
+    await Shop.findByIdAndDelete(id)
+    revalidatePath(path)
+  } catch (error) {
+    throw new Error(`Xatolik yuz berid DELETE Shopda, ${error}`)
+  }
 }

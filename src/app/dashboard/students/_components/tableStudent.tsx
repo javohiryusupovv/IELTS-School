@@ -1,7 +1,7 @@
 "use client";
 
 import { ICourse, IStudent } from "@/types/type";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import {
   Select,
@@ -22,13 +22,38 @@ interface PropsTableStudent {
 
 export default function TableStudent({ students, courses }: PropsTableStudent) {
   const [selectedCourse, setSelectedCourse] = useState<string>("all");
+  const [selectedTeacher, setSelectedTeacher] = useState<string>("all");
 
-  const filteredStudents =
-    selectedCourse === "all"
-      ? students
-      : students.filter(
-        (student) => student.course && student.course._id === selectedCourse
-      );
+  // 🔹 Unique teacherlar listini chiqarish
+  const teachers = useMemo(() => {
+    const unique: { id: string; name: string }[] = [];
+    courses.forEach((course) => {
+      const teacher = course.teacher;
+      if (teacher && typeof teacher === "object" && teacher._id) {
+        if (!unique.some((t) => t.id === teacher._id)) {
+          unique.push({
+            id: teacher._id,
+            name: `${teacher.teacherName} ${teacher.teacherSurname}`,
+          });
+        }
+      }
+    });
+    return unique;
+  }, [courses]);
+
+  // 🔹 Filterlangan students
+  const filteredStudents = students.filter((student) => {
+    const byCourse =
+      selectedCourse === "all" || student.course?._id === selectedCourse;
+
+    const teacher = student.course?.teacher;
+    const teacherId =
+      typeof teacher === "string" ? teacher : teacher?._id;
+
+    const byTeacher = selectedTeacher === "all" || teacherId === selectedTeacher;
+
+    return byCourse && byTeacher;
+  });
 
   let studentCounter = 1;
 
@@ -73,6 +98,38 @@ export default function TableStudent({ students, courses }: PropsTableStudent) {
                 </SelectContent>
               </Select>
             </th>
+            <th>
+              <Select
+                value={selectedTeacher}
+                onValueChange={setSelectedTeacher}
+              >
+                <SelectTrigger className="group relative w-[170px] h-[35px] font-normal">
+                  <SelectValue placeholder="O‘qituvchini tanlang" />
+                  {selectedTeacher !== "all" && (
+                    <CircleX
+                      className="absolute right-3 top-2 z-30 bg-white cursor-pointer text-gray-500 hover:text-red-500 transition"
+                      size={18}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setSelectedTeacher("all");
+                      }}
+                    />
+                  )}
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Barchasi</SelectItem>
+                  {teachers.map((t) => (
+                    <SelectItem
+                      key={t.id}
+                      value={t.id}
+                      className="max-sm:text-[14px] line-clamp-1"
+                    >
+                      {t.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </th>
             <th className="py-3 max-md:text-[12px] max-lg:text-[14px]">
               TalabaID
             </th>
@@ -111,6 +168,11 @@ export default function TableStudent({ students, courses }: PropsTableStudent) {
                   </td>
                   <td className="py-2 text-[14px] font-normal max-lg:text-[12px]">
                     {student.course?.courseTitle}
+                  </td>
+                  <td>
+                    {typeof student.course?.teacher === "object"
+                      ? `${student.course.teacher.teacherName} ${student.course.teacher.teacherSurname}`
+                      : ""}
                   </td>
                   <td className="py-2 text-[14px] font-normal max-lg:text-[11px] max-md:text-[9px]">
                     <span className="py-1 px-2 text-center rounded-full border bg-[#04b94f] text-white inline-flex">
@@ -177,6 +239,11 @@ export default function TableStudent({ students, courses }: PropsTableStudent) {
                   </td>
                   <td className="py-2 text-[14px] font-normal text-gray-400">
                     {student.course.courseTitle}
+                  </td>
+                  <td>
+                    {typeof student.course?.teacher === "object"
+                      ? `${student.course.teacher.teacherName} ${student.course.teacher.teacherSurname}`
+                      : ""}
                   </td>
                   <td className="py-2 text-[14px] font-normal text-gray-400 max-lg:text-[11px] max-md:text-[9px]">
                     <span className="w-[100px] py-1 px-1 text-center rounded-full border bg-[#b90404] text-white flex justify-center">

@@ -138,12 +138,15 @@ export function SearchFuture({ studentList }: StudentListProps) {
                 className="flex items-center gap-3 w-full px-5 py-3 border cursor-pointer hover:bg-accent"
               >
                 <Clock10 className=" stroke-1 stroke-gray-500 w-5 h-5" />
-                <p className="flex gap-2 items-end text-[13px] text-gray-500 font-medium">
-                  {student.surname} {student.name}
-                  <span className="text-orange-300/60 text-[12px]">
-                    ({student.course.courseTitle})
-                  </span>
-                </p>
+                <article>
+                  <p className="flex gap-2 items-end text-[13px] text-gray-500 font-medium">
+                    {student.surname} {student.name}
+                    <span className="text-orange-300/60 text-[12px]">
+                      ({student.course.courseTitle})
+                    </span>
+                  </p>
+                  <p className="text-[12px]">o'qituvchi: <span className="text-orange-300 text-[14px]">{student.course.teacher.teacherSurname} {student.course.teacher.teacherName}</span></p>
+                </article>
               </Link>
             ))}
         </div>
