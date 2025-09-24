@@ -18,6 +18,7 @@ export interface IStudent {
   coins: number[];
   payments: IPayment[];
   course: ICourse; // MongoDB ObjectId string sifatida bo'ladi
+  balance: number;
 }
 
 export interface ICourse {

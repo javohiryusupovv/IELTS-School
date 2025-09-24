@@ -9,7 +9,6 @@ import moment from "moment";
 import { Course, Student, Teacher, Shop } from "@/models/index"
 import Education from "@/models/courseBox.model";
 import bcrypt from "bcryptjs";
-import { IPayment } from "@/types/type";
 
 
 type Records_Coins = {
@@ -83,6 +82,7 @@ export const postAddStudent = async (
       studentID,
       course: courseId,
       publishStudent: true,
+      balance: -course.price,
     });
     await newStudent.save();
 
@@ -416,47 +416,48 @@ export async function deleteCoinHistoryEntry(
 }
 
 
-interface PaymentInput {
-  amount: number;
-  type: "Naqd" | "Karta";
-}
 
-export async function addPayment(
+export const addPayment = async (
   studentId: string,
-  paymentData: PaymentInput,
-  pathname: string
-) {
-  const student = await Student.findById(studentId).populate("course");
+  paymentData: { amount: number; type: "Naqd" | "Karta" | "Click" },
+  path: string
+) => {
+  try {
+    await ConnectMonogDB();
+    const student = await Student.findById(studentId).populate("course");
+    if (!student) throw new Error("Talaba topilmadi!");
 
-  if (!student) throw new Error("Talaba topilmadi");
+    const coursePrice = student.course?.price || 0;
 
-  // 🆕 yangi to‘lov qo‘shamiz
-  student.payments.push({
-    ...paymentData,
-    date: new Date(),
-    nextPayment: new Date(new Date().setMonth(new Date().getMonth() + 1)),
-    status: "pending", // vaqtincha
-  });
+    const today = new Date();
+    const nextPayment = new Date(today);
+    nextPayment.setMonth(today.getMonth() + 1);
 
-  // 🧮 Jami to‘langan summa
-  const totalPaid = student.payments.reduce(
-    (sum: number, p: { amount: number }) => sum + p.amount,
-    0
-  );
+    // 🔹 yangi to‘lovni qo‘shamiz
+    const newPayment = {
+      amount: paymentData.amount,
+      type: paymentData.type,
+      date: today,
+      nextPayment,
+      status:
+        paymentData.amount + student.balance >= 0 ? "to'langan" : "qarzdor",
+    };
 
-  const coursePrice = student.course?.price || 0;
+    student.payments.push(newPayment);
 
-  // ✅ Statusni yangilash
-  if (totalPaid >= coursePrice && coursePrice > 0) {
-    // kurs to‘liq yopilgan
-    student.payments[student.payments.length - 1].status = "paid";
-  } else {
-    // hali qarz bor
-    student.payments[student.payments.length - 1].status = "debt";
+    // 🔹 balansni yangilash
+    student.balance += paymentData.amount;
+
+    await student.save();
+
+    revalidateTag("students");
+    revalidateTag("student");
+    revalidatePath(path);
+
+    return { success: true, message: "To‘lov muvaffaqiyatli qo‘shildi!" };
+  } catch (error) {
+    console.error("Error adding payment:", error);
+    throw new Error("To‘lov qo‘shishda xatolik yuz berdi");
   }
+};
 
-  await student.save();
-  revalidatePath(pathname);
-
-  return JSON.parse(JSON.stringify(student)); // clientga faqat plain object qaytadi
-}

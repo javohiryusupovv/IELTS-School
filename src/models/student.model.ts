@@ -22,8 +22,8 @@ const PaymentSchema = new Schema(
       required: true,
     }, // To'lov turi
     date: { type: Date, default: Date.now }, // To'langan sana
-    nextPayment: { type: Date, required: true }, // Keyingi to'lov sanasi
-    status: { type: String, enum: ["paid", "debt", "pending"],  default: "pending" },
+    nextPayment: { type: Date, required: true }, // Keyingi to'lov sanasi "to'langan", "to'lanmagan", "kutilmoqda",
+    status: { type: String, enum: ["to'langan", "qarzdor", "kutilmoqda"],  default: "kutilmoqda" },
   },
   { timestamps: true }
 );
@@ -43,6 +43,7 @@ const StudentSchema = new Schema(
 
     // 🔹 To'lovlar
     payments: [PaymentSchema],
+    balance: { type: Number, default: 0 }, // Qoldiq summasi va student balansi
   },
   { timestamps: true }
 );

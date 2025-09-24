@@ -188,19 +188,19 @@ export default function TableStudent({ students, courses }: PropsTableStudent) {
                       const lastPayment = student.payments?.[student.payments.length - 1];
 
                       if (lastPayment) {
-                        if (lastPayment.status === "paid") {
+                        if (lastPayment.status === "to'langan") {
                           // To‘liq to‘langan bo‘lsa
                           return (
                             <p className="py-1 px-5 border rounded-full bg-green-500 text-white inline-flex">
-                              Paid
+                              To'langan
                             </p>
                           );
-                        } else if (lastPayment.status === "debt") {
+                        } else if (lastPayment.status === "qarzdor") {
                           // Qarzdor bo‘lsa
                           return (
                             <article className="flex items-center gap-2">
                               <span className="py-1 px-5 border rounded-full bg-red-500 text-white inline-flex">
-                                Debt
+                                Qarzdor
                               </span>
                               <PayModal student={student} />
                             </article>
@@ -212,7 +212,7 @@ export default function TableStudent({ students, courses }: PropsTableStudent) {
                       return (
                         <article className="flex items-center gap-2">
                           <span className="py-1 px-5 border rounded-full bg-red-500 text-white inline-flex">
-                            Debt
+                            Qarzdor
                           </span>
                           <PayModal student={student} />
                         </article>

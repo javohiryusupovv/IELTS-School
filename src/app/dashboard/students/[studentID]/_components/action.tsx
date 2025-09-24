@@ -153,6 +153,9 @@ export default function Actions({ student, courses }: Props) {
             <h6 className="mb-2 text-[25px] font-medium">
               {student.surname} {student.name}
             </h6>
+            <article className="mb-5">
+              <p className="flex items-center gap-2">Balans: <span className="px-2 text-[14px] rounded-full text-white bg-red-500">{student.balance}</span></p>
+            </article>
             <p className="mb-4 flex items-center gap-2">
               StudentID:{" "}
               <span className="px-2 text-[14px] rounded-full text-white bg-yellow-500">

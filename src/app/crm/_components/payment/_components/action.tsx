@@ -118,10 +118,10 @@ export default function PaymentModal({getEducation}: Props) {
                   <SelectContent>
                     <SelectGroup>
                       <SelectItem
-                        value="pending"
+                        value="kutilmoqda"
                         className="bg-[#FF9548] text-white mb-2"
                       >
-                        Pending
+                        Kutilmoqda
                       </SelectItem>
                       <SelectItem
                         value="success"
