@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Search, MoreHorizontal, Phone, Mail } from "lucide-react"
 import { IStudent } from "@/types/type"
-import PayModal from "../../students/_components/PayModal"
 
 export function formatCurrency(value: number) {
     return new Intl.NumberFormat("en-US", {
@@ -145,7 +144,7 @@ function StudentList({ debtors }: { debtors: IStudent[] }) {
                                             Qo'ng'iroq qilish
                                         </a>
                                     </DropdownMenuItem>
-                                    <PayModal student={student} />
+                                    
                                 </DropdownMenuContent>
                             </DropdownMenu>
                         </div>
