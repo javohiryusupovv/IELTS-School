@@ -64,7 +64,7 @@ export default function QarzdorStudents({ students }: { students: IStudent[] }) 
         <Card className="h-fit">
             <CardHeader className="pb-3">
                 <div className="flex items-center justify-between">
-                    <CardTitle className="text-lg font-semibold">Qarzidor talabalar</CardTitle>
+                    <CardTitle className="text-lg font-semibold">Qarzdor talabalar</CardTitle>
                 </div>
 
                 {/* Qidiruv */}
@@ -97,7 +97,7 @@ export default function QarzdorStudents({ students }: { students: IStudent[] }) 
 // 👥 Qarzdor talabalar ro‘yxati
 function StudentList({ debtors }: { debtors: IStudent[] }) {
     if (debtors.length === 0) {
-        return <div className="text-center py-8 text-muted-foreground text-sm">Hozircha qarzdorlar yo‘q 🎉</div>
+        return <div className="text-center py-8 text-muted-foreground text-sm">Hozircha qarzdorlar topilmadi</div>
     }
 
     return (

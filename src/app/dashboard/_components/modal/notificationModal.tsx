@@ -21,16 +21,24 @@ export default function NotificationModal() {
                 <PopoverContent className="w-80 absolute sm:right-2 -right-[70px]">
                     <div>
                         <p className="sm:mb-2 max-sm:text-[14px]">Tizimdagi Yangiliklar</p>
-                        <hr className="sm:mb-4 mb-2"/>
+                        <hr className="sm:mb-4 mb-2" />
                         <div className="w-full">
                             <article className="p-2 border rounded mb-3">
-                                <h6 className="mb-2 text-orange-500/80">📢 Yangi imkoniyatlar haqida:</h6>
-                                <p className="text-[13px]">Endi siz coinX orqali bevosita kurslarga yozilishingiz mumkin! Tajribangizni kengaytiring va yangiliklardan birinchilardan bo‘lib foydalaning.</p>
+                                <h6 className="mb-2 text-green-500/80">💳 To‘lov qo‘shilmoqda</h6>
+                                <p className="text-[13px]">
+                                    O‘quvchilar to‘lovlari tizimga muvaffaqiyatli qo‘shilmoqda. Har bir to‘lov
+                                    kurs narxiga mos ravishda qayd etiladi.
+                                </p>
                             </article>
+
                             <article className="p-2 border rounded mb-3">
-                                <h6 className="mb-2 text-orange-500/80">⚙️ Texnik xizmat</h6>
-                                <p className="text-[13px]">22-aprel kuni soat 01:00 dan 03:00 gacha tizimda texnik ishlar olib boriladi. Shu vaqt ichida ayrim xizmatlar vaqtincha ishlamasligi mumkin</p>
+                                <h6 className="mb-2 text-blue-500/80">📊 To‘lovlarni kuzatish</h6>
+                                <p className="text-[13px]">
+                                    Endi siz barcha o‘quvchilarning to‘lov tarixini kuzatishingiz mumkin.
+                                    Qarzdorlik va to‘langan summalar aniq ko‘rinadi.
+                                </p>
                             </article>
+
                         </div>
                     </div>
                 </PopoverContent>

@@ -428,10 +428,29 @@ export const addPayment = async (
     if (!student) throw new Error("Talaba topilmadi!");
 
     const coursePrice = student.course?.price || 0;
+    console.log(coursePrice);
+    
 
     const today = new Date();
-    const nextPayment = new Date(today);
-    nextPayment.setMonth(today.getMonth() + 1);
+
+    // 🔹 Talaba qo'shilgan sana
+    const startDate = student.createdAt || today;
+
+    // 🔹 Agar oldingi to‘lov bo‘lsa, oxirgi nextPayment asosida hisoblaymiz
+    const lastPayment = student.payments?.length
+      ? student.payments[student.payments.length - 1].nextPayment
+      : null;
+
+    let nextPayment: Date;
+    if (lastPayment) {
+      // Oxirgi nextPayment dan keyingi oyga o‘tkazamiz
+      nextPayment = new Date(lastPayment);
+      nextPayment.setMonth(nextPayment.getMonth() + 1);
+    } else {
+      // Birinchi marta to‘lov qilsa → student qo‘shilgan sanadan 1 oy qo‘shamiz
+      nextPayment = new Date(startDate);
+      nextPayment.setMonth(nextPayment.getMonth() + 1);
+    }
 
     // 🔹 yangi to‘lovni qo‘shamiz
     const newPayment = {
@@ -460,4 +479,3 @@ export const addPayment = async (
     throw new Error("To‘lov qo‘shishda xatolik yuz berdi");
   }
 };
-

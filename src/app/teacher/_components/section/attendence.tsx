@@ -12,19 +12,14 @@ import {
   CheckCheck,
   Info,
   User,
+  Check,
+  X,
 } from "lucide-react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { PopoverClose } from "@radix-ui/react-popover";
 
 import { usePathname } from "next/navigation";
 import { formatDate, reasonsWithValues } from "../../../../../constants/page";
@@ -52,30 +47,19 @@ export default function Attendence({
     studentID: string;
     day: string;
   } | null>(null);
-  const [isopen, setOpen] = useState(false);
-  const [attedence, setAttendence] = useState({
-    homework: false,
-    keldi: false,
-    leader: false,
-  });
+
   const pathname = usePathname();
 
-  const handleOnChangeChecked = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, checked } = e.target;
-    setAttendence((item) => ({
-      ...item,
-      [id]: checked,
-    }));
-  };
-
-  // Hozirgi oy va yilni boshlang'ich qiymati
+  // Hozirgi oy va yil
   const [currentMonth, setCurrentMonth] = useState(moment(days[0]).month());
   const [currentYears, setCurrentYears] = useState(moment(days[0]).year());
+
   const filterDays = days.filter(
     (day) =>
       moment(day).month() === currentMonth &&
       moment(day).year() === currentYears
   );
+
   const nextMonth = () => {
     const nextDate = moment()
       .year(currentYears)
@@ -115,27 +99,18 @@ export default function Attendence({
       if (prev?.studentID === studentID && prev?.day === day) return null;
       return { studentID, day };
     });
-    setOpen(!isopen);
   };
 
-  const handleCheckedValue = async () => {
+  const handleCheckedValue = async (reason: string) => {
     const studentId = selectedCell?.studentID;
     if (!studentId) return;
 
-    // Checkboxlarning qiymatlari
-    const reasons = {
-      UygaVazifa: attedence.homework,
-      VaqtidaKeldi: attedence.keldi,
-      ImtihondanYaxshiBall: attedence.leader,
-    };
-    // Tanlangan sabablarga ko'ra qiymatlarni olish
-    const filteredReasons = Object.entries(reasons);
-    const filteredReasonsArray = filteredReasons
-      .filter(([key, value]) => value === true)
-      .map(([key]) => ({
-        reason: key,
-        value: reasonsWithValues[key as keyof typeof reasonsWithValues],
-      }));
+    const filteredReasonsArray = [
+      {
+        reason,
+        value: reasonsWithValues[reason as keyof typeof reasonsWithValues],
+      },
+    ];
 
     try {
       toast.promise(
@@ -152,18 +127,12 @@ export default function Attendence({
               backgroundColor: "white",
             },
           },
-          error: "Coin sabablari tanlanmadi",
+          error: "Xatolik yuz berdi",
         }
       );
-      setAttendence({
-        homework: false,
-        keldi: false,
-        leader: false,
-      });
       setSelectedCell(null);
     } catch (error) {
       console.log("Xatolik:", error);
-      throw new Error("Xatolik yuz berdi");
     }
   };
 
@@ -181,16 +150,12 @@ export default function Attendence({
         <div className="flex items-center justify-end mr-10 gap-4 mb-5 max-btn:absolute sm:-bottom-[365px] -bottom-[380px] -right-10">
           <button
             onClick={prevMonth}
-            className="flex items-center py-[2px] px-2 border rounded-sm  focus:bg-orange-500 bg-[#ffa600b8]"
+            className="flex items-center py-[2px] px-2 border rounded-sm focus:bg-orange-500 bg-[#ffa600b8]"
           >
             <ChevronLeft className="stroke-white stroke-1 w-[18] h-[18px]" />
           </button>
           <p>
-            {moment()
-              .month(currentMonth)
-              .format("MMMM")
-              .slice(0, 3)
-              .toLowerCase()}{" "}
+            {moment().month(currentMonth).format("MMMM").slice(0, 3).toLowerCase()}{" "}
             {currentYears}
           </p>
           <button
@@ -201,6 +166,7 @@ export default function Attendence({
           </button>
         </div>
       </div>
+
       <div className="grid btn:grid-cols-4 sm:grid-cols-3 grid-cols-1 justify-between items-start sm:gap-10 mb-5">
         <div className="max-btn:w-[400px] max-sm:w-full border px-5 pt-5 pb-16 col-span-1 rounded shadow-md shadow-gray-500/10 mb-16">
           <article>
@@ -231,9 +197,7 @@ export default function Attendence({
           </article>
           <article className="text-[14px]">
             <p>
-              <strong className="font-medium text-[13px]">
-                Dars muddati:{" "}
-              </strong>
+              <strong className="font-medium text-[13px]">Dars muddati: </strong>
             </p>
             <p>
               {formatDate(course.startDate)} — {formatDate(course.endDate)}
@@ -243,7 +207,8 @@ export default function Attendence({
             <EctraCoin students={students} />
           </article>
         </div>
-        <div className="col-span-3  xl:w-full overflow-hidden">
+
+        <div className="col-span-3 xl:w-full overflow-hidden">
           <div className="w-full overflow-x-auto">
             <table className="w-full pr-28">
               <thead className="overflow-x-auto w-full whitespace-nowrap border-t border-b mr-[100px]">
@@ -270,151 +235,38 @@ export default function Attendence({
                       </div>
                     </th>
                     {filterDays.map((day, i) => {
-                      const today = moment().format("YYYY-MM-DD");
-                      const isArxivDay = moment(day).isSameOrBefore(
-                        today,
-                        "day"
-                      );
-                      const isToday = moment(day).isSame(today, "day");
-                      const isCoinGiven = student.coins?.some((coin: any) =>
-                        moment(coin.date).isSame(day, "day")
-                      );
-
                       return (
                         <td key={i} className="text-[12px] p-3">
                           <span className="text-white flex items-center justify-center">
-                            {isArxivDay ? (
-                              isToday ? (
-                                isCoinGiven ? (
-                                  // Bugungi kun va coin berilgan holat
-                                  <TooltipProvider>
-                                    <Tooltip>
-                                      <TooltipTrigger
-                                        disabled
-                                        className="cursor-pointer flex justify-center items-center py-1 px-2 rounded-md bg-[#f0f9f3]"
-                                      >
-                                        <CheckCheck className="stroke-green-500 stroke-[1.4] w-4 h-5" />
-                                      </TooltipTrigger>
-                                      <TooltipContent>
-                                        <p className="text-green-500">
-                                          Coin berilgan
-                                        </p>
-                                      </TooltipContent>
-                                    </Tooltip>
-                                  </TooltipProvider>
-                                ) : (
-                                  // Bugungi kun va coin berilmagan holat
-                                  <Popover>
-                                    <PopoverTrigger
-                                      asChild
-                                      onClick={() =>
-                                        handleSelect(student._id, day)
-                                      }
-                                    >
-                                      <button className="w-9 h-7 cursor-pointer border rounded-md hover:border-green-500 transition-all duration-300"></button>
-                                    </PopoverTrigger>
-                                    <PopoverContent className="w-64">
-                                      <div>
-                                        <p className="text-orange-500 text-center mb-2">
-                                          Coin sabablari
-                                        </p>
-                                        <hr className="mb-2" />
-                                        <article className="flex items-center gap-2 mb-2">
-                                          <input
-                                            type="checkbox"
-                                            checked={attedence.homework}
-                                            onChange={handleOnChangeChecked}
-                                            id="homework"
-                                            name="attendance"
-                                          />
-                                          -
-                                          <label
-                                            htmlFor="homework"
-                                            className="text-[13px]"
-                                          >
-                                            Uyga vazifa
-                                          </label>
-                                        </article>
-                                        <article className="flex items-center gap-2 mb-4">
-                                          <input
-                                            type="checkbox"
-                                            checked={attedence.keldi}
-                                            onChange={handleOnChangeChecked}
-                                            id="keldi"
-                                            name="attendance"
-                                          />
-                                          -
-                                          <label
-                                            htmlFor="keldi"
-                                            className="text-[13px]"
-                                          >
-                                            Vaqtida keldi
-                                          </label>
-                                        </article>
-                                        <PopoverClose
-                                          onClick={handleCheckedValue}
-                                          className="px-2 py-1 text-[13px] rounded-md bg-orange-500 text-white"
-                                        >
-                                          Saqlash
-                                        </PopoverClose>
-                                      </div>
-                                    </PopoverContent>
-                                  </Popover>
-                                )
-                              ) : (
-                                // Arxiv kuni lekin bugun emas
-                                <TooltipProvider>
-                                  <Tooltip>
-                                    <TooltipTrigger
-                                      disabled
-                                      className={`cursor-pointer flex justify-center items-center py-1 px-2 rounded ${
-                                        isCoinGiven
-                                          ? "bg-[#f0f9f3]"
-                                          : "bg-[#ff000013]"
-                                      }`}
-                                    >
-                                      {isCoinGiven ? (
-                                        <CheckCheck className="stroke-green-500 stroke-[1.4] w-5 h-5" />
-                                      ) : (
-                                        <Info className="stroke-red-500 stroke-1 w-4 h-5" />
-                                      )}
-                                    </TooltipTrigger>
-                                    <TooltipContent>
-                                      <p
-                                        className={
-                                          isCoinGiven
-                                            ? "text-green-500"
-                                            : "text-red-500"
-                                        }
-                                      >
-                                        {isCoinGiven
-                                          ? "Coin berilgan"
-                                          : "Coin berilmagan"}
-                                      </p>
-                                    </TooltipContent>
-                                  </Tooltip>
-                                </TooltipProvider>
-                              )
-                            ) : (
-                              // Kelajakdagi kun — yopiq
-                              <TooltipProvider>
-                                <Tooltip>
-                                  <TooltipTrigger
-                                    disabled
-                                    className="cursor-not-allowed py-1 px-3 border rounded-md"
-                                  >
-                                    <LockKeyhole className="stroke-black/70 stroke-1 w-4 h-5" />
-                                  </TooltipTrigger>
-                                  <TooltipContent>
-                                    <p>Yopiq kun</p>
-                                  </TooltipContent>
-                                </Tooltip>
-                              </TooltipProvider>
-                            )}
+                            <Popover>
+                              <PopoverTrigger
+                                asChild
+                                onClick={() => handleSelect(student._id, day)}
+                              >
+                                <button className="w-8 h-8 border rounded-full cursor-pointer hover:border-green-500 transition-all duration-300"></button>
+                              </PopoverTrigger>
+                              <PopoverContent className="w-[100px] px-2 py-1 rounded-full flex items-center justify-between">
+                                <button
+                                  onClick={() => handleCheckedValue("VaqtidaKeldi")}
+                                  title="Keldi"
+                                  className="border p-[5px] rounded-full hover:bg-green-400/20 border-green-400/20 transition-all duration-200 text-white text-sm flex items-center gap-1"
+                                >
+                                  <Check className="text-green-500 w-5 h-5" />
+                                </button>
+                                <button
+                                  onClick={() => handleCheckedValue("Kelmagan")}
+                                  title="Kelmadi"
+                                  className="border p-[5px] rounded-full hover:bg-red-400/20 border-red-400/20 transition-all duration-200 text-white text-sm flex items-center gap-1"
+                                >
+                                  <X className="text-red-500 w-5 h-5" />
+                                </button>
+                              </PopoverContent>
+                            </Popover>
                           </span>
                         </td>
                       );
                     })}
+
                   </tr>
                 ))}
               </tbody>
