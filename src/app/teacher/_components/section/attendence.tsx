@@ -1,20 +1,11 @@
 "use client";
 
-import { addCoins } from "@/actions/student.action";
+import { addAttendance } from "@/actions/student.action";
 import "./attendence.css";
 import moment from "moment";
 import { useState } from "react";
 import { toast } from "sonner";
-import {
-  ChevronRight,
-  ChevronLeft,
-  LockKeyhole,
-  CheckCheck,
-  Info,
-  User,
-  Check,
-  X,
-} from "lucide-react";
+import { ChevronRight, ChevronLeft, User, Check, X } from "lucide-react";
 import {
   Popover,
   PopoverContent,
@@ -22,7 +13,7 @@ import {
 } from "@/components/ui/popover";
 
 import { usePathname } from "next/navigation";
-import { formatDate, reasonsWithValues } from "../../../../../constants/page";
+import { formatDate } from "../../../../../constants/page";
 import { ICourse } from "@/types/type";
 import EctraCoin from "../extra/extracoin";
 
@@ -53,6 +44,40 @@ export default function Attendence({
   // Hozirgi oy va yil
   const [currentMonth, setCurrentMonth] = useState(moment(days[0]).month());
   const [currentYears, setCurrentYears] = useState(moment(days[0]).year());
+
+  const [attendance, setAttendance] = useState<{
+    [studentId: string]: { [day: string]: "keldi" | "kelmadi" | "bosh" };
+  }>(() => {
+    const initial: {
+      [studentId: string]: { [day: string]: "keldi" | "kelmadi" | "bosh" };
+    } = {};
+    students.forEach((student: any) => {
+      initial[student._id] = {};
+      student.attendance?.forEach((att: any) => {
+        initial[student._id][att.date] = att.status as
+          | "keldi"
+          | "kelmadi"
+          | "bosh";
+      });
+    });
+    return initial;
+  });
+
+  const handleAttendance = async (
+    studentId: string,
+    day: string,
+    status: "keldi" | "kelmadi" | "bosh"
+  ) => {
+    try {
+      await addAttendance(studentId, day, status, pathname); // DB update
+      setAttendance((prev) => ({
+        ...prev,
+        [studentId]: { ...prev[studentId], [day]: status },
+      }));
+    } catch (error: any) {
+      toast.error(error.message || "Xatolik yuz berdi");
+    }
+  };
 
   const filterDays = days.filter(
     (day) =>
@@ -94,47 +119,12 @@ export default function Attendence({
     }
   };
 
-  const handleSelect = (studentID: string, day: string) => {
-    setSelectedCell((prev) => {
-      if (prev?.studentID === studentID && prev?.day === day) return null;
-      return { studentID, day };
-    });
-  };
-
-  const handleCheckedValue = async (reason: string) => {
-    const studentId = selectedCell?.studentID;
-    if (!studentId) return;
-
-    const filteredReasonsArray = [
-      {
-        reason,
-        value: reasonsWithValues[reason as keyof typeof reasonsWithValues],
-      },
-    ];
-
-    try {
-      toast.promise(
-        addCoins(studentId, filteredReasonsArray, pathname, selectedCell?.day),
-        {
-          loading: "Qo'shilmoqda...",
-          success: {
-            message: "Coin muvaffaqiyatli qo'shildi",
-            duration: 2500,
-            style: {
-              height: "50px",
-              color: "orange",
-              border: "1px solid orange",
-              backgroundColor: "white",
-            },
-          },
-          error: "Xatolik yuz berdi",
-        }
-      );
-      setSelectedCell(null);
-    } catch (error) {
-      console.log("Xatolik:", error);
-    }
-  };
+  // const handleSelect = (studentID: string, day: string) => {
+  //   setSelectedCell((prev) => {
+  //     if (prev?.studentID === studentID && prev?.day === day) return null;
+  //     return { studentID, day };
+  //   });
+  // };
 
   return (
     <div className="p-4 ">
@@ -155,7 +145,11 @@ export default function Attendence({
             <ChevronLeft className="stroke-white stroke-1 w-[18] h-[18px]" />
           </button>
           <p>
-            {moment().month(currentMonth).format("MMMM").slice(0, 3).toLowerCase()}{" "}
+            {moment()
+              .month(currentMonth)
+              .format("MMMM")
+              .slice(0, 3)
+              .toLowerCase()}{" "}
             {currentYears}
           </p>
           <button
@@ -197,7 +191,9 @@ export default function Attendence({
           </article>
           <article className="text-[14px]">
             <p>
-              <strong className="font-medium text-[13px]">Dars muddati: </strong>
+              <strong className="font-medium text-[13px]">
+                Dars muddati:{" "}
+              </strong>
             </p>
             <p>
               {formatDate(course.startDate)} — {formatDate(course.endDate)}
@@ -239,24 +235,72 @@ export default function Attendence({
                         <td key={i} className="text-[12px] p-3">
                           <span className="text-white flex items-center justify-center">
                             <Popover>
-                              <PopoverTrigger
-                                asChild
-                                onClick={() => handleSelect(student._id, day)}
-                              >
-                                <button className="w-8 h-8 border rounded-full cursor-pointer hover:border-green-500 transition-all duration-300"></button>
-                              </PopoverTrigger>
-                              <PopoverContent className="w-[100px] px-2 py-1 rounded-full flex items-center justify-between">
+                              <PopoverTrigger asChild>
                                 <button
-                                  onClick={() => handleCheckedValue("VaqtidaKeldi")}
+                                  title={
+                                    attendance[student._id]?.[day] === "keldi"
+                                      ? "Keldi"
+                                      : attendance[student._id]?.[day] ===
+                                        "kelmadi"
+                                      ? "Kelmadi"
+                                      : "Bo'sh"
+                                  }
+                                  className={`w-8 h-8 border rounded-full flex items-center justify-center transition-all duration-300
+                                    ${
+                                      attendance[student._id]?.[day] === "keldi"
+                                        ? "bg-green-400/10 border-transparent"
+                                        : attendance[student._id]?.[day] === "kelmadi"
+                                        ? "bg-red-400/10 border-transparent"
+                                        : "border-gray-300/60"
+                                    }
+                                  `}
+                                >
+                                  {attendance[student._id]?.[day] ===
+                                    "keldi" && (
+                                    <Check className="text-green-500 w-4 h-4" />
+                                  )}
+                                  {attendance[student._id]?.[day] ===
+                                    "kelmadi" && (
+                                    <X className="text-red-500 w-4 h-4" />
+                                  )}
+                                  {attendance[student._id]?.[day] ===
+                                    "bosh" && (
+                                    <span className="text-gray-500"></span>
+                                  )}
+                                </button>
+                              </PopoverTrigger>
+
+                              <PopoverContent className="w-[150px] px-2 py-1 rounded-lg flex items-center justify-between">
+                                <button
                                   title="Keldi"
-                                  className="border p-[5px] rounded-full hover:bg-green-400/20 border-green-400/20 transition-all duration-200 text-white text-sm flex items-center gap-1"
+                                  onClick={() =>
+                                    handleAttendance(student._id, day, "keldi")
+                                  }
+                                  className="border p-[5px] rounded-full hover:bg-green-400/20 border-green-400/20"
                                 >
                                   <Check className="text-green-500 w-5 h-5" />
                                 </button>
+
                                 <button
-                                  onClick={() => handleCheckedValue("Kelmagan")}
+                                  title="Bo'sh"
+                                  onClick={() =>
+                                    handleAttendance(student._id, day, "bosh")
+                                  }
+                                  className="border w-8 h-8 rounded-full hover:bg-gray-400/20 border-gray-400/20"
+                                >
+                                  –
+                                </button>
+
+                                <button
                                   title="Kelmadi"
-                                  className="border p-[5px] rounded-full hover:bg-red-400/20 border-red-400/20 transition-all duration-200 text-white text-sm flex items-center gap-1"
+                                  onClick={() =>
+                                    handleAttendance(
+                                      student._id,
+                                      day,
+                                      "kelmadi"
+                                    )
+                                  }
+                                  className="border p-[5px] rounded-full hover:bg-red-400/20 border-red-400/20"
                                 >
                                   <X className="text-red-500 w-5 h-5" />
                                 </button>
@@ -266,7 +310,6 @@ export default function Attendence({
                         </td>
                       );
                     })}
-
                   </tr>
                 ))}
               </tbody>

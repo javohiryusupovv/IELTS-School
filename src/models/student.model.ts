@@ -28,6 +28,16 @@ const PaymentSchema = new Schema(
   { timestamps: true }
 );
 
+const AttendanceSchema = new Schema(
+  {
+    date: { type: String, required: true }, // YYYY-MM-DD
+    status: { type: String, enum: ["keldi", "kelmadi", "bosh"], required: true },
+    updatedAt: { type: Date, default: Date.now },
+  },
+  { _id: false }
+);
+
+
 const StudentSchema = new Schema(
   {
     name: String,
@@ -44,6 +54,7 @@ const StudentSchema = new Schema(
     // 🔹 To'lovlar
     payments: [PaymentSchema],
     balance: { type: Number, default: 0 }, // Qoldiq summasi va student balansi
+    attendance: [AttendanceSchema],
   },
   { timestamps: true }
 );

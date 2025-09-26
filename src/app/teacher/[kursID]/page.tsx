@@ -15,6 +15,8 @@ export default async function KursDetai({ params, }: { params: Promise<{ kursID:
         return <h6>Siz Qidirgan ma'lumotlar hali yaratilmagan</h6>
     }
 
+    console.log(students);
+    
   return (
     <div>
         <Attendence course={course} students={students} days={days} titleCourse={titleCourse} teacherName={teacherName} roleTeacher={roleTeacher} />

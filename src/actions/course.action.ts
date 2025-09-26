@@ -26,7 +26,7 @@ export const getCourseById = async (kursId: string) => {
         path: "students",
         model: Student,
         match: { publishStudent: true },
-        select: "name surname phone coins",
+        select: "name surname phone coins attendance",
       });
     if (!course) {
       return null;

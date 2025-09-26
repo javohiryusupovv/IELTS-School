@@ -239,48 +239,65 @@ export const updateStudent = async (
   }
 };
 
+interface IAttendance {
+  date: string; // YYYY-MM-DD
+  status: "keldi" | "kelmadi" | "bosh";
+  updatedAt: Date;
+}
+
 // Talabaga coin qo‘shish
-export const addCoins = async (
+export const addAttendance = async (
   studentId: string,
-  reasons: Records_Coins,
-  path: string,
-  date?: string
+  date: string,
+  status: "keldi" | "kelmadi" | "bosh",
+  path: string
 ) => {
   try {
     if (!mongoose.Types.ObjectId.isValid(studentId)) {
       throw new Error("Noto'g'ri ID!");
     }
-    const givenDate = date || moment().format("YYYY-MM-DD");
-    let total = reasons.reduce((acc, item) => acc + item.value, 0);
-    if (total <= 0) {
-      throw new Error("Hech qanday sabab tanlanmadi, coin qo'shilmadi.");
-    }
+
     await ConnectMonogDB();
+
     const student = await Student.findById(studentId);
-    if (!student) {
-      throw new Error("Talaba topilmadi!");
+    if (!student) throw new Error("Talaba topilmadi!");
+
+    const givenDate = moment(date).format("YYYY-MM-DD");
+
+    // Shu kunga oid yozuvni topamiz
+    const existing = student.attendance.find((a: IAttendance) => a.date === givenDate);
+
+    if (existing) {
+      // 24 soat o‘tmagan bo‘lsa o‘zgartirish mumkin
+      const diffHours = moment().diff(moment(existing.updatedAt), "hours");
+      if (diffHours < 24) {
+        existing.status = status;
+        existing.updatedAt = new Date();
+      } else {
+        throw new Error("24 soatdan keyin o'zgartirish mumkin emas!");
+      }
+    } else {
+      // Yangi yozuv qo‘shamiz
+      student.attendance.push({
+        date: givenDate,
+        status,
+        updatedAt: new Date(),
+      });
     }
-    const responseReasons = reasons.map((item) => {
-      return { reason: item.reason, value: item.value };
-    });
-    student.coins.push({
-      value: total,
-      date: givenDate,
-      reasons: responseReasons,
-    });
-    student.lastDateCoin = new Date(givenDate);
+
     await student.save();
 
-    // Keshni yangilash
     revalidateTag("students");
     revalidateTag("student");
     revalidatePath(path);
-    return { success: true, message: "Coin muvaffaqiyatli qo'shildi!" };
+
+    return { success: true, message: "Davomat yangilandi!" };
   } catch (error) {
-    console.error(`Error adding coins to student ${studentId}:`, error);
-    throw new Error("Coin qo'shishda xatolik yuz berdi");
+    console.error("Davomat qo'shishda xatolik:", error);
+    throw new Error("Davomat qo'shishda xatolik yuz berdi");
   }
 };
+
 
 // Talabadan coin ayirish
 export const salesUpdateCoins = async (
@@ -371,7 +388,12 @@ export const addAdminCoins = async (
   }
 };
 
-export const addTeacherBonusCoin = async (studentID: string, coin: number, path: string) => {
+export const addTeacherBonusCoin = async (
+  studentID: string,
+  coin: number,
+  reason: string,   // qo‘shildi
+  path: string
+) => {
   try {
     await ConnectMonogDB();
     const nowDate = moment().format("YYYY-MM-DD");
@@ -383,10 +405,10 @@ export const addTeacherBonusCoin = async (studentID: string, coin: number, path:
     student.coins.push({
       value: coin,
       date: nowDate,
-      reasons: [{ reason: "Imtihon uchun coin", value: coin }],
-    })
+      reasons: [{ reason, value: coin }],  // dynamic reason
+    });
 
-    await student.save()
+    await student.save();
     revalidatePath(path);
     revalidateTag("students");
     revalidateTag("student");
@@ -394,6 +416,7 @@ export const addTeacherBonusCoin = async (studentID: string, coin: number, path:
     throw new Error("Xatolik yuz berdi Coin qo'shishda: " + error);
   }
 };
+
 
 export async function deleteCoinHistoryEntry(
   studentId: string,
@@ -429,7 +452,7 @@ export const addPayment = async (
 
     const coursePrice = student.course?.price || 0;
     console.log(coursePrice);
-    
+
 
     const today = new Date();
 
