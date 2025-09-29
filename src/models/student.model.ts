@@ -43,6 +43,7 @@ const StudentSchema = new Schema(
     name: String,
     surname: String,
     phone: String,
+    parentPhone: String,
     password: { type: String, unique: true },
     studentID: String,
     course: { type: Schema.Types.ObjectId, ref: "Course" }, // Kursga referens

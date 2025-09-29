@@ -56,5 +56,6 @@ export const StudentSchemaZod = z.object({
     password: z
         .string() 
         .trim()
-        .min(3, "Password kam kiritildi !")
+        .min(3, "Password kam kiritildi !"),
+   
 })

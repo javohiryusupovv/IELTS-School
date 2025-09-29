@@ -52,6 +52,7 @@ export const postAddStudent = async (
   surname: string,
   password: string,
   phone: string,
+  parentPhone: string,
   studentID: string,
   path: string
 ) => {
@@ -80,6 +81,7 @@ export const postAddStudent = async (
       phone,
       password: hashedPassword,
       studentID,
+      parentPhone,
       course: courseId,
       publishStudent: true,
       balance: -course.price,

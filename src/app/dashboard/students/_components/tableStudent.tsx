@@ -47,16 +47,15 @@ export default function TableStudent({ students, courses }: PropsTableStudent) {
       selectedCourse === "all" || student.course?._id === selectedCourse;
 
     const teacher = student.course?.teacher;
-    const teacherId =
-      typeof teacher === "string" ? teacher : teacher?._id;
+    const teacherId = typeof teacher === "string" ? teacher : teacher?._id;
 
-    const byTeacher = selectedTeacher === "all" || teacherId === selectedTeacher;
+    const byTeacher =
+      selectedTeacher === "all" || teacherId === selectedTeacher;
 
     return byCourse && byTeacher;
   });
 
   let studentCounter = 1;
-
 
   return (
     <div className="w-full overflow-x-auto max-w-full scrollbar-orange">
@@ -78,7 +77,7 @@ export default function TableStudent({ students, courses }: PropsTableStudent) {
                       className="absolute right-3 top-2 z-30 bg-white cursor-pointer text-gray-500 hover:text-red-500 transition"
                       size={18}
                       onClick={(e) => {
-                        e.preventDefault()
+                        e.preventDefault();
                         setSelectedCourse("all");
                       }}
                     />
@@ -148,10 +147,11 @@ export default function TableStudent({ students, courses }: PropsTableStudent) {
           {filteredStudents.map((student: any, id: number) => (
             <tr
               key={student._id || id}
-              className={`border hover:bg-gray-100 transition ${student.publishStudent
-                ? "bg-white"
-                : "bg-accent hover:bg-gray-400/20"
-                }`}
+              className={`border hover:bg-gray-100 transition ${
+                student.publishStudent
+                  ? "bg-white"
+                  : "bg-accent hover:bg-gray-400/20"
+              }`}
             >
               {student.publishStudent ? (
                 <>
@@ -169,7 +169,7 @@ export default function TableStudent({ students, courses }: PropsTableStudent) {
                   <td className="py-2 text-[14px] font-normal max-lg:text-[12px]">
                     {student.course?.courseTitle}
                   </td>
-                  <td>
+                  <td className="py-2 text-[14px] font-normal max-lg:text-[12px]">
                     {typeof student.course?.teacher === "object"
                       ? `${student.course.teacher.teacherName} ${student.course.teacher.teacherSurname}`
                       : ""}
@@ -185,7 +185,8 @@ export default function TableStudent({ students, courses }: PropsTableStudent) {
                   <td className="py-2 text-[14px] font-normal max-lg:text-[12px]">
                     {(() => {
                       // So‘nggi paymentni olish
-                      const lastPayment = student.payments?.[student.payments.length - 1];
+                      const lastPayment =
+                        student.payments?.[student.payments.length - 1];
 
                       if (lastPayment) {
                         if (lastPayment.status === "to'langan") {
@@ -218,7 +219,6 @@ export default function TableStudent({ students, courses }: PropsTableStudent) {
                         </article>
                       );
                     })()}
-
                   </td>
                   <td className="py-2">
                     <Action student={student} />
@@ -240,7 +240,7 @@ export default function TableStudent({ students, courses }: PropsTableStudent) {
                   <td className="py-2 text-[14px] font-normal text-gray-400">
                     {student.course.courseTitle}
                   </td>
-                  <td>
+                  <td className="py-2 text-[14px] font-normal text-gray-400">
                     {typeof student.course?.teacher === "object"
                       ? `${student.course.teacher.teacherName} ${student.course.teacher.teacherSurname}`
                       : ""}
@@ -252,6 +252,13 @@ export default function TableStudent({ students, courses }: PropsTableStudent) {
                   </td>
                   <td className="py-2 text-[14px] font-normal text-gray-400">
                     +998 {student.phone}
+                  </td>
+                  <td>
+                    <article className="flex items-center gap-2">
+                      <span className="py-1 px-5 border rounded-full bg-gray-400 text-white inline-flex">
+                        Arxiv
+                      </span>
+                    </article>
                   </td>
                   <td className="py-2">
                     <Action student={student} />

@@ -136,6 +136,8 @@ export default function Actions({ student, courses }: Props) {
     return true;
   });
 
+  console.log(student);
+  
 
   return (
     <div>
@@ -153,6 +155,9 @@ export default function Actions({ student, courses }: Props) {
             <h6 className="mb-2 text-[25px] font-medium">
               {student.surname} {student.name}
             </h6>
+            <p className="mb-4">
+              Tug'ilgan kun: <span className="px-2 py-[3px] text-[14px] rounded-full text-white bg-green-400">13.09.2003</span>
+            </p>
             <article className="mb-5">
               <p className="flex items-center gap-2">Balans: <span className="px-2 text-[14px] rounded-full text-white bg-red-500">{student.balance}</span></p>
             </article>
@@ -173,6 +178,12 @@ export default function Actions({ student, courses }: Props) {
               <li className="mb-1 text-[15px] text-gray-500/50">Telefon:</li>
               <li className="text-[15px] text-orange-500">
                 +998 {student.phone}
+              </li>
+            </ul>
+            <ul className="mb-5">
+              <li className="mb-1 text-[15px] text-gray-500/50">Ota-ona raqami:</li>
+              <li className="text-[15px] text-orange-500">
+                +998 {student.parentPhone}
               </li>
             </ul>
             <div className="">

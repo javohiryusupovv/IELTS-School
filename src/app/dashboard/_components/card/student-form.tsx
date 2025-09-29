@@ -26,6 +26,7 @@ import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { FaUserPlus } from "react-icons/fa";
+import { Calendar } from "@/components/ui/calendar";
 
 export default function StudentForm({ propCourses }: { propCourses: ICourse[] }) {
     const [courses, setCourses] = useState<ICourse[]>([]);
@@ -33,6 +34,7 @@ export default function StudentForm({ propCourses }: { propCourses: ICourse[] })
     const [studentSurname, setStudentSurname] = useState("");
     const [studentCourseId, setStudentCourseId] = useState("");
     const [phone, setPhone] = useState("");
+    const [familiyNumber, setFamiliyNumber] = useState("");
     const [ispassword, setPassword] = useState("")
     const [open, setOpen] = useState(false);
     const [iserror, setError] = useState<string[]>([]);
@@ -64,7 +66,7 @@ export default function StudentForm({ propCourses }: { propCourses: ICourse[] })
         try {
 
             const studentGen = generateRandomID();
-            const promise = postAddStudent(courseSelect, name, surname, password, phone, studentGen, pathname);
+            const promise = postAddStudent(courseSelect, name, surname, password, phone, familiyNumber, studentGen, pathname);
             toast.promise(promise, {
                 loading: "O'quvchi qo'shilmoqda...",
                 success: {
@@ -88,6 +90,7 @@ export default function StudentForm({ propCourses }: { propCourses: ICourse[] })
         setStudentName("");
         setStudentSurname("");
         setStudentCourseId("");
+        setFamiliyNumber("")
         setPassword("")
         setPhone("");
         setError([])
@@ -144,6 +147,10 @@ export default function StudentForm({ propCourses }: { propCourses: ICourse[] })
                                 placeholder="O'quvchi Familiyasi!"
                             />
                         </label>
+                        <label className="flex gap-2 max-sm:text-[14px] text-[#d47323cd] flex-col sm:mb-5 mb-3">
+                            Tug'ilgan kun *
+                            <Calendar/>
+                        </label>
                         <article className="sm:mb-5 mb-3">
                             <p className="mb-3 max-sm:text-[14px] text-[#d47323cd]">Kursni tanlang *</p>
                             <Select value={studentCourseId} onValueChange={setStudentCourseId}>
@@ -166,7 +173,7 @@ export default function StudentForm({ propCourses }: { propCourses: ICourse[] })
 
                         </article>
                         <label className="flex gap-2 max-sm:text-[14px] text-[#d47323cd] flex-col sm:mb-5 mb-3">
-                            Phone *
+                            Telefon raqam *
                             <article className={`group flex gap-2 items-center rounded border px-3 focus-within:border-orange-500 transition-all duration-200`}>
                                 <span className="text-[14px] text-gray-500">+998 </span>
                                 <input
@@ -176,13 +183,29 @@ export default function StudentForm({ propCourses }: { propCourses: ICourse[] })
                                     className="py-2 w-full text-gray-700 outline-none"
                                     id="kurs"
                                     type="number"
-                                    placeholder="Telefon raqam kiriting"
+                                    placeholder="90 070 02 51"
                                     required
                                 />
                             </article>
                         </label>
                         <label className="flex gap-2 max-sm:text-[14px] text-[#d47323cd] flex-col sm:mb-5 mb-3">
-                            Password *
+                            Ota-ona raqami *
+                            <article className={`group flex gap-2 items-center rounded border px-3 focus-within:border-orange-500 transition-all duration-200`}>
+                                <span className="text-[14px] text-gray-500">+998 </span>
+                                <input
+                                    onChange={(e) => setFamiliyNumber(e.target.value)}
+                                    onInput={handlePhoneNumberInput}
+                                    value={familiyNumber}
+                                    className="py-2 w-full text-gray-700 outline-none"
+                                    id="kurs"
+                                    type="number"
+                                    placeholder="90 070 02 51"
+                                    required
+                                />
+                            </article>
+                        </label>
+                        <label className="flex gap-2 max-sm:text-[14px] text-[#d47323cd] flex-col sm:mb-5 mb-3">
+                            Parol *
                             <input
                                 onChange={(e)=> setPassword(e.target.value)}
                                 value={ispassword}

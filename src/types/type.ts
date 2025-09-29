@@ -15,10 +15,12 @@ export interface IStudent {
   surname: string;
   password: string,
   phone: string;
+  parentPhone: string;
   coins: number[];
   payments: IPayment[];
   course: ICourse; // MongoDB ObjectId string sifatida bo'ladi
   balance: number;
+  createdAt: string;
 }
 
 export interface ICourse {
