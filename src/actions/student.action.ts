@@ -54,9 +54,10 @@ export const postAddStudent = async (
   phone: string,
   parentPhone: string,
   studentID: string,
-  path: string
+  path: string,
+  birthday?: Date
 ) => {
-  if (!name || !surname || !password || !phone || !courseId || !studentID) {
+  if (!name || !surname || !password || !phone || !courseId || !studentID || !birthday) {
     throw new Error("Barcha maydonlarni to‘ldirish shart!");
   }
 
@@ -85,6 +86,7 @@ export const postAddStudent = async (
       course: courseId,
       publishStudent: true,
       balance: -course.price,
+      birthday
     });
     await newStudent.save();
 
@@ -178,7 +180,7 @@ export const ActiveStudent = async (
 // Talaba ma‘lumotlarini yangilash
 export const updateStudent = async (
   studentId: string,
-  data: { name: string; surname: string; phone: string, password: string, course: string },
+  data: { name: string; surname: string; phone: string, password: string, parentPhone: string, birthday: Date, course: string },
   path: string
 ) => {
   try {
@@ -213,6 +215,8 @@ export const updateStudent = async (
       name: data.name,
       surname: data.surname,
       phone: data.phone,
+      parentPhone: data.parentPhone,
+      birthday: data.birthday,
       course: data.course
     }
 

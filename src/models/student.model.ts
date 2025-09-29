@@ -51,7 +51,7 @@ const StudentSchema = new Schema(
     lastDateCoin: { type: Date, default: null },
     educationCenter: { type: Schema.Types.ObjectId, ref: "EducationCenter" },
     publishStudent: { type: Boolean, default: false }, // Talabani ko'rsatish
-
+    birthday: { type: Date },
     // 🔹 To'lovlar
     payments: [PaymentSchema],
     balance: { type: Number, default: 0 }, // Qoldiq summasi va student balansi

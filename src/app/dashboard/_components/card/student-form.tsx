@@ -27,6 +27,7 @@ import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { FaUserPlus } from "react-icons/fa";
 import { Calendar } from "@/components/ui/calendar";
+import BrithdayCalendar from "../brithday/BrithdayCalendar";
 
 export default function StudentForm({ propCourses }: { propCourses: ICourse[] }) {
     const [courses, setCourses] = useState<ICourse[]>([]);
@@ -37,6 +38,7 @@ export default function StudentForm({ propCourses }: { propCourses: ICourse[] })
     const [familiyNumber, setFamiliyNumber] = useState("");
     const [ispassword, setPassword] = useState("")
     const [open, setOpen] = useState(false);
+    const [birthday, setBirthday] = useState<Date | undefined>(undefined); 
     const [iserror, setError] = useState<string[]>([]);
     const pathname = usePathname()
 
@@ -66,7 +68,7 @@ export default function StudentForm({ propCourses }: { propCourses: ICourse[] })
         try {
 
             const studentGen = generateRandomID();
-            const promise = postAddStudent(courseSelect, name, surname, password, phone, familiyNumber, studentGen, pathname);
+            const promise = postAddStudent(courseSelect, name, surname, password, phone, familiyNumber, studentGen, pathname, birthday);
             toast.promise(promise, {
                 loading: "O'quvchi qo'shilmoqda...",
                 success: {
@@ -93,6 +95,7 @@ export default function StudentForm({ propCourses }: { propCourses: ICourse[] })
         setFamiliyNumber("")
         setPassword("")
         setPhone("");
+        setBirthday(undefined);
         setError([])
     };
     const handlePhoneNumberInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -144,12 +147,12 @@ export default function StudentForm({ propCourses }: { propCourses: ICourse[] })
                                 value={studentSurname}
                                 className="py-2 border rounded-md px-2 text-gray-700"
                                 type="text"
-                                placeholder="O'quvchi Familiyasi!"
+                                placeholder="O'quvchi familiyasi!"
                             />
                         </label>
                         <label className="flex gap-2 max-sm:text-[14px] text-[#d47323cd] flex-col sm:mb-5 mb-3">
                             Tug'ilgan kun *
-                            <Calendar/>
+                            <BrithdayCalendar value={birthday} onChange={setBirthday} />
                         </label>
                         <article className="sm:mb-5 mb-3">
                             <p className="mb-3 max-sm:text-[14px] text-[#d47323cd]">Kursni tanlang *</p>

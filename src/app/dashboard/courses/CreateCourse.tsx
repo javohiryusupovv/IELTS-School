@@ -217,7 +217,7 @@ function CreateCourse() {
               </SelectContent>
             </Select>
             <label
-              className="flex gap-2 text-[#d47323cd] max-sm:text-[14px] flex-col sm:mb-5 mb-3"
+              className="flex gap-2 text-[#d47323cd] max-sm:text-[14px] flex-col sm:mb-5 mb-3 mt-3"
               htmlFor="price"
             >
               Kurs narxi*

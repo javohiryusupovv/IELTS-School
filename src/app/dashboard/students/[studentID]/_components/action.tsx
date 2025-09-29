@@ -9,7 +9,7 @@ import Image from "next/image";
 import { BsCoin } from "react-icons/bs";
 import EditStudent from "./editStudent";
 import { CircleCheckBig } from "lucide-react";
-
+import { format } from "date-fns";
 import Archive from "./Archive";
 import ActiveStudentFunc from "./ActiveStudent";
 import { formatDate, formatReasonText } from "../../../../../../constants/page";
@@ -137,7 +137,7 @@ export default function Actions({ student, courses }: Props) {
   });
 
   console.log(student);
-  
+
 
   return (
     <div>
@@ -156,7 +156,9 @@ export default function Actions({ student, courses }: Props) {
               {student.surname} {student.name}
             </h6>
             <p className="mb-4">
-              Tug'ilgan kun: <span className="px-2 py-[3px] text-[14px] rounded-full text-white bg-green-400">13.09.2003</span>
+              Tug'ilgan kuni: <span className="px-2 py-[3px] text-[14px] rounded-full text-white bg-green-400">{student.birthday
+                ? format(new Date(Array.isArray(student.birthday) ? student.birthday[0] : student.birthday), "dd.MM.yyyy")
+                : "-"}</span>
             </p>
             <article className="mb-5">
               <p className="flex items-center gap-2">Balans: <span className="px-2 text-[14px] rounded-full text-white bg-red-500">{student.balance}</span></p>

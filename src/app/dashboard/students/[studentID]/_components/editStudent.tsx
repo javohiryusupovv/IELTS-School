@@ -18,6 +18,7 @@ import { usePathname } from "next/navigation";
 import { toast } from "sonner";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { iPropCourse } from "../../../../../../app.types";
+import BrithdayCalendar from "@/app/dashboard/_components/brithday/BrithdayCalendar";
 
 interface Props {
     student: IStudent;
@@ -26,10 +27,12 @@ interface Props {
 
 export default function EditStudent({ student, courses }: Props) {
     const [phone, setPhone] = useState(student.phone);
-    const [studentCourseId, setStudentCourseId] = useState(student.course._id); 
+    const [parentPhone, setParentPhone] = useState(student.parentPhone || "");
+    const [studentCourseId, setStudentCourseId] = useState(student.course._id);
+    const [birthday, setBirthday] = useState<Date | undefined>(() =>
+        parseBirthday(student.birthday)
+    );
     const pathname = usePathname();
-    
-
 
     async function onUpdateStudent(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -40,11 +43,13 @@ export default function EditStudent({ student, courses }: Props) {
                 surname: formData.get("surname") as string,
                 phone: formData.get("phone") as string,
                 password: formData.get("password") as string,
-                course: studentCourseId
-            }
+                parentPhone: formData.get("parentPhone") as string,
+                birthday: birthday ?? new Date(),
+                course: studentCourseId,
+            };
+
             const updatedStudent = updateStudent(student._id, data, pathname);
 
-            // Show success message with the toast
             toast.promise(updatedStudent, {
                 loading: "Yuklanmoqda...",
                 success: {
@@ -64,18 +69,16 @@ export default function EditStudent({ student, courses }: Props) {
             console.log(err);
         }
     }
-    const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        let value = e.target.value.replace(/\D/g, ""); // Faqat raqamlarni qoldiramiz
-        value = value.replace(/^998/, ""); // Agar 998 ni kiritsa, olib tashlaymiz
-        value = value.slice(0, 9); // Maksimal 9 ta raqam kiritish mumkin
-        setPhone(value);
+
+    const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>, setter: (val: string) => void) => {
+        let value = e.target.value.replace(/\D/g, "");
+        value = value.replace(/^998/, "");
+        value = value.slice(0, 9);
+        setter(value);
     };
-
-
 
     return (
         <div className="mb-1">
-
             <Sheet>
                 <SheetTrigger asChild>
                     <button className=" relative top-0 left-0 group border rounded-full p-[5px] hover:bg-orange-500 transition-all duration-300 border-orange-400">
@@ -91,6 +94,7 @@ export default function EditStudent({ student, courses }: Props) {
                         </SheetDescription>
                     </SheetHeader>
                     <form id="edit-student-form" onSubmit={onUpdateStudent} className="w-full mb-5">
+                        {/* Name */}
                         <label className="flex gap-2 text-[#d47323cd] flex-col mb-5">
                             Ismi *
                             <input
@@ -101,6 +105,7 @@ export default function EditStudent({ student, courses }: Props) {
                                 placeholder="O'quvchi ismi!"
                             />
                         </label>
+                        {/* Surname */}
                         <label className="flex gap-2 text-[#d47323cd] flex-col mb-5">
                             Familiya *
                             <input
@@ -108,9 +113,15 @@ export default function EditStudent({ student, courses }: Props) {
                                 defaultValue={student.surname}
                                 className="py-2 border rounded-md px-2 text-gray-700"
                                 type="text"
-                                placeholder="O'quvchi Familiyasi!"
+                                placeholder="O'quvchi familiyasi!"
                             />
                         </label>
+                        {/* Birthday */}
+                        <label className="flex gap-2 text-[#d47323cd] flex-col mb-5">
+                            Tug‘ilgan sana *
+                            <BrithdayCalendar value={birthday} onChange={setBirthday} />
+                        </label>
+                        {/* Course */}
                         <article className="mb-5">
                             <p className="mb-3 text-[#d47323cd]">Kursni tanlang *</p>
                             <Select value={studentCourseId} onValueChange={setStudentCourseId}>
@@ -130,21 +141,37 @@ export default function EditStudent({ student, courses }: Props) {
                                 </SelectContent>
                             </Select>
                         </article>
+                        {/* Phone */}
                         <label className="flex gap-2 text-[#d47323cd] flex-col mb-5">
-                            Phone *
-                            <article className={`group flex gap-2 items-center rounded border px-3 focus-within:border-orange-500 transition-all duration-200`}>
+                            Telefon raqami *
+                            <article className="group flex gap-2 items-center rounded border px-3 focus-within:border-orange-500 transition-all duration-200">
                                 <span className="text-[14px] text-gray-500">+998 </span>
                                 <input
                                     name="phone"
                                     value={phone}
-                                    onChange={handlePhoneChange}
+                                    onChange={(e) => handlePhoneChange(e, setPhone)}
                                     className="py-2 w-full outline-none rounded-md px-2 text-gray-700"
                                     type="text"
-                                    placeholder="Telefon raqami kiriting ..."
+                                    placeholder="O'quvchi raqami"
                                 />
                             </article>
-
                         </label>
+                        {/* Parent Phone */}
+                        <label className="flex gap-2 text-[#d47323cd] flex-col mb-5">
+                            Ota-ona raqami *
+                            <article className="group flex gap-2 items-center rounded border px-3 focus-within:border-orange-500 transition-all duration-200">
+                                <span className="text-[14px] text-gray-500">+998 </span>
+                                <input
+                                    name="parentPhone"
+                                    value={parentPhone}
+                                    onChange={(e) => handlePhoneChange(e, setParentPhone)}
+                                    className="py-2 w-full outline-none rounded-md px-2 text-gray-700"
+                                    type="text"
+                                    placeholder="Ota-ona telefon raqami"
+                                />
+                            </article>
+                        </label>
+                        {/* Password */}
                         <label className="flex gap-2 max-sm:text-[14px] text-[#d47323cd] flex-col sm:mb-5 mb-3">
                             Yangi Password *
                             <input
@@ -168,7 +195,27 @@ export default function EditStudent({ student, courses }: Props) {
                     </SheetFooter>
                 </SheetContent>
             </Sheet>
-
         </div>
     )
+}
+
+
+function parseBirthday(value: unknown): Date | undefined {
+    if (!value) return undefined;
+    // agar massiv bo'lsa birinchi elementni oling
+    if (Array.isArray(value)) {
+        const v = value[0];
+        if (!v) return undefined;
+        const d = v instanceof Date ? v : new Date(String(v));
+        return Number.isNaN(d.getTime()) ? undefined : d;
+    }
+
+    // agar Date obyekt bo'lsa
+    if (value instanceof Date) {
+        return Number.isNaN(value.getTime()) ? undefined : value;
+    }
+
+    // string yoki raqam bo'lsa new Date bilan urinib ko'ring
+    const d = new Date(String(value));
+    return Number.isNaN(d.getTime()) ? undefined : d;
 }

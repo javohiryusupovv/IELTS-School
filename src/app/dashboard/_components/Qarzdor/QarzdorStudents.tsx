@@ -199,11 +199,7 @@ function StudentList({ debtors }: { debtors: IStudent[] }) {
             {/* Keyingi to‘lov sanasi faqat qarzdor bo‘lsa ko‘rsatilsin */}
             <p className="text-xs text-foreground">
               Keyingi to‘lov:{" "}
-              <span className="font-medium text-orange-500">
-                {lastPayment && remainingDebt > 0 && (
-                  <NextPaymentDate date={student.createdAt} />
-                )}
-              </span>
+              <span className="font-medium text-orange-500"><NextPaymentDate date={student.createdAt} /></span>
             </p>
           </div>
         );

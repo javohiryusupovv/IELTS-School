@@ -20,6 +20,7 @@ export interface IStudent {
   payments: IPayment[];
   course: ICourse; // MongoDB ObjectId string sifatida bo'ladi
   balance: number;
+  birthday: Date | null;
   createdAt: string;
 }
 
