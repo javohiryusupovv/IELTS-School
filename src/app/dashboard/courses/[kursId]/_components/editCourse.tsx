@@ -71,6 +71,7 @@ export default function EditCourse({ course, teachers }: Props) {
         endDate: endDate ? endDate.toISOString() : course.endDate,
         days: filteredDay,
         teacher: teacher, // ✅ Selectdan kelgan teacher
+        price: Number(formData.get("price")), // Narxni raqamga aylantirish
       };
 
       const updatePromise = updateCourseServer(
@@ -172,7 +173,7 @@ export default function EditCourse({ course, teachers }: Props) {
             />
 
             {/* Teacher tanlash */}
-            <label className="flex gap-2 text-[#d47323cd] flex-col mb-10">
+            <label className="flex gap-2 text-[#d47323cd] flex-col mb-5">
               Teacherni tanlang*
               <Select value={teacher} onValueChange={(val) => setTeacher(val)}>
                 <SelectTrigger className="w-full">
@@ -186,6 +187,20 @@ export default function EditCourse({ course, teachers }: Props) {
                   ))}
                 </SelectContent>
               </Select>
+            </label>
+            <label
+              className="flex gap-2 text-[#d47323cd] flex-col mb-10"
+              htmlFor="cours_price"
+            >
+              Kurs narxi
+              <input
+                defaultValue={course.price}
+                name="price"
+                className="px-2 py-2 text-gray-700 border rounded-md "
+                id="cours_price"
+                type="text"
+                placeholder="Kurs narxini kiriting"
+              />
             </label>
 
             <SheetClose asChild>

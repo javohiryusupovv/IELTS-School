@@ -18,6 +18,7 @@ export interface IUpdateCourse{
     endDate: string;
     days: string[];
     teacher: string | ITeacher;
+    price: number;
 }
 
 export interface IAdministrator {

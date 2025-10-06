@@ -1,8 +1,9 @@
+import { IStudent } from "@/types/type";
 import { LaptopMinimalCheck, ChevronRight, Banknote, CircleGauge  } from "lucide-react";
 import Link from "next/link";
 
 
-export default function MenyuCoin() {
+export default function MenyuCoin() {  
   return (
     <div className="flex flex-col gap-3">
       <Link href={`/student/history/coinsucces`} className="group w-full flex justify-between items-center px-4 py-2 border rounded-md cursor-pointer bg-accent focus:bg-green-500/50 focus:text-white">
@@ -30,6 +31,7 @@ export default function MenyuCoin() {
           <ChevronRight className="group-hover:stroke-orange-500 group-focus:stroke-white group-hover:translate-x-1 transition-all duration-200 stroke-1 w-5 h-5" />
         </span>
       </Link>
+      
     </div>
   );
 }

@@ -1,10 +1,10 @@
 import MenyuCoin from "./action";
 
 
-export default function HistoryCoins() {
+export default async function HistoryCoins() {
   return (
     <div className="w-full">
-        <MenyuCoin />
+      <MenyuCoin/>
     </div>
   );
 }
