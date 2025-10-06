@@ -28,9 +28,20 @@ export const postShop = async ( data: ICreateShop, path: string) => {
 
 
 
-export const newAmounProduct = async (productId: string, addAmount: number, path: string) => {
-  if (!productId || !addAmount || addAmount <= 0) {
-    throw new Error("Noto'g'ri ma'lumot kiritildi");
+interface IProductUpdateData {
+  title: string;
+  description: string;
+  price: number;
+  quantity: number;
+}
+
+export const newEditShopProduct = async (
+  productId: string,
+  data: IProductUpdateData,
+  path: string
+) => {
+  if (!productId || !data) {
+    throw new Error("Noto‘g‘ri ma‘lumot kiritildi");
   }
 
   try {
@@ -41,14 +52,25 @@ export const newAmounProduct = async (productId: string, addAmount: number, path
       throw new Error("Mahsulot topilmadi");
     }
 
-    product.remainingQuantity += addAmount;
-    product.totalQuantity += addAmount;
+    // Asosiy ma'lumotlarni yangilash
+    product.title = data.title || product.title;
+    product.description = data.description || product.description;
+    product.price = data.price || product.price;
+
+    // Miqdorni yangilash
+    if (data.quantity && data.quantity > 0) {
+      product.remainingQuantity += data.quantity;
+      product.totalQuantity += data.quantity;
+    }
 
     await product.save();
-
     revalidatePath(path);
-  } catch (error) {
-    throw new Error(`Xatolik yuz berdi SHOP quantity update-da, ${error}`);
+
+    return { success: true };
+  } catch (error: any) {
+    throw new Error(
+      `Xatolik yuz berdi SHOP yangilashda: ${error.message || error}`
+    );
   }
 };
 
