@@ -37,10 +37,10 @@ export default function Actions({ student, courses }: Props) {
     }
     const coinFilter = parseFloat(coins);
 
-    if (coinFilter < 0 && Math.abs(coinFilter) > totalCoins) {
-      toast.error("Coin miqdori yetarli emas!");
-      return;
-    }
+    // if (coinFilter < 0 && Math.abs(coinFilter) > totalCoins) {
+    //   toast.error("Coin miqdori yetarli emas!");
+    //   return;
+    // }
 
     try {
       const promise = addAdminCoins(
