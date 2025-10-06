@@ -59,16 +59,18 @@ export default async function StudentDashboard() {
           </div>
         </article>
         <div className="mb-8">
-          {student.balance > 0 ? (
+          {student.balance < 0 ? (
             <div className="w-11/12 m-auto text-center">
-              <p className="text-green-500 font-medium">
-                To'lov holati: <span className="underline">To'langan</span>
+              <p className="font-medium">
+                To'lov holati:{" "}
+                <span className="underline text-red-500">To'lanmagan</span>
               </p>
             </div>
           ) : (
             <div className="w-11/12 m-auto text-center">
               <p className="font-medium">
-                To'lov holati: <span className=" underline text-red-500">To'lanmagan</span>
+                To'lov holati:{" "}
+                <span className="underline text-green-500">To'langan</span>
               </p>
             </div>
           )}
