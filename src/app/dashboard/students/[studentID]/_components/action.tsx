@@ -171,16 +171,17 @@ export default function Actions({ student, courses }: Props) {
             </p>
             <article className="mb-5">
               <p className="flex items-center gap-2">
-                Balans:{" "}
+                To'lov holati:
                 <span
                   className={`px-2 text-[14px] rounded-full text-white ${
                     student.balance < 0 ? "bg-red-500" : "bg-green-500"
                   }`}
                 >
-                  {student.balance} so'm
+                  {student.balance < 0 ? "To'lanmagan" : "To'langan"}
                 </span>
               </p>
             </article>
+
             <p className="mb-4 flex items-center gap-2">
               StudentID:{" "}
               <span className="px-2 text-[14px] rounded-full text-white bg-yellow-500">
@@ -313,7 +314,15 @@ export default function Actions({ student, courses }: Props) {
                         <td className="p-2 border">
                           {new Date(payment.date).toLocaleDateString("uz-UZ")}
                         </td>
-                        <td className={`px-2 py-1 my-1 border text-white rounded-full inline-flex ${payment.status == "qarzdor" ? "bg-red-500" : "bg-green-500"}`}>{payment.status}</td>
+                        <td
+                          className={`px-2 py-1 my-1 border text-white rounded-full inline-flex ${
+                            payment.status == "qarzdor"
+                              ? "bg-red-500"
+                              : "bg-green-500"
+                          }`}
+                        >
+                          {payment.status}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
