@@ -5,6 +5,7 @@ import { ICreateShop } from "@/types/type";
 import { revalidatePath } from "next/cache";
 import Education from "@/models/courseBox.model";
 import {Course, Student, Teacher, Shop} from "@/models/index"
+import mongoose from "mongoose";
 
 
 export const postShop = async ( data: ICreateShop, path: string) => {
@@ -86,12 +87,24 @@ export const getShopId = async (id: string) => {
     }
 }
 
-export const deleteShop = async (id: string, path: string) => {
-    try {
-        await ConnectMonogDB()
-        await Shop.findByIdAndDelete(id)
-        revalidatePath(path)
-    } catch (error) {
-        throw new Error(`Xatolik yuz berid DELETE Shopda, ${error}`)
-    }
-}
+export const deleteShop = async (id: string, educationID: string, path: string) => {
+  try {
+    await ConnectMonogDB();
+
+    // 1️⃣ Shopni o‘chirish
+    await Shop.findByIdAndDelete(id);
+
+    // 2️⃣ EducationCenter dagi shops massivdan o‘chirish
+    await Education.findByIdAndUpdate(
+      educationID,
+      { $pull: { shops: new mongoose.Types.ObjectId(id) } },
+      { new: true }
+    );
+
+    // 3️⃣ UI keshni yangilash
+    revalidatePath(path);
+  } catch (error) {
+    throw new Error(`Xatolik yuz berdi DELETE Shopda: ${error}`);
+  }
+};
+

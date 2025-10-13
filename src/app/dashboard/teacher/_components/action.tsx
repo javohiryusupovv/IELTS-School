@@ -41,9 +41,11 @@ interface Props {
 
 export default function ActionsTeacher({ teacher }: Props) {
   const pathname = usePathname();
+  console.log(teacher);
+  
   const handleDelete = async () => {
     try {
-      const deleteTeacher = deleteTeachers(teacher._id, pathname);
+      const deleteTeacher = deleteTeachers(teacher._id, teacher.educationCenter, pathname);
       await deleteTeacher;
     } catch (error) {
       console.log(error);

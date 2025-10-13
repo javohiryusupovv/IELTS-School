@@ -10,6 +10,7 @@ async function Dashboard() {
   const getStudents = educationData.students;
   const course = educationData.courses;
   
+  
   return (
     <div className="grid grid-cols-3 max-strelka:grid-cols-1 max-strelka:gap-0 gap-4">
       <div className="col-span-2 max-strelka:mb-5">

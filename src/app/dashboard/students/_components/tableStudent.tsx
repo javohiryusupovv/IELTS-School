@@ -18,9 +18,10 @@ import PayModal from "./PayModal";
 interface PropsTableStudent {
   students: IStudent[];
   courses: ICourse[];
+  educationID: string,
 }
 
-export default function TableStudent({ students, courses }: PropsTableStudent) {
+export default function TableStudent({ students, courses, educationID }: PropsTableStudent) {
   const [selectedCourse, setSelectedCourse] = useState<string>("all");
   const [selectedTeacher, setSelectedTeacher] = useState<string>("all");
 
@@ -205,7 +206,7 @@ export default function TableStudent({ students, courses }: PropsTableStudent) {
                     })()}
                   </td>
                   <td className="py-2">
-                    <Action student={student} />
+                    <Action student={student} educationID={educationID} />
                   </td>
                 </>
               ) : (
@@ -245,7 +246,7 @@ export default function TableStudent({ students, courses }: PropsTableStudent) {
                     </article>
                   </td>
                   <td className="py-2">
-                    <Action student={student} />
+                    <Action student={student} educationID={educationID}/>
                   </td>
                 </>
               )}

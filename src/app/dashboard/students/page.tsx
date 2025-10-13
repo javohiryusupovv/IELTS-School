@@ -10,6 +10,8 @@ export default async function StudentAll() {
   const students = educationData.students;
   const totalStudents = students.length;
 
+  const educationID = educationData._id
+  console.log(educationID);
   return (
     <div>
       <article className="items-center justify-between mb-3 max-sm:hidden sm:hidden OurMentor2:flex">
@@ -58,7 +60,7 @@ export default async function StudentAll() {
             </p>
           </div>
         ) : (
-          <TableStudent students={students} courses={propCourses} />
+          <TableStudent students={students} courses={propCourses} educationID={educationID}/>
         )}
       </div>
     </div>

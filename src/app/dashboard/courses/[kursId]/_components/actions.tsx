@@ -27,11 +27,12 @@ export default function Actions({ course }: Props) {
     const router = useRouter();
     const pathname = usePathname()
     const [textStatus, settextStatus] = useState(false);
+    
 
     const onDelete = () => {
         settextStatus(true);
         const toastId = toast.loading("O'chirilmoqda...");
-        DeleteCourse(course._id, pathname)
+        DeleteCourse(course._id, course.educationCenter, pathname)
             .then(() => {
                 // 2. Muvaffaqiyatli o'chirilganda toasti yangilash
                 toast.success("Muvaffaqiyatli o'chirildi!", { id: toastId });

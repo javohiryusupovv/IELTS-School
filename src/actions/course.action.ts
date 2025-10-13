@@ -138,31 +138,55 @@ export const updateCourseServer = async (
 
 
 // Kursni o‘chirish
-export const DeleteCourse = async (id: string, path: string) => {
+export const DeleteCourse = async (id: string, educationID: string, path: string) => {
   try {
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      throw new Error(`Noto‘g‘ri ID formati: ${id}`);
-    }
     await ConnectMonogDB();
-    const course = await Course.findByIdAndDelete(id);
-    if (course.educationCenter) {
-      await Education.findByIdAndUpdate(course.educationCenter, {
-        $pull: { courses: course._id },
-      });
+
+    // 1️⃣ ID formati tekshiruvi
+    if (!mongoose.Types.ObjectId.isValid(id) || !mongoose.Types.ObjectId.isValid(educationID)) {
+      throw new Error("Noto‘g‘ri ID formati");
     }
+
+    // 2️⃣ Kursni topamiz
+    const course = await Course.findById(id);
     if (!course) {
       throw new Error("Kurs topilmadi");
     }
 
+    // 3️⃣ Shu kursga biriktirilgan studentlarni topamiz
+    const students = await Student.find({ course: course._id });
+
+    // 4️⃣ EducationCenter dan kursni o‘chirish
+    await Education.findByIdAndUpdate(
+      educationID,
+      { $pull: { courses: course._id } },
+      { new: true }
+    );
+
+    // 5️⃣ EducationCenter dan shu kursdagi studentlarni ham o‘chirish
+    if (students.length > 0) {
+      const studentIds = students.map((s) => s._id);
+      await Education.findByIdAndUpdate(
+        educationID,
+        { $pull: { students: { $in: studentIds } } },
+        { new: true }
+      );
+    }
+
+    // 6️⃣ Shu kursga bog‘langan studentlarni o‘chirish
     await Student.deleteMany({ course: course._id });
 
-    // Keshni yangilash
+    // 7️⃣ Kursni o‘chirish
+    await Course.findByIdAndDelete(id);
+
+    // 8️⃣ UI keshni yangilash
     revalidateTag("courses");
     revalidateTag("course");
     revalidateTag("students");
     revalidatePath(path);
-  } catch (error) {
-    console.error(`Error deleting course ${id}:`, error);
-    throw new Error("Kursni o‘chirishda xatolik yuz berdi");
+
+  } catch (error: any) {
+    console.error(`❌ Error deleting course ${id}:`, error.message);
+    throw new Error(`Kursni o‘chirishda xatolik yuz berdi: ${error.message}`);
   }
 };

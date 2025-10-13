@@ -20,14 +20,17 @@ import {
 import { IStudent } from "@/types/type";
 
 interface Props {
-  student: IStudent
+  student: IStudent,
+  educationID: string
 }
 
 interface StudentListProps {
   studentList: any;
 }
 
-export default function Action({student}: Props) {
+export default function Action({student, educationID}: Props) {
+  console.log(student);
+  
   const handleDelete = async () => {
     if (!student.publishStudent) {
       toast.warning("Bu talabani o'chirish uchun arxivdan chiqaring !", {
@@ -43,7 +46,7 @@ export default function Action({student}: Props) {
       return;
     }
     try {
-      const promise = deleteStudent(student._id, student.course._id, "/dashboard/students");
+      const promise = deleteStudent(student._id, student.course._id, educationID,  "/dashboard/students");
       toast.promise(promise,
         {
           loading: "O'chirilmoqda...",

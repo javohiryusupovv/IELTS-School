@@ -20,9 +20,10 @@ import {
 
 interface Props {
   products: ICreateShop;
+  educationID: string;
 }
 
-export default function DeleteProduct({ products }: Props) {
+export default function DeleteProduct({ products, educationID }: Props) {
   const pathname = usePathname();
 
   const deleteProduct = async () => {
@@ -31,7 +32,7 @@ export default function DeleteProduct({ products }: Props) {
       return;
     }
     try {
-      const promise = deleteShop(products._id, pathname)
+      const promise = deleteShop(products._id, educationID, pathname)
       toast.promise(promise, {
         loading: "O'chirilmoqda...",
         success: {

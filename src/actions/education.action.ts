@@ -33,7 +33,7 @@ export const getEducationData = async () => {
     const educationData = await Education.findOne({}).populate([
       {
         path: "teachers",
-        select: "teacherName teacherSurname teacherPhone",
+        select: "teacherName teacherSurname teacherPhone educationCenter",
         options: { strictPopulate: false },
       },
       {
@@ -53,7 +53,7 @@ export const getEducationData = async () => {
       },
       {
         path: "courses",
-        select: "courseTitle price",
+        select: "courseTitle price educationCenter",
         populate: {
           path: "teacher",
           select: "teacherName teacherSurname teacherPhone", // faqat kerakli maydonlar

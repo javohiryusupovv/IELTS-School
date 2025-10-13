@@ -9,8 +9,8 @@ import EditShop from "./_components/editShop";
 async function ShopAdmin() {
   const educationData = await getEducationData();
   const product = educationData.shops
-  console.log(product);
-  
+  const educationID = educationData._id
+
   return (
     <div>
       <article className="flex justify-between items-center mb-10">
@@ -29,7 +29,7 @@ async function ShopAdmin() {
             className="relative top-0 left-0 px-3 py-5 w-full flex flex-col justify-center items-center border rounded-md"
           >
              <article className="flex justify-between w-full">
-              <DeleteProduct products={item} />
+              <DeleteProduct products={item} educationID={educationID} />
               <EditShop products={item}/>
             </article>
             <article className="w-full h-[200px] overflow-hidden mb-10 mt-5">

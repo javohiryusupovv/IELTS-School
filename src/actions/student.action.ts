@@ -137,12 +137,14 @@ export const postAddStudent = async (
 export const deleteStudent = async (
   studentId: string,
   courseId: string,
+  educationCenterId: string,
   path: string
 ) => {
   try {
     if (
       !mongoose.Types.ObjectId.isValid(studentId) ||
-      !mongoose.Types.ObjectId.isValid(courseId)
+      !mongoose.Types.ObjectId.isValid(courseId) ||
+      !mongoose.Types.ObjectId.isValid(educationCenterId)
     ) {
       throw new Error("Noto‘g‘ri ID!");
     }
@@ -159,6 +161,12 @@ export const deleteStudent = async (
     if (!deletedStudent) {
       throw new Error("Talaba topilmadi yoki o‘chirilmadi!");
     }
+    // Education centerdan ham o'chiramiz, agar mavjud bo'lsa
+    await Education.findByIdAndUpdate(
+      educationCenterId,
+      { $pull: { students: new mongoose.Types.ObjectId(studentId) } },
+      { new: true }
+    );
 
     // Keshni yangilash
     revalidateTag("students");
