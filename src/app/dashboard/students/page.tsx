@@ -39,14 +39,17 @@ export default async function StudentAll() {
 
       <hr className="mb-7" />
       <div className="w-full">
-        <article className="mb-5 flex gap-5 items-center">
-          <p className="flex items-center gap-4">
-            <span className="w-4 h-4 bg-green-500 inline-block"></span> Activ
-          </p>
-          <p className="flex items-center gap-4">
-            <span className="w-4 h-4 bg-red-500 inline-block"></span> Arxiv
-          </p>
-        </article>
+        <div className="mb-5 flex items-center justify-between">
+          <article className="flex gap-5 items-center">
+            <p className="flex items-center gap-4">
+              <span className="w-4 h-4 bg-green-500 inline-block"></span> Activ
+            </p>
+            <p className="flex items-center gap-4">
+              <span className="w-4 h-4 bg-red-500 inline-block"></span> Arxiv
+            </p>
+          </article>
+          <p className="font-semibold text-[18px]">Platformadagi o'quvchilar: <span className="text-orange-500 underline">{totalStudents} ta</span></p>
+        </div>
         {totalStudents < 1 ? (
           <div className="w-full h-[80vh] flex gap-2 flex-col justify-center items-center">
             <UserX className="w-[50px] h-10 stroke-gray-500 stroke-[0.9px]" />

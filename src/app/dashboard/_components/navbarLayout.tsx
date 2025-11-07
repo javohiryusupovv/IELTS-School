@@ -88,10 +88,6 @@ function NavbarLayout() {
                     <span className="sm:inline-flex hidden">Mahsulot yaratish</span>
                   </Link>
                   <hr />
-                  <Link href={`/dashboard/shop/history`} className="py-2 px-2 flex sm:justify-start justify-center items-center gap-2 hover:bg-accent">
-                    <BsClockHistory className="w-5 h-5" />
-                    <span className="sm:inline-flex hidden">Mahsulot tarixi</span>
-                  </Link>
                 </article>
               </li>
             </ul>

@@ -22,6 +22,7 @@ export interface IStudent {
   balance: number;
   birthday: Date | null;
   createdAt: string;
+  paymentNext: string;
 }
 
 export interface ICourse {
@@ -46,8 +47,8 @@ export interface ITeacher {
 
 export interface ICreateShop {
   _id?: string;
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
   price: number;
   image: string;
   totalQuantity: number, 

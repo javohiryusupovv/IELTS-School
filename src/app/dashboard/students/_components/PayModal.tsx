@@ -35,6 +35,7 @@ interface PayModalProps {
     surname: string;
     createdAt: string; // 🟢 talaba qo‘shilgan sana
     course?: { courseTitle: string };
+    paymentNext: string
   };
 }
 
@@ -87,6 +88,7 @@ export default function PayModal({ student }: PayModalProps) {
       setLoading(false);
     }
   };
+  
   return (
     <div>
       <AlertDialog>
@@ -150,7 +152,7 @@ export default function PayModal({ student }: PayModalProps) {
             </div>
             <div className="flex justify-between">
               <span className="font-medium">Keyingi to‘lov:</span>
-              <span className="text-green-600 font-semibold">{<NextPaymentDate date={student.createdAt} />}</span>
+              <span className="text-green-600 font-semibold">{<NextPaymentDate date={student.paymentNext} />}</span>
             </div>
           </div>
 

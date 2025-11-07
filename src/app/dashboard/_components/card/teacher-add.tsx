@@ -112,7 +112,7 @@ function TeacherCreated({educationProp}: Props) {
             <FaUserPlus color="white" className="md:hidden" />
           </button>
         </SheetTrigger>
-        <SheetContent>
+        <SheetContent className="overflow-y-auto max-h-screen">
           <SheetHeader className="sm:mb-5 mb-3 max-sm:space-y-0">
             <SheetTitle className="text-[20px] max-sm:text-[17px]">Yangi O'qituvchi Yaratish</SheetTitle>
             <SheetDescription className="max-sm:text-[12px] text-[15px]">

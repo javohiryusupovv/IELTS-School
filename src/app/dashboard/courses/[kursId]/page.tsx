@@ -32,8 +32,8 @@ async function CourseDetail({ params, }: { params: Promise<{ kursId: string }> }
         <EditCourse course={course} teachers={teacher}/>
       </article>
       <div className="flex w-full gap-10 max-xl:flex-wrap">
-        <div>
-          <div className={`relative top-0 flex justify-center items-end border mb-5 w-[500px] max-sm:w-full h-[300px] rounded-xl max-md:h-[250px] max-sm:h-[200px] max-md:w-[380px]`} style={{ backgroundColor: getStableColor(course._id) }}>
+        <div className="w-full">
+          <div className={`relative top-0 flex justify-center items-end border mb-5 max-sm:w-full h-[300px] rounded-xl max-md:h-[250px] max-sm:h-[200px] max-md:w-[380px]`} style={{ backgroundColor: getStableColor(course._id) }}>
             <p className="absolute top-8 max-sm:top-0 left-0 text-center w-full mt-12 text-[20px] font-semibold text-white">{course.courseTitle}</p>
             <Image className="w-[500px] max-sm:w-full object-cover" src={Frontend} alt="Course Detail Img" />
           </div>

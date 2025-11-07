@@ -118,7 +118,7 @@ export default function StudentForm({ propCourses }: { propCourses: ICourse[] })
                         <FaUserPlus className="text-white md:hidden" />
                     </button>
                 </SheetTrigger>
-                <SheetContent>
+                <SheetContent className="overflow-y-auto max-h-screen">
                     <SheetHeader className="sm:mb-5 mb-3 max-sm:space-y-0">
                         <SheetTitle className="text-[20px] max-sm:text-[17px]">Yangi o'quvchi qo'shish</SheetTitle>
                         <SheetDescription className="max-sm:text-[12px] text-[15px]">

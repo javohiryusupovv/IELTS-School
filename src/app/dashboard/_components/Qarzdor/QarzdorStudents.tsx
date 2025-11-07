@@ -45,14 +45,8 @@ export default function QarzdorStudents({
   // 🔹 Qarzdorlarni filter qilish
   const debtors = students.filter((student: IStudent) => {
     if (!student.course) return false;
-    if (!student.publishStudent) return false
-
-    const coursePrice = student.course.price || 0;
-    const totalPaid =
-      student.payments?.reduce((sum, p) => sum + p.amount, 0) || 0;
-
-    // Kurs narxi to‘liq yopilmagan bo‘lsa, qarzdor
-    return totalPaid < coursePrice;
+    if (!student.publishStudent) return false;
+    return student.balance < 0;
   });
 
   // 🔹 Qidiruv orqali filter
@@ -65,6 +59,7 @@ export default function QarzdorStudents({
     );
   });
   const visibleDebtors = filteredDebtors.slice(0, 5);
+
   return (
     <Card className="h-fit">
       <CardHeader className="pb-3">
@@ -126,15 +121,8 @@ function StudentList({ debtors }: { debtors: IStudent[] }) {
   return (
     <div className="space-y-3">
       {debtors.map((student: IStudent) => {
-        const lastPayment = student.payments?.[student.payments.length - 1];
-
-        // Jami to‘langan summa
-        const totalPaid: number =
-          student.payments?.reduce((sum, p) => sum + p.amount, 0) || 0;
-
-        const coursePrice: number = student.course?.price || 0;
-        const remainingDebt: number = Math.max(coursePrice - totalPaid, 0);
-        console.log(student);
+        const remainingDebt = Math.abs(student.balance); // qarz miqdori manfiydan ijobiyga
+        const isDebtor = student.balance < 0;
 
         return (
           <div
@@ -184,7 +172,7 @@ function StudentList({ debtors }: { debtors: IStudent[] }) {
 
             {/* Qolgan qarz yoki to‘liq to‘langan bo‘lsa */}
             <div className="text-xs text-muted-foreground mt-1">
-              {remainingDebt > 0 ? (
+              {isDebtor ? (
                 <p>
                   Qolgan qarz:{" "}
                   <span className="font-semibold underline text-red-600">
@@ -197,10 +185,14 @@ function StudentList({ debtors }: { debtors: IStudent[] }) {
             </div>
 
             {/* Keyingi to‘lov sanasi faqat qarzdor bo‘lsa ko‘rsatilsin */}
-            <p className="text-xs text-foreground">
-              Keyingi to‘lov:{" "}
-              <span className="font-medium text-orange-500"><NextPaymentDate date={student.createdAt} /></span>
-            </p>
+            {isDebtor && (
+              <p className="text-xs text-foreground">
+                Keyingi to‘lov:{" "}
+                <span className="font-medium text-orange-500">
+                  <NextPaymentDate date={student.paymentNext} />
+                </span>
+              </p>
+            )}
           </div>
         );
       })}

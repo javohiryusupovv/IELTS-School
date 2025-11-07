@@ -1,5 +1,5 @@
 import { Schema, model, models } from "mongoose";
-
+import Course from "./course.model"
 const CoinSchema = new Schema(
   {
     value: { type: Number, required: true },
@@ -22,8 +22,7 @@ const PaymentSchema = new Schema(
       required: true,
     }, // To'lov turi
     date: { type: Date, default: Date.now }, // To'langan sana
-    nextPayment: { type: Date, required: true }, // Keyingi to'lov sanasi "to'langan", "to'lanmagan", "kutilmoqda",
-    status: { type: String, enum: ["to'langan", "qarzdor", "kutilmoqda"],  default: "kutilmoqda" },
+    status: { type: String, enum: ["to'langan", "qarzdor", "kutilmoqda"], default: "kutilmoqda" },
   },
   { timestamps: true }
 );
@@ -54,6 +53,7 @@ const StudentSchema = new Schema(
     birthday: { type: Date },
     // 🔹 To'lovlar
     payments: [PaymentSchema],
+    paymentNext: { type: Date },
     balance: { type: Number, default: 0 }, // Qoldiq summasi va student balansi
     attendance: [AttendanceSchema],
   },

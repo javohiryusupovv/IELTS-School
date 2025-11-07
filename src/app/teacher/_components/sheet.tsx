@@ -47,7 +47,7 @@ export default function SheetDemo() {
       <SheetTrigger asChild>
         <FaGripLines className="w-5 h-5 text-gray-700 hover:text-black transition" />
       </SheetTrigger>
-      <SheetContent className="w-[150px] px-0">
+      <SheetContent className="w-[150px] px-0 overflow-y-auto max-h-screen">
         <SheetHeader className="shadow-sm">
           <SheetTitle className="flex items-center py-3 rounded-md mt-3 justify-center sm:text-[18px] text-[16px]">
             Kurslar

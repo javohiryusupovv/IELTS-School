@@ -9,7 +9,7 @@ import {Course, Student, Teacher, Shop} from "@/models/index"
 
 export const postShop = async ( data: ICreateShop, path: string) => {
 
-    if (!data.title || !data.description || !data.price || !data.image || !data.educationID) {
+    if (!data.price || !data.image || !data.educationID) {
         throw new Error("Data not found")
     }
     try {

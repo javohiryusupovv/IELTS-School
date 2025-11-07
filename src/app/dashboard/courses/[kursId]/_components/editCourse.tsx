@@ -126,7 +126,7 @@ export default function EditCourse({ course, teachers }: Props) {
             <FaEdit className="text-white lg:hidden max-sm:text-[12px]" />
           </button>
         </SheetTrigger>
-        <SheetContent>
+        <SheetContent className="overflow-y-auto max-h-screen">
           <SheetHeader className="mb-5">
             <SheetTitle>Kurs ma'lumotlarini tahrirlash</SheetTitle>
             <SheetDescription>

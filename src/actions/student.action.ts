@@ -63,19 +63,28 @@ export const postAddStudent = async (
 
   try {
     await ConnectMonogDB();
+
+    // 🔹 Tekshiruv: mavjud student
     const existingStudent = await Student.findOne({ $or: [{ phone }, { studentID }] });
     if (existingStudent) {
       throw new Error("Bu telefon raqam yoki student ID allaqachon mavjud!");
     }
 
+    // 🔹 Kursni topamiz
     const course = await Course.findById(courseId);
     if (!course) {
       throw new Error("Kurs topilmadi!");
     }
 
-    // Parolni hash qilish
-    const hashedPassword = await bcrypt.hash(password, 10); // 10 — bu saltRounds
+    // 🔹 Parolni hash qilish
+    const hashedPassword = await bcrypt.hash(password, 10);
 
+    // 🔹 Bugungi va keyingi oy sanalari
+    const today = new Date();
+    const nextPaymentDate = new Date();
+    nextPaymentDate.setMonth(nextPaymentDate.getMonth() + 1);
+
+    // 🔹 Student obyektini yaratamiz
     const newStudent = new Student({
       name,
       surname,
@@ -85,28 +94,44 @@ export const postAddStudent = async (
       parentPhone,
       course: courseId,
       publishStudent: true,
-      balance: -course.price,
-      birthday
+      birthday,
+      balance: -(course.price || 0),
+      payments: [
+        {
+          amount: course.price,
+          type: "Naqd", // default sifatida
+          date: today,
+          status: "qarzdor", // hali to‘lamagan
+        },
+      ],
+      paymentNext: nextPaymentDate,
     });
+
     await newStudent.save();
 
+    // 🔹 Kursga studentni qo‘shamiz
     course.students.unshift(newStudent._id);
     await course.save();
+
+    // 🔹 Education centerga ham qo‘shamiz (agar mavjud bo‘lsa)
     if (course.educationCenter) {
       await Education.findByIdAndUpdate(course.educationCenter, {
         $push: { students: newStudent._id },
       });
     }
-    // Keshni yangilash
+
+    // 🔹 Keshni yangilaymiz
     revalidateTag("students");
     revalidateTag("student");
     revalidatePath(path);
+
     return { success: true, message: "Talaba muvaffaqiyatli qo‘shildi!" };
   } catch (error) {
     console.error("Error adding student:", error);
     throw new Error("Talaba qo‘shishda xatolik yuz berdi");
   }
 };
+
 
 // Talabani o‘chirish
 export const deleteStudent = async (
@@ -445,6 +470,12 @@ export async function deleteCoinHistoryEntry(
 }
 
 
+interface Payment {
+  amount: number;
+  type: "Naqd" | "Karta" | "Click";
+  date: Date;
+  status: "to'langan" | "qarzdor" | "kutilmoqda";
+}
 
 export const addPayment = async (
   studentId: string,
@@ -453,51 +484,57 @@ export const addPayment = async (
 ) => {
   try {
     await ConnectMonogDB();
+
     const student = await Student.findById(studentId).populate("course");
     if (!student) throw new Error("Talaba topilmadi!");
 
-    const coursePrice = student.course?.price || 0;
-    console.log(coursePrice);
-
-
     const today = new Date();
 
-    // 🔹 Talaba qo'shilgan sana
-    const startDate = student.createdAt || today;
+    // 🔹 Agar paymentNext mavjud bo‘lsa, qarzdorlikni tekshiramiz
+    if (student.paymentNext) {
+      const nextDate = new Date(student.paymentNext);
+      const now = new Date();
 
-    // 🔹 Agar oldingi to‘lov bo‘lsa, oxirgi nextPayment asosida hisoblaymiz
-    const lastPayment = student.payments?.length
-      ? student.payments[student.payments.length - 1].nextPayment
-      : null;
+      // Har oy o‘tganida qarzdorlik qo‘shiladi
+      while (nextDate < now) {
+        student.payments.push({
+          amount: -(student.course?.price || 0),
+          type: "Naqd",
+          date: new Date(nextDate),
+          status: "qarzdor",
+        });
 
-    let nextPayment: Date;
-    if (lastPayment) {
-      // Oxirgi nextPayment dan keyingi oyga o‘tkazamiz
-      nextPayment = new Date(lastPayment);
-      nextPayment.setMonth(nextPayment.getMonth() + 1);
+        student.balance -= student.course?.price || 0;
+
+        // Keyingi oyga o‘tkazamiz
+        nextDate.setMonth(nextDate.getMonth() + 1);
+      }
+
+      student.paymentNext = nextDate;
     } else {
-      // Birinchi marta to‘lov qilsa → student qo‘shilgan sanadan 1 oy qo‘shamiz
-      nextPayment = new Date(startDate);
-      nextPayment.setMonth(nextPayment.getMonth() + 1);
+      // Agar birinchi to‘lov bo‘lsa — 1 oy keyingi sana belgilanadi
+      const next = new Date();
+      next.setMonth(next.getMonth() + 1);
+      student.paymentNext = next;
     }
 
-    // 🔹 yangi to‘lovni qo‘shamiz
+    // 🔹 Hozirgi to‘lov ma’lumotlari
     const newPayment = {
       amount: paymentData.amount,
-      type: paymentData.type,
+      type: paymentData.type || "Naqd",
       date: today,
-      nextPayment,
-      status:
-        paymentData.amount + student.balance >= 0 ? "to'langan" : "qarzdor",
+      status: paymentData.amount > 0 ? "to'langan" : "qarzdor",
     };
 
+    // 🔹 To‘lovni qo‘shamiz
     student.payments.push(newPayment);
 
-    // 🔹 balansni yangilash
-    student.balance += paymentData.amount;
+    // 🔹 Balansni yangilaymiz
+    student.balance = (student.balance || 0) + paymentData.amount;
 
     await student.save();
 
+    // 🔹 Cache va sahifani yangilaymiz
     revalidateTag("students");
     revalidateTag("student");
     revalidatePath(path);

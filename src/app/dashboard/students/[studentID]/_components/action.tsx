@@ -20,7 +20,7 @@ import { iPropCourse } from "../../../../../../app.types";
 
 interface Props {
   student: IStudent;
-  courses: iPropCourse[]
+  courses: iPropCourse[];
 }
 
 export default function Actions({ student, courses }: Props) {
@@ -119,7 +119,7 @@ export default function Actions({ student, courses }: Props) {
       value: coin.value,
       reason: coin.reasons.map((reason: any) => reason.reason),
       date: coin.date,
-      _id: coin._id
+      _id: coin._id,
     };
   });
 
@@ -138,7 +138,6 @@ export default function Actions({ student, courses }: Props) {
 
   console.log(student);
 
-
   return (
     <div>
       <div className="grid grid-cols-3 items-start gap-5 mb-4 max-studentCard:grid-cols-1">
@@ -156,12 +155,31 @@ export default function Actions({ student, courses }: Props) {
               {student.surname} {student.name}
             </h6>
             <p className="mb-4">
-              Tug'ilgan kuni: <span className="px-2 py-[3px] text-[14px] rounded-full text-white bg-green-400">{student.birthday
-                ? format(new Date(Array.isArray(student.birthday) ? student.birthday[0] : student.birthday), "dd.MM.yyyy")
-                : "-"}</span>
+              Tug'ilgan kuni:{" "}
+              <span className="px-2 py-[3px] text-[14px] rounded-full text-white bg-green-400">
+                {student.birthday
+                  ? format(
+                      new Date(
+                        Array.isArray(student.birthday)
+                          ? student.birthday[0]
+                          : student.birthday
+                      ),
+                      "dd.MM.yyyy"
+                    )
+                  : "-"}
+              </span>
             </p>
             <article className="mb-5">
-              <p className="flex items-center gap-2">Balans: <span className="px-2 text-[14px] rounded-full text-white bg-red-500">{student.balance}</span></p>
+              <p className="flex items-center gap-2">
+                Balans:{" "}
+                <span
+                  className={`px-2 text-[14px] rounded-full text-white ${
+                    student.balance < 0 ? "bg-red-500" : "bg-green-500"
+                  }`}
+                >
+                  {student.balance} so'm
+                </span>
+              </p>
             </article>
             <p className="mb-4 flex items-center gap-2">
               StudentID:{" "}
@@ -183,7 +201,9 @@ export default function Actions({ student, courses }: Props) {
               </li>
             </ul>
             <ul className="mb-5">
-              <li className="mb-1 text-[15px] text-gray-500/50">Ota-ona raqami:</li>
+              <li className="mb-1 text-[15px] text-gray-500/50">
+                Ota-ona raqami:
+              </li>
               <li className="text-[15px] text-orange-500">
                 +998 {student.parentPhone}
               </li>
@@ -248,16 +268,26 @@ export default function Actions({ student, courses }: Props) {
         </div>
         <div className="col-span-2">
           <article className="flex items-center gap-5 mb-5">
-            <button className={`px-3 py-1 rounded-md transition-all duration-200 ${activeTab === "payments"
-              ? "bg-orange-500 text-white"
-              : "bg-gray-200 text-black"
-              }`} onClick={() => setActiveTab("payments")}>To&apos;lovlar</button>
-            <button onClick={() => setActiveTab("coins")}
-              className={`px-3 py-1 rounded-md transition-all duration-200 ${activeTab === "coins"
-                ? "bg-orange-500 text-white"
-                : "bg-gray-200 text-black"
-                }`}
-            >Coinlar</button>
+            <button
+              className={`px-3 py-1 rounded-md transition-all duration-200 ${
+                activeTab === "payments"
+                  ? "bg-orange-500 text-white"
+                  : "bg-gray-200 text-black"
+              }`}
+              onClick={() => setActiveTab("payments")}
+            >
+              To&apos;lovlar
+            </button>
+            <button
+              onClick={() => setActiveTab("coins")}
+              className={`px-3 py-1 rounded-md transition-all duration-200 ${
+                activeTab === "coins"
+                  ? "bg-orange-500 text-white"
+                  : "bg-gray-200 text-black"
+              }`}
+            >
+              Coinlar
+            </button>
           </article>
           {activeTab === "payments" && (
             <div className="w-full">
@@ -269,7 +299,6 @@ export default function Actions({ student, courses }: Props) {
                       <th className="p-2 border">Summa</th>
                       <th className="p-2 border">Turi</th>
                       <th className="p-2 border">Sana</th>
-                      <th className="p-2 border">Keyingi to‘lov</th>
                       <th className="p-2 border">Status</th>
                     </tr>
                   </thead>
@@ -284,10 +313,7 @@ export default function Actions({ student, courses }: Props) {
                         <td className="p-2 border">
                           {new Date(payment.date).toLocaleDateString("uz-UZ")}
                         </td>
-                        <td className="p-2 border">
-                          {new Date(payment.nextPayment).toLocaleDateString("uz-UZ")}
-                        </td>
-                        <td className="p-2 border">{payment.status}</td>
+                        <td className={`px-2 py-1 my-1 border text-white rounded-full inline-flex ${payment.status == "qarzdor" ? "bg-red-500" : "bg-green-500"}`}>{payment.status}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -301,7 +327,6 @@ export default function Actions({ student, courses }: Props) {
               )}
             </div>
           )}
-
 
           {activeTab === "coins" && (
             <div className="p-4 text-center col-span-2 rounded-lg shadowCustom">
@@ -339,21 +364,23 @@ export default function Actions({ student, courses }: Props) {
                     {filteredCoins?.map((coin, index) => (
                       <div
                         key={index}
-                        className={`flex w-full py-2 px-4 items-center rounded-md mb-3 ${coin.reason.includes("Coin almashtirildi !")
-                          ? "bg-orange-400/30"
-                          : coin.value < 0
+                        className={`flex w-full py-2 px-4 items-center rounded-md mb-3 ${
+                          coin.reason.includes("Coin almashtirildi !")
+                            ? "bg-orange-400/30"
+                            : coin.value < 0
                             ? "bg-red-500/30"
                             : "bg-green-300/30"
-                          }`}
+                        }`}
                       >
                         <article className="flex-[0.4]">
                           <CircleCheckBig
-                            className={`stroke-[1.5] w-5 h-5 max-md:w-[16px] ${coin.reason.includes("Coin almashtirildi !")
-                              ? "stroke-orange-500"
-                              : coin.value > 0
+                            className={`stroke-[1.5] w-5 h-5 max-md:w-[16px] ${
+                              coin.reason.includes("Coin almashtirildi !")
+                                ? "stroke-orange-500"
+                                : coin.value > 0
                                 ? "stroke-green-500"
                                 : "stroke-red-500"
-                              }`}
+                            }`}
                           />
                         </article>
                         <article className="flex-1 text-start">
@@ -375,19 +402,24 @@ export default function Actions({ student, courses }: Props) {
                         </article>
                         <article className="flex-1 justify-items-end text-right">
                           <p
-                            className={`flex justify-center items-center w-14 h-6 rounded-3xl text-[14px] text-white bg-green-500 max-md:text-[10px] ${coin.reason.includes("Coin almashtirildi !")
-                              ? "bg-orange-500"
-                              : coin.value > 0
+                            className={`flex justify-center items-center w-14 h-6 rounded-3xl text-[14px] text-white bg-green-500 max-md:text-[10px] ${
+                              coin.reason.includes("Coin almashtirildi !")
+                                ? "bg-orange-500"
+                                : coin.value > 0
                                 ? "bg-green-500"
                                 : "bg-red-500"
-                              }`}
+                            }`}
                           >
                             {coin.value > 0 ? "+" : ""}
                             {coin.value}
                           </p>
                         </article>
                         <article className="flex-1 justify-items-end">
-                          <Delete studentId={student._id} coinId={coin._id} pathname={pathname} />
+                          <Delete
+                            studentId={student._id}
+                            coinId={coin._id}
+                            pathname={pathname}
+                          />
                         </article>
                       </div>
                     ))}

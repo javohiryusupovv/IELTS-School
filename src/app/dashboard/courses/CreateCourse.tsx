@@ -140,7 +140,7 @@ function CreateCourse() {
             <Plus className="text-white w-4 h-4 md:hidden" />
           </button>
         </SheetTrigger>
-        <SheetContent>
+        <SheetContent className="overflow-y-auto max-h-screen">
           <SheetHeader className="mb-5 max-sm:space-y-0">
             <SheetTitle className="text-[20px] max-sm:text-[17px]">
               Yangi Kurs Yaratish

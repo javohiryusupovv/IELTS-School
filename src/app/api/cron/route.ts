@@ -1,25 +1,39 @@
+// app/api/cron/route.ts
 import { NextResponse } from "next/server";
 import Student from "@/models/student.model";
-import Course from "@/models/course.model";
 import ConnectMongoDB from "@/lib/mongodb";
 
 export async function GET() {
   try {
     await ConnectMongoDB();
 
-    // Barcha studentlarni olish
-    const students = await Student.find().populate("course");
+    const today = new Date();
+    const students = await Student.find({ paymentNext: { $lte: today } }).populate("course");
 
     for (const student of students) {
-      if (student.course?.price) {
-        student.balance -= student.course.price; // kurs narxini minus qilamiz
-        await student.save();
-      }
+      if (!student.course?.price) continue;
+
+      // Qarzdorlik yozuvini qo‘shamiz
+      student.payments.push({
+        amount: student.course.price,
+        type: "Naqd",
+        date: new Date(student.paymentNext),
+        status: "qarzdor",
+      });
+
+      student.balance -= student.course.price;
+
+      const next = new Date(student.paymentNext);
+      next.setMonth(next.getMonth() + 1);
+      student.paymentNext = next;
+
+      await student.save();
     }
 
-    return NextResponse.json({ success: true, message: "Cron ishga tushdi, balans yangilandi!" });
+    console.log(`💰 ${students.length} ta student uchun qarzdorlik yangilandi.`);
+    return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Cron error:", error);
+    console.error("❌ Cron xatolik:", error);
     return NextResponse.json({ success: false, error: "Cron ishlamadi" }, { status: 500 });
   }
 }

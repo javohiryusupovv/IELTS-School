@@ -184,39 +184,23 @@ export default function TableStudent({ students, courses }: PropsTableStudent) {
                   </td>
                   <td className="py-2 text-[14px] font-normal max-lg:text-[12px]">
                     {(() => {
-                      // So‘nggi paymentni olish
-                      const lastPayment =
-                        student.payments?.[student.payments.length - 1];
+                      const balance = student.balance || 0;
 
-                      if (lastPayment) {
-                        if (lastPayment.status === "to'langan") {
-                          // To‘liq to‘langan bo‘lsa
-                          return (
-                            <p className="py-1 px-5 border rounded-full bg-green-500 text-white inline-flex">
-                              To'langan
-                            </p>
-                          );
-                        } else if (lastPayment.status === "qarzdor") {
-                          // Qarzdor bo‘lsa
-                          return (
-                            <article className="flex items-center gap-2">
-                              <span className="py-1 px-5 border rounded-full bg-red-500 text-white inline-flex">
-                                Qarzdor
-                              </span>
-                              <PayModal student={student} />
-                            </article>
-                          );
-                        }
+                      if (balance < 0) {
+                        return (
+                          <article className="flex items-center gap-2">
+                            <span className="py-1 px-5 border rounded-full bg-red-500 text-white inline-flex">
+                              Qarzdor
+                            </span>
+                            <PayModal student={student} />
+                          </article>
+                        );
                       }
 
-                      // Agar umuman payment bo‘lmasa ham qarzdor chiqsin
                       return (
-                        <article className="flex items-center gap-2">
-                          <span className="py-1 px-5 border rounded-full bg-red-500 text-white inline-flex">
-                            Qarzdor
-                          </span>
-                          <PayModal student={student} />
-                        </article>
+                        <p className="py-1 px-5 border rounded-full bg-green-500 text-white inline-flex">
+                          To‘langan
+                        </p>
                       );
                     })()}
                   </td>

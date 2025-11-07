@@ -86,7 +86,7 @@ export default function EditStudent({ student, courses }: Props) {
                         <UserPen className=" w-5 h-5 group-hover:stroke-white stroke-1 transition-all duration-300 group-hover:border-transparent" />
                     </button>
                 </SheetTrigger>
-                <SheetContent>
+                <SheetContent className="overflow-y-auto max-h-screen">
                     <SheetHeader className="mb-5">
                         <SheetTitle>O'quvchini Tahrirlash</SheetTitle>
                         <SheetDescription>
