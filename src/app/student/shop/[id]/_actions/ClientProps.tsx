@@ -145,7 +145,7 @@ export default function ClientComponent({ product, coins, student }: Props) {
             src={product.image}
             width={480}
             height={360}
-            alt={product.title}
+            alt="Mahsulot"
             priority
             className="w-full object-cover rounded-md "
           />
