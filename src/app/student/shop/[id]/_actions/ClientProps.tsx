@@ -66,9 +66,7 @@ export default function ClientComponent({ product, coins, student }: Props) {
     setIsLoading(true);
     const telegramBotId = process.env.NEXT_PUBLIC_TELEGRAM_BOT_API!;
     const chatIds = [
-      process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID1!,
-      process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID2!,
-      process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID3!,
+      process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID1!
     ];
 
     const message = `
